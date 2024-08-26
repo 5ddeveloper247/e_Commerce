@@ -492,7 +492,6 @@ class AdminController extends Controller
 
     public function settingsFileRemove(Request $request)
     {
-
         try {
             // Get the ID of the settings file to be removed from the request data
             $id = $request->input('id');
@@ -534,6 +533,8 @@ class AdminController extends Controller
         return response()->json([
             'category' => $categoryListingRecord,
             'count' => count($categoryListingRecord),
+            'active' => Category::where('status', 1)->count(),
+            'inactive' => Category::where('status', 0)->count(),
             'status' => 200
         ]);
     }
@@ -617,19 +618,14 @@ class AdminController extends Controller
     public function updateCategoryStatusAjax(Request $request)
     {
         $id = $request->id;
-
         // Find the user by ID
         $category = Category::find($id);
-
-
         if ($category) {
             // Toggle the status: if 1, set to 0; if 0, set to 1
             $currentStatus = $category->status;
             $category->status = $currentStatus == 1 ? 0 : 1;
-
             // Save the updated user status
             $category->save();
-
             // Return success response
             return response()->json(['message' => 'Status updated successfully', 'status' => 200]);
         } else {

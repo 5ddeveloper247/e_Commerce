@@ -1,20 +1,17 @@
 @extends('layouts.admin.admin_master')
 
 @push('css')
-
 @endpush
 
 @section('content')
-
-
-<div>
+<div id="product_listing_section">
     <div>
         <div class="p-md-4 p-3">
             <form id="add_edit_category_form">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Category</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Category Listing</li>
+                        <li class="breadcrumb-item"><a href="#">Product</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Product Listing</li>
                     </ol>
                 </nav>
                 <div class="row justify-content-center gx-0 gy-2 gap-4 mb-4">
@@ -25,7 +22,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2"></span>
+                                <span class="fw-bold fs-2" id="activeRecord"></span>
                             </h3>
                             <small>Active</small>
                         </div>
@@ -37,7 +34,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2"></span>
+                                <span class="fw-bold fs-2" id="inactiveRecord"></span>
                             </h3>
                             <small>InActive</small>
                         </div>
@@ -49,15 +46,15 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2"></span>
+                                <span class="fw-bold fs-2" id="totlaRecord"></span>
                             </h3>
                             <small>Total</small>
                         </div>
                     </div>
-                    <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3"
-                        data-bs-toggle="modal" data-bs-target="#filterModal">
+                    <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3">
                         <div class="d-flex flex-column align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 32 32">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 32 32"
+                                id="productAddBtn">
                                 <path fill="currentColor"
                                     d="M16 3C8.832 3 3 8.832 3 16s5.832 13 13 13s13-5.832 13-13S23.168 3 16 3m0 2c6.087 0 11 4.913 11 11s-4.913 11-11 11S5 22.087 5 16S9.913 5 16 5m-1 5v5h-5v2h5v5h2v-5h5v-2h-5v-5z" />
                             </svg>
@@ -173,19 +170,145 @@
 
 
 
+
+
+{{-- Add Edit Form --}}
+<div class="content d-none" id="product_add_edit_section">
+    <div id="product_settings">
+        <div class="p-md-4 p-3">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" id="settings-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="product-details-tab" data-toggle="tab" href="#product-details"
+                        role="tab" aria-controls="product-details" aria-selected="true">Product Details</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media"
+                        aria-selected="false">Media</a>
+                </li>
+            </ul>
+
+            <!-- Tab content -->
+            <div class="tab-content mt-4" id="settings-tabs-content">
+                <!-- Product Details Tab -->
+                <div class="tab-pane fade show active" id="product-details" role="tabpanel"
+                    aria-labelledby="product-details-tab">
+                    <form id="product_settings_form">
+                        <!-- Product Details -->
+                        <div class="section">
+                            <h2>Product Details</h2>
+                            <div class="row">
+                                <div class="col-sm-6 mb-3">
+                                    <label for="sku" class="form-label">SKU</label>
+                                    <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter SKU">
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="category_id" class="form-label">Category</label>
+                                    <select class="form-control" id="category_id" name="category_id">
+                                        <option value="" disabled selected>Select a category</option>
+                                        <!-- Example options; replace with dynamic data -->
+                                        <option value="1">Category 1</option>
+                                        <option value="2">Category 2</option>
+                                        <option value="3">Category 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="category_id" class="form-label">Brand Name</label>
+                                    <select class="form-control" id="brand_id" name="brand_id">
+                                        <option value="" disabled selected>Select a brand</option>
+                                        <!-- Example options; replace with dynamic data -->
+                                        <option value="1">Brand 1</option>
+                                        <option value="2">Brand 2</option>
+                                        <option value="3">Brand 3</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-sm-6 mb-3">
+                                    <label for="product_name" class="form-label">Product Name</label>
+                                    <input type="text" class="form-control" id="product_name" name="product_name"
+                                        placeholder="Enter product name">
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="model_name" class="form-label">Model Name</label>
+                                    <input type="text" class="form-control" id="model_name" name="model_name"
+                                        placeholder="Enter model name">
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="price" class="form-label">Price</label>
+                                    <input type="number" step="0.01" class="form-control" id="price" name="price"
+                                        placeholder="Enter price">
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="discount_price" class="form-label">Discount Price</label>
+                                    <input type="number" step="0.01" class="form-control" id="discount_price"
+                                        name="discount_price" placeholder="Enter discount price">
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="weight" class="form-label">Weight (kg)</label>
+                                    <input type="number" step="0.01" class="form-control" id="weight" name="weight"
+                                        placeholder="Enter weight">
+                                </div>
+                                <div class="col-sm-6 mb-3">
+                                    <label for="onhand_qty" class="form-label">On Hand Quantity</label>
+                                    <input type="number" class="form-control" id="onhand_qty" name="onhand_qty"
+                                        placeholder="Enter stock quantity">
+                                </div>
+                                <div class="col-sm-12 mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" name="description" rows="3"
+                                        placeholder="Enter description"></textarea>
+                                </div>
+                                <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
+                                    <input class="form-check-input" type="checkbox" role="switch" name="status"
+                                        id="status">
+                                    <label class="form-check-label ms-2" for="status">Status</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mt-4">
+                            <button type="button" id="saveProductBtn" class="btn theme-btn-outline btn-lg px-md-5">Save
+                                Settings</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Media Tab -->
+                <div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
+                    <form id="media_settings_form">
+                        <div class="section">
+                            <h2>Media</h2>
+                            <div class="row">
+                                <div class="col-sm-12 mb-3">
+                                    <label for="media-upload" class="form-label">Upload Images</label>
+                                    <input type="file" class="form-control" id="media-upload" name="media_upload[]"
+                                        multiple accept="image/*">
+                                </div>
+                                <div class="col-sm-12 mb-3">
+                                    <label for="media_preview" class="form-label">Image Preview</label>
+                                    <div class="image-container" id="media-preview">
+                                        <!-- Image previews will be shown here -->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center mt-4">
+                                <button type="button" id="saveMediaBtn"
+                                    class="btn theme-btn-outline btn-lg px-md-5">Save Media</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
+
 @push('scripts')
 <script>
-    $('#exam-listing').DataTable({
-        responsive: true,
-        dom: 'Bfrtip',
-        pageLength: 10,
-        buttons: [{
-            extend: 'csv',
-            text: 'Export'
-        }, ],
-        lengthMenu: [5, 10, 25, 50, 75, 100]
-    });
+    $('#settings-tabs a').on('click', function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
 </script>
-<script src="{{asset('assets_admin/customjs/category_listing.js') }}"></script>
+<script src="{{ asset('assets_admin/customjs/products.js') }}"></script>
 @endpush

@@ -40,8 +40,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/category', [AdminController::class, 'categoryGet'])->name('admin.category.get');
         Route::get('/products', [ProductController::class, 'productIndex'])->name('admin.product.get');
         //user listing
-
-
         /************** AJAX ROUTES ******************/
         Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
         Route::get('/user/listing/ajax', [AdminController::class, 'userListingAjax'])->name('user.listing.ajax');
@@ -55,8 +53,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/category/listing/ajax', [AdminController::class, 'categoryListingAjax'])->name('category.listing.ajax');
         Route::post('/category/edit/ajax', [AdminController::class, 'updateCategoryAjax'])->name('user.category.ajax');
         Route::post('/category/status/ajax', [AdminController::class, 'updateCategoryStatusAjax'])->name('admin.category.status.ajax');
-
-        // Route::post('/admin/getProfilePageData', [AdminController::class, 'getProfilePageData'])->name('admin.getProfilePageData');
+        //products
+        Route::post('/product/store/ajax', [ProductController::class, 'storeProductAjax'])->name('admin.product.store');
+        Route::get('/product/brand/fetch/ajax', [ProductController::class, 'fetchBrandAjax'])->name('admin.product.brand.fetch.ajax');
+        Route::get('/product/category/fetch/ajax', [ProductController::class, 'fetchCategoryAjax'])->name('admin.product.category.fetch.ajax');
     });
 });
 

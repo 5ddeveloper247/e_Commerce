@@ -25,7 +25,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2">{{ $categoryActive }}</span>
+                                <span class="fw-bold fs-2" id="activeRecord">{{ $categoryActive }}</span>
                             </h3>
                             <small>Active</small>
                         </div>
@@ -37,7 +37,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2">{{ $categoryInactive }}</span>
+                                <span class="fw-bold fs-2" id="inactiveRecord">{{ $categoryInactive }}</span>
                             </h3>
                             <small>InActive</small>
                         </div>
@@ -49,7 +49,8 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2">{{ $categoriesListingRecord->count() }}</span>
+                                <span class="fw-bold fs-2" id="totlaRecord">{{ $categoriesListingRecord->count()
+                                    }}</span>
                             </h3>
                             <small>Total</small>
                         </div>

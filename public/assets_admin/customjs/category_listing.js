@@ -12,58 +12,66 @@ $(document).ready(function () {
         lengthMenu: [5, 10, 25, 50, 75, 100]
     });
 
+    getCategoriesOnLoad();
+    function getCategoriesOnLoad() {
+        const url = "/admin/category/listing/ajax";
+        const type = "Get";
+        let data = {}; // Your data to send to the server here
+        SendAjaxRequestToServer(type, url, data, '', getCategoryListing, '', '#contactReply_submit');
+
+        function getCategoryListing(response) {
 
 
-    const url = "/admin/category/listing/ajax";
-    const type = "Get";
-    let data = {}; // Your data to send to the server here
-    SendAjaxRequestToServer(type, url, data, '', getCategoryListing, '', '#contactReply_submit');
+            $('#activeRecord').text(response.active);
+            $('#inactiveRecord').text(response.inactive);
+            $('#totlaRecrod').text(response.count);
+            if (response.status == 200) {
+                let html = '';
+                response.category.forEach(item => {
 
-    function getCategoryListing(response) {
 
-        console.log(response);
-        if (response.status == 200) {
-            let html = '';
-            response.category.forEach(item => {
-                html += `
-                    <tr>
-                        <td class="ps-3">${item.id}</td>
-                        <td class="ps-3">${item.category_name}</td>
-                        <td class="ps-3">${item.description}</td>
-                        <td class="text-center">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
-                                       id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
-                            </div>
-                        </td>
-                        <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
-                        <td class="text-end">
-                            <div class="btn-reveal-trigger position-static">
-                                <button class="btn btn-sm dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
-                                         data-prefix="fas" data-icon="ellipsis" role="img"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <path fill="currentColor"
-                                              d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#filterModal" data-edit-category='${JSON.stringify(item)}' id="handleEditCategoryBtn">Edit</a>
-                                    <div class="dropdown-divider"></div>
-
+                    html += `
+                        <tr>
+                            <td class="ps-3">${item.id}</td>
+                            <td class="ps-3">${item.category_name}</td>
+                            <td class="ps-3">${item.description}</td>
+                            <td class="text-center">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+                                           id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
                                 </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-            $('#category_listing_table_body').html(html);
-        }
+                            </td>
+                            <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                            <td class="text-end">
+                                <div class="btn-reveal-trigger position-static">
+                                    <button class="btn btn-sm dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                             data-prefix="fas" data-icon="ellipsis" role="img"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="currentColor"
+                                                  d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                                           data-bs-target="#filterModal" data-edit-category='${JSON.stringify(item)}' id="handleEditCategoryBtn">Edit</a>
+                                        <div class="dropdown-divider"></div>
 
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    `;
+                });
+                $('#category_listing_table_body').html(html);
+            }
+
+        }
     }
+
+
 
 
 
@@ -110,7 +118,7 @@ $(document).ready(function () {
             // Reset the form and hide the modal
             $('#addEventForm').trigger("reset");
             $("#filterModal").modal('hide');
-            window.location.reload();
+            getCategoriesOnLoad();
 
             // Uncomment and define this function if you want to reload the admin list data
             // loadJobsPageData();
@@ -229,7 +237,7 @@ $(document).ready(function () {
             toastr.success(response.message, '', {
                 timeOut: 3000
             });
-            location.reload();
+            getCategoriesOnLoad();
         }
         else {
             toastr.error(response.message, '', {
