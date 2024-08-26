@@ -1,0 +1,57 @@
+.login {
+    background-image: url('/assets_admin/images/login-form-img.jpeg');
+    background-position: bottom;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+    height: 100vh;
+    width: 100%;
+
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+
+    .login-content {
+        position: relative;
+        z-index: 1;
+        background-color: #fff;
+        box-shadow: #fff 0px 7px 29px 0px;
+        width: 50%;
+
+        button {
+            background: rgb(2, 0, 36);
+            background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(22, 9, 121, 1) 60%, rgba(0, 212, 255, 1) 100%, rgba(0, 212, 255, 1) 100%);
+            border: none;
+            color: #fff;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, rgb(6, 1, 108) 0%, rgb(7, 1, 52) 60%, rgb(0, 115, 255) 100%, rgb(0, 110, 255) 100%);
+        }
+
+    }
+
+    .overlay {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        background-color: #000000c9;
+    }
+}
+
+input {
+    border: 1.2px solid #00000038;
+    border-radius: 4px;
+}
