@@ -1,6 +1,18 @@
+console.log('yes');
 $(document).ready(function () {
 
-    alert("file loaded")
+    $('#exam-listing').DataTable({
+        responsive: true,
+        dom: 'Bfrtip',
+        pageLength: 10,
+        buttons: [{
+            extend: 'csv',
+            text: 'Export'
+        },],
+        lengthMenu: [5, 10, 25, 50, 75, 100]
+    });
+
+
     const url = "/admin/category/listing/ajax";
     const type = "Get";
     let data = {}; // Your data to send to the server here
@@ -37,10 +49,10 @@ $(document).ready(function () {
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#filterModal" data-edit-user='${JSON.stringify(item)}' id="handleEditCategoryBtn">Edit</a>
+                                       data-bs-target="#filterModal" data-edit-category='${JSON.stringify(item)}' id="handleEditCategoryBtn">Edit</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#confirmationModal"  data-remove-user='${JSON.stringify(item)}' id="handleRemoveCategoryBtn">Remove</a>
+                                       data-bs-target="#confirmationModal"  data-remove-category='${JSON.stringify(item)}' id="handleRemoveCategoryBtn">Remove</a>
                                 </div>
                             </div>
                         </td>
@@ -57,7 +69,7 @@ $(document).ready(function () {
     $('body').on('click', '#handleEditCategoryBtn', function () {
         const item = JSON.parse($(this).attr('data-edit-category'));
         $('#category_name').val(item.category_name);
-        $('#category_description').text(item.description);
+        $('#category_description').val(item.description);
         $('#category_status').prop('checked', item.status == 1);
         $('#category_id').val(item.id);
     })
@@ -79,7 +91,7 @@ $(document).ready(function () {
         }
 
         console.log(...formData);
-        const url = "/admin/user/edit/ajax";
+        const url = "/admin/category/edit/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', updateCategoryjaxResponse, '', '#editAdminNow');
     });

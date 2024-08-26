@@ -143,58 +143,7 @@
 
 
 
-            <li class="nav-item">
-                <a class="nav-link main-links-for-submenu" data-bs-toggle="collapse" href="#settings" role="button"
-                    aria-expanded="false" aria-controls="collapseExample">
-                    <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
-                        <span class="dropdown-indicator-icon-wrapper">
-                            <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
-                                focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
-                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
-                                <path fill="currentColor"
-                                    d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z">
-                                </path>
-                            </svg>
-                        </span>
-                        <div class="nav-link-icon px-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24">
-                                <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="1.5">
-                                    <path d="M12 15a3 3 0 1 0 0-6a3 3 0 0 0 0 6" />
-                                    <path
-                                        d="m19.622 10.395l-1.097-2.65L20 6l-2-2l-1.735 1.483l-2.707-1.113L12.935 2h-1.954l-.632 2.401l-2.645 1.115L6 4L4 6l1.453 1.789l-1.08 2.657L2 11v2l2.401.656L5.516 16.3L4 18l2 2l1.791-1.46l2.606 1.072L11 22h2l.604-2.387l2.651-1.098C16.697 18.832 18 20 18 20l2-2l-1.484-1.75l1.098-2.652l2.386-.62V11z" />
-                                </g>
-                            </svg>
-                        </div>
-                        <span class="nav-link-text">SETTINGS</span>
-                    </div>
-                </a>
-                <div class="collapse sidebar-inner-content" id="settings">
-                    <ul class="nav flex-column mx-3">
-                        <li class="nav-item">
-                            <a href="{{url('website_settings')}}"
-                                class="d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5"
-                                href="#">
-                                <span>Web Settings</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{url('smtp_settings')}}"
-                                class="d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5"
-                                href="#">
-                                <span>Email Settings</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{url('api_keyhandler')}}"
-                                class="d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5"
-                                href="#">
-                                <span>API Key Handler</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
+
 
             <li class="nav-item">
                 <a href="{{route('admin.category.get')}}" class="nav-link main-links-for-submenu" role="button">

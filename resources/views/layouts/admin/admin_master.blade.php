@@ -28,6 +28,7 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('assets_admin/plugins/toastr/toastr.min.css') }}" />
     <script src="{{ asset('assets_admin/plugins/toastr/toastr.min.js') }}"></script>
+
     @stack('css')
     <script>
         var base_url = "{{url('/')}}";
@@ -57,14 +58,15 @@
             <!-- main content -->
             @yield('content')
             @if($pageTitle!='Login' && $pageTitle!='Forget Password' && $pageTitle!='Signup')
-            @include('layouts.admin.footer')
+
         </div>
         @endif
     </div>
 
-
+    @include('layouts.admin.footer')
     <!-- Footer code here -->
     @stack('scripts')
+
 </body>
 
 </html>

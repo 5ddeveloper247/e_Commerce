@@ -36,7 +36,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/admin/listing', [AdminController::class, 'adminListing'])->name('admin.listing');
         Route::get('/user/listing', [AdminController::class, 'userListing'])->name('user.listing');
         Route::get('/site/settings', [AdminController::class, 'siteSettings'])->name('admin.site.settings');
-        Route::get('/category/get', [AdminController::class, 'categoryGet'])->name('admin.category.get');
+        Route::get('/category', [AdminController::class, 'categoryGet'])->name('admin.category.get');
         //user listing
 
 

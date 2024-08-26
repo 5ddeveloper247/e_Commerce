@@ -13,8 +13,9 @@
                 <!-- Website Settings Section -->
                 <div class="section">
                     <h2>Website Settings</h2>
-                    <div class="row">
-                        <div class="col-6 mb-3">
+                    <div class="row align-items-center">
+                        <!-- Upload Logo Section -->
+                        <div class="col-10 mb-3">
                             <label for="logo" class="form-label fw-bold mb-2">Upload Logo</label>
                             <div
                                 class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center p-2">
@@ -23,7 +24,7 @@
 
                                 <!-- SVG Icon acting as button for uploading logo -->
                                 <svg onclick="document.getElementById('logo').click();"
-                                    xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                     class="bi bi-upload text-primary cursor-pointer" viewBox="0 0 16 16">
                                     <path
                                         d="M.5 9.9a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4h-4a.5.5 0 0 1 0-1h4.5a.5.5 0 0 1 .5.5V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.9z" />
@@ -33,13 +34,17 @@
                             </div>
                         </div>
 
-                        <div class="col-sm-6 mt-4 p-3" >
-                            <!-- Dynamic Image Preview -->
-                            <img class="logo-preview img-fluid border rounded shadow-sm"
-                                src="{{ url('/').'/storage/'.$siteSettings->logo }}" alt="Logo Preview" id="logo-preview"
-                                >
+                        <!-- Logo Preview Section -->
+                        <div class="col-2 mt-4 p-3 d-flex justify-content-center align-items-center">
+                            <img class="logo-preview img-fluid border rounded-circle shadow-sm"
+                                style="width: 50px; height: 50px;"
+                                src="{{ url('/') . '/storage/' . $siteSettings->logo }}" alt="Logo Preview"
+                                id="logo-preview">
                         </div>
                     </div>
+
+
+
 
 
                     <h4>Contact Links</h4>
@@ -83,16 +88,17 @@
 
                         </div>
                         {{--Banner upload --}}
+
                         <div class="col-6 mb-3">
                             <label for="file-input" class="form-label fw-bold mb-2">Upload Banner</label>
-                            <div
-                                class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center p-4">
+                            <div class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center"
+                                style="height: 50px;">
+                                <!-- Adjusted height to provide space for centering -->
                                 <input type="file" id="file-input" class="form-control d-none" name="file"
                                     accept="image/*" aria-describedby="file-input-label">
-
                                 <!-- SVG Icon acting as button -->
                                 <svg onclick="document.getElementById('file-input').click();"
-                                    xmlns="http://www.w3.org/2000/svg" width="50" height="30" fill="currentColor"
+                                    xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
                                     class="bi bi-upload text-primary cursor-pointer" viewBox="0 0 16 16">
                                     <path
                                         d="M.5 9.9a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4h-4a.5.5 0 0 1 0-1h4.5a.5.5 0 0 1 .5.5V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.9z" />

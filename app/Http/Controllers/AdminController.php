@@ -512,14 +512,19 @@ class AdminController extends Controller
 
 
 
+
+    //category
+
+
     public function categoryGet(Request $request)
     {
 
         $pageTitle = 'Categories';
+        $data["pageTitle"] = "Categories";
         $categoriesListingRecord = Category::all();
         $categoryInactive = Category::where('status', 0)->count();
         $categoryActive = Category::where('status', 1)->count();
-        return view('admin.category_listing', compact('pageTitle', 'categoriesListingRecord', 'categoryInactive', 'categoryActive'));
+        return view('admin.category_listing', compact('data', 'pageTitle', 'categoriesListingRecord', 'categoryInactive', 'categoryActive'));
     }
 
 
@@ -543,7 +548,7 @@ class AdminController extends Controller
             'id' => 'nullable|integer|exists:users,id', // If present, 'id' must be an integer and exist in the 'users' table
             'category_name' => 'required|string|max:50|unique:categories,category_name',
             'category_description' => 'required|string|max:255',
-            'user_status' => 'required|integer|in:0,1'
+            'category_status' => 'required|integer|in:0,1'
         ];
 
         // Validate the incoming request data
@@ -571,7 +576,8 @@ class AdminController extends Controller
                 // Create a new user if 'id' is not present
                 $category = new Category();
                 $category->category_name = $validatedData['category_name'];
-                $category->status = $validatedData['user_status'];
+                $category->description = $validatedData['category_description'];
+                $category->status = $validatedData['category_status'];
                 $category->save();
 
                 // Return success response for creation
