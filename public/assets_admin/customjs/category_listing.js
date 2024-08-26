@@ -28,6 +28,7 @@ $(document).ready(function () {
                     <tr>
                         <td class="ps-3">${item.id}</td>
                         <td class="ps-3">${item.category_name}</td>
+                        <td class="ps-3">${item.description}</td>
                         <td class="text-center">
                             <div class="form-check form-switch">
                                 <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
@@ -51,8 +52,7 @@ $(document).ready(function () {
                                     <a class="dropdown-item" type="button" data-bs-toggle="modal"
                                        data-bs-target="#filterModal" data-edit-category='${JSON.stringify(item)}' id="handleEditCategoryBtn">Edit</a>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#confirmationModal"  data-remove-category='${JSON.stringify(item)}' id="handleRemoveCategoryBtn">Remove</a>
+
                                 </div>
                             </div>
                         </td>

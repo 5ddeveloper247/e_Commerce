@@ -518,7 +518,6 @@ class AdminController extends Controller
 
     public function categoryGet(Request $request)
     {
-
         $pageTitle = 'Categories';
         $data["pageTitle"] = "Categories";
         $categoriesListingRecord = Category::all();
@@ -589,6 +588,32 @@ class AdminController extends Controller
 
             // Return server error response
             return response()->json(['message' => 'Something went wrong. Please try again.', 'status' => 500]);
+        }
+    }
+
+
+
+    public function updateCategoryStatusAjax(Request $request)
+    {
+        $id = $request->id;
+
+        // Find the user by ID
+        $category = Category::find($id);
+
+
+        if ($category) {
+            // Toggle the status: if 1, set to 0; if 0, set to 1
+            $currentStatus = $category->status;
+            $category->status = $currentStatus == 1 ? 0 : 1;
+
+            // Save the updated user status
+            $category->save();
+
+            // Return success response
+            return response()->json(['message' => 'Status updated successfully', 'status' => 200]);
+        } else {
+            // Return error response if user not found
+            return response()->json(['message' => 'Category not found', 'status' => 404]);
         }
     }
 }
