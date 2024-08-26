@@ -1,4 +1,4 @@
-console.log('yes');
+
 $(document).ready(function () {
 
     $('#exam-listing').DataTable({
@@ -11,6 +11,7 @@ $(document).ready(function () {
         },],
         lengthMenu: [5, 10, 25, 50, 75, 100]
     });
+
 
 
     const url = "/admin/category/listing/ajax";
@@ -66,6 +67,7 @@ $(document).ready(function () {
 
 
 
+
     $('body').on('click', '#handleEditCategoryBtn', function () {
         const item = JSON.parse($(this).attr('data-edit-category'));
         $('#category_name').val(item.category_name);
@@ -113,41 +115,49 @@ $(document).ready(function () {
             // Uncomment and define this function if you want to reload the admin list data
             // loadJobsPageData();
 
-        } else {
-            // Error Handling
-            let errorMessage = 'An error occurred. Please try again.';
+        } else if (response.status === 403) {
+            // Handle forbidden error
+            toastr.error(response.message, '', {
+                timeOut: 3000
+            });
 
-            if (response.status === 402) {
-                // Handle specific error status
-                errorMessage = response.message;
-            } else if (response.status == 422) {
-                // Validation errors
+        } else if (response.status === 402) {
+            // Handle specific error status
+            toastr.error(response.message, '', {
+                timeOut: 3000
+            });
 
-                errorMessage = response.responseJSON.message || 'Validation failed.';
-                const validationErrors = response.responseJSON.errors || {};
+        } else if (response.status === 422) {
+            // Validation errors
+            let errorMessage = response.responseJSON.message || 'Validation failed.';
+            const validationErrors = response.responseJSON.errors || {};
 
-                // Log the response for debugging
+            // Highlight the invalid fields
+            $.each(validationErrors, function (key, error) {
+                const inputField = $('[name="' + key + '"]');
+                inputField.addClass('is-invalid');
+                // Optionally, show error messages next to each field
+                // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
+            });
 
-
-                // Highlight the invalid fields
-                $.each(validationErrors, function (key, error) {
-                    const inputField = $('[name="' + key + '"]');
-
-                    inputField.addClass('is-invalid');
-                    // Optionally, show error messages next to each field
-                    // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
-                });
-            } else if (response.status === 500) {
-                // Handle server error
-                errorMessage = response.message || 'Internal server error. Please contact support.';
-            }
-
-            // Display error message
             toastr.error(errorMessage, '', {
+                timeOut: 3000
+            });
+
+        } else if (response.status === 500) {
+            // Handle server error
+            toastr.error(response.message || 'Internal server error. Please contact support.', '', {
+                timeOut: 3000
+            });
+
+        } else {
+            // General error handling for other statuses
+            toastr.error('An error occurred. Please try again.', '', {
                 timeOut: 3000
             });
         }
     }
+
 
 
     $('body').on('click', '#handleRemoveCategoryBtn', function () {

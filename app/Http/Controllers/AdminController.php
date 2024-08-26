@@ -541,25 +541,44 @@ class AdminController extends Controller
 
     public function updateCategoryAjax(Request $request)
     {
-
-        // Define validation rules based on the presence of the 'id' field
-        $rules = [
-            'id' => 'nullable|integer|exists:users,id', // If present, 'id' must be an integer and exist in the 'users' table
-            'category_name' => 'required|string|max:50|unique:categories,category_name',
-            'category_description' => 'required|string|max:255',
-            'category_status' => 'required|integer|in:0,1'
-        ];
+        // Define initial validation rules
+        if ($request->has('id') && !is_null($request->id)) {
+            // When updating an existing category
+            $rules = [
+                'id' => 'required|integer|exists:categories,id', // 'id' must be an integer and exist in the 'categories' table
+                'category_name' => [
+                    'required',
+                    'string',
+                    'max:50',
+                    'unique:categories,category_name,' . $request->id . ',id' // Unique validation, excluding the current record
+                ],
+                'category_description' => 'required|string|max:255',
+                'category_status' => 'required|integer|in:0,1'
+            ];
+        } else {
+            // When creating a new category
+            $rules = [
+                'category_name' => [
+                    'required',
+                    'string',
+                    'max:50',
+                    'unique:categories,category_name' // Unique validation across all records
+                ],
+                'category_description' => 'required|string|max:255',
+                'category_status' => 'required|integer|in:0,1'
+            ];
+        }
 
         // Validate the incoming request data
         $validatedData = $request->validate($rules);
 
         try {
-            // Check if we are updating an existing user or creating a new one
+            // Check if we are updating an existing category or creating a new one
             if ($request->has('id') && !is_null($request->id)) {
-                // Find the user by ID
+                // Find the category by ID
                 $category = Category::find($validatedData['id']);
                 if ($category) {
-                    // Update user details
+                    // Update category details
                     $category->category_name = $validatedData['category_name'];
                     $category->description = $validatedData['category_description'];
                     $category->status = $validatedData['category_status'];
@@ -568,11 +587,11 @@ class AdminController extends Controller
                     // Return success response for update
                     return response()->json(['message' => 'Category updated successfully', 'status' => 200]);
                 } else {
-                    // User not found
+                    // Category not found
                     return response()->json(['message' => 'Category not found', 'status' => 404]);
                 }
             } else {
-                // Create a new user if 'id' is not present
+                // Create a new category if 'id' is not present
                 $category = new Category();
                 $category->category_name = $validatedData['category_name'];
                 $category->description = $validatedData['category_description'];
@@ -587,9 +606,11 @@ class AdminController extends Controller
             Log::error('Error updating category: ' . $e->getMessage());
 
             // Return server error response
-            return response()->json(['message' => 'Something went wrong. Please try again.', 'status' => 500]);
+            return response()->json(['message' => 'Something went wrong. Please try again.', 'status' => 500, 'errorx' => $e]);
         }
     }
+
+
 
 
 

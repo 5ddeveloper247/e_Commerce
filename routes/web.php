@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/user/listing', [AdminController::class, 'userListing'])->name('user.listing');
         Route::get('/site/settings', [AdminController::class, 'siteSettings'])->name('admin.site.settings');
         Route::get('/category', [AdminController::class, 'categoryGet'])->name('admin.category.get');
+        Route::get('/products', [ProductController::class, 'productIndex'])->name('admin.product.get');
         //user listing
 
 
@@ -53,7 +55,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/category/listing/ajax', [AdminController::class, 'categoryListingAjax'])->name('category.listing.ajax');
         Route::post('/category/edit/ajax', [AdminController::class, 'updateCategoryAjax'])->name('user.category.ajax');
         Route::post('/category/status/ajax', [AdminController::class, 'updateCategoryStatusAjax'])->name('admin.category.status.ajax');
-
 
         // Route::post('/admin/getProfilePageData', [AdminController::class, 'getProfilePageData'])->name('admin.getProfilePageData');
     });
