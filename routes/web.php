@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,15 @@ use App\Http\Controllers\ProductController;
 // Route::get('/', function () {
 //     return redirect('/admin/login');// view('welcome');
 // });
+
+// Route::get('/register', function () {
+//     return view('website.register');
+// });
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::post('/getRegisterPageData', [RegisterController::class, 'getRegisterPageData'])->name('getRegisterPageData');
+Route::post('/getSpecificStates', [RegisterController::class, 'getSpecificStates'])->name('getSpecificStates');
+Route::post('/getSpecificCities', [RegisterController::class, 'getSpecificCities'])->name('getSpecificCities');
+Route::post('/addUserData', [RegisterController::class, 'saveUserData'])->name('addUserData');
 
 Route::group(['prefix' => 'admin'], function () {
 
@@ -56,7 +66,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/category/edit/ajax', [AdminController::class, 'updateCategoryAjax'])->name('user.category.ajax');
         Route::post('/category/status/ajax', [AdminController::class, 'updateCategoryStatusAjax'])->name('admin.category.status.ajax');
 
-        // Route::post('/admin/getProfilePageData', [AdminController::class, 'getProfilePageData'])->name('admin.getProfilePageData');
+        // Route::post('/getProfilePageData', [AdminController::class, 'getProfilePageData'])->name('admin.getProfilePageData');
     });
 });
 
@@ -72,9 +82,7 @@ Route::get('/product_detail', function () {
 Route::get('/sign_in', function () {
     return view('website.sign_in');
 });
-Route::get('/register', function () {
-    return view('website.register');
-});
+
 Route::get('/cart', function () {
     return view('website.cart');
 });

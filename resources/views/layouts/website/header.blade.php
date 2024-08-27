@@ -286,7 +286,7 @@
             <div class="d-flex align-items-center" role="search">
                 <div class="dropdown">
                     <a class="px-2 d-flex align-items-end dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img height="25" width="25" src="{{asset('assets_admin/images/usa.png')}}" alt="">
+                        <img height="25" width="25" src="{{asset('assets_user/images/usa.png')}}" alt="">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                             <path fill="currentColor" d="m7 10l5 5l5-5z" />
                         </svg>

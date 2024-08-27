@@ -22,6 +22,12 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('company_name')->nullable();
+            $table->string('address')->nullable();
+            $table->integer('country_id')->nullable();
+            $table->integer('state_id')->nullable();
+            $table->integer('city_id')->nullable();
+            $table->integer('zip_code')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
