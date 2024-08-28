@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\WebsiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,14 +98,11 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/loginSubmit', [RegisterController::class, 'loginSubmit'])->name('user.loginSubmit');
     Route::get('/logout', [RegisterController::class, 'logout'])->name('user.logout');
 
-    Route::get('/home', [RegisterController::class, 'home'])->name('user.home');
+    Route::get('/home', [WebsiteController::class, 'home'])->name('user.home');
 
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
-        Route::get('/account', function () {
-            return view('website.account');
-        });
-        // Route::get('/home', [RegisterController::class, 'home'])->name('user.home');    
+        Route::get('/home', [WebsiteController::class, 'account'])->name('user.home');    
         
         
 

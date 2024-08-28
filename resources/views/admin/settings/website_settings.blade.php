@@ -43,10 +43,6 @@
                         </div>
                     </div>
 
-
-
-
-
                     <h4>Contact Links</h4>
                     <div class="row">
                         <div class="col-sm-6 mb-3">

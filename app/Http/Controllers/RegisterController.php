@@ -158,14 +158,5 @@ class RegisterController extends Controller
 
         return redirect('login');
     }
-
-    public function home(Request $request)
-    {
-        $data['pageTitle'] = 'Dashboard';
-        return view('website.home')->with($data);
-    }
-
-        
-
     
 }
