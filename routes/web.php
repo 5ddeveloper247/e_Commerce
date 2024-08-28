@@ -99,7 +99,6 @@ Route::group(['prefix' => '/'], function () {
 
     Route::get('/home', [RegisterController::class, 'home'])->name('user.home');
 
-
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
         Route::get('/account', function () {

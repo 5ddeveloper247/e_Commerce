@@ -1649,3 +1649,8 @@ figure.zoom:hover img {
     text-align: left;
     border: 1px solid #ddd;
 }
+
+
+.danger{
+    color:red;
+}

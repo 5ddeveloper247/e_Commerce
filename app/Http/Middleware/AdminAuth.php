@@ -22,7 +22,7 @@ class AdminAuth
             return redirect('admin/login');
         } else if (Auth::user()->status == 0) {
             return $next($request);
-        } else if (Auth::user()->role == 1) { // 0=>superadmin, 1=>subadmin
+        } else if (Auth::user()->role == 0 || Auth::user()->role == 1) { // 0=>superadmin, 1=>subadmin
             return $next($request);
         } else {
             $request->session()->flash('error', 'Access Denied');
