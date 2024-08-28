@@ -38,7 +38,7 @@
                         <div class="col-2 mt-4 p-3 d-flex justify-content-center align-items-center">
                             <img class="logo-preview img-fluid border rounded-circle shadow-sm"
                                 style="width: 50px; height: 50px;"
-                                src="{{ url('/') . '/storage/' . $siteSettings->logo }}" alt="Logo Preview"
+                                src="{{ url('/') . '/storage/' . @$siteSettings->logo }}" alt="Logo Preview"
                                 id="logo-preview">
                         </div>
                     </div>
@@ -51,40 +51,40 @@
                     <div class="row">
                         <div class="col-sm-6 mb-3">
                             <label for="phone" class="form-label">Phone No</label>
-                            <input type="text" class="form-control" id="phone" value="{{ $siteSettings->phone }}"
+                            <input type="text" class="form-control" id="phone" value="{{ @$siteSettings->phone }}"
                                 name="phone" placeholder="Enter contact links">
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="Email" class="form-label">Email</label>
                             <input type="mail" class="form-control" id="email" name="email"
-                                value="{{ $siteSettings->email }}" placeholder="Email">
+                                value="{{ @$siteSettings->email }}" placeholder="Email">
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="address" rows="3" value="{{ $siteSettings->address }}"
+                            <textarea class="form-control" id="address" rows="3" value="{{ @$siteSettings->address }}"
                                 name="address"
-                                placeholder="Enter contact information">{{ $siteSettings->address }}</textarea>
+                                placeholder="Enter contact information">{{ @$siteSettings->address }}</textarea>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-6 mb-3">
                             <label for="website_name" class="form-label">Website Name</label>
                             <input type="text" class="form-control" id="website_name"
-                                value="{{ $siteSettings->website_name }}" name="website_name"
+                                value="{{ @$siteSettings->website_name }}" name="website_name"
                                 placeholder="Enter website name">
 
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="banner_heading" class="form-label">Banner Heading</label>
                             <input type="text" class="form-control" name="banner_heading"
-                                value="{{ $siteSettings->banner_heading }}" id="banner_heading"
+                                value="{{ @$siteSettings->banner_heading }}" id="banner_heading"
                                 placeholder="Enter website name">
 
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="sub_heading" class="form-label">Sub Heading</label>
                             <input type="text" class="form-control" id="sub_heading" name="sub_heading"
-                                value="{{ $siteSettings->sub_heading}}" placeholder="Enter website name">
+                                value="{{ @$siteSettings->sub_heading}}" placeholder="Enter website name">
 
                         </div>
                         {{--Banner upload --}}

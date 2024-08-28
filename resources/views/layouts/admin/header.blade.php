@@ -511,8 +511,8 @@
             <a class="navbar-brand d-flex me-1 me-sm-3" href="#">
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center">
-                        <img src="https://www.mchnursing.com/lms/public/uploads/main/images/22-05-2024/664dbaf39b6a3.png"
-                            alt="phoenix" width="70">
+                        <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/220x70/logo_01_1596263683__90290.original.png"
+                            alt="phoenix" width="160">
                         <!-- <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5> -->
                     </div>
                 </div>
