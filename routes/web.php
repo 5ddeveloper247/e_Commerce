@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\RegisterController;
 
 /*
@@ -50,9 +51,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/site/settings', [AdminController::class, 'siteSettings'])->name('admin.site.settings');
         Route::get('/category', [AdminController::class, 'categoryGet'])->name('admin.category.get');
         Route::get('/products', [ProductController::class, 'productIndex'])->name('admin.product.get');
-        //user listing
-
-
+        //contact us
+        Route::get('/contactus', [ContactUsController::class, 'contactIndex'])->name('admin.contactus.index');
         /************** AJAX ROUTES ******************/
         Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
         Route::get('/user/listing/ajax', [AdminController::class, 'userListingAjax'])->name('user.listing.ajax');
@@ -66,33 +66,26 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/category/listing/ajax', [AdminController::class, 'categoryListingAjax'])->name('category.listing.ajax');
         Route::post('/category/edit/ajax', [AdminController::class, 'updateCategoryAjax'])->name('user.category.ajax');
         Route::post('/category/status/ajax', [AdminController::class, 'updateCategoryStatusAjax'])->name('admin.category.status.ajax');
+        //products
+        Route::get('/product/ajax', [ProductController::class, 'ProductAjax'])->name('admin.product.ajax');
+        Route::post('/product/store/ajax', [ProductController::class, 'storeProductAjax'])->name('admin.product.store');
+        Route::post('/product/delete/ajax', [ProductController::class, 'deleteProductAjax'])->name('admin.product.delete');
+        Route::get('/product/brand/fetch/ajax', [ProductController::class, 'fetchBrandAjax'])->name('admin.product.brand.fetch.ajax');
+        Route::get('/product/category/fetch/ajax', [ProductController::class, 'fetchCategoryAjax'])->name('admin.product.category.fetch.ajax');
+        Route::Post('/product/categoryById/fetch/ajax', [ProductController::class, 'fetchCategoryByIdAjax'])->name('admin.product.categoryById.fetch.ajax');
+        Route::Post('/product/brandById/fetch/ajax', [ProductController::class, 'fetchBrandByIdAjax'])->name('admin.product.brandById.fetch.ajax');
+        Route::post('/product/status/ajax', [ProductController::class, 'updateProductStatusAjax'])->name('product.update.status.ajax');
+        Route::post('/product/markAsDiscounted/ajax', [ProductController::class, 'markAsDiscounted'])->name('product.markAsDiscounted.ajax');
+        Route::post('/product/markAsFeatured/ajax', [ProductController::class, 'markAsFeatured'])->name('product.markAsFeatured.ajax');
 
-        // Route::post('/getProfilePageData', [AdminController::class, 'getProfilePageData'])->name('admin.getProfilePageData');
-    });
-});
+        //contact us
+        Route::post('/contact/storeOrUpdate', [ContactUsController::class, 'storeOrUpdate'])->name('admin.contact.storeUpdate');
+        //all contact
+        Route::get('/contact/ajax', [ContactUsController::class, 'contactUsAjax'])->name('admin.contact.ajax');
+        //contact by id
+        Route::post('/getcontact/ajax', [ContactUsController::class, 'getContactUsAjax'])->name('admin.getcontact.ajax');
+        Route::post('/contact/status/ajax', [ContactUsController::class, 'updateContactAjax'])->name('contact.update.status.ajax');
 
-Route::group(['prefix' => '/'], function () {
-
-    Route::get('/', [RegisterController::class, 'login'])->name('login');
-    Route::get('/login', [RegisterController::class, 'login'])->name('user.login');
-    Route::post('/loginSubmit', [RegisterController::class, 'loginSubmit'])->name('user.loginSubmit');
-    Route::get('/logout', [RegisterController::class, 'logout'])->name('user.logout');
-
-    Route::get('/home', [RegisterController::class, 'home'])->name('user.home');
-
-
-    Route::group(['middleware' => ['UserAuth']], function () {
-        /************** PAGE ROUTES ******************/
-        Route::get('/account', function () {
-            return view('website.account');
-        });
-        // Route::get('/home', [RegisterController::class, 'home'])->name('user.home');    
-        
-        
-
-        /************** AJAX ROUTES ******************/
-        // Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
-        
     });
 }); 
 

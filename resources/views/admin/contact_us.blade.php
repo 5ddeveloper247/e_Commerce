@@ -6,15 +6,14 @@
 
 @section('content')
 
-
 <div>
     <div>
         <div class="p-md-4 p-3">
-            <form id="add_edit_category_form">
+            <form id="add_edit_admin_form">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Category</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Category Listing</li>
+                        <li class="breadcrumb-item"><a href="#">Contact</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Contact Listing</li>
                     </ol>
                 </nav>
                 <div class="row justify-content-center gx-0 gy-2 gap-4 mb-4">
@@ -25,7 +24,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2" id="activeRecord">{{ $categoryActive }}</span>
+                                <span class="fw-bold fs-2" id="active"></span>
                             </h3>
                             <small>Active</small>
                         </div>
@@ -37,7 +36,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2" id="inactiveRecord">{{ $categoryInactive }}</span>
+                                <span class="fw-bold fs-2" id="inactive"></span>
                             </h3>
                             <small>InActive</small>
                         </div>
@@ -49,14 +48,13 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2" id="totlaRecord">{{ $categoriesListingRecord->count()
-                                    }}</span>
+                                <span class="fw-bold fs-2" id="total"></span>
                             </h3>
                             <small>Total</small>
                         </div>
                     </div>
-                    <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3"
-                        data-bs-toggle="modal" data-bs-target="#filterModal">
+                    {{-- <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3"
+                        data-bs-toggle="modal" data-bs-target=".addUpdateContactModal">
                         <div class="d-flex flex-column align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 32 32">
                                 <path fill="currentColor"
@@ -64,22 +62,22 @@
                             </svg>
                             <small class="text-center">Add Now</small>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
-                <div id="products">
+                <div id="contact">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
-                        <table id="category-listing" class="table table-responsive">
+                        <table id="contact-listing" class="table table-responsive">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th class="text-nowrap" scope="col">NAME</th>
-                                    <th class="text-nowrap" scope="col">Description</th>
+                                    <th scope="col" data-sort="category">EMAIL</th>
                                     <th class="text-center" scope="col">STATUS</th>
                                     <th scope="col">CREATED AT</th>
                                     <th class="text-end" scope="col">ACTIONS</th>
                                 </tr>
                             </thead>
-                            <tbody id="category_listing_table_body">
+                            <tbody id="contact_listing_table_body">
                                 {{-- dYNAMIC DATA WILL BE INJECTED HERE --}}
                             </tbody>
                         </table>
@@ -89,12 +87,12 @@
         </div>
     </div>
 
-    <div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade filterModal addUpdateContactModal" id="filterModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border">
-                <form id="addUpdateCategory" autocomplete="off">
+                <form id="updateForm" autocomplete="off">
                     <div class="modal-header justify-content-between border-0 px-4 py-3">
-                        <h4 class="modal-title text-white">Add/Update</h4>
+                        <h4 class="modal-title text-white">Contact</h4>
                         <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
@@ -106,21 +104,50 @@
                     <div class="modal-body pt-4 pb-2 px-4">
                         <div class="row">
 
-                            <input type="hidden" name="category_id" id="category_id">
+                            <input type="hidden" name="contact_id" id="contact-id">
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="category_name" name="category_name"
+                                <input type="text" class="form-control" id="full_name" name="full_name"
                                     placeholder="name">
-                                <label class="mx-2" for="generalInfo">category name</label>
+                                <label class="mx-2" for="generalInfo">username</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="category_description"
-                                    name="category_description" placeholder="name">
-                                <label class="mx-2" for="generalInfo">category description</label>
+                                <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                    placeholder="">
+                                <label class="mx-2" for="generalInfo">phone number</label>
+                            </div>
+                            <div class="form-floating col-md-12 mb-3">
+                                <input type="email" class="form-control" id="email" name="email"
+                                    placeholder="name@example.com">
+                                <label class="mx-2" for="generalInfo">email</label>
+                            </div>
+                            <div class="form-floating col-md-12 mb-3">
+                                <input type="text" class="form-control" id="order_number" name="order_number"
+                                    placeholder="order number">
+                                <label class="mx-2" for="generalInfo">order number</label>
+                            </div>
+                            <div class="form-floating col-md-12 mb-3">
+                                <input type="text" class="form-control" id="company_name" name="company_name"
+                                    placeholder="company name">
+                                <label class="mx-2" for="generalInfo">company name</label>
+                            </div>
+                            <div class="form-floating col-md-12 mb-3">
+                                <input type="text" class="form-control" id="rma_number" name="rma_number"
+                                    placeholder="rma number">
+                                <label class="mx-2" for="generalInfo">rma number</label>
+                            </div>
+                            <div class="form-floating col-md-12 mb-3">
+                                <textarea type="text" class="form-control" id="comment" name="comment"
+                                    placeholder="comment"></textarea>
+                                <label class="mx-2" for="generalInfo">comment</label>
+                            </div>
+                            <div class="form-floating col-md-12 mb-3">
+                                <textarea type="text" class="form-control" id="reply" name="reply"
+                                    placeholder="reply"></textarea>
+                                <label class="mx-2" for="generalInfo">reply</label>
                             </div>
 
                             <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
-                                <input class="form-check-input" type="checkbox" role="switch" name="category_status"
-                                    id="category_status">
+                                <input class="form-check-input" type="checkbox" role="switch" name="status" id="status">
                                 <label class="form-check-label ms-2" for="status">status</label>
                             </div>
 
@@ -130,7 +157,7 @@
                         <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
                             Cancel
                         </button>
-                        <button class="btn btn-done px-4" type="button" id="editCategoryNow">Done</button>
+                        <button class="btn btn-done px-4" type="button" id="editContactNow">Done</button>
                     </div>
                 </form>
             </div>
@@ -138,8 +165,8 @@
     </div>
 
 
-    <div class="modal fade" id="confirmationModalCategory" tabindex="-1"
-        aria-labelledby="confirmationModalCategoryLabel" aria-hidden="true">
+    {{-- <div class="modal fade" id="confirmationModalRemove" tabindex="-1"
+        aria-labelledby="confirmationModalRemoveLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content text-center">
                 <div class="modal-header bg-danger text-white">
@@ -150,7 +177,7 @@
                 <div class="modal-body">
                     <div class="d-flex align-items-center justify-content-center my-4">
                         <h6 class="mb-0 me-2">Are Sure Want to Delete</h6>
-                        <input type="hidden" name="delete-id" id="delete-category-id">
+                        <input type="hidden" name="delete-id" id="delete-admin-id">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
                             <g fill="none">
                                 <path
@@ -167,15 +194,10 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </div>
 
-
-
-
-@endsection
-@push('scripts')
 <script>
     $('#exam-listing').DataTable({
         responsive: true,
@@ -188,5 +210,7 @@
         lengthMenu: [5, 10, 25, 50, 75, 100]
     });
 </script>
-<script src="{{asset('assets_admin/customjs/category_listing.js') }}"></script>
+@endsection
+@push('scripts')
+<script src="{{ asset('assets_admin/customjs/contact_us.js') }}"></script>
 @endpush
