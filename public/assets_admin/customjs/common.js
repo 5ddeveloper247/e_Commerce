@@ -117,33 +117,27 @@ $(document).ready(function () {
     });
 });
 
-ClassicEditor.create(document.querySelector("#editor")).catch((error) => {
-    console.error(error);
+const editors = [
+    "#editor",
+    "#editor2",
+    "#editor3",
+    "#editor4",
+    "#editor5",
+    "#editor6",
+    "#editor7",
+    "#editor8",
+    "#editor9"
+];
+
+editors.forEach(selector => {
+    const element = document.querySelector(selector);
+    if (element) {
+        ClassicEditor.create(element).catch((error) => {
+            console.error(error);
+        });
+    }
 });
-ClassicEditor.create(document.querySelector("#editor2")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor3")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor4")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor5")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor6")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor7")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor8")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor9")).catch((error) => {
-    console.error(error);
-});
+
 $(".add-statement-btn").on("click", function () {
     $(".add-statement").removeClass("d-none");
     // $(".add-option").addClass('d-none')
@@ -254,3 +248,12 @@ $(document).ready(function() {
       allowClear: true
     });
   });
+
+// To Clear Modal Pop Up Form On Add Click
+$(document).on('click', '.modal-btn', function () {
+    if($(this).attr('data-modal-type') == 'add') {
+        $('#filterModal').find('input').val('');
+        $('#filterModal').find('textarea').val('');
+        $('#filterModal').find('select').val(null).trigger('change');
+    }
+});

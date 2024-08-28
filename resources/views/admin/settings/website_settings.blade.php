@@ -13,40 +13,6 @@
                 <!-- Website Settings Section -->
                 <div class="section">
                     <h2>Website Settings</h2>
-                    <div class="row align-items-center">
-                        <!-- Upload Logo Section -->
-                        <div class="col-10 mb-3">
-                            <label for="logo" class="form-label fw-bold mb-2">Upload Logo</label>
-                            <div
-                                class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center p-2">
-                                <!-- Hidden file input for logo -->
-                                <input type="file" id="logo" name="logo" class="form-control d-none" accept="image/*">
-
-                                <!-- SVG Icon acting as button for uploading logo -->
-                                <svg onclick="document.getElementById('logo').click();"
-                                    xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                                    class="bi bi-upload text-primary cursor-pointer" viewBox="0 0 16 16">
-                                    <path
-                                        d="M.5 9.9a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4h-4a.5.5 0 0 1 0-1h4.5a.5.5 0 0 1 .5.5V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.9z" />
-                                    <path
-                                        d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V13.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 0 1-.708-.708l3-3z" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <!-- Logo Preview Section -->
-                        <div class="col-2 mt-4 p-3 d-flex justify-content-center align-items-center">
-                            <img class="logo-preview img-fluid border rounded-circle shadow-sm"
-                                style="width: 50px; height: 50px;"
-                                src="{{ url('/') . '/storage/' . @$siteSettings->logo }}" alt="Logo Preview"
-                                id="logo-preview">
-                        </div>
-                    </div>
-
-
-
-
-
                     <h4>Contact Links</h4>
                     <div class="row">
                         <div class="col-sm-6 mb-3">
@@ -87,6 +53,36 @@
                                 value="{{ @$siteSettings->sub_heading}}" placeholder="Enter website name">
 
                         </div>
+                    </div>
+                    <div class="row">
+                        <!-- Upload Logo Section -->
+                        <div class="col-4 mb-3">
+                            <label for="logo" class="form-label fw-bold mb-2">Upload Logo</label>
+                            <div
+                                class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center p-2">
+                                <!-- Hidden file input for logo -->
+                                <input type="file" id="logo" name="logo" class="form-control d-none" accept="image/*">
+
+                                <!-- SVG Icon acting as button for uploading logo -->
+                                <svg onclick="document.getElementById('logo').click();"
+                                    xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                    class="bi bi-upload text-primary cursor-pointer" viewBox="0 0 16 16">
+                                    <path
+                                        d="M.5 9.9a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4h-4a.5.5 0 0 1 0-1h4.5a.5.5 0 0 1 .5.5V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.9z" />
+                                    <path
+                                        d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V13.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 0 1-.708-.708l3-3z" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Logo Preview Section -->
+                        <div class="col-2 mt-4 p-3 d-flex justify-content-center align-items-center">
+                            <img class="logo-preview img-fluid border rounded-circle shadow-sm"
+                                style="width: 50px; height: 50px;"
+                                src="{{ url('/') . '/storage/' . @$siteSettings->logo }}" alt="Logo Preview"
+                                id="logo-preview">
+                        </div>
+
                         {{--Banner upload --}}
 
                         <div class="col-6 mb-3">
@@ -117,7 +113,6 @@
 
                             {{-- Banner Preview --}}
                         </div>
-
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
