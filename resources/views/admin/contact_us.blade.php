@@ -24,7 +24,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2"></span>
+                                <span class="fw-bold fs-2" id="active"></span>
                             </h3>
                             <small>Active</small>
                         </div>
@@ -36,7 +36,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2"></span>
+                                <span class="fw-bold fs-2" id="inactive"></span>
                             </h3>
                             <small>InActive</small>
                         </div>
@@ -48,13 +48,13 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2"></span>
+                                <span class="fw-bold fs-2" id="total"></span>
                             </h3>
                             <small>Total</small>
                         </div>
                     </div>
-                    <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3"
-                        data-bs-toggle="modal" data-bs-target="#addUpdateContactModal">
+                    {{-- <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3"
+                        data-bs-toggle="modal" data-bs-target=".addUpdateContactModal">
                         <div class="d-flex flex-column align-items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 32 32">
                                 <path fill="currentColor"
@@ -62,7 +62,7 @@
                             </svg>
                             <small class="text-center">Add Now</small>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div id="contact">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
@@ -87,12 +87,12 @@
         </div>
     </div>
 
-    <div class="modal fade filterModal" id="addUpdateContactModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade filterModal addUpdateContactModal" id="filterModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border">
-                <form id="addEventForm" autocomplete="off">
+                <form id="updateForm" autocomplete="off">
                     <div class="modal-header justify-content-between border-0 px-4 py-3">
-                        <h4 class="modal-title text-white">Contacts</h4>
+                        <h4 class="modal-title text-white">Contact</h4>
                         <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
@@ -147,8 +147,7 @@
                             </div>
 
                             <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
-                                <input class="form-check-input" type="checkbox" role="switch" name="admin_status"
-                                    id="admin_status">
+                                <input class="form-check-input" type="checkbox" role="switch" name="status" id="status">
                                 <label class="form-check-label ms-2" for="status">status</label>
                             </div>
 
@@ -166,8 +165,8 @@
     </div>
 
 
-    <div class="modal fade" id="confirmationModalRemove" tabindex="-1" aria-labelledby="confirmationModalRemoveLabel"
-        aria-hidden="true">
+    {{-- <div class="modal fade" id="confirmationModalRemove" tabindex="-1"
+        aria-labelledby="confirmationModalRemoveLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content text-center">
                 <div class="modal-header bg-danger text-white">
@@ -195,7 +194,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
 </div>
 

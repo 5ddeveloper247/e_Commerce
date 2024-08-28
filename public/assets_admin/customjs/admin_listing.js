@@ -104,7 +104,8 @@ $(document).ready(function () {
             // Uncomment and define this function if you want to reload the admin list data
             // loadJobsPageData();
 
-        } else {
+        }
+        else {
             // Error Handling
             let errorMessage = 'An error occurred. Please try again.';
 
@@ -122,7 +123,7 @@ $(document).ready(function () {
 
                 // Highlight the invalid fields
                 $.each(validationErrors, function (key, error) {
-                  
+
                     const inputField = $('[name="' + key + '"]');
 
                     inputField.addClass('is-invalid');
