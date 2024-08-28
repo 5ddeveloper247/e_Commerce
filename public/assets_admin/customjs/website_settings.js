@@ -179,16 +179,6 @@ $(document).ready(function () {
 
         const settingForm = document.getElementById('site_settings_form'); // get the jQuery object for the form
         var formData = new FormData(settingForm);
-        if (selectedFiles.length > 0) {
-            for (let i = 0; i < selectedFiles.length; i++) {
-                formData.append('property_photos[]', selectedFiles[i]);
-            }
-        } else {
-            formData.append('property_photos', '');
-        }
-
-
-
         const url = "/admin/site/settings/store";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', handleSiteSettingResponse, '', '#editAdminNow');
