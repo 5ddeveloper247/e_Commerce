@@ -98,7 +98,7 @@
             </div>
         </div> -->
     </div>
-    <div class="col-lg-6 px-md-0 d-lg-block d-none">
+    <div class="col-lg-6 px-md-0">
         <div class="swiper mySwiper10" id="hero-slider">
             <div class="swiper-wrapper">
                 <div class="swiper-slide">
@@ -236,7 +236,7 @@
         </div>
     </div>
     <!-- _______________________Counters_________________________ -->
-    <div class="counters mt-2">
+    <div class="counters mt-4">
         <div class="row">
             <div class="col-md-7 d-flex align-items-center">
                 <h2 class=" font-weight-bold pt-md-3 pt-1 mt-lg-3 mt-0">Explore Hundreds
@@ -314,17 +314,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -356,14 +346,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -376,17 +369,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -418,14 +401,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -438,17 +424,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -480,14 +456,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -501,17 +480,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -543,14 +512,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -563,17 +535,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -605,14 +567,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -625,17 +590,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -667,14 +622,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -687,17 +645,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -729,14 +677,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -804,7 +755,7 @@
         </div>
     </div>
     <!-- _______________________Our Mission Cards_________________________ -->
-    <div class="our-mission-cards-div mt-5">
+    <div class="our-mission-cards-div mt-4">
         <h3 class="main-headings position-relative text-start">
             Empowering businesses
             <div class="border-under-main-heading"></div>
@@ -861,17 +812,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -903,14 +844,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -923,17 +867,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -965,14 +899,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -985,17 +922,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1027,14 +954,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1048,17 +978,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1090,14 +1010,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1110,17 +1033,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1152,14 +1065,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1172,17 +1088,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1214,14 +1120,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1234,17 +1143,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1276,14 +1175,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1349,17 +1251,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1391,14 +1283,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1411,17 +1306,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1453,14 +1338,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1473,17 +1361,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1515,14 +1393,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1536,17 +1417,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1578,14 +1449,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1598,17 +1472,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1640,14 +1504,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1660,17 +1527,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1702,14 +1559,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1722,17 +1582,7 @@
                                     <path fill="#000" d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                                 </svg>
                             </button>
-                            <button class="btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
-                                    <g fill="#000">
-                                        <path d="M5.254 14.596a.5.5 0 0 1 .707-.707A5.5 5.5 0 0 0 15.35 10a.5.5 0 0 1 .999.001a6.5 6.5 0 0 1-11.096 4.596" />
-                                        <path d="M13.131 12.416a.5.5 0 0 1-.555-.832l3-2a.5.5 0 1 1 .555.832z" />
-                                        <path d="M18.266 12.723a.5.5 0 1 1-.832.554l-2-3a.5.5 0 0 1 .832-.554zm-3.912-7.518a.5.5 0 0 1-.708.707a5.5 5.5 0 0 0-9.389 3.89a.5.5 0 0 1-1-.001a6.5 6.5 0 0 1 11.097-4.596" />
-                                        <path d="M6.476 7.385a.5.5 0 0 1 .555.832l-3 2a.5.5 0 1 1-.555-.832z" />
-                                        <path d="M1.341 7.078a.5.5 0 1 1 .832-.554l2 3a.5.5 0 0 1-.832.554z" />
-                                    </g>
-                                </svg>
-                            </button>
+                           
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000" d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -1764,14 +1614,17 @@
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                 </svg>
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">Suscipit laboriosam nisi</p>
-                            <div class="price-and-btn">
-                                <h5 class="card-price">$12.99</h5>
-                                <button class="btn btn-add-to-cart">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
-                                </button>
+                           <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <div class="price-and-btn">
+                             <div class="d-flex justify-content-center card-price">
+                                <h5>$12.99</h5>
+                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                             </div>
+                            <button class="btn btn-add-to-cart">
+                                <span class="me-2">+</span>
+                                Add to Cart
+                            </button>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -1824,7 +1677,7 @@
         </div>
     </div>
     <!-- _______________________Latest Blogs Card Slider_________________________ -->
-    <div class="best-seller-cards-div mt-4">
+    <div class="best-seller-cards-div my-4">
         <h3 class="main-headings position-relative text-start">
             Latest Blogs
             <div class="border-under-main-heading"></div>

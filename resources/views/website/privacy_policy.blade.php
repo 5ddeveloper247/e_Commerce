@@ -6,7 +6,7 @@
 
 @section('content')
 
-<div class="container about-us py-5">
+<div class="container privacy-policy py-5">
 
     <div class="row">
         <div class="col-md-6 my-1">
@@ -16,7 +16,7 @@
             </h3>
         </div>
     </div>
-    <div class="privacy-section mt-5">
+    <div class="privacy-section mt-4">
         <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores sit nemo nisi deserunt reprehenderit totam quae, molestias tempora impedit facilis ratione, excepturi voluptatem quis sint nam consequatur perspiciatis. Veritatis pariatur non natus fuga quia sapiente, saepe fugit facere quam rem minima, quibusdam nam, maiores exercitationem quidem unde dolor? Repellendus, libero? Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad totam pariatur dolore fugiat voluptates praesentium amet cupiditate sapiente modi, tenetur voluptatibus natus molestias doloremque hic. Facilis, consequatur ad quis laboriosam consectetur blanditiis, ullam commodi voluptate neque quam dolorem accusantium reprehenderit vitae saepe libero suscipit nihil iure quo dignissimos. Atque, temporibus.</p>
         <h6 class="fw-bold">A. Collection of Information</h6>
         <p>The personal information that we collect from you, either directly or indirectly, will depend on how you interact with us and the Platform. Such personal information broadly falls into the following categories:</p>

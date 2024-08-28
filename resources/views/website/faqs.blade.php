@@ -9,9 +9,9 @@
 <div class="container faqs py-5">
 
     <div class="row">
-        <h3 class="main-headings position-relative text-start ps-0">
+        <h3 class="main-headings position-relative text-start ps-md-0">
             Frequently Asked Questions
-            <div class="border-under-main-heading"></div>
+            <div class="border-under-main-heading ms-3 ms-md-0"></div>
         </h3>
         <div class="accordion accordion-flush mt-5" id="accordionFlushExample">
             <div class="accordion-item">

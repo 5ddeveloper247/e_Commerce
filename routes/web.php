@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\RegisterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,16 @@ use App\Http\Controllers\ContactUsController;
 // Route::get('/', function () {
 //     return redirect('/admin/login');// view('welcome');
 // });
+
+// Route::get('/register', function () {
+//     return view('website.register');
+// });
+
+Route::get('/register', [RegisterController::class, 'register'])->name('register');
+Route::post('/getRegisterPageData', [RegisterController::class, 'getRegisterPageData'])->name('getRegisterPageData');
+Route::post('/getSpecificStates', [RegisterController::class, 'getSpecificStates'])->name('getSpecificStates');
+Route::post('/getSpecificCities', [RegisterController::class, 'getSpecificCities'])->name('getSpecificCities');
+Route::post('/addUserData', [RegisterController::class, 'saveUserData'])->name('addUserData');
 
 Route::group(['prefix' => 'admin'], function () {
 
@@ -87,12 +98,10 @@ Route::get('/', function () {
 Route::get('/product_detail', function () {
     return view('website.product_detail');
 });
-Route::get('/sign_in', function () {
-    return view('website.sign_in');
-});
-Route::get('/register', function () {
-    return view('website.register');
-});
+// Route::get('/sign_in', function () {
+//     return view('website.sign_in');
+// });
+
 Route::get('/cart', function () {
     return view('website.cart');
 });
@@ -106,9 +115,9 @@ Route::get('/contact_us', function () {
 Route::get('/about_us', function () {
     return view('website.about_us');
 });
-Route::get('/account', function () {
-    return view('website.account');
-});
+// Route::get('/account', function () {
+//     return view('website.account');
+// });
 Route::get('/checkout', function () {
     return view('website.checkout');
 });

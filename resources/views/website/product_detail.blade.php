@@ -31,7 +31,7 @@
         </div>
         <div class="col-md-7 my-1">
             <div class="d-flex justify-content-between">
-                <h5 class="product-title mb-0">Aspetur Autodit Autfugit</h5>
+                <h5 class="product-title mb-0">Aspetur Autodit Autfugittt</h5>
             </div>
             <hr class="mb-0">
             <p class="text-muted mt-2">Foodzone</p>
@@ -130,22 +130,304 @@
             </div>
         </div>
         <div class="border rounded-2 p-3 mt-5">
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav nav-tabs product-detail-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                     <button class="nav-link px-1 active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description-tab-pane" type="button" role="tab" aria-controls="description-tab-pane" aria-selected="true">Description</button>
                 </li>
-                <li class="nav-item mx-md-4" role="presentation">
+                <li class="nav-item mx-md-4 mx-3" role="presentation">
+                    <button class="nav-link px-1" id="specification-tab" data-bs-toggle="tab" data-bs-target="#specification-tab-pane" type="button" role="tab" aria-controls="specification-tab-pane" aria-selected="false">Specification</button>
+                </li>
+                <li class="nav-item mx-md-4 mx-3" role="presentation">
+                    <button class="nav-link px-1" id="features-tab" data-bs-toggle="tab" data-bs-target="#features-tab-pane" type="button" role="tab" aria-controls="features-tab-pane" aria-selected="false">Features</button>
+                </li>
+                <li class="nav-item mx-md-4 mx-3" role="presentation">
                     <button class="nav-link px-1" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews-tab-pane" type="button" role="tab" aria-controls="reviews-tab-pane" aria-selected="false">Reviews</button>
+                </li>
+                <li class="nav-item mx-md-4 mx-3" role="presentation">
+                    <button class="nav-link px-1" id="extras-tab" data-bs-toggle="tab" data-bs-target="#extras-tab-pane" type="button" role="tab" aria-controls="extras-tab-pane" aria-selected="false">Extras</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade py-3 show active" id="description-tab-pane" role="tabpanel" aria-labelledby="description-tab" tabindex="0">
                     <p class="mb-0">
-                        A seemingly simple dustpan with a few features to make life easier. The arch and length of the dustpan eases cleanup, the wood turned handle provides firm grip and the rubber liner along the edge of the scoop will retrieve small crumbs with a single swipe. A key ring at the top makes storage a cinch - hang it off a broom closet hook when not in use.
+                        Packaged Terminal Air Conditioners (Commonly known as PTAC) are ideal for application in hotels, motels and apartments, where the environment of a single zone, with an outside wall needs to be controlled. As the name implies, a single package contains all the components of an air-cooled (and often heated) refrigeration and air-handling system. The entire package is self contained. PTAC’s are designed for through-the-wall installation, with decorative outdoor grilles. PTAC units are also available with various heating options (Electrical or Heat-Pump). Since the heat-pump ambient temperature (15 degrees Fahrenheit) may provide certain limitations in many climates, the most popular models are equipped with electric heat. <br>
                         <br>
-                        <br>
-                        Dustpan Measures 45 cm/17.7 in
+                        Ramsond PTAC systems are easy and quick to install. They operate quietly. They are versatile and efficient and can be installed in variety of zones. They are integrated with the most reliable components available in the market. As such, they are backed by one of the best warranties in market. They are far more advanced than conventional air conditioning systems. Ramsond PTAC systems are not only sleek and stylish, but are super efficient and economical. For these and other reasons, Ramsond PTAC units have become the preferred choice of many HVAC professionals worldwide.
                     </p>
+                </div>
+                <div class="tab-pane fade py-3" id="specification-tab-pane" role="tabpanel" aria-labelledby="specification-tab" tabindex="0">
+                    <div class="row main-specifiaction-div">
+                        <div class="specification-first-table my-4">
+                            <div class="d-flex table-responsive">
+                                <table class="table table-custom">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="3" class="text-center">Model</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Feature</th>
+                                            <th>Specification</th>
+                                            <th>Unit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Power supply</td>
+                                            <td>Capacity</td>
+                                            <td>V/N/Hz</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cooling</td>
+                                            <td>Capacity</td>
+                                            <td>Btu/h</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>Power input</td>
+                                            <td>W</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>EER</td>
+                                            <td>Btu/h/w</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>IEER</td>
+                                            <td>Btu/h/w</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Heating</td>
+                                            <td>Capacity range</td>
+                                            <td>Btu/h</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>Power input</td>
+                                            <td>W</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>COP</td>
+                                            <td>W/W</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Indoor side performance</td>
+                                            <td>Air flow</td>
+                                            <td>CFM</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>Noise level</td>
+                                            <td>dB(A)</td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td>Optional E-heater</td>
+                                            <td>KW</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Compressor brand</td>
+                                            <td colspan="2"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Net dimension</td>
+                                            <td>WxDxH</td>
+                                            <td>inch</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Packing dimension</td>
+                                            <td>WxDxH</td>
+                                            <td>inch</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Net weight</td>
+                                            <td></td>
+                                            <td>LBS</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Gross weight</td>
+                                            <td></td>
+                                            <td>LBS</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Refrigerant</td>
+                                            <td>Charge volume</td>
+                                            <td>g/oz</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Qty per 20'/40'/40'/HQ</td>
+                                            <td></td>
+                                            <td>Set</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-custom ms-2">
+                                    <thead>
+                                        <tr>
+                                            <th>MYP -09ANVR1-C</th>
+                                            <th>MYP -12ANVR1-C</th>
+                                            <th>MYP -15ANVR1-C</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>208~230/1/60</td>
+                                            <td>208~230/1/60</td>
+                                            <td>208~230/1/60</td>
+                                        </tr>
+                                        <tr>
+                                            <td>9600/9400</td>
+                                            <td>12200/12000</td>
+                                            <td>15200/15000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>820/800</td>
+                                            <td>1065/1045</td>
+                                            <td>1400/1380</td>
+                                        </tr>
+                                        <tr>
+                                            <td>11.7/11.7</td>
+                                            <td>11.5/11.5</td>
+                                            <td>10.8/10.8</td>
+                                        </tr>
+                                        <tr>
+                                            <td>18.64</td>
+                                            <td>17.74</td>
+                                            <td>18.09</td>
+                                        </tr>
+                                        <tr>
+                                            <td>5250~11900</td>
+                                            <td>5300~14300</td>
+                                            <td>7000~17140</td>
+                                        </tr>
+                                        <tr>
+                                            <td>8800/8500</td>
+                                            <td>11900/11800</td>
+                                            <td>13800/13600</td>
+                                        </tr>
+                                        <tr>
+                                            <td>720/695</td>
+                                            <td>970/960</td>
+                                            <td>1170/1160</td>
+                                        </tr>
+                                        <tr>
+                                            <td>3.58/3.58</td>
+                                            <td>3.60/3.60</td>
+                                            <td>3.48/3.48</td>
+                                        </tr>
+                                        <tr>
+                                            <td>4070~11570</td>
+                                            <td>4140~13100</td>
+                                            <td>6600~14800</td>
+                                        </tr>
+                                        <tr>
+                                            <td>400/290</td>
+                                            <td>470/360</td>
+                                            <td>470/360</td>
+                                        </tr>
+                                        <tr>
+                                            <td>50/42</td>
+                                            <td>52/46</td>
+                                            <td>52/46</td>
+                                        </tr>
+                                        <tr>
+                                            <td>2.0/2.5/3.0</td>
+                                            <td>2.0/2.5/3.0/(3+2)</td>
+                                            <td>2.0/2.5/3.0/3.6/(3+2)</td>
+                                        </tr>
+                                        <tr>
+                                            <td>MITSUIBISHI</td>
+                                            <td>MITSUIBISHI</td>
+                                            <td>MITSUIBISHI</td>
+                                        </tr>
+                                        <tr>
+                                            <td>42x21x16</td>
+                                            <td>42x21x16</td>
+                                            <td>42x21x16</td>
+                                        </tr>
+                                        <tr>
+                                            <td>45x25x19</td>
+                                            <td>45x25x19</td>
+                                            <td>45x25x19</td>
+                                        </tr>
+                                        <tr>
+                                            <td>106</td>
+                                            <td>108</td>
+                                            <td>108</td>
+                                        </tr>
+                                        <tr>
+                                            <td>119</td>
+                                            <td>121</td>
+                                            <td>121</td>
+                                        </tr>
+                                        <tr>
+                                            <td>840/29.6</td>
+                                            <td>910/32.1</td>
+                                            <td>970/34.2</td>
+                                        </tr>
+                                        <tr>
+                                            <td>72/152/190</td>
+                                            <td>72/152/190</td>
+                                            <td>72/152/190</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="tab-pane fade py-3" id="features-tab-pane" role="tabpanel" aria-labelledby="features-tab" tabindex="0">
+                    <div class="container feature-section">
+                        <div class="row g-4 mt-2 align-items-center">
+                            <div class="col-md-6 feature-item d-flex">
+                                <div>
+                                    <h3 class="feature-title">High Energy Efficiency</h3>
+                                    <p class="feature-description">Efficient refrigeration design with EER up to 11.7 and COP up to 3.6, meeting the latest AHRI standard and DOE requirements.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <img src="https://store-6cihw.mybigcommerce.com/content/ebay/Closing%20Sales/ptac/pane.jpg" alt="AHRI Certified" class="img-fluid">
+                            </div>
+                        </div>
+                        <div class="row g-4 mt-2 align-items-center">
+                            <div class="col-md-6 text-center">
+                                <img src="https://cdn2.bigcommerce.com/server2800/u5behrs/content/products/AirConditioners/common/filterptac.jpg" alt="Silent Design Image" class="img-fluid">
+                            </div>
+                            <div class="col-md-6 feature-item d-flex">
+                                <div>
+                                    <h3 class="feature-title">Silent Design</h3>
+                                    <p class="feature-description">Optimized air discharge channel design with specialized blower wheel and efficient rotary compressor for lower noise levels.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-4 mt-2 align-items-center">
+                            <div class="col-md-6 feature-item d-flex">
+                                <div>
+                                    <h3 class="feature-title">Room Freeze Protection</h3>
+                                    <p class="feature-description">When the indoor room temperature has fallen to 50°F, the unit will cycle on the fan and run electric heating mode to raise the temperature to 55°F.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 feature-item d-flex">
+                                <div>
+                                    <h3 class="feature-title">Self Diagnostics</h3>
+                                    <p class="feature-description">Our units have a function of auto error check, and error codes will be shown on the electric display.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-4 mt-2 align-items-center">
+                            <div class="col-md-6 feature-item d-flex">
+                                <div>
+                                    <h3 class="feature-title">Easy Installation And Maintenance</h3>
+                                    <p class="feature-description">Indoor and outdoor sub assembly structure, integral type chassis structure, whole form air discharge channel, as well as sealed electric PCB box make installation and maintenance more convenient.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-center">
+                                <img src="https://store-6cihw.mybigcommerce.com/content/ebay/Closing%20Sales/ptac/remote.jpg" alt="Installation and Maintenance Image" class="feature-image">
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane fade py-3" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab" tabindex="0">
                     <h5>1 Review</h5>
@@ -173,6 +455,18 @@
                     <p><small>Posted by Jane Doe on 7th Dec 2016</small></p>
                     <hr>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel metus ac est egestas porta sed quis erat. Integer id nulla massa. Proin vitae enim nisi. Praesent non dignissim nulla. Nulla mattis id massa ac pharetra. Mauris et nisi in dolor aliquam sodales. Aliquam dui nisl, dictum quis leo sit amet, rutrum volutpat metus. Curabitur libero nunc, interdum ac libero non, tristique porttitor metus. Ut non dignissim lorem, in vestibulum leo. Vivamus sodales quis turpis eget.</p>
+                </div>
+                <div class="tab-pane fade py-3" id="extras-tab-pane" role="tabpanel" aria-labelledby="extras-tab" tabindex="0">
+                    <p>Each Ramsond 15000 BTU PTAC System will be shipped as a complete package. It will include:</p>
+                    <ul>
+                        <li>RAMSOND PTAC Unit Insert</li>
+                        <li>Wall Sleeve (off white color)</li>
+                        <li>Rear Outdoor Grill</li>
+                        <li>30 Amp LCDI Plug</li>
+                        <li><a href="#" class="operation-manual">Operation Manual</a></li>
+                        <li>1 Year Parts/5 Years Compressor Manufacturer Warranty</li>
+                    </ul>
+                    <p class="optional-note">(Optional Wireless Multifunction Digital Remote Control / Multifunction Digital Thermostat w/ Wiring Connection also available)</p>
                 </div>
             </div>
         </div>

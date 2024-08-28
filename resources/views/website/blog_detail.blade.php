@@ -35,7 +35,8 @@
                             <p class="card-text mb-2">
                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam tempore quos consequuntur eligendi, ad sit eum! Eos dolore, iure asperiores, odio incidunt optio, unde in voluptas fugit nulla est dolor! Lorem, ipsum dolor sit amet consectetur adipisicing elit. Porro, nulla iure soluta nobis enim aut. Obcaecati labore iure reprehenderit, minus dolore cumque dolorum provident veniam repellendus! Nam consequuntur perferendis blanditiis iusto quisquam?
                             </p>
-                            <a class="text-black" href="#"><small>Read More</small></a>
+                            <hr>
+                            <!-- <a class="text-black" href="#"><small>Read More</small></a> -->
                             <div class="d-flex align-items-center mt-3">
                                 <a href="#" class="text-decoration-none mx-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24">
