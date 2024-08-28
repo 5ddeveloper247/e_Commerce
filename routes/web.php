@@ -94,7 +94,7 @@ Route::group(['prefix' => '/'], function () {
         // Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
         
     });
-});
+}); 
 
 
 
