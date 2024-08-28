@@ -114,57 +114,56 @@ class RegisterController extends Controller
         
     }
 
-    // public function login(Request $request)
-    // {
-    //     $data['pageTitle'] = 'Login';
-    //     return view('admin/login')->with($data);
-    // }
+    public function login(Request $request)
+    {
+        $data['pageTitle'] = 'Login';
+        return view('website/sign_in')->with($data);
+    }
 
-    // public function loginSubmit(Request $request)
-    // {
-    //     $validatedData = $request->validate([
-    //         'email' => 'required|email|exists:users',
-    //     ]);
+    public function loginSubmit(Request $request)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
 
-    //     $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-    //     if (Auth::attempt($credentials)) {
-    //         $user = Auth::user();
-    //         if ($user->role == 1 || $user->role == 0) {
-    //             if ($user->status == 1) {
-    //                 $request->session()->put('user', $user);
-    //                 // Authentication passed...
-    //                 return redirect()->intended('/admin/dashboard');
-    //             } else {
-    //                 $request->session()->flash('error', 'The user is not active, please contact admin.');
-    //                 return redirect('/admin/login');
-    //             }
-    //         } else {
-    //             $request->session()->flash('error', 'The provided credentials do not match our records.');
-    //             return redirect('admin/login');
-    //         }
-    //     }
-    //     $request->session()->flash('error', 'The provided credentials do not match our records.');
-    //     return redirect('admin/login');
-    // }
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            if ($user->role == 2) {
+                if ($user->status == 1) {
+                    $request->session()->put('user', $user);
+                    // Authentication passed...
+                    return redirect()->intended('/home');
+                } else {
+                    $request->session()->flash('error', 'The user is not active, please contact admin.');
+                    return redirect('login');
+                }
+            } else {
+                $request->session()->flash('error', 'The provided credentials do not match our records.');
+                return redirect('login');
+            }
+        }
+        $request->session()->flash('error', 'The provided credentials do not match our records.');
+        return redirect('login');
+    }
 
-    // public function logout(Request $request)
-    // {
-    //     Auth::logout();
+    public function logout(Request $request)
+    {
+        Auth::logout();
 
-    //     $request->session()->invalidate();
+        $request->session()->invalidate();
 
-    //     $request->session()->regenerateToken();
+        $request->session()->regenerateToken();
 
-    //     return redirect('login');
-    // }
+        return redirect('login');
+    }
 
-    // public function dashboard(Request $request)
-    // {
-
-    //     $data['pageTitle'] = 'Dashboard';
-    //     return view('admin/dashboard')->with($data);
-    // }
+    public function home(Request $request)
+    {
+        $data['pageTitle'] = 'Dashboard';
+        return view('website.home')->with($data);
+    }
 
         
 

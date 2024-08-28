@@ -13,19 +13,32 @@
     </h3>
     <div class="row mt-5 justify-content-center align-items-center">
         <div class="col-md-5 my-1">
-            <form>
+            <form action="{{route('user.loginSubmit')}}" method="POST">
+                @csrf
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        {{session('error')}}
+                    </div>
+                @elseif($errors->any())
+                    <div class="alert alert-danger">
+                        @foreach ($errors->all() as $error)
+                            <p class="mb-0">{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Email address</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                    <label for="email">Email address</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                    <label for="password">Password</label>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <button class="btn btn-add-to-cart">
+                    <button type="submit" class="btn btn-add-to-cart">
                         Sign in
-                    </button> <a href="#" class="text-decoration-none text-black">Forgot your password?</a>
+                    </button> 
+                    <a href="javascript:;" class="text-decoration-none text-black">Forgot your password?</a>
                 </div>
             </form>
         </div>

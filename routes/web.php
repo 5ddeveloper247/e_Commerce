@@ -23,6 +23,7 @@ use App\Http\Controllers\RegisterController;
 // Route::get('/register', function () {
 //     return view('website.register');
 // });
+
 Route::get('/register', [RegisterController::class, 'register'])->name('register');
 Route::post('/getRegisterPageData', [RegisterController::class, 'getRegisterPageData'])->name('getRegisterPageData');
 Route::post('/getSpecificStates', [RegisterController::class, 'getSpecificStates'])->name('getSpecificStates');
@@ -70,6 +71,31 @@ Route::group(['prefix' => 'admin'], function () {
     });
 });
 
+Route::group(['prefix' => '/'], function () {
+
+    Route::get('/', [RegisterController::class, 'login'])->name('login');
+    Route::get('/login', [RegisterController::class, 'login'])->name('user.login');
+    Route::post('/loginSubmit', [RegisterController::class, 'loginSubmit'])->name('user.loginSubmit');
+    Route::get('/logout', [RegisterController::class, 'logout'])->name('user.logout');
+
+    Route::get('/home', [RegisterController::class, 'home'])->name('user.home');
+
+
+    Route::group(['middleware' => ['UserAuth']], function () {
+        /************** PAGE ROUTES ******************/
+        Route::get('/account', function () {
+            return view('website.account');
+        });
+        // Route::get('/home', [RegisterController::class, 'home'])->name('user.home');    
+        
+        
+
+        /************** AJAX ROUTES ******************/
+        // Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
+        
+    });
+});
+
 
 
 
@@ -79,9 +105,9 @@ Route::get('/', function () {
 Route::get('/product_detail', function () {
     return view('website.product_detail');
 });
-Route::get('/sign_in', function () {
-    return view('website.sign_in');
-});
+// Route::get('/sign_in', function () {
+//     return view('website.sign_in');
+// });
 
 Route::get('/cart', function () {
     return view('website.cart');
@@ -96,9 +122,9 @@ Route::get('/contact_us', function () {
 Route::get('/about_us', function () {
     return view('website.about_us');
 });
-Route::get('/account', function () {
-    return view('website.account');
-});
+// Route::get('/account', function () {
+//     return view('website.account');
+// });
 Route::get('/checkout', function () {
     return view('website.checkout');
 });
