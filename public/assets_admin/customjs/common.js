@@ -250,10 +250,12 @@ $(document).ready(function() {
   });
 
 // To Clear Modal Pop Up Form On Add Click
-$(document).on('click', '.modal-btn', function () {
-    if($(this).attr('data-modal-type') == 'add') {
-        $('#filterModal').find('input').val('');
-        $('#filterModal').find('textarea').val('');
-        $('#filterModal').find('select').val(null).trigger('change');
-    }
+$(document).on('click', '.modal-add-btn', function () {
+    resetModalForm('#filterModal');
 });
+
+function resetModalForm(selector = '#filterModal'){
+    $(selector).find('input').val('');
+    $(selector).find('textarea').val('');
+    $(selector).find('select').val(null).trigger('change');
+}

@@ -95,7 +95,7 @@
                                                 alt="">
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-auto flex-1 modal-btn" data-bs-toggle="modal"
+                                    <div class="col-12 col-sm-auto flex-1 modal-edit-btn" data-bs-toggle="modal"
                                         data-bs-target="#filterModal" data-modal-type="edit">
                                         <h3>{{ $user->username }}</h3>
                                         <p class="text-body-secondary">
