@@ -87,7 +87,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/contact/status/ajax', [ContactUsController::class, 'updateContactAjax'])->name('contact.update.status.ajax');
 
     });
-});
+}); 
 
 
 
