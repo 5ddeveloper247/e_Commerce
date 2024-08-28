@@ -147,9 +147,7 @@ $(document).ready(function () {
                 });
                 const form = document.getElementById('product_settings_form');
                 form.reset();
-
-                // Reset the form and hide the modal
-                window.location.reload();
+                InitiateOnLoad();
 
                 // Uncomment and define this function if you want to reload the admin list data
                 // loadJobsPageData();
@@ -374,7 +372,9 @@ $(document).ready(function () {
                 toastr.success(response.message, '', {
                     timeOut: 3000
                 });
+                $('.makedAsDiscounted').modal('hide');
                 InitiateOnLoad();
+                formData.reset();
                 //  $('.makedAsFeaturedConfirmationModel').hide();
             }
             else if (response.status === 422) {
@@ -428,6 +428,7 @@ $(document).ready(function () {
                 toastr.success(response.message, '', {
                     timeOut: 3000
                 });
+                $('.makedAsFeaturedConfirmationModel').modal('hide');
                 InitiateOnLoad();
                 //  $('.makedAsFeaturedConfirmationModel').hide();
             }

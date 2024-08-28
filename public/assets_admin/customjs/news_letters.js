@@ -83,6 +83,7 @@ $(document).ready(function () {
                 toastr.success(response.message, '', {
                     timeOut: 3000
                 })
+               
                 form.reset();
                 fetchInitalNewsListing();
             }

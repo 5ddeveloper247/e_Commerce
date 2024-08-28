@@ -78,8 +78,6 @@ $(document).ready(function () {
                 // Check if the request was successful
                 if (response.status == 200) {
                     let item = response.contact;
-                    console.log("item", item);
-
                     // Populate form fields with the retrieved data
                     $('#full_name').val(item.full_name);
                     $('#phone_number').val(item.phone_number);
@@ -114,8 +112,9 @@ $(document).ready(function () {
                 // Success: Display success message and reset form
                 toastr.success(response.message, '', {
                     timeOut: 3000
-                })
+                });
                 form.reset();
+                $('.addUpdateContactModal').modal('hide');
                 fetchInitalContactListing();
             }
             else {

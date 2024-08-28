@@ -1,18 +1,19 @@
 $(document).ready(function () {
 
+    fetchInitialLoad();
+    function fetchInitialLoad() {
+        const url = "/admin/admin/listing/ajax";
+        const type = "Get";
+        let data = {}; // Your data to send to the server here
+        SendAjaxRequestToServer(type, url, data, '', getAdminListing, '', '#contactReply_submit');
 
-    const url = "/admin/admin/listing/ajax";
-    const type = "Get";
-    let data = {}; // Your data to send to the server here
-    SendAjaxRequestToServer(type, url, data, '', getAdminListing, '', '#contactReply_submit');
+        function getAdminListing(response) {
 
-    function getAdminListing(response) {
-
-        console.log(response);
-        if (response.status == 200) {
-            let html = '';
-            response.admins.forEach((item, index) => {
-                html += `
+            console.log(response);
+            if (response.status == 200) {
+                let html = '';
+                response.admins.forEach((item, index) => {
+                    html += `
                     <tr>
                         <td class="ps-3">${index + 1}</td> <!-- Changed item.id to index + 1 -->
                         <td class="ps-3">${item.username}</td>
@@ -47,11 +48,12 @@ $(document).ready(function () {
                         </td>
                     </tr>
                 `;
-            });
+                });
 
-            $('#admin_listing_table_body').html(html);
+                $('#admin_listing_table_body').html(html);
+            }
+
         }
-
     }
 
     // Define additional functions for editing and removing admins
@@ -90,9 +92,10 @@ $(document).ready(function () {
                 timeOut: 3000
             });
             // Reset the form and hide the modal
-            $('#add_edit_admin_form').trigger("reset");
+            const form = document.getElementById('addEventForm');
+            form.reset();
             $("#filterModal").modal('hide');
-            window.location.reload();
+            fetchInitialLoad();
 
             // Uncomment and define this function if you want to reload the admin list data
             // loadJobsPageData();
@@ -162,7 +165,7 @@ $(document).ready(function () {
             toastr.success(response.message, '', {
                 timeOut: 3000
             })
-            location.reload();
+            fetchInitialLoad();
         }
         else {
             toastr.error('An error occurred. Please try again.', '', {
@@ -202,7 +205,7 @@ $(document).ready(function () {
             toastr.success(response.message, '', {
                 timeOut: 3000
             });
-            location.reload();
+            fetchInitialLoad();
         }
         else {
             toastr.error(response.message, '', {

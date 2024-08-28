@@ -31,7 +31,7 @@ $(document).ready(function () {
 
                     html += `
                         <tr>
-                            <td class="ps-3">${index+1}</td>
+                            <td class="ps-3">${index + 1}</td>
                             <td class="ps-3">${item.category_name}</td>
                             <td class="ps-3">${item.description}</td>
                             <td class="text-center">
@@ -107,8 +107,10 @@ $(document).ready(function () {
             });
 
             // Reset the form and hide the modal
-            $('#addEventForm').trigger("reset");
-            $("#filterModal").modal('hide');
+            const form = document.getElementById('addUpdateCategory');
+            form.reset();
+            $('.filterModal').modal('hide');
+
             getCategoriesOnLoad();
 
             // Uncomment and define this function if you want to reload the admin list data

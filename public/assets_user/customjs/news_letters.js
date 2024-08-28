@@ -13,8 +13,10 @@ $(document).ready(function () {
                 toastr.success(response.message, '', {
                     timeOut: 3000,
                 });
+               
                 $('#email').val('');
-            } else {
+            }
+            else {
                 // Error Handling
                 let errorMessage = 'An error occurred. Please try again.';
 
@@ -25,7 +27,6 @@ $(document).ready(function () {
                     // Validation errors
                     errorMessage = response.responseJSON.message || 'Validation failed.';
                     const validationErrors = response.responseJSON.errors || {};
-
                     // Highlight the invalid fields
                     $.each(validationErrors, function (key, error) {
                         const inputField = $('[name="' + key + '"]');
