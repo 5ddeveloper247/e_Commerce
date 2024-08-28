@@ -3,35 +3,104 @@ $(document).ready(function () {
 
     //handle hide show section of adding products and listings
     $('#productAddBtn').on('click', function () {
+        showAddEditForm();
+    });
+
+    function showAddEditForm() {
         $('#product_add_edit_section').removeClass('d-none');
         $('#product_add_edit_section').addClass('d-block');
         $('#product_listing_section').removeClass('d-block');
         $('#product_listing_section').addClass('d-none');
-    });
-
-
-    fetchCategories();
-    fetchBrands();
-    function fetchCategories() {
-        const url = "/admin/product/category/fetch/ajax";
-        const type = "Get";
-        SendAjaxRequestToServer(type, url, '', '', handleGetCategoryResponse, '', '#contactReply_submit');
-        function handleGetCategoryResponse(response) {
-            console.log(response);
-            console.log("cat");
-            if (response.status === 200) {
-                var html = '';
-                response.data.forEach(item => {
-                    html += `
-                        <option value="${item.id}">${item.category_name}</option>
-                    `;
-                });
-                $('#category_id').html(html);
-            } else {
-                console.error('Error fetching categories', response);
-            }
-        }
     }
+
+    function getProductsOnLoad() {
+        const url = "/admin/product/ajax";
+        const type = "Get";
+        let data = {}; // Your data to send to the server here
+        SendAjaxRequestToServer(type, url, data, '', getProductListingResponse, '', '#contactReply_submit');
+    }
+
+    function getProductListingResponse(response) {
+        $('#activeRecord').text(response.acitveProducts);
+        $('#inactiveRecord').text(response.inacitveProducts);
+        $('#totalRecord').text(response.total);
+        if (response.status == 200) {
+            let html = '';
+            response.products.forEach(item => {
+                // Determine the text for "Mark as Featured" based on the item's featured status
+                const featuredText = item.featured == 1 ? 'Marked as Unfeatured' : 'Marked as Featured';
+
+                html += `
+                    <tr>
+                        <td class="ps-3">${item.id}</td>
+                        <td class="ps-3">${item.product_name}</td>
+                        <td class="ps-3">${item.description}</td>
+                        <td class="text-center">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+                                       id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
+                            </div>
+                        </td>
+                        <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                        <td class="text-end">
+                            <div class="btn-reveal-trigger position-static">
+                                <button class="btn btn-sm dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                         data-prefix="fas" data-icon="ellipsis" role="img"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                        <path fill="currentColor"
+                                              d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                                       data-bs-target=".makedAsDiscounted" data-product-discounted='${JSON.stringify(item.id)}' id="handleMarkAsDiscountedBtn">Marked as Discounted</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                                       data-bs-target=".makedAsFeaturedConfirmationModel" data-product-featured-value='${item.featured}' data-product-featured='${JSON.stringify(item.id)}' id="handleMarkAsFeaturedBtn">${featuredText}</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" type="button"
+                                       data-edit-product='${JSON.stringify(item)}' id="handleEditProductBtn">Edit</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+                                       data-bs-target="#confirmationModalProduct" data-remove-product='${JSON.stringify(item)}' id="handleRemoveProductBtn">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            $('#product_listing_table_body').html(html);
+        }
+
+    }
+
+    function fetchCategories() {
+        $.ajax({
+            url: "/admin/product/category/fetch/ajax", // URL to fetch categories
+            type: "GET", // HTTP GET method
+            success: function (response) {
+                if (response.status === 200) {
+                    let html = ""; // Default placeholder option
+                    // let html = '<option value="">Select a category</option>'; // Default placeholder option
+                    response.data.forEach(item => {
+                        html += `<option value="${item.id}">${item.category_name}</option>`;
+                    });
+                    $("#category_id").html(html); // Update the select element with fetched categories
+                } else {
+                    console.error('Error fetching categories', response);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('AJAX Error:', textStatus, errorThrown);
+            }
+        });
+    }
+
+
 
     //fetch brands
     function fetchBrands() {
@@ -40,8 +109,6 @@ $(document).ready(function () {
         const data = {}
         SendAjaxRequestToServer(type, url, '', '', handleBrandResponse, '', '#contactReply_submit');
         function handleBrandResponse(response) {
-            console.log(response)
-            console.log("brand")
             if (response.status === 200) {
                 var html = '';
                 response.data.forEach(item => {
@@ -54,9 +121,15 @@ $(document).ready(function () {
                 console.error('Error fetching categories', response);
             }
         }
-    } 
+    }
 
-
+    function InitiateOnLoad() {
+        //fetch categories
+        fetchCategories();
+        fetchBrands();           //fetch brands
+        getProductsOnLoad(); //show listings
+    }
+    InitiateOnLoad();
 
 
     $('body').on('click', '#saveProductBtn', function () {
@@ -93,8 +166,8 @@ $(document).ready(function () {
                 if (response.status == 402) {
                     // Handle specific error status
                     errorMessage = response.message;
-                    console.log(response)
-                    console.log(errorMessage)
+
+
                 } else if (response.status == 422) {
                     // Validation errors
                     errorMessage = response.responseJSON.message || 'Validation failed.';
@@ -125,190 +198,270 @@ $(document).ready(function () {
     });
 
 
+    $('body').on('click', '#handleRemoveProductBtn', function () {
+        const item = JSON.parse($(this).attr('data-remove-product'));
+        $("#delete-product-id").val(item.id);
+    });
+
+    $('body').on('click', '#deleteNowBtn', function () {
+        const data = {
+            id: $('#delete-product-id').val(),
+        }
+        const formData = new FormData();
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                formData.append(key, data[key]);
+            }
+        }
+
+        const url = "/admin/product/delete/ajax";
+        const type = "POST";
+        SendAjaxRequestToServer(type, url, formData, '', removeProductResponse, '', '#deleteNowBtn');
+    })
+
+    function removeProductResponse(response) {
+
+        if (response.status == 200) {
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            })
+            InitiateOnLoad();
+        }
+        else {
+            toastr.error('An error occurred. Please try again.', '', {
+                timeOut: 3000
+            })
+        }
+    }
+
+
+
+
+    $('body').on('change', '.flexSwitchCheckChecked', function () {
+        const data = {
+            id: $(this).attr('id').split('flexSwitchCheckChecked')[1],
+
+            status: $(this).is(':checked') ? 1 : 0,
+        }
+
+        const formData = new FormData();
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                formData.append(key, data[key]);
+            }
+        }
+        const url = "/admin/product/status/ajax";
+        const type = "POST";
+        SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', '#flexSwitchCheckChecked');
+    });
+
+
+    function updateStatusResponse(response) {
+
+        if (response.status == 200) {
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+            InitiateOnLoad();
+        }
+        else {
+            toastr.error(response.message, '', {
+                timeOut: 3000
+            });
+        }
+
+    }
+
+
+
+    function fetchCategoryById(catId) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: "/admin/product/categoryById/fetch/ajax", // The URL to send the request to
+                type: "POST", // The HTTP method to use
+                data: { id: catId }, // The data to send with the request
+                success: function (response) { // Callback function on successful response
+                    if (response.status === 200) {
+                        resolve(response.category); // Resolve the Promise with the category data
+                    } else {
+                        reject('Failed to fetch category.'); // Reject the Promise with an error message
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) { // Callback function on error
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                    reject('Error fetching category data.'); // Reject the Promise with a general error message
+                }
+            });
+        });
+    }
+
+    function fetchBrandById(brandId) {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                url: "/admin/product/brandById/fetch/ajax", // The URL to send the request to
+                type: "POST", // The HTTP method to use
+                data: { id: brandId }, // The data to send with the request
+                success: function (response) { // Callback function on successful response
+                    if (response.status === 200) {
+                        resolve(response.brand); // Resolve the Promise with the brand data
+                    } else {
+                        reject('Failed to fetch brand.'); // Reject the Promise with an error message
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) { // Callback function on error
+                    console.error('AJAX Error:', textStatus, errorThrown);
+                    reject('Error fetching brand data.'); // Reject the Promise with a general error message
+                }
+            });
+        });
+    }
+
+
+    // Usage of fetchCategoryById and fetchBrandById
+    $('body').on('click', '#handleEditProductBtn', async function () {
+        try {
+            fetchCategories();
+            fetchBrands();
+            const item = JSON.parse($(this).attr('data-edit-product'));
+
+            // Fetch category and brand data asynchronously
+            const [category, brand] = await Promise.all([
+                fetchCategoryById(item.category_id),
+                fetchBrandById(item.brand_name)
+            ]);
+            console.log("category, brand", category, brand)
+            console.log(category.category_name)
+
+            // Populate the form fields with the product data
+            $('#product_id').val(item.id);
+            $('#sku').val(item.sku);
+            $('#category_id').val(category.category_name); // Assuming 'category_name' is the correct property
+            $('#brand_id').val(brand.title); // Assuming 'title' is the correct property
+            $('#product_name').val(item.product_name);
+            $('#model_name').val(item.model_name);
+            $('#price').val(item.price);
+            $('#discount_price').val(item.discount_price);
+            $('#weight').val(item.weight);
+            $('#onhand_qty').val(item.onhand_qty);
+            $('#description').val(item.description);
+
+            // Set the status checkbox
+            $('#status').prop('checked', item.status == 1);
+
+            // Show the modal for editing
+            showAddEditForm();
+        } catch (error) {
+            toastr.error('Failed to fetch category or brand data. Please try again.', '', {
+                timeOut: 3000
+            });
+        }
+    });
+
+
+
+    $('body').on('click', '#handleMarkAsDiscountedBtn', function () {
+        const discountedRecord = $(this).attr('data-product-discounted');
+
+        $('#discounted_id').val(discountedRecord);
+
+    })
+
+    $('body').on('click', '#addDiscountNowBtn', function () {
+        const formData = document.getElementById('markedDiscountedForm');
+        const data = new FormData(formData);
+        const url = "/admin/product/markAsDiscounted/ajax";
+
+        SendAjaxRequestToServer('POST', url, data, '', handleMarkAsDiscountedResponse, '', '#addDiscountNowBtn');
+
+        function handleMarkAsDiscountedResponse(response) {
+            var errorMessage = "";
+            if (response.status === 200) {
+                toastr.success(response.message, '', {
+                    timeOut: 3000
+                });
+                InitiateOnLoad();
+                //  $('.makedAsFeaturedConfirmationModel').hide();
+            }
+            else if (response.status === 422) {
+                // Handle validation errors
+                errorMessage = response.responseJSON.message;
+                toastr.error(errorMessage || 'An error occurred', '', {
+                    timeOut: 3000
+                });
+                const validationErrors = response.responseJSON.errors || {};
+                $.each(validationErrors, function (key, error) {
+                    const inputField = $('[name="' + key + '"]');
+                    inputField.addClass('is-invalid');
+                    // Display validation error message next to the input field
+
+                });
+            } else {
+                // Handle other errors
+                toastr.error(response.responseJSON.message || 'An error occurred', '', {
+                    timeOut: 3000
+                });
+            }
+        }
+    });
+
+
+
+    $('body').on('click', '#handleMarkAsFeaturedBtn', function () {
+        const discountedRecord = $(this).attr('data-product-featured');
+        const featuredVal = $(this).attr('data-product-featured-value');
+
+        $('#featured_id').val(discountedRecord);
+        if (featuredVal == 1) {
+
+            $("#featured_heading").text("Mark As Unfeatured Now")
+        }
+
+    })
+
+
+
+    $('body').on('click', '#featuredNowBtn', function () {
+        const formData = document.getElementById('markedAsFeaturedForm');
+        const data = new FormData(formData);
+        const url = "/admin/product/markAsFeatured/ajax";
+
+        SendAjaxRequestToServer('POST', url, data, '', handleMarkAsFeaturedResponse, '', '#addDiscountNowBtn');
+
+        function handleMarkAsFeaturedResponse(response) {
+            var errorMessage = "";
+            if (response.status === 200) {
+                toastr.success(response.message, '', {
+                    timeOut: 3000
+                });
+                InitiateOnLoad();
+                //  $('.makedAsFeaturedConfirmationModel').hide();
+            }
+            else if (response.status === 422) {
+                // Handle validation errors
+                errorMessage = response.responseJSON.message;
+                toastr.error(errorMessage || 'An error occurred', '', {
+                    timeOut: 3000
+                });
+                const validationErrors = response.responseJSON.errors || {};
+                $.each(validationErrors, function (key, error) {
+                    const inputField = $('[name="' + key + '"]');
+                    inputField.addClass('is-invalid');
+                    // Display validation error message next to the input field
+
+                });
+            } else {
+                // Handle other errors
+                toastr.error(response.responseJSON.message || 'An error occurred', '', {
+                    timeOut: 3000
+                });
+            }
+        }
+    });
 
 
 
 
 
-
-
-
-
-
-
-
-    // SendAjaxRequestToServer("Get", "/admin/site/settings/get", '', '', getSiteSettings, '');
-    // var files = [];
-
-    // function getSiteSettings(response) {
-    //     if (response.status === 200) {
-    //         // Process the response to populate the files array
-    //         response.settings.setting_files.forEach((file) => {
-    //             const imgdata = {
-    //                 id: file.id,
-    //                 name: base_url + '/storage/' + file.file_path
-    //             };
-    //             files.push(imgdata);
-    //         });
-
-    //         displayExistedFiles(); // Call to display the initial files
-    //     }
-    // }
-
-    // function removeExistedFiles(fileIndex) {
-    //     // Remove the file from the files array
-    //     const removedfile = files[fileIndex]; // Directly use fileIndex to get the file object
-    //     files.splice(fileIndex, 1); // Remove the file from the array
-
-    //     if (removedfile !== undefined) {
-    //         const url = "/admin/settings/file/remove";
-    //         const type = "POST";
-    //         const data = {
-    //             id: removedfile.id
-    //         };
-
-    //         // Ensure that AJAX settings are correct
-    //         $.ajax({
-    //             type: type,
-    //             url: url,
-    //             data: JSON.stringify(data),
-    //             contentType: "application/json; charset=utf-8",
-    //             dataType: "json",
-    //             success: function (response) {
-    //                 handleFileRemoveResponse(response);
-    //             },
-    //             error: function (error) {
-    //                 console.error("Error removing file:", error);
-    //             }
-    //         });
-    //     }
-
-    //     // Re-render the image container after removal
-    //     displayExistedFiles();
-    // }
-
-
-    // function handleFileRemoveResponse(response) {
-    //     if (response.status == 200) {
-    //         toastr.success(response.message, '', {
-    //             "timeOut": "3000"
-    //         })
-    //     }
-    //     else {
-    //         toastr.error(response.message, '', {
-    //             "timeOut": "3000"
-    //         })
-    //     }
-    // }
-
-    // function displayExistedFiles() {
-    //     const $imageContainerexisted = $('.image-container-existed');
-    //     $imageContainerexisted.empty(); // Clear previous images
-
-    //     files.forEach((file, index) => {
-    //         const $imageDiv = $('<div>').addClass('image-item-land');
-    //         const $image = $('<img>').attr('src', file.name);
-    //         $imageDiv.append($image);
-
-    //         const $fileName = $('<p>').text(file.name); // Display the file ID if needed
-    //         $imageDiv.append($fileName);
-
-    //         const $cancelButton = $('<span>').html('&times;').addClass('cancel-icon');
-    //         $cancelButton.on('click', function () {
-    //             removeExistedFiles(index); // Call remove function with the current index
-    //         });
-
-    //         $imageDiv.append($cancelButton);
-    //         $imageContainerexisted.append($imageDiv);
-    //     });
-    // }
-
-
-
-
-
-    // //logo handling started
-    // // JavaScript to dynamically preview the uploaded image
-    // document.getElementById('logo').addEventListener('change', function (event) {
-    //     const file = event.target.files[0]; // Get the selected file
-
-    //     if (file) {
-    //         const reader = new FileReader(); // Create a new FileReader object
-
-    //         // Define the onload event for the reader
-    //         reader.onload = function (e) {
-    //             // Set the src attribute of the image preview element
-    //             document.getElementById('logo-preview').src = e.target.result;
-    //         };
-
-    //         reader.readAsDataURL(file); // Read the file as a data URL
-    //     } else {
-    //         // If no file is selected, reset the src attribute to a default image
-    //         document.getElementById('logo-preview').src = "https://static.onecompiler.com/images/logo/oc_logo_v4_light.svg";
-    //     }
-    // });
-
-
-
-
-
-
-    // //logo handling ended
-    // $('#file-input').on('change', function (event) {
-    //     const files = event.target.files;
-    //     var allfileslength = files.length + selectedFiles.length;
-    //     if (allfileslength > 7) {
-    //         toastr.error('You can upload a maximum of 7 images.');
-    //         return;
-    //     }
-    //     $('.image-container-selected').empty();
-    //     // Validate and add selected files to selectedFiles array
-    //     for (let i = 0; i < files.length; i++) {
-    //         const file = files[i];
-    //         // Check if the file is an image
-    //         if (!file.type.startsWith('image/')) {
-    //             toastr.error('Please select only image files.');
-    //             continue;
-    //         }
-    //         selectedFiles.push(file);
-    //     }
-    //     // Update the display
-    //     displaySelectedFiles();
-    // });
-
-
-
-
-
-    // var selectedFiles = [];
-    // function displaySelectedFiles() {
-    //     const $imageContainerselected = $('.image-container-selected');
-    //     $imageContainerselected.empty(); // Clear previous images
-    //     selectedFiles.forEach((file, index) => {
-    //         const reader = new FileReader();
-    //         reader.onload = function (e) {
-    //             const $imageDiv = $('<div>').addClass('image-item-land'); const $image = $('<img>').attr('src', e.target.result);
-    //             $imageDiv.append($image);
-    //             const $fileName = $('<p>').text(file.name);
-    //             $imageDiv.append($fileName);
-    //             const $cancelButton = $('<span>').html('&times;').addClass('cancel-icon');
-    //             $cancelButton.on('click', function () {
-    //                 selectedFiles.splice(index, 1);
-    //                 displaySelectedFiles();
-    //             });
-
-    //             $imageDiv.append($cancelButton);
-    //             $imageContainerselected.append($imageDiv);
-    //         }
-    //         reader.readAsDataURL(file);
-    //     });
-    // }
-
-
-
-
-    //save settings
-    //site_settings_form
 
 
 

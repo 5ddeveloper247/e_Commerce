@@ -16,6 +16,7 @@ class Product extends Model
         'model_name',
         'price',
         'discount_price',
+        'featured',
         'weight',
         'onhand_qty',
         'description',
@@ -23,5 +24,6 @@ class Product extends Model
         'created_by',
         'updated_by',
         'deleted_by',
+
     ];
 }

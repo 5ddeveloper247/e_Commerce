@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('model_name')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->decimal('discount_price', 10, 2)->nullable();
+            $table->boolean('status')->default(true)->nullable()->comment('Status: 1 = active, 0 = inactive');
+            $table->integer('featured')->nullable()->comment('Status: 1 = active, 0 = inactive');
             $table->float('weight')->nullable()->comment('Weight in kg');
             $table->unsignedInteger('onhand_qty')->nullable(); // Stock is nullable now
             $table->text('description')->nullable();

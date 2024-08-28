@@ -122,8 +122,7 @@ $(document).ready(function () {
 
                 // Highlight the invalid fields
                 $.each(validationErrors, function (key, error) {
-                    console.log(error, key)
-                    console.log("error,key")
+                  
                     const inputField = $('[name="' + key + '"]');
 
                     inputField.addClass('is-invalid');
