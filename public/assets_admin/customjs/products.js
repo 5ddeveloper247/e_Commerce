@@ -135,6 +135,13 @@ $(document).ready(function () {
     $('body').on('click', '#saveProductBtn', function () {
         const saveForm = document.getElementById('product_settings_form'); // get the jQuery object for the form
         var formData = new FormData(saveForm);
+        // if (selectedFiles.length > 0) {
+        //     for (let i = 0; i < selectedFiles.length; i++) {
+        //         formData.append('banner_images[]', selectedFiles[i]);
+        //     }
+        // } else {
+        //     formData.append('banner_images', '');
+        // }
         const url = "/admin/product/store/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', handleProductSaveResponse, '', '#editAdminNow');

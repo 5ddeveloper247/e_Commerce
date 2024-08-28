@@ -145,7 +145,7 @@ $('#first_name, #last_name').on('keydown', function(e) {
     }
 });
 
-$('#phone_number, #zipcode').on('keydown', function(e) {
+$('#phone, #zipcode').on('keydown', function(e) {
     var key = e.keyCode || e.which;
     var char = String.fromCharCode(key);
     var controlKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete', 'Enter'];

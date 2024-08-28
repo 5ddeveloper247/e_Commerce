@@ -396,8 +396,7 @@ class AdminController extends Controller
             'website_name' => 'required|string|max:50',
             'banner_heading' => 'required|string|max:255',
             'sub_heading' => 'required|string|max:255',
-            'banner_images' => 'nullable|array',
-            'property_photos.*' => 'image|mimes:jpeg,png,ico|max:2048'
+            'banner_images.*' => 'image|mimes:jpeg,png,ico|max:2048',
         ]);
 
         try {
@@ -424,7 +423,7 @@ class AdminController extends Controller
                 }
 
                 // Handle banner images
-                if ($request->has('banner_images')) {
+                if ($request->hasFile('banner_images')) {
                     // Upload and save new photos
                     foreach ($request->banner_images as $photo) {
                         $photoName = time() . '_' . $photo->getClientOriginalName();

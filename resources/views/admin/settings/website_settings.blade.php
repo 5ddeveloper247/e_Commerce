@@ -13,16 +13,16 @@
                 <!-- Website Settings Section -->
                 <div class="section">
                     <h2>Website Settings</h2>
-                    <h4>Contact Links</h4>
+                    <h4>Contact Details</h4>
                     <div class="row">
                         <div class="col-sm-6 mb-3">
                             <label for="phone" class="form-label">Phone No</label>
-                            <input type="text" class="form-control" id="phone" value="{{ @$siteSettings->phone }}"
+                            <input type="number" class="form-control" id="phone" value="{{ @$siteSettings->phone }}"
                                 name="phone" placeholder="Enter contact links">
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="Email" class="form-label">Email</label>
-                            <input type="mail" class="form-control" id="email" name="email"
+                            <input type="email" class="form-control" id="email" name="email"
                                 value="{{ @$siteSettings->email }}" placeholder="Email">
                         </div>
                         <div class="col-sm-6 mb-3">
@@ -76,7 +76,7 @@
                         </div>
 
                         <!-- Logo Preview Section -->
-                        <div class="col-10 mt-4 p-3 d-flex justify-content-center align-items-center">
+                        <div class="col-10 mt-4 p-3 d-flex align-items-center">
                             <img 
                                 class="logo-preview img-fluid border rounded-circle shadow-sm"
                                 style="width: 50px; height: 50px;"
@@ -95,7 +95,7 @@
                             <div onclick="document.getElementById('file-input').click();" class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center" 
                                 style="height: 50px; cursor: pointer;">
                                 <!-- Adjusted height to provide space for centering -->
-                                <input type="file" id="file-input" class="form-control d-none" name="banner_images[]" accept="image/*" multiple aria-describedby="file-input-label">
+                                <input type="file" id="file-input" class="form-control d-none" name="banner_images" accept="image/*" aria-describedby="file-input-label">
                                 <!-- SVG Icon acting as button -->
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -109,7 +109,7 @@
                         </div>    
 
                         {{-- Banner Preview --}}
-                        <div class="col-10 mt-4 p-3 d-flex justify-content-center align-items-center">
+                        <div class="col-10 mt-4 p-3 d-flex align-items-center">
                             <div class="white image-container-existed mx-4" id="image-container"></div>
                             <div class="white image-container-selected mx-4" id="image-container"></div>
                         </div>
