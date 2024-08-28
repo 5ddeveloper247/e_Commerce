@@ -1,8 +1,8 @@
 <footer>
     <div class="main-footer border-end border-top toggle-button ">
         <div class="d-flex align-items-center p-md-3 p-2">
-            <p class="mb-0">Thank you for creating with EMS | 2024 ©</p>
-            <a class="mx-1" href="https://themewagon.com">EMS</a>
+            <p class="mb-0">Payee Shop | 2024 ©</p>
+            <a class="mx-1" href="https://themewagon.com">E commerce</a>
         </div>
     </div>
 </footer>

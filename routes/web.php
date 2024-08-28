@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\NewsLetterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/products', [ProductController::class, 'productIndex'])->name('admin.product.get');
         //contact us
         Route::get('/contactus', [ContactUsController::class, 'contactIndex'])->name('admin.contactus.index');
+        //news letter
+        Route::get('/newsletter', [NewsLetterController::class, 'newsletterIndex'])->name('admin.newsletter.index');
+
         /************** AJAX ROUTES ******************/
         Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
         Route::get('/user/listing/ajax', [AdminController::class, 'userListingAjax'])->name('user.listing.ajax');
@@ -85,8 +89,22 @@ Route::group(['prefix' => 'admin'], function () {
         //contact by id
         Route::post('/getcontact/ajax', [ContactUsController::class, 'getContactUsAjax'])->name('admin.getcontact.ajax');
         Route::post('/contact/status/ajax', [ContactUsController::class, 'updateContactAjax'])->name('contact.update.status.ajax');
+
+        //newsletter
+        Route::post('/newsletters/create/ajax', [NewsLetterController::class, 'newLetterCreate'])->name('admin.newsletter.create');
+        Route::get('/newletters/ajax', [NewsLetterController::class, 'newsLetterListing'])->name('admin.newsletter.list');
+        Route::post('/newsDelete/ajax', [NewsLetterController::class, 'newsletterDelete'])->name('admin.newsletter.delete');
     });
 });
+
+
+
+
+
+
+
+
+
 
 Route::group(['prefix' => '/'], function () {
 

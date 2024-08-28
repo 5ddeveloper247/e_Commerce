@@ -11,10 +11,10 @@ $(document).ready(function () {
         console.log(response);
         if (response.status == 200) {
             let html = '';
-            response.admins.forEach(item => {
+            response.admins.forEach((item, index) => {
                 html += `
                     <tr>
-                        <td class="ps-3">${item.id}</td>
+                        <td class="ps-3">${index + 1}</td> <!-- Changed item.id to index + 1 -->
                         <td class="ps-3">${item.username}</td>
                         <td class="ps-3">${item.email}</td>
                         <td class="text-center">
@@ -38,7 +38,7 @@ $(document).ready(function () {
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end">
                                     <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#filterModal" data-edit-admin='${JSON.stringify(item)}' id="handleEditAdminBtn">Edit</a>
+                                       data-bs-target=".filterModal" data-edit-admin='${JSON.stringify(item)}' id="handleEditAdminBtn">Edit</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
                                        data-bs-target="#confirmationModalRemove" data-remove-admin='${JSON.stringify(item)}' id="handleRemoveAdminBtn">Remove</a>
@@ -48,24 +48,22 @@ $(document).ready(function () {
                     </tr>
                 `;
             });
+
             $('#admin_listing_table_body').html(html);
         }
 
     }
 
-
     // Define additional functions for editing and removing admins
-
     $('body').on('click', '#handleEditAdminBtn', function () {
         const item = JSON.parse($(this).attr('data-edit-admin'));
         $('#admin_name').val(item.username);
         $('#admin_email').val(item.email);
         $('#admin_status').prop('checked', item.status == 1);
         $('#admin-id').val(item.id);
-    })
+    });
 
     $('body').on('click', '#editAdminNow', function () {
-
         const data = {
             id: $('#admin-id').val(),
             admin_name: $('#admin_name').val(),
@@ -80,14 +78,10 @@ $(document).ready(function () {
                 formData.append(key, data[key]);
             }
         }
-
-        console.log(...formData);
         const url = "/admin/admin/edit/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', updateAdminajaxResponse, '', '#editAdminNow');
     });
-
-
 
     function updateAdminajaxResponse(response) {
         if (response.status === 200) {
@@ -95,7 +89,6 @@ $(document).ready(function () {
             toastr.success(response.message, '', {
                 timeOut: 3000
             });
-
             // Reset the form and hide the modal
             $('#add_edit_admin_form').trigger("reset");
             $("#filterModal").modal('hide');
@@ -103,7 +96,6 @@ $(document).ready(function () {
 
             // Uncomment and define this function if you want to reload the admin list data
             // loadJobsPageData();
-
         }
         else {
             // Error Handling

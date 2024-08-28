@@ -5,7 +5,6 @@
 @endpush
 
 @section('content')
-
     <div>
         <div class="container py-5">
             <h2 class="fw-bold">Projects Dashboard</h2>
@@ -26,7 +25,6 @@
                         <small>Awating processing</small>
                     </div>
                 </div>
-
 
                 <div class="col d-flex justify-content-center gap-2 align-items-center d-card py-3 px-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 1024 1024">
@@ -57,7 +55,6 @@
                         <small>Soon to be cleared</small>
                     </div>
                 </div>
-
 
                 <div class="col d-flex justify-content-center gap-2 align-items-center d-card py-3 px-3">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 24 24">

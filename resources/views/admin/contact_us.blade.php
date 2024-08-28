@@ -71,6 +71,7 @@
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th class="text-nowrap" scope="col">NAME</th>
+                                    <th class="text-nowrap" scope="col">PHONE</th>
                                     <th scope="col" data-sort="category">EMAIL</th>
                                     <th class="text-center" scope="col">STATUS</th>
                                     <th scope="col">CREATED AT</th>

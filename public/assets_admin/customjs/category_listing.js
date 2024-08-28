@@ -21,18 +21,17 @@ $(document).ready(function () {
 
         function getCategoryListing(response) {
 
-
             $('#activeRecord').text(response.active);
             $('#inactiveRecord').text(response.inactive);
             $('#totlaRecrod').text(response.count);
             if (response.status == 200) {
                 let html = '';
-                response.category.forEach(item => {
+                response.category.forEach((item, index) => {
 
 
                     html += `
                         <tr>
-                            <td class="ps-3">${item.id}</td>
+                            <td class="ps-3">${index+1}</td>
                             <td class="ps-3">${item.category_name}</td>
                             <td class="ps-3">${item.description}</td>
                             <td class="text-center">
@@ -72,10 +71,6 @@ $(document).ready(function () {
     }
 
 
-
-
-
-
     $('body').on('click', '#handleEditCategoryBtn', function () {
         const item = JSON.parse($(this).attr('data-edit-category'));
         $('#category_name').val(item.category_name);
@@ -99,14 +94,10 @@ $(document).ready(function () {
                 formData.append(key, data[key]);
             }
         }
-
-        console.log(...formData);
         const url = "/admin/category/edit/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', updateCategoryjaxResponse, '', '#editAdminNow');
     });
-
-
 
     function updateCategoryjaxResponse(response) {
         if (response.status === 200) {
@@ -166,8 +157,6 @@ $(document).ready(function () {
         }
     }
 
-
-
     $('body').on('click', '#handleRemoveCategoryBtn', function () {
         const item = JSON.parse($(this).attr('data-remove-category'));
         $("#delete-category-id").val(item.id);
@@ -187,7 +176,7 @@ $(document).ready(function () {
         const url = "/admin/admin/category/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', removeCategoryResponse, '', '#deleteNowBtn');
-    })
+    });
 
     function removeCategoryResponse(response) {
         console.log(response);
@@ -203,8 +192,6 @@ $(document).ready(function () {
             })
         }
     }
-
-
 
     //update user status
     //update status
@@ -228,9 +215,6 @@ $(document).ready(function () {
         SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', '#flexSwitchCheckChecked');
     });
 
-
-
-
     function updateStatusResponse(response) {
         console.log('Status updated successfully');
         if (response.status == 200) {
@@ -247,4 +231,4 @@ $(document).ready(function () {
 
     }
 
-})
+});

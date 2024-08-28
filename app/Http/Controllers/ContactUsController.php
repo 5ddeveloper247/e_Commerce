@@ -95,11 +95,11 @@ class ContactUsController extends Controller
     }
 
 
-    public function updateContactAjax(Request $request){
+    public function updateContactAjax(Request $request)
+    { 
         $contact = ContactUs::find($request->id);
         $contact->update([
-           'status' => $request->status == "on"? 1 : 0,
-           'reply' => $request->reply,
+            'status' => $request->status == "1" ? 1 : 0,
         ]);
         return response()->json(['message' => 'Status updated successfully', 'status' => 200]);
     }

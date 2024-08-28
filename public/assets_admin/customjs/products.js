@@ -26,13 +26,13 @@ $(document).ready(function () {
         $('#totalRecord').text(response.total);
         if (response.status == 200) {
             let html = '';
-            response.products.forEach(item => {
+            response.products.forEach((item, index) => {
                 // Determine the text for "Mark as Featured" based on the item's featured status
                 const featuredText = item.featured == 1 ? 'Marked as Unfeatured' : 'Marked as Featured';
 
                 html += `
                     <tr>
-                        <td class="ps-3">${item.id}</td>
+                        <td class="ps-3">${index + 1}</td>
                         <td class="ps-3">${item.product_name}</td>
                         <td class="ps-3">${item.description}</td>
                         <td class="text-center">
@@ -135,13 +135,6 @@ $(document).ready(function () {
     $('body').on('click', '#saveProductBtn', function () {
         const saveForm = document.getElementById('product_settings_form'); // get the jQuery object for the form
         var formData = new FormData(saveForm);
-        // if (selectedFiles.length > 0) {
-        //     for (let i = 0; i < selectedFiles.length; i++) {
-        //         formData.append('property_photos[]', selectedFiles[i]);
-        //     }
-        // } else {
-        //     formData.append('property_photos', '');
-        // }
         const url = "/admin/product/store/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', handleProductSaveResponse, '', '#editAdminNow');
@@ -152,6 +145,8 @@ $(document).ready(function () {
                 toastr.success(response.message, '', {
                     timeOut: 3000
                 });
+                const form = document.getElementById('product_settings_form');
+                form.reset();
 
                 // Reset the form and hide the modal
                 window.location.reload();

@@ -40,7 +40,7 @@
     <div id="uiBlocker"
         style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:9999;">
         <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
-            <img src="{{ asset('assets_admin/images/ripple-spinner-trans.gif') }}" alt="Loading..."
+            <img src="{{ asset('assets_admin/images/Spinner_blue.svg') }}" alt="Loading..."
                 style="height:150px; width:150px;" />
         </div>
     </div>

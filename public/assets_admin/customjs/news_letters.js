@@ -1,31 +1,30 @@
 $(document).ready(function () {
 
 
-    fetchInitalContactListing();
-    function fetchInitalContactListing() {
-        const url = "/admin/contact/ajax";
+    fetchInitalNewsListing();
+    function fetchInitalNewsListing() {
+        const url = "/admin/newletters/ajax";
         const type = "Get";
-        SendAjaxRequestToServer(type, url, '', '', getInitialContactListingResponse, '', '');
-        contact_listing_table_body
-        function getInitialContactListingResponse(response) {
+        SendAjaxRequestToServer(type, url, '', '', getInitialNewListingResponse, '', '');
+        function getInitialNewListingResponse(response) {
+            console.log(response)
             if (response.status == 200) {
                 $('#active').text(response.active)
                 $('#inactive').text(response.inactive)
                 $('#total').text(response.total);
                 let html = '';
-                response.contacts.forEach((item, index) => {
+                response.newsletters.forEach((item, index) => {
+
+                    // edit has done already with working functuanlity is required then add thsese
+                    // below the remove button of the html which is created dynamically then the edit starts working
+                    //     <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                    //     data-bs-target=".addUpdateNewsModal" data-edit-newsletter='${JSON.stringify(item)}' id="handleEditAddBtn">Edit</a>
+                    //  <div class="dropdown-divider"></div>
+
                     html += `
                         <tr>
                             <td class="ps-3">${index + 1}</td>
-                            <td class="ps-3">${item.full_name}</td>
-                            <td class="ps-3">${item.phone_number}</td>
-                            <td class="ps-3">${item.email_address}</td>
-                            <td class="text-center">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
-                                           id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
-                                </div>
-                            </td>
+                            <td class="ps-3">${item.email}</td>
                             <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
                             <td class="text-end">
                                 <div class="btn-reveal-trigger position-static">
@@ -40,83 +39,52 @@ $(document).ready(function () {
                                         </svg>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                                           data-bs-target="#filterModal" data-edit-contact='${JSON.stringify(item.id)}' id="handleEditAddBtn">Edit</a>
-                                        <div class="dropdown-divider"></div>
 
+                                       <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+                                       data-bs-target="#confirmationModalRemove" data-remove-news='${JSON.stringify(item.id)}' id="handleRemoveNewsBtn">Remove</a>
                                     </div>
                                 </div>
                             </td>
                         </tr>
                     `;
                 });
-                $('#contact_listing_table_body').html(html);
+                $('#newsletter_listing_table_body').html(html);
+
+
             }
         }
     }
 
 
 
+
+
     $('body').on('click', '#handleEditAddBtn', function () {
-        const itemId = $(this).attr('data-edit-contact');
-        const type = "POST";
-        const url = "/admin/getcontact/ajax";
+        const item = JSON.parse($(this).attr('data-edit-newsletter'));
+        console.log(item)
 
-        // Define the data to send in the AJAX request
-        const data = {
-            id: itemId,  // Assuming 'id' is the expected parameter for the backend route
-            _token: $('meta[name="csrf-token"]').attr('content') // Include CSRF token for security
-        };
-
-        // Send AJAX request to the server
-        $.ajax({
-            type: type,
-            url: url,
-            data: data,
-            dataType: 'json',
-            success: function (response) {
-                // Check if the request was successful
-                if (response.status == 200) {
-                    let item = response.contact;
-                    console.log("item", item);
-
-                    // Populate form fields with the retrieved data
-                    $('#full_name').val(item.full_name);
-                    $('#phone_number').val(item.phone_number);
-                    $('#email').val(item.email_address);
-                    $('#order_number').val(item.order_number);
-                    $('#company_name').val(item.company_name);
-                    $('#rma_number').val(item.rma_number);
-                    $('#comment').val(item.comment);
-                    $('#status').prop('checked', item.status == 1);
-                    $('#contact-id').val(item.id);
-                }
-            },
-            error: function (xhr, status, error) {
-
-                toast.error('An error occurred while processing your request.', '', {
-                    time: 3000,
-                });
-            }
-        });
+        // Populate form fields with the retrieved data
+        $('#email').val(item.email);
+        $('#news-id').val(item.id);
     });
 
 
-    $('body').on('click', '#editContactNow', function () {
+    $('body').on('click', '#editNewsNow', function () {
 
         const form = document.getElementById('updateForm');
         const formData = new FormData(form);
-        const url = "/admin/contact/storeOrUpdate";
+        const url = "/admin/newsletters/create/ajax";
         const type = "Post";
         SendAjaxRequestToServer(type, url, formData, '', getUpdateResponse, '', '');
         function getUpdateResponse(response) {
+            console.log(response);
             if (response.status == 200) {
                 // Success: Display success message and reset form
                 toastr.success(response.message, '', {
                     timeOut: 3000
                 })
                 form.reset();
-                fetchInitalContactListing();
+                fetchInitalNewsListing();
             }
             else {
                 // Error Handling
@@ -153,46 +121,39 @@ $(document).ready(function () {
     });
 
 
+    $('body').on('click', '#handleRemoveNewsBtn', function () {
+        const item = $(this).attr('data-remove-news');
+        $("#delete-news-id").val(item);
+    });
 
-
-    //update status
-    $('body').on('change', '.flexSwitchCheckChecked', function () {
+    $('body').on('click', '#deleteNowBtn', function () {
         const data = {
-            id: $(this).attr('id').split('flexSwitchCheckChecked')[1],
-
-            status: $(this).is(':checked') ? 1 : 0,
+            id: $('#delete-news-id').val(),
         }
-        console.log(data);
         const formData = new FormData();
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
                 formData.append(key, data[key]);
             }
         }
-
-        const url = "/admin/contact/status/ajax";
+        const url = "/admin/newsDelete/ajax";
         const type = "POST";
-        SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', '#flexSwitchCheckChecked');
-    });
+        SendAjaxRequestToServer(type, url, formData, '', removeNewsResponse, '', '#deleteNowBtn');
+    })
 
-
-
-
-    function updateStatusResponse(response) {
-        console.log('Status updated successfully');
+    function removeNewsResponse(response) {
+        console.log(response);
         if (response.status == 200) {
             toastr.success(response.message, '', {
                 timeOut: 3000
-            });
+            })
             fetchInitalContactListing();
         }
         else {
-            toastr.error(response.message, '', {
+            toastr.error('An error occurred. Please try again.', '', {
                 timeOut: 3000
-            });
+            })
         }
-
     }
-
 
 });
