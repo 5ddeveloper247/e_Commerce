@@ -28,7 +28,7 @@ class ContactUsController extends Controller
             'rma_number' => 'required|string|max:255',
             'comment' => 'required|string|max:255',
             'status' => 'nullable',
-            'reply' =>   'required|string|max:255'
+            'reply' =>   'nullable|string|max:255'
         ]);
         // Check if 'contact_id' is present in the request
         if ($request->has('contact_id')) {
@@ -38,7 +38,7 @@ class ContactUsController extends Controller
             $contact->update([
                 $contact->full_name = $request->full_name,
                 'phone_number' => $request->phone_number,
-                'email' => $request->email,
+                'email_address' => $request->email,
                 'order_number' => $request->order_number,
                 'company_name' => $request->company_name,
                 'rma_number' => $request->rma_number,
@@ -52,7 +52,7 @@ class ContactUsController extends Controller
             ContactUs::create([
                 'full_name' => $request->full_name,
                 'phone_number' => $request->phone_number,
-                'email' => $request->email,
+                'email_address' => $request->email,
                 'order_number' => $request->order_number,
                 'company_name' => $request->company_name,
                 'rma_number' => $request->rma_number,
@@ -96,7 +96,7 @@ class ContactUsController extends Controller
 
 
     public function updateContactAjax(Request $request)
-    { 
+    {
         $contact = ContactUs::find($request->id);
         $contact->update([
             'status' => $request->status == "1" ? 1 : 0,
