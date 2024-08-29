@@ -1,6 +1,5 @@
 $(document).ready(function () {
-    
-    let existingFiles = [];
+    getProductsOnLoad();
 
     //handle hide show section of adding products and listings
     $('#productAddBtn').on('click', function () {
@@ -15,130 +14,110 @@ $(document).ready(function () {
     }
 
     function getProductsOnLoad() {
-        const url = "/admin/product/ajax";
-        const type = "Get";
-        let data = {}; // Your data to send to the server here
-        SendAjaxRequestToServer(type, url, data, '', getProductListingResponse, '', '#contactReply_submit');
-    }
-
-    function getProductListingResponse(response) {
-        $('#activeRecord').text(response.acitveProducts);
-        $('#inactiveRecord').text(response.inacitveProducts);
-        $('#totalRecord').text(response.total);
-        if (response.status == 200) {
-            let html = '';
-            response.products.forEach(item => {
-                // Determine the text for "Mark as Featured" based on the item's featured status
-                const featuredText = item.featured == 1 ? 'Marked as Unfeatured' : 'Marked as Featured';
-
-                html += `
-                    <tr>
-                        <td class="ps-3">${item.id}</td>
-                        <td class="ps-3">${item.product_name}</td>
-                        <td class="ps-3">${item.description}</td>
-                        <td class="text-center">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
-                                       id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
-                            </div>
-                        </td>
-                        <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
-                        <td class="text-end">
-                            <div class="btn-reveal-trigger position-static">
-                                <button class="btn btn-sm dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
-                                         data-prefix="fas" data-icon="ellipsis" role="img"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <path fill="currentColor"
-                                              d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                                       data-bs-target=".makedAsDiscounted" data-product-discounted='${JSON.stringify(item.id)}' id="handleMarkAsDiscountedBtn">Marked as Discounted</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                                       data-bs-target=".makedAsFeaturedConfirmationModel" data-product-featured-value='${item.featured}' data-product-featured='${JSON.stringify(item.id)}' id="handleMarkAsFeaturedBtn">${featuredText}</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" type="button"
-                                       data-edit-product='${JSON.stringify(item)}' id="handleEditProductBtn">Edit</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#confirmationModalProduct" data-remove-product='${JSON.stringify(item)}' id="handleRemoveProductBtn">Remove</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
-
-            $('#product_listing_table_body').html(html);
-        }
-
-    }
-
-    function fetchCategories() {
-        $.ajax({
-            url: "/admin/product/category/fetch/ajax", // URL to fetch categories
-            type: "GET", // HTTP GET method
-            success: function (response) {
-                if (response.status === 200) {
-                    let html = ""; // Default placeholder option
-                    // let html = '<option value="">Select a category</option>'; // Default placeholder option
-                    response.data.forEach(item => {
-                        html += `<option value="${item.id}">${item.category_name}</option>`;
-                    });
-                    $("#category_id").html(html); // Update the select element with fetched categories
-                } else {
-                    console.error('Error fetching categories', response);
-                }
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('AJAX Error:', textStatus, errorThrown);
-            }
-        });
-    }
-
-
-
-    //fetch brands
-    function fetchBrands() {
-        const url = "/admin/product/brand/fetch/ajax";
-        const type = "Get"
-        const data = {}
-        SendAjaxRequestToServer(type, url, '', '', handleBrandResponse, '', '#contactReply_submit');
-        function handleBrandResponse(response) {
-            if (response.status === 200) {
-                var html = '';
-                response.data.forEach(item => {
-                    html += `
-                        <option value="${item.id}">${item.title}</option>
-                    `;
-                });
-                $('#brand_id').html(html);
-            } else {
-                console.error('Error fetching categories', response);
-            }
-        }
-    }
-
-    function InitiateOnLoad() {
-        //fetch categories
-        fetchCategories();
-        fetchBrands();           //fetch brands
-        getProductsOnLoad(); //show listings
-    }
-    InitiateOnLoad();
-
-
-    $('body').on('click', '#saveProductBtn', function () {
-        const saveForm = document.getElementById('product_settings_form'); // get the jQuery object for the form
-        var formData = new FormData(saveForm);
-        const url = "/admin/product/store/ajax";
+        const url = "/admin/products/get";
         const type = "POST";
-        SendAjaxRequestToServer(type, url, formData, '', handleProductSaveResponse, '', '#editAdminNow');
+        var formData = new FormData();
+        formData.append('includeCategories', true);
+        formData.append('includeBrands', true);
+        formData.append('includeTotals', true);
+        SendAjaxRequestToServer(type, url, formData, '', getProductLoadResponse, '', '');
+    }
+
+    function getProductLoadResponse(response) {
+        if (response.status == 200) {
+            populateTotals(response)
+            populateListng(response.products);
+            populateCategories(response.categories);
+            populateBrands(response.brands);
+        }
+    }
+
+    function populateTotals(response){
+        if (response.activeProducts !== undefined && response.inactiveProducts !== undefined && response.total !== undefined) {
+            $('#activeRecord').text(response.activeProducts);
+            $('#inactiveRecord').text(response.inactiveProducts);
+            $('#totalRecord').text(response.total);
+        }
+    }
+
+    function populateListng(response){
+        let html = '';
+        response.forEach(item => {
+            // Determine the text for "Mark as Featured" based on the item's featured status
+            const featuredText = item.featured == 1 ? 'Marked as Unfeatured' : 'Marked as Featured';
+
+            html += `
+                <tr>
+                    <td class="ps-3">${item.id}</td>
+                    <td class="ps-3">${item.product_name}</td>
+                    <td class="ps-3">${item.description}</td>
+                    <td class="text-center">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+                                id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
+                        </div>
+                    </td>
+                    <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                    <td class="text-end">
+                        <div class="btn-reveal-trigger position-static">
+                            <button class="btn btn-sm dropdown-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                    data-prefix="fas" data-icon="ellipsis" role="img"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path fill="currentColor"
+                                        d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end">
+                                <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                                data-bs-target=".makedAsOffered" data-product-id='${JSON.stringify(item.id)}' id="handleMarkAsOfferedBtn">Marked as Offered</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                                data-bs-target=".makedAsFeaturedConfirmationModel" data-product-featured-value='${item.featured}' data-product-featured='${JSON.stringify(item.id)}' id="handleMarkAsFeaturedBtn">${featuredText}</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" type="button"
+                                data-edit-product='${JSON.stringify(item)}' id="handleEditProductBtn">Edit</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+                                data-bs-target="#confirmationModalProduct" data-remove-product='${JSON.stringify(item)}' id="handleRemoveProductBtn">Remove</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        });
+
+        $('#product_listing_table_body').html(html);
+    }
+
+    function populateCategories(response){
+        var html = '';
+        response.forEach(item => {
+            html += `
+                <option value="${item.id}">${item.category_name}</option>
+            `;
+        });
+        $('#category_id').html(html);
+    }
+
+    function populateBrands(response){
+        var html = '';
+        response.forEach(item => {
+            html += `
+                <option value="${item.id}">${item.title}</option>
+            `;
+        });
+        $('#brand_id').html(html);
+    }
+
+    // Global Function to Add or update product
+    function productUpdateStore(formData){
+        const url = "/admin/products/store";
+        const type = "POST";
+
+        SendAjaxRequestToServer(type, url, formData, '', handleProductSaveResponse, '', '');
 
         function handleProductSaveResponse(response) {
             if (response.status === 200) {
@@ -151,6 +130,8 @@ $(document).ready(function () {
 
                 $('.media-nav-item').removeClass('d-none');
                 $('.specifications-nav-item').removeClass('d-none');
+
+                populateTotals(response);
 
                 // Reset the form and hide the modal
                 // window.location.reload();
@@ -193,16 +174,31 @@ $(document).ready(function () {
                 });
             }
         }
+    }
 
+    // Add Product Details
+    $('body').on('click', '#saveProductBtn', function () {
+        const saveForm = document.getElementById('product_settings_form');
+        var formData = new FormData(saveForm);
+        productUpdateStore(formData);
+    });
+
+    // Product Status Change
+    $('body').on('change', '.flexSwitchCheckChecked', function () {
+        const formData = new FormData();
+        formData.append('product_id', $(this).attr('id').split('flexSwitchCheckChecked')[1]);
+        formData.append('status', $(this).is(':checked') ? 1 : 0);
+        formData.append('includeTotals', true);
+        productUpdateStore(formData);
     });
 
     $('body').on('click', '#saveProductAssetsBtn', function () {
         // Get the product ID from the hidden input field
         const productId = document.querySelector('input[name="product_id"]').value;
-    
+
         // Create a new FormData object
         var formData = new FormData();
-    
+
         // Append the product ID to the FormData
         formData.append('product_id', productId);
 
@@ -210,10 +206,10 @@ $(document).ready(function () {
         saveImages(formData, productId);
     });
 
-    function saveVideo(formData){
+    function saveVideo(formData) {
         const url = "/admin/product/store/video";
         const type = "POST";
-    
+
         formData.append('video_url', document.querySelector('input[name="video_url"]').value);
 
         SendAjaxRequestToServer(type, url, formData, '', handleProductVideoSaveResponse, '', '#saveProductAssetsBtn');
@@ -227,12 +223,12 @@ $(document).ready(function () {
             } else {
                 // Error Handling
                 let errorMessage = 'An error occurred. Please try again.';
-    
+
                 if (response.status == 422) {
                     // Validation errors
                     errorMessage = response.message || 'Validation failed.';
                     const validationErrors = response.errors || {};
-    
+
                     // Highlight the invalid fields
                     $.each(validationErrors, function (key, error) {
                         const inputField = $('[name="' + key + '"]');
@@ -244,7 +240,7 @@ $(document).ready(function () {
                     // Handle server error
                     errorMessage = response.message || 'Internal server error. Please contact support.';
                 }
-    
+
                 // Display error message
                 toastr.error(errorMessage, '', {
                     timeOut: 3000
@@ -253,7 +249,7 @@ $(document).ready(function () {
         }
     }
 
-    function saveImages(formData, productId){
+    function saveImages(formData, productId) {
         // Check if selected files are present and append them to the FormData
         if (selectedFiles && selectedFiles.length > 0) {
             for (let i = 0; i < selectedFiles.length; i++) {
@@ -265,15 +261,15 @@ $(document).ready(function () {
             toastr.error(errorMessage, '', {
                 timeOut: 3000
             });
-            
-            return false;            
+
+            return false;
         }
-    
+
         const url = "/admin/product/store/images";
         const type = "POST";
-    
+
         SendAjaxRequestToServer(type, url, formData, '', handleProductImagesSaveResponse, '', '#saveProductAssetsBtn');
-    
+
         function handleProductImagesSaveResponse(response) {
             if (response.success) {
                 // Success: Display success message and reset form
@@ -299,7 +295,7 @@ $(document).ready(function () {
                             };
                             files.push(imgdata);
                         });
-            
+
                         displayExistedFiles(); // Call to display the initial files
                     }
                 }
@@ -307,12 +303,12 @@ $(document).ready(function () {
             } else {
                 // Error Handling
                 let errorMessage = 'An error occurred. Please try again.';
-    
+
                 if (response.status == 422) {
                     // Validation errors
                     errorMessage = response.message || 'Validation failed.';
                     const validationErrors = response.errors || {};
-    
+
                     // Highlight the invalid fields
                     $.each(validationErrors, function (key, error) {
                         const inputField = $('[name="' + key + '"]');
@@ -324,7 +320,7 @@ $(document).ready(function () {
                     // Handle server error
                     errorMessage = response.message || 'Internal server error. Please contact support.';
                 }
-    
+
                 // Display error message
                 toastr.error(errorMessage, '', {
                     timeOut: 3000
@@ -361,60 +357,21 @@ $(document).ready(function () {
                 timeOut: 3000
             })
             InitiateOnLoad();
-        }
-        else {
+        } else {
             toastr.error('An error occurred. Please try again.', '', {
                 timeOut: 3000
             })
         }
     }
 
-
-
-
-    $('body').on('change', '.flexSwitchCheckChecked', function () {
-        const data = {
-            id: $(this).attr('id').split('flexSwitchCheckChecked')[1],
-
-            status: $(this).is(':checked') ? 1 : 0,
-        }
-
-        const formData = new FormData();
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                formData.append(key, data[key]);
-            }
-        }
-        const url = "/admin/product/status/ajax";
-        const type = "POST";
-        SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', '#flexSwitchCheckChecked');
-    });
-
-
-    function updateStatusResponse(response) {
-
-        if (response.status == 200) {
-            toastr.success(response.message, '', {
-                timeOut: 3000
-            });
-            InitiateOnLoad();
-        }
-        else {
-            toastr.error(response.message, '', {
-                timeOut: 3000
-            });
-        }
-
-    }
-
-
-
     function fetchCategoryById(catId) {
         return new Promise((resolve, reject) => {
             $.ajax({
                 url: "/admin/product/categoryById/fetch/ajax", // The URL to send the request to
                 type: "POST", // The HTTP method to use
-                data: { id: catId }, // The data to send with the request
+                data: {
+                    id: catId
+                }, // The data to send with the request
                 success: function (response) { // Callback function on successful response
                     if (response.status === 200) {
                         resolve(response.category); // Resolve the Promise with the category data
@@ -435,7 +392,9 @@ $(document).ready(function () {
             $.ajax({
                 url: "/admin/product/brandById/fetch/ajax", // The URL to send the request to
                 type: "POST", // The HTTP method to use
-                data: { id: brandId }, // The data to send with the request
+                data: {
+                    id: brandId
+                }, // The data to send with the request
                 success: function (response) { // Callback function on successful response
                     if (response.status === 200) {
                         resolve(response.brand); // Resolve the Promise with the brand data
@@ -494,49 +453,17 @@ $(document).ready(function () {
 
 
 
-    $('body').on('click', '#handleMarkAsDiscountedBtn', function () {
-        const discountedRecord = $(this).attr('data-product-discounted');
-
-        $('#discounted_id').val(discountedRecord);
-
+    $('body').on('click', '#handleMarkAsOfferedBtn', function () {
+        const discountedRecord = $(this).attr('data-product-id');
+        $('#product_id_offerd').val(discountedRecord);
     })
 
-    $('body').on('click', '#addDiscountNowBtn', function () {
-        const formData = document.getElementById('markedDiscountedForm');
-        const data = new FormData(formData);
-        const url = "/admin/product/markAsDiscounted/ajax";
-
-        SendAjaxRequestToServer('POST', url, data, '', handleMarkAsDiscountedResponse, '', '#addDiscountNowBtn');
-
-        function handleMarkAsDiscountedResponse(response) {
-            var errorMessage = "";
-            if (response.status === 200) {
-                toastr.success(response.message, '', {
-                    timeOut: 3000
-                });
-                InitiateOnLoad();
-                //  $('.makedAsFeaturedConfirmationModel').hide();
-            }
-            else if (response.status === 422) {
-                // Handle validation errors
-                errorMessage = response.responseJSON.message;
-                toastr.error(errorMessage || 'An error occurred', '', {
-                    timeOut: 3000
-                });
-                const validationErrors = response.responseJSON.errors || {};
-                $.each(validationErrors, function (key, error) {
-                    const inputField = $('[name="' + key + '"]');
-                    inputField.addClass('is-invalid');
-                    // Display validation error message next to the input field
-
-                });
-            } else {
-                // Handle other errors
-                toastr.error(response.responseJSON.message || 'An error occurred', '', {
-                    timeOut: 3000
-                });
-            }
-        }
+    $('body').on('click', '#addOfferedValueBtn', function () {
+        const formData = new FormData();
+        formData.append('product_id',$('#product_id_offerd').val());
+        formData.append('is_offered', 1);
+        formData.append('offered_percentage',$('#offered_percentage').val());
+        productUpdateStore(formData);
     });
 
 
@@ -560,7 +487,7 @@ $(document).ready(function () {
         const data = new FormData(formData);
         const url = "/admin/product/markAsFeatured/ajax";
 
-        SendAjaxRequestToServer('POST', url, data, '', handleMarkAsFeaturedResponse, '', '#addDiscountNowBtn');
+        SendAjaxRequestToServer('POST', url, data, '', handleMarkAsFeaturedResponse, '', '#addOfferedValueBtn');
 
         function handleMarkAsFeaturedResponse(response) {
             var errorMessage = "";
@@ -570,8 +497,7 @@ $(document).ready(function () {
                 });
                 InitiateOnLoad();
                 //  $('.makedAsFeaturedConfirmationModel').hide();
-            }
-            else if (response.status === 422) {
+            } else if (response.status === 422) {
                 // Handle validation errors
                 errorMessage = response.responseJSON.message;
                 toastr.error(errorMessage || 'An error occurred', '', {
@@ -592,6 +518,7 @@ $(document).ready(function () {
             }
         }
     });
+
 
 
 

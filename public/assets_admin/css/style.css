@@ -1253,3 +1253,29 @@ div.dt-container .dt-search input {
     width: 100%;
     margin-left: 0;
 }
+
+.popup-form-modal .modal-header {
+    background-color: #2fa992 !important;
+}
+
+.popup-form-modal .btn-done {
+    background-color: #2fa992 !important;
+    color: #fff;
+}
+
+.popup-form-modal .btn-done:hover {
+    background-color: #fff !important;
+    color: #2fa992;
+    border: 1px solid #2fa992;
+}
+
+.popup-form-modal .btn-cancel {
+    background-color: #fff !important;
+    color: #ff0000bd;
+    border: 1px solid #ff0000bd;
+}
+
+.popup-form-modal .btn-cancel:hover {
+    background-color: #ff0000bd !important;
+    color: #fff;
+}

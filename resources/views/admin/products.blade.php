@@ -211,47 +211,44 @@
     </div>
 </div>
 
+{{-- Mark as offered --}}
 
-
-{{-- _____marked as discounted_____ --}}
-<div class="modal fade makedAsDiscounted" id="filterModal" tabindex="-1" aria-hidden="true">
+<div class="modal fade makedAsOffered" id="filterModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content border">
-            <form id="markedDiscountedForm" autocomplete="off">
-                <div class="modal-header justify-content-between border-0 px-4 py-3">
-                    <h4 class="modal-title text-white">Marked As Discounted Price</h4>
-                    <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
-                            <path fill="currentColor"
-                                d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="modal-body pt-4 pb-2 px-4">
-                    <div class="row">
-                        <input type="hidden" name="discounted_id" id="discounted_id">
-                        <div class="col-md-12 mb-3">
-                            <!-- Label placed above the input -->
-                            <label class="form-label" for="discounted_value">Discount</label>
-                            <input class="form-control" type="number" name="discounted_value" id="discounted_value"
-                                placeholder="Percentage value  between 1 to 100" maxlength="3" min="1" max="100"
-                                autocomplete="off">
+            <div class="modal-header justify-content-between border-0 px-4 py-3">
+                <h4 class="modal-title text-white">Marked As Offered</h4>
+                <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
+                        <path fill="currentColor"
+                            d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body pt-4 pb-2 px-4">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <!-- Label placed above the input -->
+                        <input type="hidden" name="product_id" id="product_id_offerd">
+                        <label class="form-label" for="offered_percentage">Offer Percentage</label>
+                        <input class="form-control" type="number" name="offered_percentage" id="offered_percentage"
+                            placeholder="Percentage value  between 1 to 100" maxlength="3" min="1" max="100"
+                            autocomplete="off">
 
-                        </div>
                     </div>
                 </div>
-                <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
-                    <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
-                        Cancel
-                    </button>
-                    <button class="btn btn-done px-4" type="button" id="addDiscountNowBtn">Done</button>
-                </div>
-            </form>
+            </div>
+            <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
+                <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    Cancel
+                </button>
+                <button class="btn btn-done px-4" type="button" id="addOfferedValueBtn">Done</button>
+            </div>
         </div>
     </div>
 </div>
 
-{{-- _____marked as discounted_____ --}}
+{{-- Mark as offered --}}
 
 
 {{-- marked as feature --}}

@@ -1,23 +1,9 @@
 <div class="tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
-
-    <div class="row justify-content-center gx-0 gy-2 gap-4 mb-4 add-specifications">
-        <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3">
-            <div class="d-flex flex-column align-items-center">
-                <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 32 32">
-                    <path fill="currentColor"
-                        d="M16 3C8.832 3 3 8.832 3 16s5.832 13 13 13s13-5.832 13-13S23.168 3 16 3m0 2c6.087 0 11 4.913 11 11s-4.913 11-11 11S5 22.087 5 16S9.913 5 16 5m-1 5v5h-5v2h5v5h2v-5h5v-2h-5v-5z" />
-                </svg>
-                <small class="text-center">Add Now</small>
-            </div>
-        </div>
-    </div>
-
-    <div class="px-4 py-4 bg-white shadow table-container table-container">
+    <div class="mt-4 px-4 py-4 bg-white shadow table-container table-container">
         <table id="specifications-listing" class="table table-responsive">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th class="text-nowrap" scope="col">MODEL NAME</th>
                     <th class="text-nowrap" scope="col">FEATURE</th>
                     <th class="text-center" scope="col">SPECIFICATION</th>
                     <th class="text-center" scope="col">UNIT</th>
@@ -31,51 +17,10 @@
         </table>
     </div>
 
-    <form id="product_specifications_form">
-        <!-- Product Details -->
-        <div class="section">
-            <h2>Product Specifications</h2>
-            <div class="row">
-                <div class="col-sm-6 mb-3">
-                    <label for="model-name" class="form-label">Model Name</label>
-                    <input type="text" class="form-control" id="model-name" name="model_name"
-                        placeholder="Enter Model Name">
-                </div>
-
-                <div class="col-sm-6 mb-3">
-                    <label for="specification" class="form-label">Feature</label>
-                    <input type="text" class="form-control" id="specification" name="specification"
-                        placeholder="Enter Feature Name">
-                </div>
-
-                <div class="col-sm-6 mb-3">
-                    <label for="subspecification" class="form-label">Specification</label>
-                    <input type="text" class="form-control" id="subspecification" name="sub_specification"
-                        placeholder="Enter Feature Specification">
-                </div>
-
-                <div class="col-sm-6 mb-3">
-                    <label for="unit" class="form-label">Unit</label>
-                    <input type="text" class="form-control" id="unit" name="unit" placeholder="Enter Feature Unit">
-                </div>
-
-                <div class="col-sm-6 mb-3">
-                    <label for="value" class="form-label">Value</label>
-                    <input type="text" class="form-control" id="value" name="value"
-                        placeholder="Enter Feature Unit Value">
-                </div>
-            </div>
-        </div>
-        <div class="d-flex justify-content-center mt-4">
-            <button type="button" id="saveProductBtn" class="btn theme-btn-outline btn-lg px-md-5">Save
-                Specifications</button>
-        </div>
-    </form>
-
-    <div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade popup-form-modal" id="add-specififcation-modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border">
-                <form id="addUpdateCategory" autocomplete="off">
+                <form id="add-specification-form" autocomplete="off">
                     <div class="modal-header justify-content-between border-0 px-4 py-3">
                         <h4 class="modal-title text-white">Add/Update</h4>
                         <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal"
@@ -89,38 +34,33 @@
                     <div class="modal-body pt-4 pb-2 px-4">
                         <div class="row">
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="category_name" name="category_name"
-                                    placeholder="name">
-                                <label class="mx-2" for="generalInfo">category name</label>
+                                <input type="text" class="form-control" id="specification" name="specification" placeholder="Enter Feature">
+                                <label class="mx-2" for="specification">Feature</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="category_description"
-                                    name="category_description" placeholder="name">
-                                <label class="mx-2" for="generalInfo">category description</label>
+                                <input type="text" class="form-control" id="sub-specification" name="sub_specification" placeholder="Enter Specification">
+                                <label class="mx-2" for="sub-specification">Specification</label>
                             </div>
-
-                            <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
-                                <input class="form-check-input" type="checkbox" role="switch" name="category_status"
-                                    id="category_status">
-                                <label class="form-check-label ms-2" for="status">status</label>
+                            <div class="form-floating col-md-12 mb-3">
+                                <input type="text" class="form-control" id="unit" name="unit" placeholder="Enter Unit">
+                                <label class="mx-2" for="unit">Unit</label>
                             </div>
-
+                            <div class="form-floating col-md-12 mb-3">
+                                <input type="text" class="form-control" id="value" name="value" placeholder="Enter Value">
+                                <label class="mx-2" for="value">Value</label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
                         <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
                             Cancel
                         </button>
-                        <button class="btn btn-done px-4" type="button" id="editCategoryNow">Done</button>
+                        <button class="btn btn-done px-4" type="button" id="addSpecification">Done</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-
-
-
 
     <div class="modal fade" id="confirmationModalProduct" tabindex="-1" aria-labelledby="confirmationModalProductLabel"
         aria-hidden="true">
@@ -134,7 +74,7 @@
                 <div class="modal-body">
                     <div class="d-flex align-items-center justify-content-center my-4">
                         <h6 class="mb-0 me-2">Are Sure Want to Delete</h6>
-                        <input type="hidden" name="delete-id" id="delete-product-id">
+                        <input type="hidden" name="delete-id" id="delete-specification-id">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
                             <g fill="none">
                                 <path
@@ -153,3 +93,231 @@
         </div>
     </div>
 </div>
+
+<script>
+    function initializeSpecificationsDatatable(){
+        $('#specifications-listing').DataTable({
+            responsive: true,
+            dom: 'Bfrtip',
+            pageLength: 10,
+            buttons: [],
+            lengthMenu: [5, 10, 25, 50, 75, 100]
+        });
+    }
+    initializeSpecificationsDatatable();
+
+    $('#saveProductmodel').on('click', function () {
+        const url = "/admin/product/store/model";
+        const type = "POST";
+        var formData = new FormData();
+
+        productId = document.querySelector('input[name="product_id"]').value;
+        modelName = document.querySelector('input[name="model_name"]').value;
+
+        // Append the product ID & model name to the FormData
+        formData.append('product_id', productId);
+        formData.append('model_name', modelName);
+
+        SendAjaxRequestToServer(type, url, formData, '', getProductAddModelResponse, '', '#saveProductmodel');
+    });
+
+    function getProductAddModelResponse(response) {
+        if (response.success) {
+            // Success: Display success message and reset form
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+        } else {
+            // Error Handling
+            let errorMessage = 'An error occurred. Please try again.';
+
+            if (response.status == 422) {
+                // Validation errors
+                errorMessage = response.message || 'Validation failed.';
+                const validationErrors = response.errors || {};
+
+                // Highlight the invalid fields
+                $.each(validationErrors, function (key, error) {
+                    const inputField = $('[name="' + key + '"]');
+                    inputField.addClass('is-invalid');
+                    // Optionally, show error messages next to each field
+                    // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
+                });
+            } else if (response.status === 500) {
+                // Handle server error
+                errorMessage = response.message || 'Internal server error. Please contact support.';
+            }
+
+            // Display error message
+            toastr.error(errorMessage, '', {
+                timeOut: 3000
+            });
+        }
+    }
+
+    $('#addSpecification').on('click', function () {
+        const url = "/admin/product/store/specification";
+        const type = "POST";
+
+        var formData = new FormData();
+
+        productId = document.querySelector('input[name="product_id"]').value;
+        specification = document.querySelector('input[name="specification"]').value;
+        subspecification = document.querySelector('input[name="sub_specification"]').value;
+        unit = document.querySelector('input[name="unit"]').value;
+        value = document.querySelector('input[name="value"]').value;
+
+        // Append the product ID & model name to the FormData
+        formData.append('product_id', productId);
+        formData.append('specification', specification);
+        formData.append('sub_specification', subspecification);
+        formData.append('unit', unit);
+        formData.append('value', value);
+
+        SendAjaxRequestToServer(type, url, formData, '', getProductAddSpecificationResponse, '', '');
+    });
+
+    function getProductAddSpecificationResponse(response) {
+        if (response.success) {
+            // Success: Display success message and reset form
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+
+            // Reset Datatable
+            $('#specifications-listing').DataTable().clear().destroy();
+            // Populate with new markup
+            getProductSpecificationsListingResponse(response);
+            // Reinitialize datatable with new data
+            initializeSpecificationsDatatable();
+
+            
+        } else {
+            // Error Handling
+            let errorMessage = 'An error occurred. Please try again.';
+
+            if (response.status == 422) {
+                // Validation errors
+                errorMessage = response.message || 'Validation failed.';
+                const validationErrors = response.errors || {};
+
+                // Highlight the invalid fields
+                $.each(validationErrors, function (key, error) {
+                    const inputField = $('[name="' + key + '"]');
+                    inputField.addClass('is-invalid');
+                    // Optionally, show error messages next to each field
+                    // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
+                });
+            } else if (response.status === 500) {
+                // Handle server error
+                errorMessage = response.message || 'Internal server error. Please contact support.';
+            }
+
+            // Display error message
+            toastr.error(errorMessage, '', {
+                timeOut: 3000
+            });
+        }
+    }
+
+    function getSpecifications() {
+        const url = "/admin/product/get/specifications";
+        const type = "POST";
+        productId = document.querySelector('input[name="product_id"]').value;
+        let data = {
+            product_id: productId
+        };
+        SendAjaxRequestToServer(type, url, data, '', getProductSpecificationsListingResponse, '', '');
+    }
+
+    function getProductSpecificationsListingResponse(response) {
+        if (response.status == 200) {
+            let html = '';
+            response.productSpecifications.forEach(item => {
+                html += `
+                    <tr>
+                        <td class="ps-3">${item.id}</td>
+                        <td class="ps-3">${item.specification}</td>
+                        <td class="ps-3">${item.sub_specification}</td>
+                        <td class="ps-3">${item.key}</td>
+                        <td class="ps-3">${item.value}</td>
+                        <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                        <td class="text-end">
+                            <div class="btn-reveal-trigger position-static">
+                                <button class="btn btn-sm dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                         data-prefix="fas" data-icon="ellipsis" role="img"
+                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                        <path fill="currentColor"
+                                              d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                        </path>
+                                    </svg>
+                                </button>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <a class="dropdown-item" type="button"
+                                       data-specification-edit='${JSON.stringify(item)}' id="handleEditSpecificationBtn">Edit</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+                                       data-bs-target="#confirmationModalProduct" data-remove-product='${JSON.stringify(item)}' id="handleRemoveSpecificationBtn">Remove</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            $('#specifications_table_body').html(html);
+        }
+    }
+
+    $('#saveProductmodel').on('click', function () {
+        const url = "/admin/product/store/model";
+        const type = "POST";
+        var formData = new FormData();
+
+        productId = document.querySelector('input[name="product_id"]').value;
+        modelName = document.querySelector('input[name="model_name"]').value;
+
+        // Append the product ID & model name to the FormData
+        formData.append('product_id', productId);
+        formData.append('model_name', modelName);
+
+        SendAjaxRequestToServer(type, url, formData, '', getProductAddModelResponse, '', '#saveProductmodel');
+    });
+
+    function getProductAddModelResponse(response) {
+        if (response.success) {
+            // Success: Display success message and reset form
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+        } else {
+            // Error Handling
+            let errorMessage = 'An error occurred. Please try again.';
+
+            if (response.status == 422) {
+                // Validation errors
+                errorMessage = response.message || 'Validation failed.';
+                const validationErrors = response.errors || {};
+
+                // Highlight the invalid fields
+                $.each(validationErrors, function (key, error) {
+                    const inputField = $('[name="' + key + '"]');
+                    inputField.addClass('is-invalid');
+                    // Optionally, show error messages next to each field
+                    // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
+                });
+            } else if (response.status === 500) {
+                // Handle server error
+                errorMessage = response.message || 'Internal server error. Please contact support.';
+            }
+
+            // Display error message
+            toastr.error(errorMessage, '', {
+                timeOut: 3000
+            });
+        }
+    }
+
+</script>

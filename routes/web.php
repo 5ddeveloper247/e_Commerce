@@ -66,21 +66,31 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/category/listing/ajax', [AdminController::class, 'categoryListingAjax'])->name('category.listing.ajax');
         Route::post('/category/edit/ajax', [AdminController::class, 'updateCategoryAjax'])->name('user.category.ajax');
         Route::post('/category/status/ajax', [AdminController::class, 'updateCategoryStatusAjax'])->name('admin.category.status.ajax');
-        //products
-        Route::get('/product/ajax', [ProductController::class, 'ProductAjax'])->name('admin.product.ajax');
-        Route::post('/product/store/ajax', [ProductController::class, 'storeProductAjax'])->name('admin.product.store');
-        Route::post('/product/store/video', [ProductController::class, 'storeProductVideo'])->name('admin.product.store.video');
-        Route::get('/product/get/images', [ProductController::class, 'getProductImages'])->name('admin.product.get.images');
+        
+        // Admin Product Start //
+        Route::get('/products', [ProductController::class, 'showProducts'])->name('admin.products.index');        
+        Route::post('/products/get', [ProductController::class, 'getProducts'])->name('admin.products.get');        
+        Route::post('/products/store', [ProductController::class, 'storeProduct'])->name('admin.products.store');
+        Route::post('/products/delete', [ProductController::class, 'deleteProduct'])->name('admin.products.destroy');
+
+        // Product Images
+        Route::get('/products/images', [ProductController::class, 'getProductImages'])->name('admin.products.images.index');
         Route::post('/product/store/images', [ProductController::class, 'storeProductImages'])->name('admin.product.store.images');
-        Route::post('/product/delete/images', [ProductController::class, 'deleteProductImages'])->name('admin.product.delete.images');
-        Route::post('/product/delete/ajax', [ProductController::class, 'deleteProductAjax'])->name('admin.product.delete');
-        Route::get('/product/brand/fetch/ajax', [ProductController::class, 'fetchBrandAjax'])->name('admin.product.brand.fetch.ajax');
-        Route::get('/product/category/fetch/ajax', [ProductController::class, 'fetchCategoryAjax'])->name('admin.product.category.fetch.ajax');
-        Route::Post('/product/categoryById/fetch/ajax', [ProductController::class, 'fetchCategoryByIdAjax'])->name('admin.product.categoryById.fetch.ajax');
-        Route::Post('/product/brandById/fetch/ajax', [ProductController::class, 'fetchBrandByIdAjax'])->name('admin.product.brandById.fetch.ajax');
-        Route::post('/product/status/ajax', [ProductController::class, 'updateProductStatusAjax'])->name('product.update.status.ajax');
-        Route::post('/product/markAsDiscounted/ajax', [ProductController::class, 'markAsDiscounted'])->name('product.markAsDiscounted.ajax');
-        Route::post('/product/markAsFeatured/ajax', [ProductController::class, 'markAsFeatured'])->name('product.markAsFeatured.ajax');
+        Route::post('/products/images/delete', [ProductController::class, 'deleteProductImages'])->name('admin.products.images.destroy');
+
+        // Product Brands
+        Route::get('/brands', [ProductController::class, 'getBrands'])->name('admin.brands.index');
+        Route::post('/brands/{id}', [ProductController::class, 'getBrand'])->name('admin.brands.show');
+
+        // Product Categories
+        Route::get('/categories', [ProductController::class, 'getCategories'])->name('admin.categories.index');
+        Route::post('/categories/{id}', [ProductController::class, 'getCategory'])->name('admin.categories.show');
+
+        // Product Specifications
+        Route::post('/products/specifications', [ProductController::class, 'getProductSpecifications'])->name('admin.products.specifications.index');
+        Route::post('/products/specifications/store', [ProductController::class, 'storeProductSpecifications'])->name('admin.products.specifications.store');
+
+        // Admin Product End //
 
         //contact us
         Route::post('/contact/storeOrUpdate', [ContactUsController::class, 'storeOrUpdate'])->name('admin.contact.storeUpdate');
