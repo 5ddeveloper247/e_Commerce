@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Log;
+use Storage;
+use Exception;
 use App\Models\Brand;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\ProductImage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -31,22 +35,20 @@ class ProductController extends Controller
                 'category_id' => 'required|integer|exists:categories,id', // Ensure category_id exists in categories table
                 'brand_id' => 'required|integer|exists:brands,id', // Ensure brand_id exists in brands table
                 'product_name' => 'required|string|max:255',
-                'model_name' => 'nullable|string|max:255',
                 'price' => 'required|numeric|min:0',
                 'discount_price' => 'nullable|numeric|min:0',
                 'weight' => 'nullable|numeric|min:0',
                 'onhand_qty' => 'nullable|integer|min:0',
                 'description' => 'nullable|string',
-                'status' => 'required|in:on,off', // Ensure status is either 'on' or 'off'
+                'status' => 'nullable|in:on,off', // Ensure status is either 'on' or 'off'
             ]);
-
+    
             // Update the existing product with validated data
             $product->update([
                 'sku' => $request->input('sku'),
                 'category_id' => $request->input('category_id'),
                 'brand_id' => $request->input('brand_id'),
                 'product_name' => $request->input('product_name'),
-                'model_name' => $request->input('model_name'),
                 'price' => $request->input('price'),
                 'discount_price' => $request->input('discount_price'),
                 'weight' => $request->input('weight'),
@@ -54,8 +56,12 @@ class ProductController extends Controller
                 'description' => $request->input('description'),
                 'status' => $request->input('status') === 'on' ? 1 : 0, // Store 1 if status is 'on', 0 otherwise
             ]);
-
-            return response()->json(['message' => 'Product updated successfully', 'status' => 200]);
+    
+            return response()->json([
+                'message' => 'Product updated successfully',
+                'status' => 200,
+                'product_id' => $product->id // Return the product ID
+            ]);
         } else {
             // Create a new product
 
@@ -65,22 +71,20 @@ class ProductController extends Controller
                 'category_id' => 'required|integer|exists:categories,id', // Ensure category_id exists in categories table
                 'brand_id' => 'required|integer|exists:brands,id', // Ensure brand_id exists in brands table
                 'product_name' => 'required|string|max:255',
-                'model_name' => 'nullable|string|max:255',
                 'price' => 'required|numeric|min:0',
                 'discount_price' => 'nullable|numeric|min:0',
                 'weight' => 'nullable|numeric|min:0',
                 'onhand_qty' => 'nullable|integer|min:0',
                 'description' => 'nullable|string',
-                'status' => 'required|in:on,off', // Ensure status is either 'on' or 'off'
+                'status' => 'nullable|in:on,off', // Ensure status is either 'on' or 'off'
             ]);
-
+    
             // Create the new product with validated data
             $product = Product::create([
                 'sku' => $request->input('sku'),
                 'category_id' => $request->input('category_id'),
                 'brand_id' => $request->input('brand_id'),
                 'product_name' => $request->input('product_name'),
-                'model_name' => $request->input('model_name'),
                 'price' => $request->input('price'),
                 'discount_price' => $request->input('discount_price'),
                 'weight' => $request->input('weight'),
@@ -89,11 +93,146 @@ class ProductController extends Controller
                 'status' => $request->input('status') === 'on' ? 1 : 0, // Store 1 if status is 'on', 0 otherwise
                 'created_by' => auth()->id(), // Assuming you are using authentication
             ]);
-            return response()->json(['message' => 'Product stored successfully', 'status' => 200]);
+    
+            return response()->json([
+                'message' => 'Product stored successfully',
+                'status' => 200,
+                'product_id' => $product->id
+            ]);
         }
     }
 
+    public function getProductImages(Request $request)
+    {
+        $productId = $request->query('product_id');
 
+        // Fetch images for the specified product
+        $productImages = ProductImage::where('product_id',$productId)->get();
+
+        if (!$productImages) {
+            return response()->json(['status' => 404, 'message' => 'Product not found.'], 404);
+        }
+
+        $responseImages = $productImages->map(function ($image) {
+            return [
+                'id' => $image->id,
+                'filepath' => $image->filepath
+            ];
+        });
+
+        return response()->json(['status' => 200, 'images' => ['image' => $responseImages]]);
+    }
+    
+
+    public function storeProductImages(Request $request) 
+    {
+        // Validation rules for image upload
+        $request->validate([
+            'product_id' => 'required|integer|exists:products,id',
+            'product_images.*' => 'image|mimes:jpeg,png,ico|max:2048'
+        ]);
+    
+        // Find the product by ID
+        $product = Product::find($request->input('product_id'));
+    
+        if (!$product) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Product not found'
+            ], 404);
+        }
+    
+        try {
+            if ($request->hasFile('product_images')) {
+                // Create a unique folder for the product
+                $productFolder = 'product_images/' . $product->id;
+    
+                // Array to store image IDs
+                $imageIds = [];
+    
+                // Upload and save new photos
+                foreach ($request->file('product_images') as $photo) {
+                    $photoName = time() . '_' . $photo->getClientOriginalName();
+                    $photoPath = $photo->storeAs($productFolder, $photoName, 'public');
+    
+                    // Save each new photo path in the ProductImage table and get the ID
+                    $productImage = ProductImage::create([
+                        'product_id' => $product->id,
+                        'filename' => $photoName,
+                        'filepath' => $photoPath,
+                    ]);
+    
+                    // Store the image ID in the array
+                    $imageIds[] = $productImage->id;
+                }
+    
+                return response()->json([
+                    'success' => true,
+                    'message' => 'Images uploaded successfully',
+                    'data' => [
+                        'product_id' => $product->id,
+                        'image_count' => count($imageIds),
+                        'image_ids' => $imageIds
+                    ]
+                ], 200);
+            } else {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No images provided'
+                ], 400);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while uploading images',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+    
+    
+    public function deleteProductImages(Request $request)
+    {
+        try {
+            // Get the ID of the product image to be removed from the request data
+            $imageId = $request->input('id');
+            $productImage = ProductImage::find($imageId);
+
+            if ($productImage) {
+                // Delete the image file from storage
+                Storage::disk('public')->delete($productImage->filepath);
+
+                // Delete the image record from the database
+                $productImage->delete();
+
+                return response()->json(['message' => 'Image removed successfully', 'status' => 200]);
+            } else {
+                return response()->json(['message' => 'Image not found', 'status' => 404]);
+            }
+        } catch (Exception $e) {
+            Log::error('Error removing product image: ' . $e->getMessage());
+            return response()->json(['message' => 'Something went wrong. Please try again.', 'status' => 500]);
+        }
+    }
+
+    public function storeProductVideo(Request $request)
+    {
+        // Find the product by ID
+        $product = Product::findOrFail($request->input('product_id'));
+
+        // Validate the request
+        $request->validate([
+            'video_url' => ['nullable', 'url', 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/']
+        ], [
+            'video_url.regex' => 'The video URL must be a valid YouTube link.'
+        ]);
+
+        // Update the product's video URL
+        $product->video_url = $request->input('video_url');
+        $product->save();
+
+        return response()->json(['success' => true, 'message' => 'Product video url added successfully', 'status' => 200]);
+    }
 
     public function deleteProductAjax(Request $request)
     {

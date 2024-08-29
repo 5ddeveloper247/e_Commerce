@@ -6,16 +6,17 @@ use App\Models\Product;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Category extends Model
+class ProductImage extends Model
 {
     use HasFactory;
+
     protected $fillable = [
-        'category_name',
-        'description',
-        'status'
+        'product_id',
+        'filename',
+        'filepath',
     ];
 
-    public function products() {
-        return $this->belongsToMany(Product::class);
+    public function product() {
+        return $this->belongsTo(Product::class);
     }
 }

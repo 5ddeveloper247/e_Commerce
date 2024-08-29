@@ -95,7 +95,7 @@
                             <div onclick="document.getElementById('file-input').click();" class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center" 
                                 style="height: 50px; cursor: pointer;">
                                 <!-- Adjusted height to provide space for centering -->
-                                <input type="file" id="file-input" class="form-control d-none" name="banner_images" accept="image/*" aria-describedby="file-input-label">
+                                <input type="file" id="file-input" class="form-control d-none" name="banner_images" accept="image/*" multiple aria-describedby="file-input-label">
                                 <!-- SVG Icon acting as button -->
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
@@ -110,8 +110,8 @@
 
                         {{-- Banner Preview --}}
                         <div class="col-10 mt-4 p-3 d-flex align-items-center">
-                            <div class="white image-container-existed mx-4" id="image-container"></div>
-                            <div class="white image-container-selected mx-4" id="image-container"></div>
+                            <div class="white image-container-existed mx-4" id="image-container" data-page-name="settings"></div>
+                            <div class="white image-container-selected mx-4" id="image-container" data-page-name="settings"></div>
                         </div>
                     </div>
                 </div>

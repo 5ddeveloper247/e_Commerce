@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Brand;
+use App\Models\Category;
+use App\Models\ProductModel;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Product extends Model
 {
@@ -11,10 +14,11 @@ class Product extends Model
     protected $fillable = [
         'sku',
         'category_id',
-        'brand_name',
+        'brand_id',
         'product_name',
-        'model_name',
+        'model_id',
         'price',
+        'video_url',
         'discount_price',
         'featured',
         'weight',
@@ -26,4 +30,16 @@ class Product extends Model
         'deleted_by',
 
     ];
+
+    public function categories() {
+        return $this->belongsToMany(Category::class);
+    }
+
+    public function brand() {
+        return $this->hasOne(Brand::class);
+    }
+
+    public function productModel() {
+        return $this->hasOne(ProductModel::class);
+    }
 }
