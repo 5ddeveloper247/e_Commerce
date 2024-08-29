@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('code')->nullable();
             $table->string('name')->nullable();
             $table->text('description')->nullable();
-            $table->integer('status')->nullable()->comment('0=>inactive, 1=>active');
+            $table->boolean('status')->default(false)->nullable();
             $table->timestamps();
         });
     }

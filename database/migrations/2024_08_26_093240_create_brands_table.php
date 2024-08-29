@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title')->nullable()->comment("Title or name of the brand");
             $table->text('description')->nullable()->comment("Description of the brand");
             $table->string('url')->nullable()->comment("URL associated with the brand");
-            $table->boolean('status')->default(true)->comment("Status of the brand (active/inactive)");
+            $table->boolean('status')->default(false);
             $table->timestamps();
         });
     }
