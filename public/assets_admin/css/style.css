@@ -1213,3 +1213,43 @@ div.dt-container .dt-search input {
 div.dt-container .dt-search input {
     padding: 5px 10px !important;
 }
+
+.cancel-icon {
+    position: absolute !important;
+    top: -10px !important;
+    right: -8px !important;
+    background: #DC2F2B !important;
+    color: #fff;
+    border-radius: 50%;
+    cursor: pointer;
+    padding: 2px 8px;
+    font-size: 14px;
+}
+.image-item-land p {
+    font-size:12px;
+    color: #DC2F2B;
+    background: transparent;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.image-item-land img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    /* border: 1px solid #DC2F2B; */
+    border-radius: 10px;
+}
+.image-item-land {
+    position: relative !important;
+    display: inline-block !important;
+    margin-right: 20px !important;
+    width: 80px !important;
+    text-align: center !important;
+    vertical-align: top !important;
+}
+.image-container {
+    overflow-x: auto;
+    width: 100%;
+    margin-left: 0;
+}

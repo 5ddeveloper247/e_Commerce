@@ -70,6 +70,10 @@ Route::group(['prefix' => 'admin'], function () {
         //products
         Route::get('/product/ajax', [ProductController::class, 'ProductAjax'])->name('admin.product.ajax');
         Route::post('/product/store/ajax', [ProductController::class, 'storeProductAjax'])->name('admin.product.store');
+        Route::post('/product/store/video', [ProductController::class, 'storeProductVideo'])->name('admin.product.store.video');
+        Route::get('/product/get/images', [ProductController::class, 'getProductImages'])->name('admin.product.get.images');
+        Route::post('/product/store/images', [ProductController::class, 'storeProductImages'])->name('admin.product.store.images');
+        Route::post('/product/delete/images', [ProductController::class, 'deleteProductImages'])->name('admin.product.delete.images');
         Route::post('/product/delete/ajax', [ProductController::class, 'deleteProductAjax'])->name('admin.product.delete');
         Route::get('/product/brand/fetch/ajax', [ProductController::class, 'fetchBrandAjax'])->name('admin.product.brand.fetch.ajax');
         Route::get('/product/category/fetch/ajax', [ProductController::class, 'fetchCategoryAjax'])->name('admin.product.category.fetch.ajax');
