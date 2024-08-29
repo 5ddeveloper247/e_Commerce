@@ -18,7 +18,7 @@ class ContactUsController extends Controller
 
     public function storeOrUpdate(Request $request)
     {
-        // Validate the request
+        //Validate the request
         $request->validate([
             'full_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
@@ -27,8 +27,8 @@ class ContactUsController extends Controller
             'company_name' => 'required|string|max:255',
             'rma_number' => 'required|string|max:255',
             'comment' => 'required|string|max:255',
-            'status' => 'nullable',
-            'reply' =>   'nullable|string|max:255'
+            'status' => 'nullable|in:on,off,0,1',
+            'reply' => 'nullable|string|max:255'
         ]);
         // Check if 'contact_id' is present in the request
         if ($request->has('contact_id')) {
