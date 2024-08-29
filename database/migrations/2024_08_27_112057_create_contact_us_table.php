@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('rma_number')->nullable(); // Optional RMA Number
             $table->text('comment')->nullable(); // Optional Comment
             $table->text('reply')->nullable(); // Optional Comment
-            $table->integer('status')->nullable(); // Optional Comment
-            $table->timestamps(); // Created at and Updated at timestamps
+            $table->boolean('status')->default(false)->nullable();
+            $table->timestamps();
         });
     }
 
