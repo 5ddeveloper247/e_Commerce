@@ -8,7 +8,7 @@
 
 <div class="container signin py-5">
     <h3 class="main-headings position-relative text-start">
-        Featured Products
+        SIGN IN
         <div class="border-under-main-heading"></div>
     </h3>
     <div class="row mt-5 justify-content-center align-items-center">
@@ -38,7 +38,7 @@
                     <button type="submit" class="btn btn-add-to-cart">
                         Sign in
                     </button> 
-                    <a href="javascript:;" class="text-decoration-none text-black">Forgot your password?</a>
+                    <a href="{{route('user.forgetpassword')}}" class="text-decoration-none text-black">Forgot password?</a>
                 </div>
             </form>
         </div>

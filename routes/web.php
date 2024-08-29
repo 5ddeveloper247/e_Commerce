@@ -97,8 +97,12 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/login', [RegisterController::class, 'login'])->name('user.login');
     Route::post('/loginSubmit', [RegisterController::class, 'loginSubmit'])->name('user.loginSubmit');
     Route::get('/logout', [RegisterController::class, 'logout'])->name('user.logout');
-
+    Route::get('/forget_password', [RegisterController::class, 'forget_password'])->name('user.forgetpassword');
+    
     Route::get('/home', [WebsiteController::class, 'home'])->name('user.home');
+    Route::post('/verifyEmailForget', [RegisterController::class, 'verifyEmailForget'])->name('user.verifyEmailForget');
+    Route::post('/verifyOtpForget', [RegisterController::class, 'verifyOtpForget'])->name('user.verifyOtpForget');
+    Route::post('/changePassForget', [RegisterController::class, 'changePassForget'])->name('user.changePassForget');
 
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/

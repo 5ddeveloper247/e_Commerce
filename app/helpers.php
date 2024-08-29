@@ -79,7 +79,6 @@ if (!function_exists('deleteImage')) {
 if (!function_exists('sendMail')) {
     function sendMail($send_to_name, $send_to_email, $email_from_name, $subject, $body)
     {
-
         try {
             $mail_val = [
                 'send_to_name' => $send_to_name,
@@ -133,38 +132,39 @@ if (!function_exists('sendMailAttachment')) {
             return false;
         }
     }
-
-    // if (!function_exists('sendMailAttachment')) {
-    //     function sendMailAttachment($send_to_name, $send_to_email, $email_from_name, $subject, $body, $attachment_path)
-    //     {
-    //         try {
-    //             $mail_val = [
-    //                 'send_to_name' => $send_to_name,
-    //                 'send_to' => $send_to_email,
-    //                 'email_from' => 'noreply@pancard.com',
-    //                 'email_from_name' => $email_from_name,
-    //                 'subject' => $subject,
-    //             ];
-
-    //             Mail::send('emails.mail', ['body' => $body], function ($send) use ($mail_val, $attachment_path) {
-    //                 $send->from($mail_val['email_from'], $mail_val['email_from_name']);
-    //                 $send->replyTo($mail_val['email_from'], $mail_val['email_from_name']);
-    //                 $send->to($mail_val['send_to'], $mail_val['send_to_name'])->subject($mail_val['subject']);
-                    
-    //                 // Attach the file
-    //                 if (!empty($attachment_path) && file_exists($attachment_path)) {
-    //                     $send->attach($attachment_path);
-    //                 }
-    //             });
-
-    //             return true;
-    //         } catch (\Exception $e) {
-    //             Log::error($e->getMessage());
-    //             echo "An error occurred while sending the email: " . $e->getMessage();
-    //             return false;
-    //         }
-    //     }
-    // }
-
 }
+
+if (!function_exists('sendMailAttachment')) {
+    function sendMailAttachment($send_to_name, $send_to_email, $email_from_name, $subject, $body, $attachment_path)
+    {
+        try {
+            $mail_val = [
+                'send_to_name' => $send_to_name,
+                'send_to' => $send_to_email,
+                'email_from' => 'noreply@pancard.com',
+                'email_from_name' => $email_from_name,
+                'subject' => $subject,
+            ];
+
+            Mail::send('emails.mail', ['body' => $body], function ($send) use ($mail_val, $attachment_path) {
+                $send->from($mail_val['email_from'], $mail_val['email_from_name']);
+                $send->replyTo($mail_val['email_from'], $mail_val['email_from_name']);
+                $send->to($mail_val['send_to'], $mail_val['send_to_name'])->subject($mail_val['subject']);
+                
+                // Attach the file
+                if (!empty($attachment_path) && file_exists($attachment_path)) {
+                    $send->attach($attachment_path);
+                }
+            });
+
+            return true;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            echo "An error occurred while sending the email: " . $e->getMessage();
+            return false;
+        }
+    }
+}
+
+
 

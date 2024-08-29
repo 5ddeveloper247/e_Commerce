@@ -17,14 +17,19 @@
 </script>
 
 <body>
-        <!-- header code here -->
-        @include('layouts.website.header')
+    <div id="uiBlocker" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:9999;">
+        <div style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);">
+            <img src="{{ asset('assets_user/images/loading-spinner.gif') }}" alt="Loading..." style="height:150px; width:150px;"/>
+        </div>
+    </div>
+    <!-- header code here -->
+    @include('layouts.website.header')
 
-        <!-- main content -->
-        @yield('content')
+    <!-- main content -->
+    @yield('content')
 
-        <!-- Footer code here -->
-        @include('layouts.website.footer')
+    <!-- Footer code here -->
+    @include('layouts.website.footer')
 
 </body>
 
