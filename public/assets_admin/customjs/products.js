@@ -193,7 +193,6 @@ $(document).ready(function () {
                 });
             }
         }
-
     });
 
     $('body').on('click', '#saveProductAssetsBtn', function () {

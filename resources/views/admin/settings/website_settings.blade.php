@@ -38,20 +38,17 @@
                             <input type="text" class="form-control" id="website_name"
                                 value="{{ @$siteSettings->website_name }}" name="website_name"
                                 placeholder="Enter website name">
-
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="banner_heading" class="form-label">Banner Heading</label>
                             <input type="text" class="form-control" name="banner_heading"
                                 value="{{ @$siteSettings->banner_heading }}" id="banner_heading"
                                 placeholder="Enter website name">
-
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="sub_heading" class="form-label">Sub Heading</label>
                             <input type="text" class="form-control" id="sub_heading" name="sub_heading"
                                 value="{{ @$siteSettings->sub_heading}}" placeholder="Enter website name">
-
                         </div>
                     </div>
                     <div class="row">
@@ -76,7 +73,7 @@
                         </div>
 
                         <!-- Logo Preview Section -->
-                        <div class="col-10 mt-4 p-3 d-flex align-items-center">
+                        <div class="col-10  p-3 d-flex align-items-center">
                             <img 
                                 class="logo-preview img-fluid border rounded-circle shadow-sm"
                                 style="width: 50px; height: 50px;"
@@ -109,9 +106,9 @@
                         </div>    
 
                         {{-- Banner Preview --}}
-                        <div class="col-10 mt-4 p-3 d-flex align-items-center">
-                            <div class="white image-container-existed mx-4" id="image-container" data-page-name="settings"></div>
-                            <div class="white image-container-selected mx-4" id="image-container" data-page-name="settings"></div>
+                        <div class="col-10 p-3 d-flex align-items-center">
+                            <div class="white image-container-existed" id="image-container" data-page-name="settings"></div>
+                            <div class="white image-container-selected" id="image-container" data-page-name="settings"></div>
                         </div>
                     </div>
                 </div>

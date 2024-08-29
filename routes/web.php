@@ -97,7 +97,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 Route::group(['prefix' => '/'], function () {
 
-    Route::get('/', [RegisterController::class, 'login'])->name('login');
+    Route::get('/', [WebsiteController::class, 'home'])->name('home');
     Route::get('/login', [RegisterController::class, 'login'])->name('user.login');
     Route::post('/loginSubmit', [RegisterController::class, 'loginSubmit'])->name('user.loginSubmit');
     Route::get('/logout', [RegisterController::class, 'logout'])->name('user.logout');
@@ -110,7 +110,7 @@ Route::group(['prefix' => '/'], function () {
 
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
-        Route::get('/home', [WebsiteController::class, 'account'])->name('user.home');    
+        Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');    
         
         
 
@@ -122,9 +122,9 @@ Route::group(['prefix' => '/'], function () {
 
 
 
-Route::get('/', function () {
-    return view('website.home');
-});
+// Route::get('/', function () {
+//     return view('website.home');
+// });
 Route::get('/product_detail', function () {
     return view('website.product_detail');
 });

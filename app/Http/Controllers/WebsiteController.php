@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SiteSetting;
+use App\Models\SiteSettingsFiles;
 
 class WebsiteController extends Controller
 {
@@ -12,6 +14,7 @@ class WebsiteController extends Controller
     public function home(Request $request)
     {
         $data['pageTitle'] = 'Dashboard';
+        
         return view('website.home')->with($data);
     }
 

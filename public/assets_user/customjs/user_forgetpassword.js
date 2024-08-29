@@ -135,6 +135,8 @@ function changePassForgetResponse(response) {
 
         verifyFlag = '1';
 
+        
+
     }else{
         if (response.status == 402) {
             error = response.message;

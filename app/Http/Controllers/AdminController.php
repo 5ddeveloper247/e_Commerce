@@ -389,14 +389,14 @@ class AdminController extends Controller
     {
         // Validate the incoming request
         $validatedData = $request->validate([
-            'logo' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'logo' => 'nullable|image|max:2048',
             'phone' => 'required|regex:/^[0-9]{9,15}$/|max:15|min:9',
             'email' => 'required|email|max:50',
             'address' => 'required|string|max:255',
             'website_name' => 'required|string|max:50',
             'banner_heading' => 'required|string|max:255',
             'sub_heading' => 'required|string|max:255',
-            'banner_images.*' => 'image|mimes:jpeg,png,ico|max:2048',
+            'banner_images.*' => 'image|max:2048',
         ]);
 
         try {

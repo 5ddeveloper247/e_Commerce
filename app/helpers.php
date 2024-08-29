@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Mail;
 use App\Models\Roles;
-use App\Models\Notifications;
+use App\Models\SiteSetting;
+use App\Models\Product;
 
 if (!function_exists('saveMultipleImages')) {
 
@@ -161,6 +162,32 @@ if (!function_exists('sendMailAttachment')) {
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             echo "An error occurred while sending the email: " . $e->getMessage();
+            return false;
+        }
+    }
+}
+
+if (!function_exists('getWebsiteSettings')) {
+    function getWebsiteSettings()
+    {   
+        try {
+            $settings = SiteSetting::with(['settingFiles'])->first();
+            return $settings;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
+}
+
+if (!function_exists('getFeaturedProducts')) {
+    function getFeaturedProducts()
+    {   
+        try {
+            $featured = Product::where('featured', '1')->get();
+            return $featured;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return false;
         }
     }
