@@ -160,7 +160,7 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{route('admin.product.get')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{route('admin.products.index')}}" class="nav-link main-links-for-submenu" role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 2048 2048">

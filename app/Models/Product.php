@@ -29,7 +29,8 @@ class Product extends Model
         'is_featured',
         'status',
         'created_by',
-        'updated_by'
+        'updated_by',
+        'offered_percentage',
     ];
 
     public function categories() {
