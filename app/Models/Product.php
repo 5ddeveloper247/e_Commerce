@@ -40,6 +40,10 @@ class Product extends Model
         return $this->hasOne(Brand::class);
     }
 
+    public function productImages() {
+        return $this->hasMany(ProductImage::class);
+    }
+
     public function productSpecifications() {
         return $this->hasMany(ProductSpecification::class);
     }

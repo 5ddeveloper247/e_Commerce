@@ -184,7 +184,7 @@ if (!function_exists('getFeaturedProducts')) {
     function getFeaturedProducts()
     {   
         try {
-            $featured = Product::where('featured', '1')->get();
+            $featured = Product::where('featured', '1')->with(['productImages'])->get();
             return $featured;
         } catch (\Exception $e) {
             Log::error($e->getMessage());

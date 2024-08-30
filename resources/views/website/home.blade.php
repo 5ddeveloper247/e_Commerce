@@ -70,16 +70,22 @@
     <div class="col-lg-6 hero-banner p-md-5 p-4">
         <?php
             $settings = getWebsiteSettings();
-            $banner_images = $settings->settingFiles;
+            $banner_images = @$settings->settingFiles;
             // dd($banner_images);
-            $words = explode(' ', $settings->banner_heading);
+            $words = explode(' ', @$settings->banner_heading);
             $firstTwoWords = implode(' ', array_slice($words, 0, 2));
             $thirdWords = implode(' ', array_slice($words, 2, 1));
             $fourthStatement = implode(' ', array_slice($words, 3, 3));
             $remainingStatement = implode(' ', array_slice($words, 6));
         ?>
-        <h1 class="mb-0 fw-bold"><span class="the-future px-1">{{@$firstTwoWords}}</span> {{@$thirdWords}} <br> {{@$fourthStatement}}<br> {{@$remainingStatement}} </h1>
-        <p class="my-4">{{@$settings->sub_heading}}</p>
+        @if($settings)
+            <h1 class="mb-0 fw-bold"><span class="the-future px-1">{{@$firstTwoWords}}</span> {{@$thirdWords}} <br> {{@$fourthStatement}}<br> {{@$remainingStatement}} </h1>
+            <p class="my-4">{{@$settings->sub_heading}}</p>
+        @else
+            <h1 class="mb-0 fw-bold"><span class="the-future px-1">The Future</span> Of <br> Nursing Exam<br> Prep Starts Here</h1>
+            <p class="my-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+        @endif
+        
         <!-- <div class="swiperrr position-relative"> -->
         <div class="swiper mySwiper" id="hero-slider">
             <div class="swiper-wrapper">
@@ -327,11 +333,12 @@
             <div class="swiper-wrapper">
                 <?php
                     $featured_products = getFeaturedProducts();
+                    
                 ?>
                 @if($featured_products != null)
                     @foreach(@$featured_products as $product)
                         <?php
-                            
+                           $product_images = $product->productImages;
                         ?>
                         <div class="swiper-slide mt-5 p-2">
                             <div class="card featured-card border-0">
@@ -352,7 +359,12 @@
                                 <div class="d-flex justify-content-center my-4">
                                     <div class="featured-card-images">
                                         <a href="{{'product_detail'}}">
+                                            @if(isset($product_images[0]['path']))
+                                            <img class="img-fluid" src="{{$product_images[0]['path']}}" alt="Card image">
+                                            @else
                                             <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}" alt="Card image">
+                                            @endif
+                                            
                                         </a>
                                     </div>
                                 </div>
@@ -374,11 +386,13 @@
                                             <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                                         </svg>
                                     </div>
-                                <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                                <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>{{@$product->product_name}}</small></p>
                                 <div class="price-and-btn">
                                     <div class="d-flex justify-content-center card-price">
-                                        <h5>$12.99</h5>
-                                        <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
+                                        <h5>${{ number_format(@$product->discount_price != null ? $product->discount_price : $product->price, 2) }}</h5>
+                                        @if(@$product->discount_price != null)
+                                            <p class="text-danger ps-1"><small><del>${{number_format(@$product->price, 2) }}</del></small></p>
+                                        @endif
                                     </div>
                                     <button class="btn btn-add-to-cart">
                                         <span class="me-2">+</span>
@@ -390,7 +404,7 @@
                         </div>
                     @endforeach
                 @endif
-                <div class="swiper-slide mt-5 p-2">
+                <!-- <div class="swiper-slide mt-5 p-2">
                     <div class="card featured-card border-0">
                         <p class="sale-badge text-black">Sale</p>
                         <div class="actions">
@@ -780,7 +794,7 @@
                         </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
             </div>
             <!-- Add Navigation buttons -->
