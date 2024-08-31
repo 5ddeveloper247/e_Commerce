@@ -1,5 +1,4 @@
-<div class="tab-pane fade show active" id="product-details" role="tabpanel"
-    aria-labelledby="product-details-tab">
+<div class="tab-pane fade show active" id="product-details" role="tabpanel" aria-labelledby="product-details-tab">
     <form id="product_settings_form">
         <!-- Product Details -->
         <div class="section">
@@ -12,12 +11,12 @@
 
                 <div class="col-sm-6 mb-3">
                     <label for="sku" class="form-label">SKU</label>
-                    <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter SKU">
+                    <input type="text" class="form-control" id="sku" maxlength="50" name="sku" placeholder="Enter SKU">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="product_name" class="form-label">Product Name</label>
-                    <input type="text" class="form-control" id="product_name" name="product_name"
+                    <input type="text" class="form-control" id="product_name" maxlength="255" name="product_name"
                         placeholder="Enter product name">
                 </div>
 
@@ -39,44 +38,46 @@
 
                 <div class="col-sm-6 mb-3">
                     <label for="product_name" class="form-label">Model Name</label>
-                    <input type="text" class="form-control" id="model-name" name="model_name"
+                    <input type="text" class="form-control" id="model-name" maxlength="255" name="model_name"
                         placeholder="Enter Model Name">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="price" class="form-label">Price</label>
-                    <input type="number" step="0.01" class="form-control" id="price" name="price"
+                    <input type="number" step="0.01" class="form-control" id="price" maxlength="10" name="price"
                         placeholder="Enter price">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="discount_price" class="form-label">Discount Price</label>
-                    <input type="number" step="0.01" class="form-control" id="discount_price"
+                    <input type="number" step="0.01" class="form-control" maxlength="10" id="discount_price"
                         name="discount_price" placeholder="Enter discount price">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="weight" class="form-label">Weight (kg)</label>
-                    <input type="number" step="0.01" class="form-control" id="weight" name="weight"
+                    <input type="number" step="0.01" class="form-control" maxlength="10" id="weight" name="weight"
                         placeholder="Enter weight">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="onhand_qty" class="form-label">On Hand Quantity</label>
-                    <input type="number" class="form-control" id="onhand_qty" name="onhand_qty"
+                    <input type="number" class="form-control" id="onhand_qty" maxlength="10" name="onhand_qty"
                         placeholder="Enter stock quantity">
                 </div>
-                
+
                 <div class="col-sm-12 mb-3">
                     <label for="description" class="form-label">Description</label>
-                    <textarea class="form-control" id="description" name="description" rows="3"
+                    <textarea class="form-control" id="description" name="description" maxlength="3000" rows="3"
                         placeholder="Enter description"></textarea>
                 </div>
             </div>
         </div>
-        <div class="d-flex justify-content-center mt-4">
+        <div class="d-flex justify-content-center mt-4 ">
+            <button type="button" id="backProductBtn" class=" mx-2 btn btn-danger btn-lg px-md-5">Back
+            </button>
             <button type="button" id="saveProductBtn" class="btn theme-btn-outline btn-lg px-md-5">Save
-                Settings</button>
+            </button>
         </div>
     </form>
 </div>

@@ -5,6 +5,11 @@ $(document).ready(function () {
     $('#productAddBtn').on('click', function () {
         showAddEditForm();
     });
+    $('#backProductBtn').on('click', function () {
+        hideAddEditForm();
+        resetForm();
+
+    });
 
     function showAddEditForm() {
         $('#product_add_edit_section').removeClass('d-none');
@@ -12,6 +17,23 @@ $(document).ready(function () {
         $('#product_listing_section').removeClass('d-block');
         $('#product_listing_section').addClass('d-none');
     }
+
+    function hideAddEditForm() {
+        $('#product_add_edit_section').removeClass('d-block');
+        $('#product_add_edit_section').addClass('d-none');
+        $('#product_listing_section').removeClass('d-none');
+        $('#product_listing_section').addClass('d-block');
+    }
+
+    function resetForm() {
+        let form = document.getElementById('product_settings_form');
+        form.reset();
+        $("#product_edit_id").val('');
+    }
+
+
+
+
 
     function getProductsOnLoad() {
         const url = "/admin/products/get";
@@ -32,7 +54,7 @@ $(document).ready(function () {
         }
     }
 
-    function populateTotals(response){
+    function populateTotals(response) {
         if (response.activeProducts !== undefined && response.inactiveProducts !== undefined && response.total !== undefined) {
             $('#activeRecord').text(response.activeProducts);
             $('#inactiveRecord').text(response.inactiveProducts);
@@ -40,7 +62,7 @@ $(document).ready(function () {
         }
     }
 
-    function populateListng(response){
+    function populateListng(response) {
         let html = '';
         response.forEach(item => {
             // Determine the text for "Mark as Featured" based on the item's featured status
@@ -92,8 +114,9 @@ $(document).ready(function () {
         $('#product_listing_table_body').html(html);
     }
 
-    function populateCategories(response){
-        var html = '';
+    function populateCategories(response) {
+        var html = '<option value="">Choose Category</option>';
+
         response.forEach(item => {
             html += `
                 <option value="${item.id}">${item.category_name}</option>
@@ -102,8 +125,8 @@ $(document).ready(function () {
         $('#category_id').html(html);
     }
 
-    function populateBrands(response){
-        var html = '';
+    function populateBrands(response) {
+        var html = '<option value="">Choose Brand</option>';
         response.forEach(item => {
             html += `
                 <option value="${item.id}">${item.title}</option>
@@ -113,7 +136,7 @@ $(document).ready(function () {
     }
 
     // Global Function to Add or update product
-    function productUpdateStore(formData){
+    function productUpdateStore(formData) {
         const url = "/admin/products/store";
         const type = "POST";
 
@@ -195,16 +218,114 @@ $(document).ready(function () {
     $('body').on('click', '#saveProductAssetsBtn', function () {
         // Get the product ID from the hidden input field
         const productId = document.querySelector('input[name="product_id"]').value;
-
         // Create a new FormData object
         var formData = new FormData();
-
         // Append the product ID to the FormData
         formData.append('product_id', productId);
+        if (selectedFiles && selectedFiles.length > 0) {
+            for (let i = 0; i < selectedFiles.length; i++) {
+                formData.append('product_images[]', selectedFiles[i]);
+            }
+        }
+        else {
+            errorMessage = "Please either select new images or click the upload button to choose images before saving. If no images are selected, ensure to choose some before submitting.";
 
-        saveVideo(formData);
-        saveImages(formData, productId);
+            toastr.error(errorMessage, '', {
+                timeOut: 3000
+            });
+
+            return false;
+        }
+
+        // saveVideo(formData);
+        saveImages(formData);
     });
+
+
+    function saveImages(formData) {
+        // Check if selected files are present and append them to the FormData
+        const url = "/admin/product/store/images";
+        const type = "POST";
+        SendAjaxRequestToServer(type, url, formData, '', handleProductImagesSaveResponse, '', '#saveProductAssetsBtn');
+        function handleProductImagesSaveResponse(response) {
+            if (response.success) {
+                response.data.productImages.map((file) => {
+                    const imgdata = {
+                        id: file.id,
+                        fileNmae: file.filename,
+                        name: `${base_url}/storage/product_images/${file.product_id}/${file.filename}`
+
+                    };
+                    files.push(imgdata);
+
+                })
+            }
+
+            displayExistedFiles();
+
+
+        }
+
+        // function handleProductImagesSaveResponse(response) {
+        //     if (response.success) {
+        //         // Success: Display success message and reset form
+        //         toastr.success(response.message, '', {
+        //             timeOut: 3000
+        //         });
+
+        //         // Clear the selectedFiles
+        //         selectedFiles = [];
+        //         files = [];
+        //         $('.image-container-selected').empty();
+        //         $('input[name="product_images[]"]').val('');
+
+        //         SendAjaxRequestToServer("get", `/admin/product/get/images?product_id=${productId}`, '', '', renderExistingImages, '');
+
+        //         function renderExistingImages(response) {
+        //             if (response.status === 200) {
+        //                 // Process the response to populate the files array
+        //                 response.images.image.forEach((file) => {
+        //                     const imgdata = {
+        //                         id: file.id,
+        //                         name: base_url + '/storage/' + file.filepath
+        //                     };
+        //                     files.push(imgdata);
+        //                 });
+
+        //                 displayExistedFiles(); // Call to display the initial files
+        //             }
+        //         }
+
+        //     } else {
+        //         // Error Handling
+        //         let errorMessage = 'An error occurred. Please try again.';
+
+        //         if (response.status == 422) {
+        //             // Validation errors
+        //             errorMessage = response.message || 'Validation failed.';
+        //             const validationErrors = response.errors || {};
+
+        //             // Highlight the invalid fields
+        //             $.each(validationErrors, function (key, error) {
+        //                 const inputField = $('[name="' + key + '"]');
+        //                 inputField.addClass('is-invalid');
+        //                 // Optionally, show error messages next to each field
+        //                 // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
+        //             });
+        //         } else if (response.status === 500) {
+        //             // Handle server error
+        //             errorMessage = response.message || 'Internal server error. Please contact support.';
+        //         }
+
+        //         // Display error message
+        //         toastr.error(errorMessage, '', {
+        //             timeOut: 3000
+        //         });
+        //     }
+        // }
+    }
+
+
 
     function saveVideo(formData) {
         const url = "/admin/product/store/video";
@@ -249,85 +370,6 @@ $(document).ready(function () {
         }
     }
 
-    function saveImages(formData, productId) {
-        // Check if selected files are present and append them to the FormData
-        if (selectedFiles && selectedFiles.length > 0) {
-            for (let i = 0; i < selectedFiles.length; i++) {
-                formData.append('product_images[]', selectedFiles[i]);
-            }
-        } else {
-            errorMessage = "Please either select new images or click the upload button to choose images before saving. If no images are selected, ensure to choose some before submitting.";
-
-            toastr.error(errorMessage, '', {
-                timeOut: 3000
-            });
-
-            return false;
-        }
-
-        const url = "/admin/product/store/images";
-        const type = "POST";
-
-        SendAjaxRequestToServer(type, url, formData, '', handleProductImagesSaveResponse, '', '#saveProductAssetsBtn');
-
-        function handleProductImagesSaveResponse(response) {
-            if (response.success) {
-                // Success: Display success message and reset form
-                toastr.success(response.message, '', {
-                    timeOut: 3000
-                });
-
-                // Clear the selectedFiles
-                selectedFiles = [];
-                files = [];
-                $('.image-container-selected').empty();
-                $('input[name="product_images[]"]').val('');
-
-                SendAjaxRequestToServer("get", `/admin/product/get/images?product_id=${productId}`, '', '', renderExistingImages, '');
-
-                function renderExistingImages(response) {
-                    if (response.status === 200) {
-                        // Process the response to populate the files array
-                        response.images.image.forEach((file) => {
-                            const imgdata = {
-                                id: file.id,
-                                name: base_url + '/storage/' + file.filepath
-                            };
-                            files.push(imgdata);
-                        });
-
-                        displayExistedFiles(); // Call to display the initial files
-                    }
-                }
-
-            } else {
-                // Error Handling
-                let errorMessage = 'An error occurred. Please try again.';
-
-                if (response.status == 422) {
-                    // Validation errors
-                    errorMessage = response.message || 'Validation failed.';
-                    const validationErrors = response.errors || {};
-
-                    // Highlight the invalid fields
-                    $.each(validationErrors, function (key, error) {
-                        const inputField = $('[name="' + key + '"]');
-                        inputField.addClass('is-invalid');
-                        // Optionally, show error messages next to each field
-                        // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
-                    });
-                } else if (response.status === 500) {
-                    // Handle server error
-                    errorMessage = response.message || 'Internal server error. Please contact support.';
-                }
-
-                // Display error message
-                toastr.error(errorMessage, '', {
-                    timeOut: 3000
-                });
-            }
-        }
-    }
 
     $('body').on('click', '#handleRemoveProductBtn', function () {
         const item = JSON.parse($(this).attr('data-remove-product'));
@@ -423,9 +465,6 @@ $(document).ready(function () {
                 fetchCategoryById(item.category_id),
                 fetchBrandById(item.brand_name)
             ]);
-            console.log("category, brand", category, brand)
-            console.log(category.category_name)
-
             // Populate the form fields with the product data
             $('#product_id').val(item.id);
             $('#sku').val(item.sku);
@@ -460,9 +499,9 @@ $(document).ready(function () {
 
     $('body').on('click', '#addOfferedValueBtn', function () {
         const formData = new FormData();
-        formData.append('product_id',$('#product_id_offerd').val());
+        formData.append('product_id', $('#product_id_offerd').val());
         formData.append('is_offered', 1);
-        formData.append('offered_percentage',$('#offered_percentage').val());
+        formData.append('offered_percentage', $('#offered_percentage').val());
         productUpdateStore(formData);
     });
 
@@ -526,6 +565,31 @@ $(document).ready(function () {
 
 
 
+    //-----------------------validation_________________________
 
+    $('#client_name,#supplier_name').on('keydown', function (e) {    // only characters allow
+        var key = e.keyCode || e.which;
+        var char = String.fromCharCode(key);
+        var controlKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
+        // Allow control keys and non-numeric characters
+        if (controlKeys.includes(e.key) || !char.match(/[0-9]/)) {
+            return true;
+        } else {
+            e.preventDefault();
+            return false;
+        }
+    });
+    $('#phone_number,onhand_qty').on('keydown', function (e) {      // only numbers allow
+        var key = e.keyCode || e.which;
+        var char = String.fromCharCode(key);
+        var controlKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete', 'Enter'];
+        // Allow control keys and numeric characters
+        if (controlKeys.includes(e.key) || char.match(/[0-9]/)) {
+            return true;
+        } else {
+            e.preventDefault();
+            return false;
+        }
+    });
 
 });

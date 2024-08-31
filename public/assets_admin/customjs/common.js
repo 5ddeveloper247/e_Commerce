@@ -242,25 +242,28 @@ $(".back-to-products").on("click", function () {
     $(".rational-main-content").addClass("d-none");
     $("#products").removeClass("d-none");
 });
-$(document).ready(function() {
+$(document).ready(function () {
     $('.my-select2').select2({
-      placeholder: "Modes",
-      allowClear: true
+        placeholder: "Modes",
+        allowClear: true
     });
-  });
+});
 
 // To Clear Modal Pop Up Form On Add Click
 $(document).on('click', '.modal-add-btn', function () {
     resetModalForm('#filterModal');
 });
 
-function resetModalForm(selector = '#filterModal'){
+function resetModalForm(selector = '#filterModal') {
     $(selector).find('input').val('');
     $(selector).find('textarea').val('');
     $(selector).find('select').val(null).trigger('change');
 }
-var files = [];
 
+
+
+var files = [];
+var selectedFiles = [];
 $('#file-input').on('change', function (event) {
     const files = event.target.files;
     var allfileslength = files.length + selectedFiles.length;
@@ -283,12 +286,11 @@ $('#file-input').on('change', function (event) {
     displaySelectedFiles();
 });
 
-var selectedFiles = [];
 
 function displaySelectedFiles() {
     const $imageContainerselected = $('.image-container-selected');
     $imageContainerselected.empty(); // Clear previous images
-    if($imageContainerselected.attr('data-page-name') == 'products'){
+    if ($imageContainerselected.attr('data-page-name') == 'products') {
         ajaxUrl = '/admin/product/delete/images';
     } else {
         ajaxUrl = '/admin/settings/file/remove';
@@ -325,7 +327,7 @@ function removeExistedFiles(fileIndex, url) {
         const data = {
             id: removedfile.id
         };
-    
+
         // Ensure that AJAX settings are correct
         $.ajax({
             type: type,
@@ -359,6 +361,7 @@ function handleFileRemoveResponse(response) {
     }
 }
 
+
 function displayExistedFiles() {
     const $imageContainerexisted = $('.image-container-existed');
     $imageContainerexisted.empty(); // Clear previous images
@@ -367,7 +370,8 @@ function displayExistedFiles() {
     let ajaxUrl;
     if ($imageContainerexisted.attr('data-page-name') === 'products') {
         ajaxUrl = '/admin/product/delete/images';
-    } else {
+    }
+    else {
         ajaxUrl = '/admin/settings/file/remove';
     }
 

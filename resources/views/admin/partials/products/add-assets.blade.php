@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-2 mb-3">
             <label for="file-input" class="form-label fw-bold mb-2">Upload Product Images</label>
-            <div onclick="document.getElementById('file-input').click();" class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center" 
+            <div onclick="document.getElementById('file-input').click();" class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center"
                 style="height: 50px; cursor: pointer;">
                 <!-- Adjusted height to provide space for centering -->
                 <input type="file" id="file-input" class="form-control d-none" name="product_images" accept="image/*" multiple aria-describedby="file-input-label">
@@ -17,12 +17,16 @@
                         d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V13.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 0 1-.708-.708l3-3z" />
                 </svg>
             </div>
-        </div>    
+        </div>
 
         {{-- Images Preview --}}
         <div class="col-10 mt-4 p-3 d-flex align-items-center">
-            <div class="white image-container-existed mx-4" id="image-container" data-page-name="products"></div>
-            <div class="white image-container-selected mx-4" id="image-container" data-page-name="products"></div>
+            <div class="white image-container-existed mx-4" id="image-container" data-page-name="products">
+
+            </div>
+            <div class="white image-container-selected mx-4" id="image-container" data-page-name="products">
+                
+            </div>
         </div>
     </div>
 

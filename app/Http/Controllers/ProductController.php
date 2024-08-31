@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Log;
-use Storage;
 use Exception;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductImage;
+use App\Models\ProductSpecification;;
+
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 
 class ProductController extends Controller
 {
@@ -27,19 +29,19 @@ class ProductController extends Controller
         $includeCategories = $request->input('includeCategories', false);
         $includeBrands = $request->input('includeBrands', false);
         $includeTotals = $request->input('includeTotals', false);
-    
+
         // Fetch products
         $products = Product::all();
-    
+
         // Calculate totals if requested
         $totalProducts = $includeTotals ? $products->count() : null;
         $activeProducts = $includeTotals ? $products->where('status', 1)->count() : null;
         $inactiveProducts = $includeTotals ? $products->where('status', 0)->count() : null;
-    
+
         // Fetch categories and brands if requested
         $categories = $includeCategories ? Category::all() : null;
         $brands = $includeBrands ? Brand::all() : null;
-    
+
         return response()->json([
             'products' => $products,
             'categories' => $categories,
@@ -61,9 +63,23 @@ class ProductController extends Controller
             return $this->storeNewProduct($request);
         }
     }
-    
+
     protected function storeNewProduct(ProductRequest $request)
     {
+
+        $request->validate([
+            'sku' => 'required|string|max:50,unqiue:products,sku', // Consider whether 'sku' should be an integer or a string with max length
+            'product_name' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:categories,id',
+            'brand_id' => 'required|integer|exists:brands,id',
+            'model_name' => 'required|string|max:255',
+            'price' => 'required|numeric', // Use 'numeric' instead of 'float'
+            'discount_price' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'onhand_qty' => 'required|numeric',
+            'description' => 'required|string|max:3000',
+        ]);
+
         // Create the new product with validated data
         $product = Product::create([
             'sku' => $request->input('sku'),
@@ -77,26 +93,26 @@ class ProductController extends Controller
             'weight' => $request->input('weight'),
             'onhand_qty' => $request->input('onhand_qty'),
             'description' => $request->input('description'),
-            'is_offered' => $request->input('is_offered'),
-            'featured' => $request->input('featured'),
-            'status' => $request->input('status'),
-            'offered_percentage' => $request->input('offered_percentage'),
-            'created_by' => auth()->id(),
+            // 'is_offered' => $request->input('is_offered'),
+            // 'featured' => $request->input('featured'),
+            // 'status' => $request->input('status'),
+            // 'offered_percentage' => $request->input('offered_percentage'),
+            // 'created_by' => auth()->id(),
         ]);
-    
+
         return response()->json([
             'message' => 'Product stored successfully',
             'status' => 200,
             'product_id' => $product->id,
         ]);
     }
-    
+
     protected function updateExistingProduct(ProductRequest $request)
     {
 
         // Find the product by ID
         $product = Product::findOrFail($request->input('product_id'));
-        
+
         // Prepare the update data
         $updateData = $request->only([
             'sku',
@@ -117,13 +133,13 @@ class ProductController extends Controller
         ]);
 
         $product->update($updateData);
-        
+
         // Update the 'updated_by' field
         $product->update(['updated_by' => auth()->id()]);
 
         $includeTotals = $request->input('includeTotals', false);
-    
-        if($includeTotals) {
+
+        if ($includeTotals) {
             // Fetch products
             $products = Product::all();
         }
@@ -132,7 +148,7 @@ class ProductController extends Controller
         $totalProducts = $includeTotals ? $products->count() : null;
         $activeProducts = $includeTotals ? $products->where('status', 1)->count() : null;
         $inactiveProducts = $includeTotals ? $products->where('status', 0)->count() : null;
-    
+
         return response()->json([
             'message' => 'Product updated successfully',
             'status' => 200,
@@ -141,7 +157,7 @@ class ProductController extends Controller
             'activeProducts' => $activeProducts,
             'inactiveProducts' => $inactiveProducts,
         ]);
-    }    
+    }
 
     public function getProductImages(Request $request)
     {
@@ -163,13 +179,13 @@ class ProductController extends Controller
 
         return response()->json(['status' => 200, 'images' => ['image' => $responseImages]]);
     }
-    
-    public function storeProductImages(Request $request) 
+
+    public function storeProductImages(Request $request)
     {
         // Validation rules for image upload
         $request->validate([
             'product_id' => 'required|integer|exists:products,id',
-            'product_images.*' => 'image|mimes:jpeg,png,ico|max:2048'
+            'product_images.*' => 'image|mimes:jpeg,png,ico|max:500048'
         ]);
 
         // Find the product by ID
@@ -189,7 +205,6 @@ class ProductController extends Controller
 
                 // Array to store image IDs
                 $imageIds = [];
-
                 // Upload and save new photos
                 foreach ($request->file('product_images') as $photo) {
                     $photoName = time() . '_' . $photo->getClientOriginalName();
@@ -204,6 +219,7 @@ class ProductController extends Controller
 
                     // Store the image ID in the array
                     $imageIds[] = $productImage->id;
+                    $productImages[] = $productImage;
                 }
 
                 return response()->json([
@@ -212,7 +228,8 @@ class ProductController extends Controller
                     'data' => [
                         'product_id' => $product->id,
                         'image_count' => count($imageIds),
-                        'image_ids' => $imageIds
+                        'image_ids' => $imageIds,
+                        'productImages' => $productImages,
                     ]
                 ], 200);
             } else {
@@ -221,7 +238,7 @@ class ProductController extends Controller
                     'message' => 'No images provided'
                 ], 400);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while uploading images',
@@ -229,6 +246,8 @@ class ProductController extends Controller
             ], 500);
         }
     }
+
+
 
     public function deleteProductImages(Request $request)
     {
@@ -330,12 +349,13 @@ class ProductController extends Controller
         }
     }
 
-    public function getProductSpecifications(Request $request){
+    public function getProductSpecifications(Request $request)
+    {
         // Find the product by ID
         $product = Product::with('productSpecifications')->findOrFail($request->input('product_id'));
-    
+
         $productSpecifications = $product->productSpecifications->count();
-        
+
         return response()->json([
             'productSpecifications' => $productSpecifications,
             'message' => 'Product specifications fetched successfully',
@@ -353,10 +373,10 @@ class ProductController extends Controller
             'unit' => 'nullable|string|max:50',
             'value' => 'nullable|string|max:255',
         ]);
-    
+
         // Find the product by ID
         $product = Product::findOrFail($validatedData['product_id']);
-    
+
         // Create the product specification
         $specification = ProductSpecification::create([
             'product_id' => $product->id,
@@ -365,7 +385,7 @@ class ProductController extends Controller
             'key' => $validatedData['unit'],
             'value' => $validatedData['value'],
         ]);
-    
+
         // Return success response
         return response()->json([
             'success' => true,
@@ -373,5 +393,5 @@ class ProductController extends Controller
             'message' => 'Specification added successfully.',
             'productSpecifications' => $specification
         ], 200);
-    }    
+    }
 }
