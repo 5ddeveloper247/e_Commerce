@@ -316,20 +316,17 @@ $(document).ready(function () {
             fetchCategories();
             fetchBrands();
             const item = JSON.parse($(this).attr('data-edit-product'));
-
             // Fetch category and brand data asynchronously
-            const [category, brand] = await Promise.all([
-                fetchCategoryById(item.category_id),
-                fetchBrandById(item.brand_name)
-            ]);
-            console.log("category, brand", category, brand)
-            console.log(category.category_name)
-
+            console.log(item)
+            // const [category, brand] = await Promise.all([
+            //     fetchCategoryById(item.category_id),
+            //     fetchBrandById(item.brand_name)
+            // ]);
             // Populate the form fields with the product data
             $('#product_id').val(item.id);
             $('#sku').val(item.sku);
-            $('#category_id').val(category.category_name); // Assuming 'category_name' is the correct property
-            $('#brand_id').val(brand.title); // Assuming 'title' is the correct property
+            $('#category_id').val(item.category_id); // Assuming 'category_name' is the correct property
+            $('#brand_id').val(item.brand_name); // Assuming 'title' is the correct property
             $('#product_name').val(item.product_name);
             $('#model_name').val(item.model_name);
             $('#price').val(item.price);
@@ -337,13 +334,13 @@ $(document).ready(function () {
             $('#weight').val(item.weight);
             $('#onhand_qty').val(item.onhand_qty);
             $('#description').val(item.description);
-
             // Set the status checkbox
             $('#status').prop('checked', item.status == 1);
 
             // Show the modal for editing
             showAddEditForm();
         } catch (error) {
+            console.log(error)
             toastr.error('Failed to fetch category or brand data. Please try again.', '', {
                 timeOut: 3000
             });
