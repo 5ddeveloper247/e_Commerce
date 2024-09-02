@@ -254,8 +254,9 @@ $(document).ready(function () {
                         id: file.id,
                         fileNmae: file.filename,
                         name: `${base_url}/storage/product_images/${file.product_id}/${file.filename}`
-
                     };
+                    const $imageContainerselected = $('.image-container-selected');
+                    $imageContainerselected.empty(); // Clear previous images
                     files.push(imgdata);
 
                 })
@@ -266,63 +267,6 @@ $(document).ready(function () {
 
         }
 
-        // function handleProductImagesSaveResponse(response) {
-        //     if (response.success) {
-        //         // Success: Display success message and reset form
-        //         toastr.success(response.message, '', {
-        //             timeOut: 3000
-        //         });
-
-        //         // Clear the selectedFiles
-        //         selectedFiles = [];
-        //         files = [];
-        //         $('.image-container-selected').empty();
-        //         $('input[name="product_images[]"]').val('');
-
-        //         SendAjaxRequestToServer("get", `/admin/product/get/images?product_id=${productId}`, '', '', renderExistingImages, '');
-
-        //         function renderExistingImages(response) {
-        //             if (response.status === 200) {
-        //                 // Process the response to populate the files array
-        //                 response.images.image.forEach((file) => {
-        //                     const imgdata = {
-        //                         id: file.id,
-        //                         name: base_url + '/storage/' + file.filepath
-        //                     };
-        //                     files.push(imgdata);
-        //                 });
-
-        //                 displayExistedFiles(); // Call to display the initial files
-        //             }
-        //         }
-
-        //     } else {
-        //         // Error Handling
-        //         let errorMessage = 'An error occurred. Please try again.';
-
-        //         if (response.status == 422) {
-        //             // Validation errors
-        //             errorMessage = response.message || 'Validation failed.';
-        //             const validationErrors = response.errors || {};
-
-        //             // Highlight the invalid fields
-        //             $.each(validationErrors, function (key, error) {
-        //                 const inputField = $('[name="' + key + '"]');
-        //                 inputField.addClass('is-invalid');
-        //                 // Optionally, show error messages next to each field
-        //                 // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
-        //             });
-        //         } else if (response.status === 500) {
-        //             // Handle server error
-        //             errorMessage = response.message || 'Internal server error. Please contact support.';
-        //         }
-
-        //         // Display error message
-        //         toastr.error(errorMessage, '', {
-        //             timeOut: 3000
-        //         });
-        //     }
-        // }
     }
 
 
@@ -406,65 +350,15 @@ $(document).ready(function () {
         }
     }
 
-    function fetchCategoryById(catId) {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: "/admin/product/categoryById/fetch/ajax", // The URL to send the request to
-                type: "POST", // The HTTP method to use
-                data: {
-                    id: catId
-                }, // The data to send with the request
-                success: function (response) { // Callback function on successful response
-                    if (response.status === 200) {
-                        resolve(response.category); // Resolve the Promise with the category data
-                    } else {
-                        reject('Failed to fetch category.'); // Reject the Promise with an error message
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) { // Callback function on error
-                    console.error('AJAX Error:', textStatus, errorThrown);
-                    reject('Error fetching category data.'); // Reject the Promise with a general error message
-                }
-            });
-        });
-    }
-
-    function fetchBrandById(brandId) {
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                url: "/admin/product/brandById/fetch/ajax", // The URL to send the request to
-                type: "POST", // The HTTP method to use
-                data: {
-                    id: brandId
-                }, // The data to send with the request
-                success: function (response) { // Callback function on successful response
-                    if (response.status === 200) {
-                        resolve(response.brand); // Resolve the Promise with the brand data
-                    } else {
-                        reject('Failed to fetch brand.'); // Reject the Promise with an error message
-                    }
-                },
-                error: function (jqXHR, textStatus, errorThrown) { // Callback function on error
-                    console.error('AJAX Error:', textStatus, errorThrown);
-                    reject('Error fetching brand data.'); // Reject the Promise with a general error message
-                }
-            });
-        });
-    }
 
 
-    // Usage of fetchCategoryById and fetchBrandById
     $('body').on('click', '#handleEditProductBtn', async function () {
         try {
             fetchCategories();
             fetchBrands();
             const item = JSON.parse($(this).attr('data-edit-product'));
+            console.log(item)
 
-            // Fetch category and brand data asynchronously
-            const [category, brand] = await Promise.all([
-                fetchCategoryById(item.category_id),
-                fetchBrandById(item.brand_name)
-            ]);
             // Populate the form fields with the product data
             $('#product_id').val(item.id);
             $('#sku').val(item.sku);
@@ -484,6 +378,7 @@ $(document).ready(function () {
             // Show the modal for editing
             showAddEditForm();
         } catch (error) {
+            console.log(error)
             toastr.error('Failed to fetch category or brand data. Please try again.', '', {
                 timeOut: 3000
             });
