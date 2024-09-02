@@ -97,6 +97,8 @@ class ContactUsController extends Controller
 
     public function updateContactAjax(Request $request)
     {
+    public function updateContactAjax(Request $request)
+    {
         $contact = ContactUs::find($request->id);
         $contact->update([
             'status' => $request->status == "1" ? 1 : 0,
