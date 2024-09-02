@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
     $('#newsLetterSubscribeBtn').on('click', function () {
-        const form = document.getElementById('newsLetterForm');
+        var form = document.getElementById('newsLetterForm');
         const formData = new FormData(form);
         const type = "POST";
         const url = "/admin/newsletters/create/ajax"; // replace with your server-side route
@@ -13,8 +13,7 @@ $(document).ready(function () {
                 toastr.success(response.message, '', {
                     timeOut: 3000,
                 });
-               
-                $('#email').val('');
+                form.reset()
             }
             else {
                 // Error Handling

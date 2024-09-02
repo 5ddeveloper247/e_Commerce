@@ -107,6 +107,69 @@ class ProductController extends Controller
         ]);
     }
 
+
+    public function markAsDiscounted(Request $request)
+    {
+        $id = $request->discounted_id;
+        $discount_value = $request->discounted_value;
+        $request->validate([
+            'discounted_id' => 'required|integer', // Ensure 'discounted_id' is required and must be an integer
+            'discounted_value' => 'required|numeric|between:1,100', // Ensure 'discounted_value' is required, numeric, and between 1 and 99
+        ]);
+        // Find the user by ID
+        $product = Product::find($id);
+        if ($product) {
+            // Toggle the status: if 1, set to 0; if 0, set to 1
+            $product->discount_price = $request->discounted_value;
+            // Save the updated user status
+            $product->save();
+
+            // Return success response
+            return response()->json(['message' => 'Discount updated successfully', 'status' => 200]);
+        } else {
+            // Return error response if user not found
+            return response()->json(['message' => 'Product not found', 'status' => 404]);
+        }
+    }
+
+
+    public function markAsFeatured(Request $request)
+    {
+        // Validate the request
+        $request->validate([
+            'featured_id' => 'required|integer', // Ensure 'featured_id' is required and must be an integer
+        ]);
+
+        $id = $request->input('featured_id');
+        $product = Product::find($id);
+
+        if (!$product) {
+            // Return error response if product not found
+            return response()->json(['message' => 'Product not found', 'status' => 404]);
+        }
+
+        // Count the number of currently featured products
+        $featuredCount = Product::where('featured', 1)->count();
+
+        if ($product->featured) {
+            // If the product is already featured, unmark it
+            $product->featured = 0;
+        } else {
+            // If the product is not featured, check if we can mark it as featured
+            if ($featuredCount >= 2) {
+                // Return validation error if there are already two featured products
+                return response()->json(['message' => 'There can be only two featured products at a time.', 'status' => 422]);
+            }
+            $product->featured = 1;
+        }
+
+        // Save the updated product status
+        $product->save();
+
+        // Return success response
+        return response()->json(['message' => 'Featured status updated successfully', 'status' => 200]);
+    }
+
     protected function updateExistingProduct(ProductRequest $request)
     {
 

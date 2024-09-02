@@ -119,7 +119,7 @@ if (!function_exists('sendMailAttachment')) {
                 $send->from($mail_val['email_from'], $mail_val['email_from_name']);
                 $send->replyTo($mail_val['email_from'], $mail_val['email_from_name']);
                 $send->to($mail_val['send_to'], $mail_val['send_to_name'])->subject($mail_val['subject']);
-                
+
                 // Attach the file
                 if (!empty($attachment_path) && file_exists($attachment_path)) {
                     $send->attach($attachment_path);
@@ -151,7 +151,7 @@ if (!function_exists('sendMailAttachment')) {
                 $send->from($mail_val['email_from'], $mail_val['email_from_name']);
                 $send->replyTo($mail_val['email_from'], $mail_val['email_from_name']);
                 $send->to($mail_val['send_to'], $mail_val['send_to_name'])->subject($mail_val['subject']);
-                
+
                 // Attach the file
                 if (!empty($attachment_path) && file_exists($attachment_path)) {
                     $send->attach($attachment_path);
@@ -169,7 +169,7 @@ if (!function_exists('sendMailAttachment')) {
 
 if (!function_exists('getWebsiteSettings')) {
     function getWebsiteSettings()
-    {   
+    {
         try {
             $settings = SiteSetting::with(['settingFiles'])->first();
             return $settings;
@@ -182,7 +182,7 @@ if (!function_exists('getWebsiteSettings')) {
 
 if (!function_exists('getFeaturedProducts')) {
     function getFeaturedProducts()
-    {   
+    {
         try {
             $featured = Product::where('featured', '1')->with(['productImages'])->get();
             return $featured;
@@ -194,4 +194,18 @@ if (!function_exists('getFeaturedProducts')) {
 }
 
 
-
+if (!function_exists('getDiscountedProducts')) {
+    function getDiscountedProducts()
+    {
+        try {
+            $discountedProducts = Product::where('is_offered', '1')
+            ->limit(2)
+            ->with(['productImages'])
+            ->get();
+            return $discountedProducts;
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return false;
+        }
+    }
+}

@@ -78,6 +78,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/get', [ProductController::class, 'getProducts'])->name('admin.products.get');
         Route::post('/products/store', [ProductController::class, 'storeProduct'])->name('admin.products.store');
         Route::post('/products/delete', [ProductController::class, 'deleteProduct'])->name('admin.products.destroy');
+        Route::post('/product/markAsDiscounted/ajax', [ProductController::class, 'markAsDiscounted'])->name('product.markAsDiscounted.ajax');
+        Route::post('/product/markAsFeatured/ajax', [ProductController::class, 'markAsFeatured'])->name('product.markAsFeatured.ajax');
 
         // Product Images
         Route::get('/products/images', [ProductController::class, 'getProductImages'])->name('admin.products.images.index');
@@ -140,15 +142,18 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/verifyOtpForget', [RegisterController::class, 'verifyOtpForget'])->name('user.verifyOtpForget');
     Route::post('/changePassForget', [RegisterController::class, 'changePassForget'])->name('user.changePassForget');
 
+    //ajax request
+    Route::get('products_listing', [WebsiteController::class, 'productsListing'])->name('user.productsListing');
+
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
         Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
 
 
 
-        /************** AJAX ROUTES ******************/
-        // Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
 
+
+        /************** AJAX ROUTES ******************/
     });
 });
 

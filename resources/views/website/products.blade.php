@@ -172,7 +172,8 @@
     </nav>
 
     <div class="d-flex py-5">
-        <nav class="navbar d-none d-lg-block border rounded-4 w-50 navbar-expand-lg" style="height:fit-content; width:fit-content">
+        <nav class="navbar d-none d-lg-block border rounded-4 w-50 navbar-expand-lg"
+            style="height:fit-content; width:fit-content">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
@@ -307,200 +308,23 @@
                 <h5 class="mb-0">AC Products</h5>
                 <div class="list-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-width="2" d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
+                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-width="2"
+                            d="M9 8h10M9 12h10M9 16h10M4.99 8H5m-.02 4h.01m0 4H5" />
                     </svg>
                 </div>
                 <div class="grid-icon d-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.7em" height="1.7em" viewBox="0 0 56 56">
-                        <path fill="#000" d="M43.265 27.696h8.975c2.5 0 3.76-1.26 3.76-3.859V15.04c0-2.598-1.26-3.838-3.76-3.838h-8.975c-2.5 0-3.76 1.24-3.76 3.838v8.798c0 2.599 1.26 3.858 3.76 3.858m-39.505 0h8.975c2.5 0 3.76-1.26 3.76-3.859V15.04c0-2.598-1.26-3.838-3.76-3.838H3.76C1.26 11.2 0 12.44 0 15.039v8.798c0 2.599 1.26 3.858 3.76 3.858m19.762 0h8.956c2.52 0 3.76-1.26 3.76-3.859V15.04c0-2.598-1.24-3.838-3.76-3.838h-8.956c-2.5 0-3.76 1.24-3.76 3.838v8.798c0 2.599 1.26 3.858 3.76 3.858M3.799 24.92c-.689 0-1.024-.354-1.024-1.083V15.04c0-.709.335-1.063 1.024-1.063h8.877c.69 0 1.043.354 1.043 1.063v8.798c0 .729-.354 1.083-1.043 1.083Zm19.762 0c-.689 0-1.023-.354-1.023-1.083V15.04c0-.709.334-1.063 1.023-1.063h8.897q1.004 0 1.004 1.063v8.798c0 .729-.334 1.083-1.004 1.083Zm19.743 0c-.689 0-1.023-.354-1.023-1.083V15.04c0-.709.334-1.063 1.023-1.063h8.878c.708 0 1.042.354 1.042 1.063v8.798c0 .729-.334 1.083-1.042 1.083ZM3.76 47.438h8.975c2.5 0 3.76-1.24 3.76-3.838v-8.818c0-2.579-1.26-3.839-3.76-3.839H3.76c-2.5 0-3.76 1.26-3.76 3.839V43.6c0 2.598 1.26 3.838 3.76 3.838m19.762 0h8.956c2.52 0 3.76-1.24 3.76-3.838v-8.818c0-2.579-1.24-3.839-3.76-3.839h-8.956c-2.5 0-3.76 1.26-3.76 3.839V43.6c0 2.598 1.26 3.838 3.76 3.838m19.743 0h8.975c2.5 0 3.76-1.24 3.76-3.838v-8.818c0-2.579-1.26-3.839-3.76-3.839h-8.975c-2.5 0-3.76 1.26-3.76 3.839V43.6c0 2.598 1.26 3.838 3.76 3.838M3.799 44.663c-.689 0-1.024-.354-1.024-1.063v-8.8c0-.728.335-1.082 1.024-1.082h8.877c.69 0 1.043.354 1.043 1.082v8.8c0 .709-.354 1.063-1.043 1.063Zm19.762 0c-.689 0-1.023-.354-1.023-1.063v-8.8c0-.728.334-1.082 1.023-1.082h8.897c.67 0 1.004.354 1.004 1.082v8.8q0 1.063-1.004 1.063Zm19.743 0c-.689 0-1.023-.354-1.023-1.063v-8.8c0-.728.334-1.082 1.023-1.082h8.878c.708 0 1.042.354 1.042 1.082v8.8c0 .709-.334 1.063-1.042 1.063Z" />
+                        <path fill="#000"
+                            d="M43.265 27.696h8.975c2.5 0 3.76-1.26 3.76-3.859V15.04c0-2.598-1.26-3.838-3.76-3.838h-8.975c-2.5 0-3.76 1.24-3.76 3.838v8.798c0 2.599 1.26 3.858 3.76 3.858m-39.505 0h8.975c2.5 0 3.76-1.26 3.76-3.859V15.04c0-2.598-1.26-3.838-3.76-3.838H3.76C1.26 11.2 0 12.44 0 15.039v8.798c0 2.599 1.26 3.858 3.76 3.858m19.762 0h8.956c2.52 0 3.76-1.26 3.76-3.859V15.04c0-2.598-1.24-3.838-3.76-3.838h-8.956c-2.5 0-3.76 1.24-3.76 3.838v8.798c0 2.599 1.26 3.858 3.76 3.858M3.799 24.92c-.689 0-1.024-.354-1.024-1.083V15.04c0-.709.335-1.063 1.024-1.063h8.877c.69 0 1.043.354 1.043 1.063v8.798c0 .729-.354 1.083-1.043 1.083Zm19.762 0c-.689 0-1.023-.354-1.023-1.083V15.04c0-.709.334-1.063 1.023-1.063h8.897q1.004 0 1.004 1.063v8.798c0 .729-.334 1.083-1.004 1.083Zm19.743 0c-.689 0-1.023-.354-1.023-1.083V15.04c0-.709.334-1.063 1.023-1.063h8.878c.708 0 1.042.354 1.042 1.063v8.798c0 .729-.334 1.083-1.042 1.083ZM3.76 47.438h8.975c2.5 0 3.76-1.24 3.76-3.838v-8.818c0-2.579-1.26-3.839-3.76-3.839H3.76c-2.5 0-3.76 1.26-3.76 3.839V43.6c0 2.598 1.26 3.838 3.76 3.838m19.762 0h8.956c2.52 0 3.76-1.24 3.76-3.838v-8.818c0-2.579-1.24-3.839-3.76-3.839h-8.956c-2.5 0-3.76 1.26-3.76 3.839V43.6c0 2.598 1.26 3.838 3.76 3.838m19.743 0h8.975c2.5 0 3.76-1.24 3.76-3.838v-8.818c0-2.579-1.26-3.839-3.76-3.839h-8.975c-2.5 0-3.76 1.26-3.76 3.839V43.6c0 2.598 1.26 3.838 3.76 3.838M3.799 44.663c-.689 0-1.024-.354-1.024-1.063v-8.8c0-.728.335-1.082 1.024-1.082h8.877c.69 0 1.043.354 1.043 1.082v8.8c0 .709-.354 1.063-1.043 1.063Zm19.762 0c-.689 0-1.023-.354-1.023-1.063v-8.8c0-.728.334-1.082 1.023-1.082h8.897c.67 0 1.004.354 1.004 1.082v8.8q0 1.063-1.004 1.063Zm19.743 0c-.689 0-1.023-.354-1.023-1.063v-8.8c0-.728.334-1.082 1.023-1.082h8.878c.708 0 1.042.354 1.042 1.082v8.8c0 .709-.334 1.063-1.042 1.063Z" />
                     </svg>
                 </div>
             </div>
-            <div class="products grid-view-products mx-3">
-                <div class="card featured-card border-0">
-                    <p class="sale-badge text-black">AC</p>
-                    <div class="actions">
-                        <button class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
-                                <path fill="#000"
-                                    d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
-                            </svg>
-                        </button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="#000"
-                                    d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-center my-4">
-                        <div class="featured-card-images">
-                            <a href="{{'product_detail'}}">
-                                <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}"
-                                    alt="Card image">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body text-center">
-                        <div class="rating border-bottom pb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                        </div>
-                        <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
-                        <div class="price-and-btn">
-                            <div class="d-flex justify-content-center card-price">
-                                <h5>$12.99</h5>
-                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
-                            </div>
-                            <button class="btn btn-add-to-cart">
-                                <span class="me-2">+</span>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card featured-card border-0">
-                    <p class="sale-badge text-black">AC</p>
-                    <div class="actions">
-                        <button class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
-                                <path fill="#000"
-                                    d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
-                            </svg>
-                        </button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="#000"
-                                    d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-center my-4">
-                        <div class="featured-card-images">
-                            <a href="{{'product_detail'}}">
-                                <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}"
-                                    alt="Card image">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body text-center">
-                        <div class="rating border-bottom pb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                        </div>
-                        <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
-                        <div class="price-and-btn">
-                            <div class="d-flex justify-content-center card-price">
-                                <h5>$12.99</h5>
-                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
-                            </div>
-                            <button class="btn btn-add-to-cart">
-                                <span class="me-2">+</span>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
+            <div class="products grid-view-products mx-3" id="product_grid_element">
 
-                <div class="card featured-card border-0">
-                    <p class="sale-badge text-black">AC</p>
-                    <div class="actions">
-                        <button class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
-                                <path fill="#000"
-                                    d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
-                            </svg>
-                        </button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="#000"
-                                    d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-center my-4">
-                        <div class="featured-card-images">
-                            <a href="{{'product_detail'}}">
-                                <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}"
-                                    alt="Card image">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body text-center">
-                        <div class="rating border-bottom pb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                        </div>
-                        <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
-                        <div class="price-and-btn">
-                            <div class="d-flex justify-content-center card-price">
-                                <h5>$12.99</h5>
-                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
-                            </div>
-                            <button class="btn btn-add-to-cart">
-                                <span class="me-2">+</span>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card featured-card border-0">
+                {{-- sample product --}}
+                {{-- <div class="card featured-card border-0">
                     <p class="sale-badge text-black">AC</p>
                     <div class="actions">
                         <button class="btn">
@@ -547,7 +371,8 @@
                                     d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
                             </svg>
                         </div>
-                        <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
+                        <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT
+                                PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
                         <div class="price-and-btn">
                             <div class="d-flex justify-content-center card-price">
                                 <h5>$12.99</h5>
@@ -559,223 +384,60 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </div> --}}
+                {{-- sample product --}}
+                {{-- products will be inserted here dynamically through js --}}
 
-                <div class="card featured-card border-0">
-                    <p class="sale-badge text-black">AC</p>
-                    <div class="actions">
-                        <button class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
-                                <path fill="#000"
-                                    d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
-                            </svg>
-                        </button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="#000"
-                                    d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-center my-4">
-                        <div class="featured-card-images">
-                            <a href="{{'product_detail'}}">
-                                <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}"
-                                    alt="Card image">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body text-center">
-                        <div class="rating border-bottom pb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                        </div>
-                        <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
-                        <div class="price-and-btn">
-                            <div class="d-flex justify-content-center card-price">
-                                <h5>$12.99</h5>
-                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
-                            </div>
-                            <button class="btn btn-add-to-cart">
-                                <span class="me-2">+</span>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card featured-card border-0">
-                    <p class="sale-badge text-black">AC</p>
-                    <div class="actions">
-                        <button class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
-                                <path fill="#000"
-                                    d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
-                            </svg>
-                        </button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="#000"
-                                    d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-center my-4">
-                        <div class="featured-card-images">
-                            <a href="{{'product_detail'}}">
-                                <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}"
-                                    alt="Card image">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body text-center">
-                        <div class="rating border-bottom pb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                        </div>
-                        <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
-                        <div class="price-and-btn">
-                            <div class="d-flex justify-content-center card-price">
-                                <h5>$12.99</h5>
-                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
-                            </div>
-                            <button class="btn btn-add-to-cart">
-                                <span class="me-2">+</span>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="card featured-card border-0">
-                    <p class="sale-badge text-black">AC</p>
-                    <div class="actions">
-                        <button class="btn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
-                                <path fill="#000"
-                                    d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
-                            </svg>
-                        </button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                <path fill="#000"
-                                    d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="d-flex justify-content-center my-4">
-                        <div class="featured-card-images">
-                            <a href="{{'product_detail'}}">
-                                <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}"
-                                    alt="Card image">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="card-body text-center">
-                        <div class="rating border-bottom pb-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                            </svg>
-                        </div>
-                        <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
-                        <div class="price-and-btn">
-                            <div class="d-flex justify-content-center card-price">
-                                <h5>$12.99</h5>
-                                <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
-                            </div>
-                            <button class="btn btn-add-to-cart">
-                                <span class="me-2">+</span>
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="list-view-products mx-3 d-none">
+            <div class="list-view-products mx-3 d-none" id="product_list_element">
                 <div class="card list-view-card p-2 border-0 my-4">
                     <div class="verified-badge">AC</div>
                     <div class="row align-items-center">
                         <div class="col-md-3">
                             <!-- Property Image or Placeholder -->
                             <div class="text-center">
-                                <img src="{{asset('assets_user/images/category-img.png')}}" alt="Property Image" class="img-fluid list-view-card-images" style="max-width: 100%;">
+                                <img src="{{asset('assets_user/images/category-img.png')}}" alt="Property Image"
+                                    class="img-fluid list-view-card-images" style="max-width: 100%;">
                             </div>
                         </div>
                         <div class="col-md-7 d-flex flex-column justify-content-center border-end">
-                            <h6 class="property-price">Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</h6>
+                            <h6 class="property-price">Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP
+                                COMBO</h6>
                             <div class="rating-list-view pb-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
+                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
+                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
+                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
+                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
+                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
                             </div>
                             <!-- <p class="property-type">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, culpa.</p> -->
                             <p class="card-text mb-0 line-clamp-4">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum modi, ipsam molestias maiores magni dolores suscipit voluptatem laborum rerum voluptate, veritatis, at quibusdam voluptates doloribus impedit molestiae blanditiis fuga sit veniam! Nostrum quibusdam eveniet sit. lorem3
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum modi, ipsam
+                                molestias maiores magni dolores suscipit voluptatem laborum rerum voluptate, veritatis,
+                                at quibusdam voluptates doloribus impedit molestiae blanditiis fuga sit veniam! Nostrum
+                                quibusdam eveniet sit. lorem3
                             </p>
 
                         </div>
@@ -794,104 +456,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="card list-view-card p-2 border-0 my-4">
-                    <div class="verified-badge">AC</div>
-                    <div class="row align-items-center">
-                        <div class="col-md-3">
-                            <!-- Property Image or Placeholder -->
-                            <div class="text-center">
-                                <img src="{{asset('assets_user/images/category-img.png')}}" alt="Property Image" class="img-fluid list-view-card-images" style="max-width: 100%;">
-                            </div>
-                        </div>
-                        <div class="col-md-7 d-flex flex-column justify-content-center border-end">
-                            <h6 class="property-price">Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</h6>
-                            <div class="rating-list-view pb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                            </div>
-                            <!-- <p class="property-type">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, culpa.</p> -->
-                            <p class="card-text mb-0 line-clamp-4">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum modi, ipsam molestias maiores magni dolores suscipit voluptatem laborum rerum voluptate, veritatis, at quibusdam voluptates doloribus impedit molestiae blanditiis fuga sit veniam! Nostrum quibusdam eveniet sit. lorem3
-                            </p>
 
-                        </div>
-                        <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
-                            <div class="d-flex card-price">
-                                <h5 class=" mb-0">$12.99</h5>
-                                <p class="mb-0 text-danger ps-1"><small><del>$15.00</del></small></p>
-                            </div>
-                            <p class="fw-bold text-success">Free Shipping</p>
-                            <button class="btn btn-view-details my-1">
-                                <small>View Detail</small>
-                            </button>
-                            <button class="btn btn-add-to-cart my-1">
-                                <small>Add to Cart</small>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card list-view-card p-2 border-0 my-4">
-                    <div class="verified-badge">AC</div>
-                    <div class="row align-items-center">
-                        <div class="col-md-3">
-                            <!-- Property Image or Placeholder -->
-                            <div class="text-center">
-                                <img src="{{asset('assets_user/images/category-img.png')}}" alt="Property Image" class="img-fluid list-view-card-images" style="max-width: 100%;">
-                            </div>
-                        </div>
-                        <div class="col-md-7 d-flex flex-column justify-content-center border-end">
-                            <h6 class="property-price">Ramsond 15000 BTU PTAC AC HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</h6>
-                            <div class="rating-list-view pb-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                                </svg>
-                            </div>
-                            <!-- <p class="property-type">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod, culpa.</p> -->
-                            <p class="card-text mb-0 line-clamp-4">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatum modi, ipsam molestias maiores magni dolores suscipit voluptatem laborum rerum voluptate, veritatis, at quibusdam voluptates doloribus impedit molestiae blanditiis fuga sit veniam! Nostrum quibusdam eveniet sit. lorem3
-                            </p>
 
-                        </div>
-                        <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
-                            <div class="d-flex card-price">
-                                <h5 class=" mb-0">$12.99</h5>
-                                <p class="mb-0 text-danger ps-1"><small><del>$15.00</del></small></p>
-                            </div>
-                            <p class="fw-bold text-success">Free Shipping</p>
-                            <button class="btn btn-view-details my-1">
-                                <small>View Detail</small>
-                            </button>
-                            <button class="btn btn-add-to-cart my-1">
-                                <small>Add to Cart</small>
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -901,3 +467,8 @@
 
 
 @endsection
+
+@push('scripts')
+
+<script src="{{ asset('assets_user/customjs/product_listing.js') }}"></script>
+@endpush

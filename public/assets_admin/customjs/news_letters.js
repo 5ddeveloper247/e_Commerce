@@ -142,15 +142,19 @@ $(document).ready(function () {
         SendAjaxRequestToServer(type, url, formData, '', removeNewsResponse, '', '#deleteNowBtn');
     })
 
-    
+
     function removeNewsResponse(response) {
         console.log(response);
         if (response.status == 200) {
             toastr.success(response.message, '', {
                 timeOut: 3000
             })
+            fetchInitalNewsListing();
+            $('#confirmationModalRemove').modal('hide');
         }
         else {
+            fetchInitalNewsListing();
+            $('#confirmationModalRemove').modal('hide');
             toastr.error('An error occurred. Please try again.', '', {
                 timeOut: 3000
             })
