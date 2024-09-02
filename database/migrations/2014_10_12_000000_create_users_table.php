@@ -22,6 +22,8 @@ return new class extends Migration
             $table->string('phone')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('otp')->nullable();
+            $table->timestamp('otp_created_at')->nullable();
             $table->string('company_name')->nullable();
             $table->string('address')->nullable();
             $table->integer('country_id')->nullable();

@@ -37,8 +37,8 @@
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="email" name="email"
-                        placeholder="Email Address" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email Address"
+                        required>
                     <label for="email_address">Email Address (Required)</label>
                 </div>
             </div>

@@ -502,5 +502,4 @@
         img.style.transformOrigin = "center center";
     }
 </script>
-{{-- //handling news letters--}}
 <script src="{{ asset('assets_user/customjs/news_letters.js') }}"></script>

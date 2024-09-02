@@ -37,7 +37,7 @@ $(document).ready(function () {
                                     </svg>
                                 </button>
                                 <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                                    <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
                                        data-bs-target="#filterModal" data-edit-user='${JSON.stringify(item)}' id="handleEditUserBtn">Edit</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"

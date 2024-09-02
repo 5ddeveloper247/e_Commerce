@@ -185,165 +185,70 @@
                     <a class="nav-link active" id="product-details-tab" data-toggle="tab" href="#product-details"
                         role="tab" aria-controls="product-details" aria-selected="true">Product Details</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item media-nav-item d-none">
                     <a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media"
-                        aria-selected="false">Media</a>
+                        aria-selected="false">Product Meida</a>
+                </li>
+                <li class="nav-item specifications-nav-item d-none">
+                    <a class="nav-link" id="specifications-tab" data-toggle="tab" href="#specifications" role="tab" aria-controls="specifications"
+                        aria-selected="false">Product Specifications</a>
                 </li>
             </ul>
 
             <!-- Tab content -->
             <div class="tab-content mt-4" id="settings-tabs-content">
                 <!-- Product Details Tab -->
-                <div class="tab-pane fade show active" id="product-details" role="tabpanel"
-                    aria-labelledby="product-details-tab">
-                    <form id="product_settings_form">
-                        <!-- Product Details -->
-                        <div class="section">
-                            <h2>Product Details</h2>
-                            <div class="row">
-
-                                {{-- update id --}}
-                                <input type="hidden" id="product_id" name="product_id" value="">
-                                {{-- update id --}}
-                                <div class="col-sm-6 mb-3">
-                                    <label for="sku" class="form-label">SKU</label>
-                                    <input type="text" class="form-control" id="sku" name="sku" placeholder="Enter SKU">
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <label for="" class="form-label">Category</label>
-                                    <select class="form-control" id="category_id" name="category_id">
-                                        <option value="" disabled selected>Select a category</option>
-                                        <!-- Example options; replace with dynamic data -->
-                                    </select>
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <label for="" class="form-label">Brand Name</label>
-                                    <select class="form-control" id="brand_id" name="brand_id">
-                                        <option value="" disabled selected>Select a brand</option>
-                                        <!-- Example options; replace with dynamic data -->
-                                    </select>
-                                </div>
-
-                                <div class="col-sm-6 mb-3">
-                                    <label for="product_name" class="form-label">Product Name</label>
-                                    <input type="text" class="form-control" id="product_name" name="product_name"
-                                        placeholder="Enter product name">
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <label for="model_name" class="form-label">Model Name</label>
-                                    <input type="text" class="form-control" id="model_name" name="model_name"
-                                        placeholder="Enter model name">
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <label for="price" class="form-label">Price</label>
-                                    <input type="number" step="0.01" class="form-control" id="price" name="price"
-                                        placeholder="Enter price">
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <label for="discount_price" class="form-label">Discount Price</label>
-                                    <input type="number" step="0.01" class="form-control" id="discount_price"
-                                        name="discount_price" placeholder="Enter discount price">
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <label for="weight" class="form-label">Weight (kg)</label>
-                                    <input type="number" step="0.01" class="form-control" id="weight" name="weight"
-                                        placeholder="Enter weight">
-                                </div>
-                                <div class="col-sm-6 mb-3">
-                                    <label for="onhand_qty" class="form-label">On Hand Quantity</label>
-                                    <input type="number" class="form-control" id="onhand_qty" name="onhand_qty"
-                                        placeholder="Enter stock quantity">
-                                </div>
-                                <div class="col-sm-12 mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" id="description" name="description" rows="3"
-                                        placeholder="Enter description"></textarea>
-                                </div>
-                                <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
-                                    <input class="form-check-input" type="checkbox" role="switch" name="status"
-                                        id="status">
-                                    <label class="form-check-label ms-2" for="status">Status</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-center mt-4">
-                            <button type="button" id="saveProductBtn" class="btn theme-btn-outline btn-lg px-md-5">Save
-                                Settings</button>
-                        </div>
-                    </form>
-                </div>
+                @include('admin.partials.products.add-details')
 
                 <!-- Media Tab -->
-                <div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
-                    <form id="media_settings_form">
-                        <div class="section">
-                            <h2>Media</h2>
-                            <div class="row">
-                                <div class="col-sm-12 mb-3">
-                                    <label for="media-upload" class="form-label">Upload Images</label>
-                                    <input type="file" class="form-control" id="media-upload" name="media_upload[]"
-                                        multiple accept="image/*">
-                                </div>
-                                <div class="col-sm-12 mb-3">
-                                    <label for="media_preview" class="form-label">Image Preview</label>
-                                    <div class="image-container" id="media-preview">
-                                        <!-- Image previews will be shown here -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-center mt-4">
-                                <button type="button" id="saveMediaBtn"
-                                    class="btn theme-btn-outline btn-lg px-md-5">Save Media</button>
-                            </div>
-                        </div>
-                    </form>
+                @include('admin.partials.products.add-assets')
+
+                <!-- Specifications Tab -->
+                @include('admin.partials.products.add-specifications')
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{{-- Mark as offered --}}
+
+<div class="modal fade makedAsOffered" id="filterModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border">
+            <div class="modal-header justify-content-between border-0 px-4 py-3">
+                <h4 class="modal-title text-white">Marked As Offered</h4>
+                <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
+                        <path fill="currentColor"
+                            d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
+                    </svg>
+                </button>
+            </div>
+            <div class="modal-body pt-4 pb-2 px-4">
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <!-- Label placed above the input -->
+                        <input type="hidden" name="product_id" id="product_id_offerd">
+                        <label class="form-label" for="offered_percentage">Offer Percentage</label>
+                        <input class="form-control" type="number" name="offered_percentage" id="offered_percentage"
+                            placeholder="Percentage value  between 1 to 100" maxlength="3" min="1" max="100"
+                            autocomplete="off">
+
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
+                <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    Cancel
+                </button>
+                <button class="btn btn-done px-4" type="button" id="addOfferedValueBtn">Done</button>
             </div>
         </div>
     </div>
 </div>
 
-
-
-{{-- _____marked as discounted_____ --}}
-<div class="modal fade makedAsDiscounted" id="filterModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content border">
-            <form id="markedDiscountedForm" autocomplete="off">
-                <div class="modal-header justify-content-between border-0 px-4 py-3">
-                    <h4 class="modal-title text-white">Marked As Discounted Price</h4>
-                    <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal" aria-label="Close">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
-                            <path fill="currentColor"
-                                d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
-                        </svg>
-                    </button>
-                </div>
-                <div class="modal-body pt-4 pb-2 px-4">
-                    <div class="row">
-                        <input type="hidden" name="discounted_id" id="discounted_id">
-                        <div class="col-md-12 mb-3">
-                            <!-- Label placed above the input -->
-                            <label class="form-label" for="discounted_value">Discount</label>
-                            <input class="form-control" type="number" name="discounted_value" id="discounted_value"
-                                placeholder="Percentage value  between 1 to 100" maxlength="3" min="1" max="100"
-                                autocomplete="off">
-
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
-                    <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
-                        Cancel
-                    </button>
-                    <button class="btn btn-done px-4" type="button" id="addDiscountNowBtn">Done</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-{{-- _____marked as discounted_____ --}}
+{{-- Mark as offered --}}
 
 
 {{-- marked as feature --}}

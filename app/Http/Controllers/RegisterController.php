@@ -39,6 +39,12 @@ class RegisterController extends Controller
         return view('website/register')->with($data);
     }
 
+    public function forget_password(Request $request)
+    {
+        $data['pageTitle'] = 'Forget Password';
+        return view('website/forget_password')->with($data);
+    }
+
     public function getRegisterPageData(Request $request){
 
         $data['countries'] = Country::where('status', '1')->get();
@@ -158,14 +164,91 @@ class RegisterController extends Controller
 
         return redirect('login');
     }
+    
+    public function verifyEmailForget(Request $request){
+        
+        $validatedData = $request->validate([
+            'email' => 'required|email|exists:users',
+        ]);
 
-    public function home(Request $request)
-    {
-        $data['pageTitle'] = 'Dashboard';
-        return view('website.home')->with($data);
+        $user = User::where("email", $request->email)->where('role', '2')->first();
+        
+        if(!$user){
+            return response()->json(['status' => 402, 'message' => "The selected email is invalid."]);
+        }else{
+            $mailData = [];
+            $otp = implode('', array_map(function() {
+                return mt_rand(0, 9);
+            }, range(1, 5)));
+            $user->otp = $otp;
+            $user->otp_created_at = date('Y-m-d H:i:s');
+            $user->save();
+
+            $mailData['otp'] = $otp;
+            $mailData['username'] = $user->first_name;
+            $body = view('emails.forgot_password', $mailData);
+            $userEmailsSend[] = $user->email;
+            
+            sendMail($user->first_name, $userEmailsSend, 'E-commerce', 'Password Reset Request', $body);
+        }
+        
+        return response()->json(['status' => 200, 'message' => 'One Time Password (OTP) successfully send to your given email address.']);
     }
 
+    public function verifyOtpForget(Request $request){
         
+        $validatedData = $request->validate([
+            'email' => 'required|email|exists:users',
+            'otp' => 'required',
+        ]);
 
-    
+        $user = User::where("email", $request->email)->where('role', '2')->first();
+        
+        if($user){
+            if($request->otp == $user->otp){
+                
+                return response()->json(['status' => 200, 'message' => 'One Time Password (OTP) successfully send to your given email address.']); 
+            }else{
+                return response()->json(['status' => 402, 'message' => "OTP is not valid."]);
+            }
+        }else{
+            return response()->json(['status' => 402, 'message' => "Something went wrong."]);
+        }
+    }
+
+    public function changePassForget(Request $request){
+        
+        $validatedData = $request->validate([
+            'email' => 'required|email|exists:users',
+            'otp' => 'required',
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'max:20',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
+                'confirmed'
+            ],
+        ], [
+            'password_confirmation.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+        ]);
+
+        $user = User::where("email", $request->email)->where('role', '2')->first();
+        
+        if($user){
+            if($request->otp == $user->otp){
+
+                $user->password = bcrypt($request->password);
+                $user->otp = null;
+                $user->otp_created_at = null;
+                $user->save();
+
+                return response()->json(['status' => 200, 'message' => 'Password change successfully, now login with your new email and password.']); 
+            }else{
+                return response()->json(['status' => 402, 'message' => "Something went wrong."]);
+            }
+        }else{
+            return response()->json(['status' => 402, 'message' => "Something went wrong."]);
+        }
+    }
 }

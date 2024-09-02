@@ -53,8 +53,8 @@
                         <small>Total</small>
                     </div>
                 </div>
-                <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3"
-                    data-bs-toggle="modal" data-bs-target="#filterModal">
+                <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3 modal-add-btn"
+                    data-bs-toggle="modal" data-bs-target="#filterModal" data-modal-type="add">
                     <div class="d-flex flex-column align-items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 32 32">
                             <path fill="currentColor"
@@ -116,12 +116,12 @@
                         </div>
 
                         <div class="form-floating col-md-12 mb-3">
-                            <input type="text" class="form-control" id="user_password" name="user_password"
+                            <input type="password" class="form-control" id="user_password" name="user_password"
                                 placeholder="">
                             <label class="mx-2" for="edit-admin-password">Password</label>
                         </div>
                         <div class="form-floating col-md-12 mb-3">
-                            <input type="text" class="form-control" id="user_confirm_password"
+                            <input type="password" class="form-control" id="user_confirm_password"
                                 name="user_confirm_password" placeholder="">
                             <label class="mx-2" for="edit-admin-confirm-password">confirm Password</label>
                         </div>

@@ -16,7 +16,6 @@ $(document).ready(function () {
                 });
                 // Reset the form and hide the modal
                 form.reset();
-
                 // Uncomment and define this function if you want to reload the admin list data
                 // loadJobsPageData();
             } else {

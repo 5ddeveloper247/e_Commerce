@@ -83,7 +83,7 @@ $(document).ready(function () {
                 toastr.success(response.message, '', {
                     timeOut: 3000
                 })
-               
+
                 form.reset();
                 fetchInitalNewsListing();
             }
@@ -142,13 +142,13 @@ $(document).ready(function () {
         SendAjaxRequestToServer(type, url, formData, '', removeNewsResponse, '', '#deleteNowBtn');
     })
 
+    
     function removeNewsResponse(response) {
         console.log(response);
         if (response.status == 200) {
             toastr.success(response.message, '', {
                 timeOut: 3000
             })
-            fetchInitalContactListing();
         }
         else {
             toastr.error('An error occurred. Please try again.', '', {

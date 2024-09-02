@@ -508,11 +508,11 @@
                 </div>
             </div>
             <!-- Toggle button for Small Screen End -->
-            <a class="navbar-brand d-flex me-1 me-sm-3" href="#">
+            <a class="navbar-brand d-flex me-1 me-sm-3" href="{{ route('admin.dashboard') }}">
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center">
-                        <img src="https://www.mchnursing.com/lms/public/uploads/main/images/22-05-2024/664dbaf39b6a3.png"
-                            alt="phoenix" width="70">
+                        <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/220x70/logo_01_1596263683__90290.original.png"
+                            alt="phoenix" width="160">
                         <!-- <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5> -->
                     </div>
                 </div>
@@ -1355,83 +1355,11 @@
                     </div>
                 </div>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link" id="navbarDropdownNindeDots" href="#" role="button" data-bs-toggle="dropdown"
-                    aria-haspopup="true" data-bs-auto-close="outside" aria-expanded="false"><svg width="16" height="16"
-                        viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
-                        <circle cx="2" cy="8" r="2" fill="currentColor"></circle>
-                        <circle cx="2" cy="14" r="2" fill="currentColor"></circle>
-                        <circle cx="8" cy="8" r="2" fill="currentColor"></circle>
-                        <circle cx="8" cy="14" r="2" fill="currentColor"></circle>
-                        <circle cx="14" cy="8" r="2" fill="currentColor"></circle>
-                        <circle cx="14" cy="14" r="2" fill="currentColor"></circle>
-                        <circle cx="8" cy="2" r="2" fill="currentColor"></circle>
-                        <circle cx="14" cy="2" r="2" fill="currentColor"></circle>
-                    </svg></a>
-                <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-nine-dots shadow border"
-                    aria-labelledby="navbarDropdownNindeDots">
-                    <div class="card bg-body-emphasis position-relative border-0">
-                        <div class="card-body pt-3 px-3 pb-0 overflow-auto scrollbar" style="height: 17rem;">
-                            <div class="row text-center align-items-center gx-0 gy-0">
-                                <div class="col-6">
-                                    <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!">
-                                        <img src="https://prium.github.io/phoenix/v1.18.0/assets/img/nav-icons/behance.webp"
-                                            alt="" width="30">
-                                        <p class="mb-0 text-body-emphasis text-truncate fs-10 mt-1 pt-1">Behance</p>
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!">
-                                        <img src="https://prium.github.io/phoenix/v1.18.0/assets/img/nav-icons/google-cloud.webp"
-                                            alt="" width="30">
-                                        <p class="mb-0 text-body-emphasis text-truncate fs-10 mt-1 pt-1">Cloud</p>
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!">
-                                        <img src="https://prium.github.io/phoenix/v1.18.0/assets/img/nav-icons/slack.webp"
-                                            alt="" width="30">
-                                        <p class="mb-0 text-body-emphasis text-truncate fs-10 mt-1 pt-1">Slack</p>
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!">
-                                        <img src="https://prium.github.io/phoenix/v1.18.0/assets/img/nav-icons/behance.webp"
-                                            alt="" width="30">
-                                        <p class="mb-0 text-body-emphasis text-truncate fs-10 mt-1 pt-1">Behance</p>
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!">
-                                        <img src="https://prium.github.io/phoenix/v1.18.0/assets/img/nav-icons/google-cloud.webp"
-                                            alt="" width="30">
-                                        <p class="mb-0 text-body-emphasis text-truncate fs-10 mt-1 pt-1">Cloud</p>
-                                    </a>
-                                </div>
-                                <div class="col-6">
-                                    <a class="d-block bg-body-secondary-hover p-2 rounded-3 text-center text-decoration-none mb-3"
-                                        href="#!">
-                                        <img src="https://prium.github.io/phoenix/v1.18.0/assets/img/nav-icons/slack.webp"
-                                            alt="" width="30">
-                                        <p class="mb-0 text-body-emphasis text-truncate fs-10 mt-1 pt-1">Slack</p>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </li>
+
             <li class="nav-item dropdown"><a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button"
                     data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                     <div class="avatar avatar-l ">
-                        <img class="rounded-circle "
-                            src="https://prium.github.io/phoenix/v1.18.0/assets/img/team/40x40/57.webp" alt="">
+                        <img class="rounded-circle " src="{{ asset('assets_admin/images/user-icon.webp') }}" alt="">
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
@@ -1440,16 +1368,12 @@
                         <div class="card-body p-0">
                             <div class="text-center py-2">
                                 <div class="avatar avatar-xl ">
-                                    <img class="rounded-circle "
-                                        src="https://prium.github.io/phoenix/v1.18.0/assets/img/team/72x72/57.webp"
-                                        alt="">
+                                    <img class="rounded-circle " src="{{ asset('assets_admin/images/user-icon-md.jpg') }}" alt="">
                                 </div>
-                                <h6 class="mt-2 text-body-emphasis">Jerry Seinfield</h6>
+                                <h6 class="mt-2 text-body-emphasis">{{ auth()->user()->name }}</h6>
                             </div>
-                            <div class="mb-3 mx-3"><input class="form-control form-control-sm" id="statusUpdateInput"
-                                    type="text" placeholder="Update your status"></div>
                         </div>
-                        <div class="overflow-auto scrollbar" style="height: 10rem;">
+                        <div class="overflow-auto scrollbar">
                             <ul class="nav d-flex flex-column mb-2 pb-1">
                                 <li class="nav-item"><a class="nav-link px-3 d-block"
                                         href="{{ route('admin.profile') }}"> <svg xmlns="http://www.w3.org/2000/svg"
@@ -1461,7 +1385,7 @@
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg><span>Profile</span></a></li>
                                 <li class="nav-item"><a class="nav-link px-3 d-block"
-                                        href="route('admin.dashboard')"><svg xmlns="http://www.w3.org/2000/svg"
+                                        href="{{route('admin.dashboard')}}"><svg xmlns="http://www.w3.org/2000/svg"
                                             width="16px" height="16px" viewBox="0 0 24 24" fill="none"
                                             stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                             stroke-linejoin="round"
@@ -1469,61 +1393,10 @@
                                             <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
                                             <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
                                         </svg>Dashboard</a></li>
-                                <li class="nav-item"><a class="nav-link px-3 d-block" href="#!"> <svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-lock me-2 text-body align-bottom">
-                                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                                        </svg>Posts &amp; Activity</a></li>
-                                <li class="nav-item"><a class="nav-link px-3 d-block" href="#!"> <svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-settings me-2 text-body align-bottom">
-                                            <circle cx="12" cy="12" r="3"></circle>
-                                            <path
-                                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
-                                            </path>
-                                        </svg>Settings &amp; Privacy </a></li>
-                                <li class="nav-item"><a class="nav-link px-3 d-block" href="#!"> <svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-help-circle me-2 text-body align-bottom">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                                        </svg>Help Center</a></li>
-                                <li class="nav-item"><a class="nav-link px-3 d-block" href="#!"> <svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-globe me-2 text-body align-bottom">
-                                            <circle cx="12" cy="12" r="10"></circle>
-                                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                                            <path
-                                                d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z">
-                                            </path>
-                                        </svg>Language</a></li>
                             </ul>
                         </div>
                         <div class="card-footer p-0 border-top border-translucent">
-                            <ul class="nav d-flex flex-column my-3">
-                                <li class="nav-item"><a class="nav-link px-3 d-block" href="#!"> <svg
-                                            xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round"
-                                            class="feather feather-user-plus me-2 text-body align-bottom">
-                                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                                            <circle cx="8.5" cy="7" r="4"></circle>
-                                            <line x1="20" y1="8" x2="20" y2="14"></line>
-                                            <line x1="23" y1="11" x2="17" y2="11"></line>
-                                        </svg>Add another account</a></li>
-                            </ul>
-                            <hr>
-                            <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="#!">
+                            <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="{{route('admin.logout')}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"
@@ -1532,10 +1405,6 @@
                                         <polyline points="16 17 21 12 16 7"></polyline>
                                         <line x1="21" y1="12" x2="9" y2="12"></line>
                                     </svg>Sign out</a></div>
-                            <div class="my-2 text-center fw-bold fs-10 text-body-quaternary"><a
-                                    class="text-body-quaternary me-1" href="#!">Privacy policy</a>•<a
-                                    class="text-body-quaternary mx-1" href="#!">Terms</a>•<a
-                                    class="text-body-quaternary ms-1" href="#!">Cookies</a></div>
                         </div>
                     </div>
                 </div>

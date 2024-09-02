@@ -117,33 +117,27 @@ $(document).ready(function () {
     });
 });
 
-ClassicEditor.create(document.querySelector("#editor")).catch((error) => {
-    console.error(error);
+const editors = [
+    "#editor",
+    "#editor2",
+    "#editor3",
+    "#editor4",
+    "#editor5",
+    "#editor6",
+    "#editor7",
+    "#editor8",
+    "#editor9"
+];
+
+editors.forEach(selector => {
+    const element = document.querySelector(selector);
+    if (element) {
+        ClassicEditor.create(element).catch((error) => {
+            console.error(error);
+        });
+    }
 });
-ClassicEditor.create(document.querySelector("#editor2")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor3")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor4")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor5")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor6")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor7")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor8")).catch((error) => {
-    console.error(error);
-});
-ClassicEditor.create(document.querySelector("#editor9")).catch((error) => {
-    console.error(error);
-});
+
 $(".add-statement-btn").on("click", function () {
     $(".add-statement").removeClass("d-none");
     // $(".add-option").addClass('d-none')
@@ -248,9 +242,153 @@ $(".back-to-products").on("click", function () {
     $(".rational-main-content").addClass("d-none");
     $("#products").removeClass("d-none");
 });
-$(document).ready(function() {
+$(document).ready(function () {
     $('.my-select2').select2({
-      placeholder: "Modes",
-      allowClear: true
+        placeholder: "Modes",
+        allowClear: true
     });
-  });
+});
+
+// To Clear Modal Pop Up Form On Add Click
+$(document).on('click', '.modal-add-btn', function () {
+    resetModalForm('#filterModal');
+});
+
+function resetModalForm(selector = '#filterModal') {
+    $(selector).find('input').val('');
+    $(selector).find('textarea').val('');
+    $(selector).find('select').val(null).trigger('change');
+}
+
+
+
+var files = [];
+var selectedFiles = [];
+$('#file-input').on('change', function (event) {
+    const files = event.target.files;
+    var allfileslength = files.length + selectedFiles.length;
+    if (allfileslength > 7) {
+        toastr.error('You can upload a maximum of 7 images.');
+        return;
+    }
+    $('.image-container-selected').empty();
+    // Validate and add selected files to selectedFiles array
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        // Check if the file is an image
+        if (!file.type.startsWith('image/')) {
+            toastr.error('Please select only image files.');
+            continue;
+        }
+        selectedFiles.push(file);
+    }
+    // Update the display
+    displaySelectedFiles();
+});
+
+
+function displaySelectedFiles() {
+    const $imageContainerselected = $('.image-container-selected');
+    $imageContainerselected.empty(); // Clear previous images
+    if ($imageContainerselected.attr('data-page-name') == 'products') {
+        ajaxUrl = '/admin/product/delete/images';
+    } else {
+        ajaxUrl = '/admin/settings/file/remove';
+    }
+    selectedFiles.forEach((file, index) => {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const $imageDiv = $('<div>').addClass('image-item-land');
+            const $image = $('<img>').attr('src', e.target.result);
+            $imageDiv.append($image);
+            const $fileName = $('<p>').text(file.name);
+            $imageDiv.append($fileName);
+            const $cancelButton = $('<span>').html('&times;').addClass('cancel-icon');
+            $cancelButton.on('click', function () {
+                selectedFiles.splice(index, 1);
+                displaySelectedFiles();
+            });
+
+            $imageDiv.append($cancelButton);
+            $imageContainerselected.append($imageDiv);
+        }
+        reader.readAsDataURL(file);
+    });
+}
+
+function removeExistedFiles(fileIndex, url) {
+    // Remove the file from the files array
+    const removedfile = files[fileIndex]; // Directly use fileIndex to get the file object
+    files.splice(fileIndex, 1); // Remove the file from the array
+
+    if (removedfile !== undefined) {
+        var url = url;
+        const type = "POST";
+        const data = {
+            id: removedfile.id
+        };
+
+        // Ensure that AJAX settings are correct
+        $.ajax({
+            type: type,
+            url: url,
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (response) {
+                handleFileRemoveResponse(response);
+            },
+            error: function (error) {
+                console.error("Error removing file:", error);
+            }
+        });
+    }
+
+    // Re-render the image container after removal
+    displayExistedFiles();
+}
+
+function handleFileRemoveResponse(response) {
+    if (response.status == 200) {
+        toastr.success(response.message, '', {
+            "timeOut": "3000"
+        })
+    }
+    else {
+        toastr.error(response.message, '', {
+            "timeOut": "3000"
+        })
+    }
+}
+
+
+function displayExistedFiles() {
+    const $imageContainerexisted = $('.image-container-existed');
+    $imageContainerexisted.empty(); // Clear previous images
+
+    // Determine the AJAX URL based on the page name
+    let ajaxUrl;
+    if ($imageContainerexisted.attr('data-page-name') === 'products') {
+        ajaxUrl = '/admin/product/delete/images';
+    }
+    else {
+        ajaxUrl = '/admin/settings/file/remove';
+    }
+
+    files.forEach((file, index) => {
+        const $imageDiv = $('<div>').addClass('image-item-land');
+        const $image = $('<img>').attr('src', file.name);
+        $imageDiv.append($image);
+
+        const $fileName = $('<p>').text(file.name); // Display the file name
+        $imageDiv.append($fileName);
+
+        const $cancelButton = $('<span>').html('&times;').addClass('cancel-icon');
+        $cancelButton.on('click', function () {
+            removeExistedFiles(index, ajaxUrl); // Call remove function with the current index
+        });
+
+        $imageDiv.append($cancelButton);
+        $imageContainerexisted.append($imageDiv);
+    });
+}

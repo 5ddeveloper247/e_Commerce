@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\NewsLetterController;
 
 /*
@@ -54,7 +55,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/products', [ProductController::class, 'productIndex'])->name('admin.product.get');
         //contact us
         Route::get('/contactus', [ContactUsController::class, 'contactIndex'])->name('admin.contactus.index');
-        //news letter
+
+        //news letters
         Route::get('/newsletter', [NewsLetterController::class, 'newsletterIndex'])->name('admin.newsletter.index');
 
         /************** AJAX ROUTES ******************/
@@ -70,17 +72,31 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/category/listing/ajax', [AdminController::class, 'categoryListingAjax'])->name('category.listing.ajax');
         Route::post('/category/edit/ajax', [AdminController::class, 'updateCategoryAjax'])->name('user.category.ajax');
         Route::post('/category/status/ajax', [AdminController::class, 'updateCategoryStatusAjax'])->name('admin.category.status.ajax');
-        //products
-        Route::get('/product/ajax', [ProductController::class, 'ProductAjax'])->name('admin.product.ajax');
-        Route::post('/product/store/ajax', [ProductController::class, 'storeProductAjax'])->name('admin.product.store');
-        Route::post('/product/delete/ajax', [ProductController::class, 'deleteProductAjax'])->name('admin.product.delete');
-        Route::get('/product/brand/fetch/ajax', [ProductController::class, 'fetchBrandAjax'])->name('admin.product.brand.fetch.ajax');
-        Route::get('/product/category/fetch/ajax', [ProductController::class, 'fetchCategoryAjax'])->name('admin.product.category.fetch.ajax');
-        Route::Post('/product/categoryById/fetch/ajax', [ProductController::class, 'fetchCategoryByIdAjax'])->name('admin.product.categoryById.fetch.ajax');
-        Route::Post('/product/brandById/fetch/ajax', [ProductController::class, 'fetchBrandByIdAjax'])->name('admin.product.brandById.fetch.ajax');
-        Route::post('/product/status/ajax', [ProductController::class, 'updateProductStatusAjax'])->name('product.update.status.ajax');
-        Route::post('/product/markAsDiscounted/ajax', [ProductController::class, 'markAsDiscounted'])->name('product.markAsDiscounted.ajax');
-        Route::post('/product/markAsFeatured/ajax', [ProductController::class, 'markAsFeatured'])->name('product.markAsFeatured.ajax');
+
+        // Admin Product Start //
+        Route::get('/products', [ProductController::class, 'showProducts'])->name('admin.products.index');
+        Route::post('/products/get', [ProductController::class, 'getProducts'])->name('admin.products.get');
+        Route::post('/products/store', [ProductController::class, 'storeProduct'])->name('admin.products.store');
+        Route::post('/products/delete', [ProductController::class, 'deleteProduct'])->name('admin.products.destroy');
+
+        // Product Images
+        Route::get('/products/images', [ProductController::class, 'getProductImages'])->name('admin.products.images.index');
+        Route::post('/product/store/images', [ProductController::class, 'storeProductImages'])->name('admin.product.store.images');
+        Route::post('/product/delete/images', [ProductController::class, 'deleteProductImages'])->name('admin.products.images.destroy');
+
+        // Product Brands
+        Route::get('/brands', [ProductController::class, 'getBrands'])->name('admin.brands.index');
+        Route::post('/brands/{id}', [ProductController::class, 'getBrand'])->name('admin.brands.show');
+
+        // Product Categories
+        Route::get('/categories', [ProductController::class, 'getCategories'])->name('admin.categories.index');
+        Route::post('/categories/{id}', [ProductController::class, 'getCategory'])->name('admin.categories.show');
+
+        // Product Specifications
+        Route::post('/products/specifications', [ProductController::class, 'getProductSpecifications'])->name('admin.products.specifications.index');
+        Route::post('/products/specifications/store', [ProductController::class, 'storeProductSpecifications'])->name('admin.products.specifications.store');
+
+        // Admin Product End //
 
         //contact us
         Route::post('/contact/storeOrUpdate', [ContactUsController::class, 'storeOrUpdate'])->name('admin.contact.storeUpdate');
@@ -90,6 +106,9 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/getcontact/ajax', [ContactUsController::class, 'getContactUsAjax'])->name('admin.getcontact.ajax');
         Route::post('/contact/status/ajax', [ContactUsController::class, 'updateContactAjax'])->name('contact.update.status.ajax');
 
+
+
+        //news letters
         //newsletter
         Route::post('/newsletters/create/ajax', [NewsLetterController::class, 'newLetterCreate'])->name('admin.newsletter.create');
         Route::get('/newletters/ajax', [NewsLetterController::class, 'newsLetterListing'])->name('admin.newsletter.list');
@@ -106,23 +125,24 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 
+
+
 Route::group(['prefix' => '/'], function () {
 
-    Route::get('/', [RegisterController::class, 'login'])->name('login');
+    Route::get('/', [WebsiteController::class, 'home'])->name('home');
     Route::get('/login', [RegisterController::class, 'login'])->name('user.login');
     Route::post('/loginSubmit', [RegisterController::class, 'loginSubmit'])->name('user.loginSubmit');
     Route::get('/logout', [RegisterController::class, 'logout'])->name('user.logout');
-    Route::get('/home', [RegisterController::class, 'home'])->name('user.home');
+    Route::get('/forget_password', [RegisterController::class, 'forget_password'])->name('user.forgetpassword');
 
-    Route::get('/home', [RegisterController::class, 'home'])->name('user.home');
-
+    Route::get('/home', [WebsiteController::class, 'home'])->name('user.home');
+    Route::post('/verifyEmailForget', [RegisterController::class, 'verifyEmailForget'])->name('user.verifyEmailForget');
+    Route::post('/verifyOtpForget', [RegisterController::class, 'verifyOtpForget'])->name('user.verifyOtpForget');
+    Route::post('/changePassForget', [RegisterController::class, 'changePassForget'])->name('user.changePassForget');
 
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
-        Route::get('/account', function () {
-            return view('website.account');
-        });
-        // Route::get('/home', [RegisterController::class, 'home'])->name('user.home');
+        Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
 
 
 
@@ -134,9 +154,9 @@ Route::group(['prefix' => '/'], function () {
 
 
 
-Route::get('/', function () {
-    return view('website.home');
-});
+// Route::get('/', function () {
+//     return view('website.home');
+// });
 Route::get('/product_detail', function () {
     return view('website.product_detail');
 });
