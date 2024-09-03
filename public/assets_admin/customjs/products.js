@@ -6,6 +6,7 @@ $(document).ready(function () {
     $('#productAddBtn').on('click', function () {
         showAddEditForm();
         $(".media-nav-item,.specifications-nav-item,.features-nav-item").addClass('d-none');
+        $('input, select, textarea').removeClass('is-invalid');
     });
     $('#backProductBtn').on('click', function () {
         hideAddEditForm();
@@ -114,7 +115,7 @@ $(document).ready(function () {
                                 <hr>
                                 <a class="dropdown-item" type="button" data-id='${item.id}' data-offered-flag='${item.is_offered}' id="handleMarkAsOfferedBtn">${offeredText}</a>
                                 <hr>
-                                <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target=".makedAsFeaturedConfirmationModel" data-product-featured-value='${item.featured}' data-product-featured='${JSON.stringify(item.id)}' id="handleMarkAsFeaturedBtn">${featuredText}</a>
+                                <a class="dropdown-item" type="button" data-id='${item.id}' data-featured-flag='${item.featured}'  id="hacndleMarkAsFeaturedBtn">${featuredText}</a>
                                 
                                 
                                 
@@ -475,6 +476,7 @@ $(document).ready(function () {
         let form = $('#addSpecification_form');
         form.trigger("reset");
         $("#specification_id").val('');
+        $('input').removeClass('is-invalid');
 
         $("#addSpecififcation_modal").modal('show');
     });
@@ -502,7 +504,7 @@ $(document).ready(function () {
             form.trigger("reset");
             $("#specification_id").val('');
 
-            $("#addSpecififcation_modal").modal('hide');
+            $(".modal").modal('hide');
             
             var product_id = $("#product_id").val();
             getSpecificProductDetail(product_id);
@@ -596,6 +598,7 @@ $(document).ready(function () {
         $("#feature_id,#file-input2").val('');
         $("#imagePreview_div").hide();
         $("#featureImagePreview").attr('src', '');
+        $('input').removeClass('is-invalid');
 
         $("#addFeature_modal").modal('show');
     });
@@ -744,49 +747,12 @@ $(document).ready(function () {
         getProductsOnLoad();
     }
 
-
-
-
-
-
-
-
-
-
     $(document).on('click', '.close_modal', function (e) {
         tempFeatureId = '';
         tempSpecifId = '';
         
         $(".modal").modal('hide');
     });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-    
-
-
-
-
-
-
-
 
     $('body').on('click', '#handleMarkAsOfferedBtn', function () {
         var offered_prod_id = $(this).attr('data-id');
@@ -799,8 +765,7 @@ $(document).ready(function () {
             $("#offered_percentage").val('');
             $(".removedFromOfferdConfirmModel").modal('show');
         }
-        
-    })
+    });
 
     $(document).on('click', '.changeProductOfferedStatus', function (e) {
         
@@ -830,6 +795,44 @@ $(document).ready(function () {
     });
     
     function changeProductOfferedStatusResponse(response) {
+        
+        toastr.success(response.message, '', {
+            timeOut: 3000
+        });
+        
+        $('.modal').modal('hide');
+        getProductsOnLoad();
+    }
+
+    $('body').on('click', '#hacndleMarkAsFeaturedBtn', function () {
+        var product_id = $(this).attr('data-id');
+        var featured_flag = $(this).attr('data-featured-flag');
+        $('#featured_product_id').val(product_id);
+        
+        if(featured_flag == '1'){
+            $("#featured_heading").html('Are you sure you want to remove this product from featured.');
+        }else{
+            $("#featured_heading").html('Are you sure you want to mark this product as featured.');
+        }
+        console.log('asd');
+
+        $(".makedAsFeaturedConfirmationModel").modal('show');
+    });
+
+    $(document).on('click', '#featuredNowBtn', function (e) {
+        
+        var product_id = $("#featured_product_id").val();
+        if(product_id != ''){
+            let data = new FormData();
+            data.append('product_id', product_id);
+            let type = 'POST';
+            let url = '/admin/products/changeProductFeaturedStatus';
+            SendAjaxRequestToServer(type, url, data, '', changeProductFeaturedStatusResponse, '', '#featuredNowBtn');
+        }
+        
+    });
+    
+    function changeProductFeaturedStatusResponse(response) {
         
         toastr.success(response.message, '', {
             timeOut: 3000
