@@ -677,34 +677,9 @@ $(document).ready(function () {
             $('#featureImagePreview').attr('src', base_url+'/storage/'+details.filepath);
             $('#imagePreview_div').show();
 
-    $('body').on('click', '#handleEditProductBtn', async function () {
-        try {
-            fetchCategories();
-            fetchBrands();
-            const item = JSON.parse($(this).attr('data-edit-product'));
-            console.log(item)
-
-            // Populate the form fields with the product data
-            $('#product_id').val(item.id);
-            $('#sku').val(item.sku);
-            $('#category_id').val(category.category_name); // Assuming 'category_name' is the correct property
-            $('#brand_id').val(brand.title); // Assuming 'title' is the correct property
-            $('#product_name').val(item.product_name);
-            $('#model_name').val(item.model_name);
-            $('#price').val(item.price);
-            $('#discount_price').val(item.discount_price);
-            $('#weight').val(item.weight);
-            $('#onhand_qty').val(item.onhand_qty);
-            $('#description').val(item.description);
-
-            // Set the status checkbox
-            $('#status').prop('checked', item.status == 1);
-
-            // Show the modal for editing
-            showAddEditForm();
-        } catch (error) {
-            console.log(error)
-            toastr.error('Failed to fetch category or brand data. Please try again.', '', {
+            $("#addFeature_modal").modal('show');
+        }else{
+            toastr.error('Something went wrong...', '', {
                 timeOut: 3000
             });
         }
@@ -827,41 +802,19 @@ $(document).ready(function () {
         
     })
 
-
-
-    $('body').on('click', '#featuredNowBtn', function () {
-        const formData = document.getElementById('markedAsFeaturedForm');
-        const data = new FormData(formData);
-        const url = "/admin/product/markAsFeatured/ajax";
-
-        SendAjaxRequestToServer('POST', url, data, '', handleMarkAsFeaturedResponse, '', '#addOfferedValueBtn');
-
-        function handleMarkAsFeaturedResponse(response) {
-            var errorMessage = "";
-            if (response.status === 200) {
-                toastr.success(response.message, '', {
-                    timeOut: 3000
-                });
-                InitiateOnLoad();
-                //  $('.makedAsFeaturedConfirmationModel').hide();
-            } else if (response.status === 422) {
-                // Handle validation errors
-                errorMessage = response.responseJSON.message;
-                toastr.error(errorMessage || 'An error occurred', '', {
-                    timeOut: 3000
-                });
-                const validationErrors = response.responseJSON.errors || {};
-                $.each(validationErrors, function (key, error) {
-                    const inputField = $('[name="' + key + '"]');
-                    inputField.addClass('is-invalid');
-                    // Display validation error message next to the input field
-
-                });
-            } else {
-                // Handle other errors
-                toastr.error(response.responseJSON.message || 'An error occurred', '', {
-                    timeOut: 3000
-                });
+    $(document).on('click', '.changeProductOfferedStatus', function (e) {
+        
+        var product_id = $("#product_id_offered").val();
+        var offered_flag = $("#product_offered_flag").val();
+        var offered_percentage = $("#offered_percentage").val();
+        if(offered_flag == '1'){
+            if(offered_percentage == ''){
+                toastr.error('Offer Percentage is required.', '', {timeOut: 3000});
+                return;
+            } 
+            if(offered_percentage <= 0 || offered_percentage > 100){
+                toastr.error('Offer Percentage must be in between 0 to 100.', '', {timeOut: 3000});
+                return;
             }
         }else{
             offered_percentage = '0';
