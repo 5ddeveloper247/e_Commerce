@@ -106,6 +106,10 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/specifications', [ProductController::class, 'getProductSpecifications'])->name('admin.products.specifications.index');
         Route::post('/products/specifications/store', [ProductController::class, 'storeProductSpecifications'])->name('admin.products.specifications.store');
 
+        // Product Features
+        Route::post('/products/saveProductFeature', [ProductController::class, 'storeProductFeature'])->name('admin.products.saveProductFeature');
+        Route::post('/products/deleteProductFeature', [ProductController::class, 'deleteProductFeature'])->name('admin.products.deleteProductFeature');
+        
         // Admin Product End //
 
         //contact us
