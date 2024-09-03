@@ -33,13 +33,19 @@ class Product extends Model
         'offered_percentage',
     ];
 
-    public function categories() {
-        return $this->belongsToMany(Category::class);
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
-    public function brand() {
-        return $this->hasOne(Brand::class);
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class, 'brand_id');
     }
+
+    // public function brand() {
+    //     return $this->hasOne(Brand::class);
+    // }
 
     public function productImages() {
         return $this->hasMany(ProductImage::class);

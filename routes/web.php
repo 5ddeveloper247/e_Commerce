@@ -78,7 +78,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/get', [ProductController::class, 'getProducts'])->name('admin.products.get');
         Route::post('/products/store', [ProductController::class, 'storeProduct'])->name('admin.products.store');
         Route::post('/products/delete', [ProductController::class, 'deleteProduct'])->name('admin.products.destroy');
-
+        Route::post('/products/getSpecificProductDetail', [ProductController::class, 'getSpecificProductDetail'])->name('admin.products.getSpecificProductDetail');
+        Route::post('/products/markAsFeatured', [ProductController::class, 'markAsFeatured'])->name('admin.products.markAsFeatured');
+        Route::post('/products/markProductStatus', [ProductController::class, 'markProductStatus'])->name('admin.products.markProductStatus');
+        Route::post('/products/changeProductOfferedStatus', [ProductController::class, 'changeProductOfferedStatus'])->name('admin.products.changeProductOfferedStatus');
+      
         // Product Images
         Route::get('/products/images', [ProductController::class, 'getProductImages'])->name('admin.products.images.index');
         Route::post('/product/store/images', [ProductController::class, 'storeProductImages'])->name('admin.product.store.images');
@@ -94,7 +98,12 @@ Route::group(['prefix' => 'admin'], function () {
 
         // Product Specifications
         Route::post('/products/specifications', [ProductController::class, 'getProductSpecifications'])->name('admin.products.specifications.index');
-        Route::post('/products/specifications/store', [ProductController::class, 'storeProductSpecifications'])->name('admin.products.specifications.store');
+        Route::post('/products/saveProductSpecifications', [ProductController::class, 'storeProductSpecifications'])->name('admin.products.saveProductSpecifications');
+        Route::post('/products/deleteSpecification', [ProductController::class, 'deleteSpecification'])->name('admin.products.deleteSpecification');
+
+        // Product Features
+        Route::post('/products/saveProductFeature', [ProductController::class, 'storeProductFeature'])->name('admin.products.saveProductFeature');
+        Route::post('/products/deleteProductFeature', [ProductController::class, 'deleteProductFeature'])->name('admin.products.deleteProductFeature');
 
         // Admin Product End //
 
