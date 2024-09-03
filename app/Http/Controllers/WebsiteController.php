@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\SiteSetting;
 use App\Models\SiteSettingsFiles;
 use App\Models\Product;
+use App\Models\Testimonial;
 
 class WebsiteController extends Controller
 {
@@ -36,4 +37,14 @@ class WebsiteController extends Controller
             return response()->json(['status' => 404, 'message' => 'No products found']);
         }
     }
+
+    public function testimonialsListing(Request $request){
+        $testimonials = Testimonial::where('status', 1)->get();
+        if ($testimonials) {
+            return response()->json(['status' => 200, 'message' => 'Testimonials fetched successfully', 'data' => $testimonials]);
+        } else {
+            return response()->json(['status' => 404, 'message' => 'No testimonials found', 'data'=>$testimonials]);
+        }
+    }
+
 }

@@ -7,6 +7,7 @@ use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\NewsLetterController;
+use App\Http\Controllers\TestimonialController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,6 +59,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         //news letters
         Route::get('/newsletter', [NewsLetterController::class, 'newsletterIndex'])->name('admin.newsletter.index');
+        //testimonials
+        Route::get('/testimonials', [TestimonialController::class, 'testimonialIndex'])->name('admin.testimonials');
+
 
         /************** AJAX ROUTES ******************/
         Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
@@ -97,7 +101,6 @@ Route::group(['prefix' => 'admin'], function () {
         // Product Specifications
         Route::post('/products/specifications', [ProductController::class, 'getProductSpecifications'])->name('admin.products.specifications.index');
         Route::post('/products/specifications/store', [ProductController::class, 'storeProductSpecifications'])->name('admin.products.specifications.store');
-
         // Admin Product End //
 
         //contact us
@@ -107,14 +110,17 @@ Route::group(['prefix' => 'admin'], function () {
         //contact by id
         Route::post('/getcontact/ajax', [ContactUsController::class, 'getContactUsAjax'])->name('admin.getcontact.ajax');
         Route::post('/contact/status/ajax', [ContactUsController::class, 'updateContactAjax'])->name('contact.update.status.ajax');
-
-
-
-        //news letters
         //newsletter
         Route::post('/newsletters/create/ajax', [NewsLetterController::class, 'newLetterCreate'])->name('admin.newsletter.create');
         Route::get('/newletters/ajax', [NewsLetterController::class, 'newsLetterListing'])->name('admin.newsletter.list');
         Route::post('/newsDelete/ajax', [NewsLetterController::class, 'newsletterDelete'])->name('admin.newsletter.delete');
+
+
+        //testimonials
+        Route::post('/testimonials/createOrUpdate', [TestimonialController::class, 'createOrUpdate'])->name('admin.testimonials.createOrUpdate');
+        Route::get('/testimonials/ajax', [TestimonialController::class, 'testimonialListing'])->name('admin.testimonials.list');
+        Route::post('/testimonial/delete', [TestimonialController::class, 'testimonialDelete'])->name('admin.testimonial.delete');
+        Route::post('/testimonial/status', [TestimonialController::class, 'updateStatus'])->name('admin.testimonial.updateStatus');
     });
 });
 
@@ -144,10 +150,12 @@ Route::group(['prefix' => '/'], function () {
 
     //ajax request
     Route::get('products_listing', [WebsiteController::class, 'productsListing'])->name('user.productsListing');
+    Route::get('testimonials', [WebsiteController::class, 'testimonialsListing'])->name('user.testimonials');
 
+   //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {
-        /************** PAGE ROUTES ******************/
-        Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
+    /************** PAGE ROUTES ******************/
+     Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
 
 
 

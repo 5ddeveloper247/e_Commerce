@@ -1897,8 +1897,8 @@ $discountedProducts = getDiscountedProducts();
             <div class="border-under-main-heading"></div>
         </h3>
         <div class="swiper mySwiper8 mt-5">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide p-2">
+            <div class="swiper-wrapper" id="testimonial-slider-element">
+                {{-- <div class="swiper-slide p-2">
                     <div
                         class="testimonial d-flex flex-lg-nowrap flex-wrap justify-content-md-start justify-content-center align-items-center">
                         <img src="https://s.alicdn.com/@img/imgextra/i3/O1CN01wllRR11a9Uiq6syoP_!!6000000003287-2-tps-352-352.png_350x350.jpg"
@@ -1910,33 +1910,7 @@ $discountedProducts = getDiscountedProducts();
                             <p>Founder of SprinJene</p>
                         </div>
                     </div>
-                </div>
-                <div class="swiper-slide p-2">
-                    <div
-                        class="testimonial d-flex flex-lg-nowrap flex-wrap justify-content-md-start justify-content-center align-items-center">
-                        <img src="https://s.alicdn.com/@img/imgextra/i3/O1CN01wllRR11a9Uiq6syoP_!!6000000003287-2-tps-352-352.png_350x350.jpg"
-                            alt="Dr. Sayed Ibrahim">
-                        <div class="testimonial-content d-flex flex-column flex-lg-nowrap flex-wrap">
-                            <p class="quote">“Once I discovered Alibaba.com, I was amazed at how many options I had with
-                                suppliers from all over the world.”</p>
-                            <h6>Dr. Sayed Ibrahim</h6>
-                            <p>Founder of SprinJene</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide p-2">
-                    <div
-                        class="testimonial d-flex flex-lg-nowrap flex-wrap justify-content-md-start justify-content-center align-items-center">
-                        <img src="https://s.alicdn.com/@img/imgextra/i3/O1CN01wllRR11a9Uiq6syoP_!!6000000003287-2-tps-352-352.png_350x350.jpg"
-                            alt="Dr. Sayed Ibrahim">
-                        <div class="testimonial-content d-flex flex-column flex-lg-nowrap flex-wrap">
-                            <p class="quote">“Once I discovered Alibaba.com, I was amazed at how many options I had with
-                                suppliers from all over the world.”</p>
-                            <h6>Dr. Sayed Ibrahim</h6>
-                            <p>Founder of SprinJene</p>
-                        </div>
-                    </div>
-                </div>
+                </div> --}}
             </div>
             <!-- <div class="swiper-pagination"></div> -->
         </div>
@@ -2294,3 +2268,8 @@ $discountedProducts = getDiscountedProducts();
 
 
 @endsection
+@push('scripts')
+
+<script src="{{ asset("assets_user/customjs/testimonials.js") }}"></script>
+
+@endpush
