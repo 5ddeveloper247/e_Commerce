@@ -105,7 +105,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/saveProductFeature', [ProductController::class, 'storeProductFeature'])->name('admin.products.saveProductFeature');
         Route::post('/products/deleteProductFeature', [ProductController::class, 'deleteProductFeature'])->name('admin.products.deleteProductFeature');
 
-        // Admin Product End //
+        // Admin Product End // 
 
         //contact us
         Route::post('/contact/storeOrUpdate', [ContactUsController::class, 'storeOrUpdate'])->name('admin.contact.storeUpdate');
