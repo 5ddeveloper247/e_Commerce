@@ -1,74 +1,85 @@
-<div class="tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
+<div class="tab-pane fade" id="features" role="tabpanel" aria-labelledby="features-tab">
     
     <div class="mt-4 px-4 py-4 bg-white shadow table-container table-container">
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn theme-btn-outline btn-lg px-md-5" id="addNewSpecification" >Add Specification</button>
+            <button type="button" class="btn theme-btn-outline btn-lg px-md-5" id="addNewFeature" >Add Feature</button>
         </div>
-        <table id="specifications-listing" class="table table-responsive">
+        <table id="features-listing" class="table table-responsive">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th class="text-nowrap" scope="col">FEATURE</th>
-                    <th class="text-nowrap" scope="col">SPECIFICATION</th>
-                    <th class="text-nowrap" scope="col">UNIT</th>
-                    <th class="text-nowrap" scope="col">VALUE</th>
+                    <th class="text-nowrap" scope="col">FEATURE TITLE</th>
                     <th class="text-nowrap" scope="col">CREATED AT</th>
                     <th class="text-end" scope="col">ACTIONS</th>
                 </tr>
             </thead>
-            <tbody id="specifications_table_body">
+            <tbody id="features_table_body">
                 {{-- DYNAMIC DATA WILL BE INJECTED HERE --}}
             </tbody>
         </table>
     </div>
 
-    <div class="modal fade popup-form-modal" id="addSpecififcation_modal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade popup-form-modal" id="addFeature_modal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border">
-                <form id="addSpecification_form" autocomplete="off">
-                    <input type="hidden" id="specification_id" name="specification_id" value="">
+                <form id="addFeature_form" autocomplete="off">
+                    <input type="hidden" id="feature_id" name="feature_id" value="">
                     <div class="modal-header justify-content-between border-0 px-4 py-3">
-                        <h4 class="modal-title text-white">Specification Details</h4>
+                        <h4 class="modal-title text-white">Feature Details</h4>
                         <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
-                                <path fill="currentColor"
-                                    d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
+                                <path fill="currentColor" d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
                             </svg>
                         </button>
                     </div>
                     <div class="modal-body pt-4 pb-2 px-4">
                         <div class="row">
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="specification" name="specification" placeholder="Enter Feature" maxlength="20">
-                                <label class="mx-2" for="specification">Feature</label>
+                                <input type="text" class="form-control" id="feature_title" name="feature_title" placeholder="Enter Feature" maxlength="20">
+                                <label class="mx-2" for="specification">Feature Title</label>
                             </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="sub_specification" name="sub_specification" placeholder="Enter Specification" maxlength="20">
-                                <label class="mx-2" for="sub-specification">Specification</label>
+                            <div class="col-md-12">
+                            <label class="mx-2" for="specification">Feature Description</label>
+                                <textarea id="editor2"></textarea>
                             </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="unit" name="unit" placeholder="Enter Unit" maxlength="20">
-                                <label class="mx-2" for="unit">Unit</label>
+
+                            
+                            <div class="col-4">
+                                <label for="feature_file" class="form-label fw-bold mb-2">Upload Image</label>
+                                <div onclick="document.getElementById('feature_file').click();" class="position-relative border border-primary rounded shadow-sm d-flex align-items-center justify-content-center"
+                                    style="height: 50px; cursor: pointer;">
+                                    <!-- Adjusted height to provide space for centering -->
+                                    <input type="file" id="feature_file" class="form-control d-none" name="feature_image" accept="image/*" single>
+                                    <!-- SVG Icon acting as button -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-upload text-primary cursor-pointer" viewBox="0 0 16 16">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4h-4a.5.5 0 0 1 0-1h4.5a.5.5 0 0 1 .5.5V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.9z" />
+                                        <path d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V13.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 0 1-.708-.708l3-3z" />
+                                    </svg>
+                                </div>
                             </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="value" name="value" placeholder="Enter Value" maxlength="20">
-                                <label class="mx-2" for="value">Value</label>
+                            <div class="col-6 mt-4 d-flex align-items-center">
+                                <div class="white mx-2" id="imagePreview_div" style="display:none;">
+                                    <div class="image-item-land" >
+                                        <img id="featureImagePreview" src="">
+                                    </div>
+                                </div>
                             </div>
+                            
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4" type="button">
+                        <button class="btn btn-cancel px-4 close_modal" type="button">
                             Cancel
                         </button>
-                        <button class="btn btn-done px-4" type="button" id="addSpecification_btn">Save</button>
+                        <button class="btn btn-done px-4" type="button" id="addFeature_btn">Save</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="confirmationModalSpecification" tabindex="-1" aria-labelledby="confirmationModalSpecification"
+    <div class="modal fade" id="confirmationModalFeature" tabindex="-1" aria-labelledby="confirmationModalFeature"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content text-center">
@@ -90,7 +101,7 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
                     <button type="button" class="btn btn-danger px-md-3 close_modal">NO</button>
-                    <button type="button" class="btn btn-outline-danger px-md-3" id="deleteSpecificationConfirmedBtn">YES</button>
+                    <button type="button" class="btn btn-outline-danger px-md-3" id="deleteFeatureConfirmedBtn">YES</button>
                 </div>
             </div>
         </div>

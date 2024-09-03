@@ -64,12 +64,15 @@
                 </div>
                 <div id="products">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
-                        <table id="product-listing" class="table table-responsive">
+                        <table id="productListing_table" class="table table-responsive">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
+                                    
                                     <th class="text-nowrap" scope="col">NAME</th>
-                                    <th class="text-nowrap" scope="col">Description</th>
+                                    <th class="text-nowrap" scope="col">CATEGORY</th>
+                                    <th class="text-nowrap" scope="col">BRAND</th>
+                                    <th class="text-nowrap" scope="col">MODEL</th>
                                     <th class="text-center" scope="col">STATUS</th>
                                     <th scope="col">CREATED AT</th>
                                     <th class="text-end" scope="col">ACTIONS</th>
@@ -82,54 +85,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-    </div>
-
-    <div class="modal fade" id="filterModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border">
-                <form id="addUpdateCategory" autocomplete="off">
-                    <div class="modal-header justify-content-between border-0 px-4 py-3">
-                        <h4 class="modal-title text-white">Add/Update</h4>
-                        <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal"
-                            aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
-                                <path fill="currentColor"
-                                    d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="modal-body pt-4 pb-2 px-4">
-                        <div class="row">
-
-                            <input type="hidden" name="product_edit_id" id="product_edit_id">
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="category_name" name="category_name"
-                                    placeholder="name">
-                                <label class="mx-2" for="generalInfo">category name</label>
-                            </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="category_description"
-                                    name="category_description" placeholder="name">
-                                <label class="mx-2" for="generalInfo">category description</label>
-                            </div>
-
-                            <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
-                                <input class="form-check-input" type="checkbox" role="switch" name="category_status"
-                                    id="category_status">
-                                <label class="form-check-label ms-2" for="status">status</label>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
-                            Cancel
-                        </button>
-                        <button class="btn btn-done px-4" type="button" id="editCategoryNow">Done</button>
-                    </div>
-                </form>
-            </div>
         </div>
     </div>
 
@@ -193,6 +148,10 @@
                     <a class="nav-link" id="specifications-tab" data-toggle="tab" href="#specifications" role="tab" aria-controls="specifications"
                         aria-selected="false">Product Specifications</a>
                 </li>
+                <li class="nav-item features-nav-item d-none">
+                    <a class="nav-link" id="features-tab" data-toggle="tab" href="#features" role="tab" aria-controls="features"
+                        aria-selected="false">Product Features</a>
+                </li>
             </ul>
 
             <!-- Tab content -->
@@ -205,6 +164,9 @@
 
                 <!-- Specifications Tab -->
                 @include('admin.partials.products.add-specifications')
+
+                <!-- Features Tab -->
+                @include('admin.partials.products.add-features')
             </div>
 
         </div>
@@ -218,7 +180,7 @@
         <div class="modal-content border">
             <div class="modal-header justify-content-between border-0 px-4 py-3">
                 <h4 class="modal-title text-white">Marked As Offered</h4>
-                <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <button class="btn p-1 btn-outline-light close_modal" type="button" data-bs-dismiss="modal" aria-label="Close">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
                         <path fill="currentColor"
                             d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
@@ -229,7 +191,8 @@
                 <div class="row">
                     <div class="col-md-12 mb-3">
                         <!-- Label placed above the input -->
-                        <input type="hidden" name="product_id" id="product_id_offerd">
+                        <input type="hidden" name="" id="product_id_offered">
+                        <input type="hidden" name="" id="product_offered_flag">
                         <label class="form-label" for="offered_percentage">Offer Percentage</label>
                         <input class="form-control" type="number" name="offered_percentage" id="offered_percentage"
                             placeholder="Percentage value  between 1 to 100" maxlength="3" min="1" max="100"
@@ -239,10 +202,38 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
-                <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <button class="btn btn-cancel px-4 close_modal" type="button" data-bs-dismiss="modal" aria-label="Close">
                     Cancel
                 </button>
-                <button class="btn btn-done px-4" type="button" id="addOfferedValueBtn">Done</button>
+                <button class="btn btn-done px-4 changeProductOfferedStatus" type="button" id="" >Done</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade removedFromOfferdConfirmModel " tabindex="-1"
+    aria-labelledby="removedFromOfferdConfirmModel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+        <div class="modal-content text-center">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title" id="">Confirmation</h5>
+                <button type="button" class="btn-close close_modal" data-bs-dismiss="modal" aria-label="Close"
+                    style="background-color: #00000040 !important;"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex align-items-center justify-content-center my-4">
+                    <h6 class="mb-0 me-2" id="featured_heading">Are you sure you want to remove this product from offered?</h6>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
+                        <g fill="none">
+                            <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                            <path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2a1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99a.8.8 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509a1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5" />
+                        </g>
+                    </svg>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="button" class="btn btn-danger px-md-3 close_modal" data-bs-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-outline-danger px-md-3 changeProductOfferedStatus" id="">YES</button>
             </div>
         </div>
     </div>
@@ -258,7 +249,7 @@
         <div class="modal-content text-center">
             <div class="modal-header bg-danger text-white">
                 <h5 class="modal-title" id="makedAsFeaturedConfirmationModelRemoveLabel">Confirmation</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                <button type="button" class="btn-close close_modal" data-bs-dismiss="modal" aria-label="Close"
                     style="background-color: #00000040 !important;"></button>
             </div>
             <div class="modal-body">
@@ -280,7 +271,7 @@
             </div>
             </form>
             <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-danger px-md-3" data-bs-dismiss="modal">NO</button>
+                <button type="button" class="btn btn-danger px-md-3 close_modal" data-bs-dismiss="modal">NO</button>
                 <button type="button" class="btn btn-outline-danger px-md-3" id="featuredNowBtn">YES</button>
             </div>
         </div>

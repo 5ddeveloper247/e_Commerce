@@ -1279,3 +1279,6 @@ div.dt-container .dt-search input {
     background-color: #ff0000bd !important;
     color: #fff;
 }
+.danger{
+    color: #ff0000bd;
+}

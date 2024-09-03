@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('product_features', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('title')->nullable();
+            $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->string('filename')->nullable();
             $table->string('filepath')->nullable();

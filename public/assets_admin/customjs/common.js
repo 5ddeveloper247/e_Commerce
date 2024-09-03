@@ -117,6 +117,26 @@ $(document).ready(function () {
     });
 });
 
+// const editors = [
+//     "#editor",
+//     "#editor2",
+//     "#editor3",
+//     "#editor4",
+//     "#editor5",
+//     "#editor6",
+//     "#editor7",
+//     "#editor8",
+//     "#editor9"
+// ];
+
+// editors.forEach(selector => {
+//     const element = document.querySelector(selector);
+//     if (element) {
+//         ClassicEditor.create(element).catch((error) => {
+//             console.error(error);
+//         });
+//     }
+// });
 const editors = [
     "#editor",
     "#editor2",
@@ -129,14 +149,32 @@ const editors = [
     "#editor9"
 ];
 
+// Create an object to store the editor instances
+const editorInstances = {};
+
+// Initialize each editor and store its instance
 editors.forEach(selector => {
     const element = document.querySelector(selector);
     if (element) {
-        ClassicEditor.create(element).catch((error) => {
-            console.error(error);
-        });
+        ClassicEditor.create(element)
+            .then(editor => {
+                // Store the editor instance in the object with the selector as the key
+                editorInstances[selector] = editor;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 });
+
+// Example of how to set data for editor2
+function setEditorData(selector, data) {
+    if (editorInstances[selector]) {
+        editorInstances[selector].setData(data);
+    } else {
+        console.error("Editor not initialized for " + selector);
+    }
+}
 
 $(".add-statement-btn").on("click", function () {
     $(".add-statement").removeClass("d-none");
@@ -262,7 +300,7 @@ function resetModalForm(selector = '#filterModal') {
 
 
 
-var files = [];
+// var files = [];
 var selectedFiles = [];
 $('#file-input').on('change', function (event) {
     const files = event.target.files;

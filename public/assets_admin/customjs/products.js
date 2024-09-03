@@ -1,9 +1,11 @@
+var selectedFiles = [];
 $(document).ready(function () {
     getProductsOnLoad();
 
     //handle hide show section of adding products and listings
     $('#productAddBtn').on('click', function () {
         showAddEditForm();
+        $(".media-nav-item,.specifications-nav-item,.features-nav-item").addClass('d-none');
     });
     $('#backProductBtn').on('click', function () {
         hideAddEditForm();
@@ -12,23 +14,32 @@ $(document).ready(function () {
     });
 
     function showAddEditForm() {
-        $('#product_add_edit_section').removeClass('d-none');
-        $('#product_add_edit_section').addClass('d-block');
-        $('#product_listing_section').removeClass('d-block');
-        $('#product_listing_section').addClass('d-none');
+        $('#product_add_edit_section').removeClass('d-none').addClass('d-block');
+        $('#product_listing_section').removeClass('d-block').addClass('d-none');
     }
 
     function hideAddEditForm() {
-        $('#product_add_edit_section').removeClass('d-block');
-        $('#product_add_edit_section').addClass('d-none');
-        $('#product_listing_section').removeClass('d-none');
-        $('#product_listing_section').addClass('d-block');
+        $('#product_add_edit_section').removeClass('d-block').addClass('d-none');
+        $('#product_listing_section').removeClass('d-none').addClass('d-block');
     }
 
     function resetForm() {
         let form = document.getElementById('product_settings_form');
         form.reset();
-        $("#product_edit_id").val('');
+
+        let form1 = document.getElementById('addSpecification_form');
+        form1.reset();
+
+        let form2 = document.getElementById('addFeature_form');
+        form2.reset();
+
+
+        $("#product_id, #file-input1, #video_url, #specification_id, #feature_id, #feature_file").val('');
+        $(".image-container-existed, .image-container-selected, #specifications_table_body").html('');
+        $("#imagePreview_div").hide();
+        $("#featureImagePreview").attr('src', '');
+        setEditorData('#editor2', '');
+        getProductsOnLoad();
     }
 
 
@@ -63,20 +74,26 @@ $(document).ready(function () {
     }
 
     function populateListng(response) {
+
+        // if ($.fn.DataTable.isDataTable('#productListing_table')) {
+        //     $('#productListing_table').DataTable().destroy();
+        // }
+        
         let html = '';
         response.forEach(item => {
             // Determine the text for "Mark as Featured" based on the item's featured status
-            const featuredText = item.featured == 1 ? 'Marked as Unfeatured' : 'Marked as Featured';
-
+            var featuredText = item.featured == 1 ? 'Remove from featured' : 'Marked as featured';
+            var offeredText = item.is_offered == 1 ? 'Remove from offered' : 'Marked as offered';
             html += `
                 <tr>
                     <td class="ps-3">${item.id}</td>
-                    <td class="ps-3">${item.product_name}</td>
-                    <td class="ps-3">${item.description}</td>
+                    <td class="ps-3">${trimText(item.product_name, 15)}</td>
+                    <td class="ps-3">${item.category != null ? trimText(item.category.category_name, 15) : ''}</td>
+                    <td class="ps-3">${item.brand != null ? trimText(item.brand.title, 15) : ''}</td>
+                    <td class="ps-3">${item.model_name != null ? trimText(item.model_name, 15) : ''}</td>
                     <td class="text-center">
                         <div class="form-check form-switch">
-                            <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
-                                id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
+                            <input class="form-check-input flexSwitchCheckChecked" data-id="${item.id}" type="checkbox" role="switch" ${item.status === 1 ? 'checked' : ''}>
                         </div>
                     </td>
                     <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
@@ -93,17 +110,14 @@ $(document).ready(function () {
                                 </svg>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                                data-bs-target=".makedAsOffered" data-product-id='${JSON.stringify(item.id)}' id="handleMarkAsOfferedBtn">Marked as Offered</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" type="button" data-bs-toggle="modal"
-                                data-bs-target=".makedAsFeaturedConfirmationModel" data-product-featured-value='${item.featured}' data-product-featured='${JSON.stringify(item.id)}' id="handleMarkAsFeaturedBtn">${featuredText}</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" type="button"
-                                data-edit-product='${JSON.stringify(item)}' id="handleEditProductBtn">Edit</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
-                                data-bs-target="#confirmationModalProduct" data-remove-product='${JSON.stringify(item)}' id="handleRemoveProductBtn">Remove</a>
+                                <a type="button" class="dropdown-item edit_product" data-id='${item.id}' >Edit</a>
+                                <hr>
+                                <a class="dropdown-item" type="button" data-id='${item.id}' data-offered-flag='${item.is_offered}' id="handleMarkAsOfferedBtn">${offeredText}</a>
+                                <hr>
+                                <a class="dropdown-item" type="button" data-bs-toggle="modal" data-bs-target=".makedAsFeaturedConfirmationModel" data-product-featured-value='${item.featured}' data-product-featured='${JSON.stringify(item.id)}' id="handleMarkAsFeaturedBtn">${featuredText}</a>
+                                
+                                
+                                
                             </div>
                         </div>
                     </td>
@@ -112,6 +126,21 @@ $(document).ready(function () {
         });
 
         $('#product_listing_table_body').html(html);
+
+        // setTimeout(function(){
+        //     $('#productListing_table').DataTable({
+        //         "scrollY": "400px",
+        //         "scrollCollapse": true,
+        //         "fixedHeader": true ,
+        //         dom: 'Bfrtip',
+        //         pageLength: 10,
+        //         buttons: [{
+        //             extend: 'csv',
+        //             text: 'Export'
+        //         }],
+        //         lengthMenu: [5, 10, 25, 50, 75, 100]
+        //     });
+        // }, 500);
     }
 
     function populateCategories(response) {
@@ -141,61 +170,37 @@ $(document).ready(function () {
         const type = "POST";
 
         SendAjaxRequestToServer(type, url, formData, '', handleProductSaveResponse, '', '');
+    }
+    function handleProductSaveResponse(response) {
+        if (response.status === 200) {
+            // Success: Display success message and reset form
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
 
-        function handleProductSaveResponse(response) {
-            if (response.status === 200) {
-                // Success: Display success message and reset form
-                toastr.success(response.message, '', {
-                    timeOut: 3000
-                });
+            $('#product_id').val(response.product_id);
 
-                $('#product_id').val(response.product_id);
+            $('.media-nav-item,.specifications-nav-item,.features-nav-item').removeClass('d-none');
 
-                $('.media-nav-item').removeClass('d-none');
-                $('.specifications-nav-item').removeClass('d-none');
-
-                populateTotals(response);
-
-                // Reset the form and hide the modal
-                // window.location.reload();
-
-                // Uncomment and define this function if you want to reload the admin list data
-                // loadJobsPageData();
-
+            populateTotals(response);
+        } else {
+            
+            if (response.status == 402) {
+                error = response.message;
             } else {
-                // Error Handling
-                let errorMessage = 'An error occurred. Please try again.';
-
-                if (response.status == 402) {
-                    // Handle specific error status
-                    errorMessage = response.message;
-
-
-                } else if (response.status == 422) {
-                    // Validation errors
-                    errorMessage = response.responseJSON.message || 'Validation failed.';
-                    const validationErrors = response.responseJSON.errors || {};
-
-                    // Log the response for debugging
-
-
-                    // Highlight the invalid fields
-                    $.each(validationErrors, function (key, error) {
-                        const inputField = $('[name="' + key + '"]');
-                        inputField.addClass('is-invalid');
-                        // Optionally, show error messages next to each field
-                        // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
-                    });
-                } else if (response.status === 500) {
-                    // Handle server error
-                    errorMessage = response.message || 'Internal server error. Please contact support.';
-                }
-
-                // Display error message
-                toastr.error(errorMessage, '', {
-                    timeOut: 3000
+                error = response.responseJSON.message;
+                var is_invalid = response.responseJSON.errors;
+        
+                $.each(is_invalid, function (key) {
+                    // Assuming 'key' corresponds to the form field name
+                    var inputField = $('[name="' + key + '"]');
+                    // Add the 'is-invalid' class to the input field's parent or any desired container
+                    inputField.addClass('is-invalid');
                 });
             }
+            toastr.error(error, '', {
+                timeOut: 3000
+            });
         }
     }
 
@@ -206,38 +211,226 @@ $(document).ready(function () {
         productUpdateStore(formData);
     });
 
-    // Product Status Change
-    $('body').on('change', '.flexSwitchCheckChecked', function () {
-        const formData = new FormData();
-        formData.append('product_id', $(this).attr('id').split('flexSwitchCheckChecked')[1]);
-        formData.append('status', $(this).is(':checked') ? 1 : 0);
-        formData.append('includeTotals', true);
-        productUpdateStore(formData);
+    $(document).on('click', '.edit_product', function (e) {
+    
+        var product_id = $(this).attr('data-id');
+        
+        let data = new FormData();
+        data.append('product_id', product_id);
+        let type = 'POST';
+        let url = '/admin/products/getSpecificProductDetail';
+        SendAjaxRequestToServer(type, url, data, '', getSpecificProductDetailResponse, '', '.edit_product');
     });
+    
+    function getSpecificProductDetailResponse(response) {
+        
+        var data = response.data;
+        var product_detail = data.product_detail;
+
+        if (product_detail != null) {
+            var product_images = product_detail.product_images;
+            var product_specifications = product_detail.product_specifications;
+            var product_features = product_detail.product_features;
+
+            $('#product_id').val(product_detail.id);
+            $('#sku').val(product_detail.sku);
+            $('#category_id').val(product_detail.category_id);
+            $('#brand_id').val(product_detail.brand_id);
+            $('#product_name').val(product_detail.product_name);
+            $('#model_name').val(product_detail.model_name);
+            $('#price').val(product_detail.price);
+            $('#discount_price').val(product_detail.discount_price);
+            $('#weight').val(product_detail.weight);
+            $('#onhand_qty').val(product_detail.onhand_qty);
+            $('#description').val(product_detail.description);
+            $('#video_url').val(product_detail.video_url);
+
+            $("#image-container,.image-container-selected").html('');
+            var image_html = '';
+            if(product_images != null){
+                $.each(product_images, function (index, value) {
+                    var image_url = base_url+'/storage/'+value.filepath;
+                    image_html += `<div class="image-item-land file_section uploaded_files" >
+                                    <img src="${image_url}">
+                                    <span class="cancel-icon remove_file_section" data-id="${value.id}">×</span>
+                                </div>`;
+                });
+            }
+            $("#image-container").html(image_html);
+
+            makeProductSpecificationListing(product_specifications);
+
+            makeProductFeaturesListing(product_features);
+            // Show the modal for editing
+            showAddEditForm();
+            $(".media-nav-item,.specifications-nav-item,.features-nav-item").removeClass('d-none');
+        }
+    }
+
+    function makeProductSpecificationListing(product_specifications) {
+
+        let html = '';
+        if(product_specifications.length > 0 ){
+            product_specifications.forEach(item => {
+           
+                html += `<tr>
+                            <td class="ps-3">${item.id}</td>
+                            <td class="ps-3">${item.specification}</td>
+                            <td class="ps-3">${item.sub_specification}</td>
+                            <td class="ps-3">${item.key}</td>
+                            <td class="ps-3">${item.value}</td>
+                            <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                            <td class="text-end">
+                                <div class="btn-reveal-trigger position-static">
+                                    <button class="btn btn-sm dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                            data-prefix="fas" data-icon="ellipsis" role="img"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="currentColor"
+                                                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" type="button" data-specification='${JSON.stringify(item)}' id="handleEditSpecificationBtn">Edit</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a type="button" class="dropdown-item text-danger deleteSpecificationConfirmBtn" data-id='${item.id}'>Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>`;
+            });
+        }else{
+            html = `<tr>
+                        <td class="text-center" colspan="6">No record found...</td>
+                    </tr>`;
+        }
+        $('#specifications_table_body').html(html);
+    }
+
+    function makeProductFeaturesListing(product_features) {
+
+        let html = '';
+        if(product_features.length > 0 ){
+            product_features.forEach(item => {
+           
+                html += `<tr>
+                            <td class="ps-3">${item.id}</td>
+                            <td class="ps-3">${item.title}</td>
+                            <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                            <td class="text-end">
+                                <div class="btn-reveal-trigger position-static">
+                                    <button class="btn btn-sm dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                            data-prefix="fas" data-icon="ellipsis" role="img"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="currentColor"
+                                                d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                            </path>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" type="button" data-feature='${JSON.stringify(item)}' id="handleEditFeatureBtn">Edit</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a type="button" class="dropdown-item text-danger deleteFeatureConfirmBtn" data-id='${item.id}'>Remove</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>`;
+            });
+        }else{
+            html = `<tr>
+                        <td class="text-center" colspan="6">No record found...</td>
+                    </tr>`;
+        }
+        $('#features_table_body').html(html);
+    }
+
+
+    $('#file-input1').on('change', function (event) {
+        const files = event.target.files;
+        const existing = $('.uploaded_files');
+        var allfileslength = existing.length + files.length + selectedFiles.length;
+        if (allfileslength > 7) {
+            toastr.error('You can upload a maximum of 7 images.');
+            return;
+        }
+        // Validate and add selected files to selectedFiles array
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            // Check if the file is an image
+            if (!file.type.startsWith('image/')) {
+                toastr.error('Please select only image files.');
+                continue;
+            }
+            selectedFiles.push(file);
+        }
+        // Update the display
+        displaySelectedFiles_product();
+    });
+
+
+    function displaySelectedFiles_product() {
+        var imageContainerselected = $('.image-container-selected');
+        imageContainerselected.empty(); // Clear previous images
+        
+        selectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                var image_html = `<div class="image-item-land file_section" >
+                                        <img src="${e.target.result}">
+                                        <span class="cancel-icon remove_file_section" data-id="">×</span>
+                                    </div>`;
+                imageContainerselected.append(image_html);
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+
+    $(document).on('click', '.remove_file_section', function (e) {
+        
+        $(this).closest('.file_section').remove();
+        if($(this).attr('data-id')){
+            var image_id = $(this).attr('data-id');
+            
+            let data = new FormData();
+            data.append('id', image_id);
+            let type = 'POST';
+            let url = '/admin/product/delete/images';
+            SendAjaxRequestToServer(type, url, data, '', deleteProductImageResponse, '', '.remove_file_section');
+        }
+    });
+
+    function deleteProductImageResponse(response){
+
+        if(response.status == 200){
+            toastr.error(response.message, '', {
+                timeOut: 3000
+            });
+        }
+    }
 
     $('body').on('click', '#saveProductAssetsBtn', function () {
         // Get the product ID from the hidden input field
-        const productId = document.querySelector('input[name="product_id"]').value;
+        const productId = $("input[name='product_id']").val();
+        const video_url = $("input[name='video_url']").val();
         // Create a new FormData object
         var formData = new FormData();
         // Append the product ID to the FormData
         formData.append('product_id', productId);
+        formData.append('video_url', video_url);
+
         if (selectedFiles && selectedFiles.length > 0) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 formData.append('product_images[]', selectedFiles[i]);
             }
         }
         else {
-            errorMessage = "Please either select new images or click the upload button to choose images before saving. If no images are selected, ensure to choose some before submitting.";
-
-            toastr.error(errorMessage, '', {
-                timeOut: 3000
-            });
-
-            return false;
+            formData.append('product_images', '');
         }
 
-        // saveVideo(formData);
         saveImages(formData);
     });
 
@@ -247,110 +440,242 @@ $(document).ready(function () {
         const url = "/admin/product/store/images";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', handleProductImagesSaveResponse, '', '#saveProductAssetsBtn');
-        function handleProductImagesSaveResponse(response) {
-            if (response.success) {
-                response.data.productImages.map((file) => {
-                    const imgdata = {
-                        id: file.id,
-                        fileNmae: file.filename,
-                        name: `${base_url}/storage/product_images/${file.product_id}/${file.filename}`
-                    };
-                    const $imageContainerselected = $('.image-container-selected');
-                    $imageContainerselected.empty(); // Clear previous images
-                    files.push(imgdata);
-
-                })
-            }
-
-            displayExistedFiles();
-
-
-        }
-
     }
 
+    function handleProductImagesSaveResponse(response) {
+        if (response.status == 200) {
+            var product_id = $("#product_id").val();
+            getSpecificProductDetail(product_id);
 
-
-    function saveVideo(formData) {
-        const url = "/admin/product/store/video";
-        const type = "POST";
-
-        formData.append('video_url', document.querySelector('input[name="video_url"]').value);
-
-        SendAjaxRequestToServer(type, url, formData, '', handleProductVideoSaveResponse, '', '#saveProductAssetsBtn');
-
-        function handleProductVideoSaveResponse(response) {
-            if (response.success) {
-                // Success: Display success message and reset form
-                toastr.success(response.message, '', {
-                    timeOut: 3000
-                });
-            } else {
-                // Error Handling
-                let errorMessage = 'An error occurred. Please try again.';
-
-                if (response.status == 422) {
-                    // Validation errors
-                    errorMessage = response.message || 'Validation failed.';
-                    const validationErrors = response.errors || {};
-
-                    // Highlight the invalid fields
-                    $.each(validationErrors, function (key, error) {
-                        const inputField = $('[name="' + key + '"]');
-                        inputField.addClass('is-invalid');
-                        // Optionally, show error messages next to each field
-                        // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
-                    });
-                } else if (response.status === 500) {
-                    // Handle server error
-                    errorMessage = response.message || 'Internal server error. Please contact support.';
-                }
-
-                // Display error message
-                toastr.error(errorMessage, '', {
-                    timeOut: 3000
-                });
-            }
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+        }else{
+            var error = response.responseJSON.message;
+            toastr.error(error, '', {
+                timeOut: 3000
+            });
         }
     }
 
+    function getSpecificProductDetail(product_id){
 
-    $('body').on('click', '#handleRemoveProductBtn', function () {
-        const item = JSON.parse($(this).attr('data-remove-product'));
-        $("#delete-product-id").val(item.id);
+        var product_id = product_id;
+        
+        let data = new FormData();
+        data.append('product_id', product_id);
+        let type = 'POST';
+        let url = '/admin/products/getSpecificProductDetail';
+        SendAjaxRequestToServer(type, url, data, '', getSpecificProductDetailResponse, '', '');
+    }
+
+    // specifications tab Js start
+    $(document).on('click', '#addNewSpecification', function (e) {
+        
+        let form = $('#addSpecification_form');
+        form.trigger("reset");
+        $("#specification_id").val('');
+
+        $("#addSpecififcation_modal").modal('show');
     });
 
-    $('body').on('click', '#deleteNowBtn', function () {
-        const data = {
-            id: $('#delete-product-id').val(),
-        }
-        const formData = new FormData();
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                formData.append(key, data[key]);
+    $(document).on('click', '#addSpecification_btn', function (e) {
+        
+        var product_id = $("#product_id").val();
+        
+        let form = document.getElementById('addSpecification_form');
+        let data = new FormData(form);
+        data.append('product_id', product_id);
+        let type = 'POST';
+        let url = '/admin/products/saveProductSpecifications';
+        SendAjaxRequestToServer(type, url, data, '', saveProductSpecificationsResponse, '', '#addSpecification_btn');
+    });
+
+    function saveProductSpecificationsResponse(response) {
+        if (response.status == 200) {
+            // Success: Display success message and reset form
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+
+            let form = $('#addSpecification_form');
+            form.trigger("reset");
+            $("#specification_id").val('');
+
+            $("#addSpecififcation_modal").modal('hide');
+            
+            var product_id = $("#product_id").val();
+            getSpecificProductDetail(product_id);
+
+        } else {
+            if (response.status == 402) {
+                error = response.message;
+            } else {
+                error = response.responseJSON.message;
+                var is_invalid = response.responseJSON.errors;
+        
+                $.each(is_invalid, function (key) {
+                    // Assuming 'key' corresponds to the form field name
+                    var inputField = $('[name="' + key + '"]');
+                    // Add the 'is-invalid' class to the input field's parent or any desired container
+                    inputField.addClass('is-invalid');
+                });
             }
+            toastr.error(error, '', {
+                timeOut: 3000
+            });
         }
+    }
 
-        const url = "/admin/product/delete/ajax";
-        const type = "POST";
-        SendAjaxRequestToServer(type, url, formData, '', removeProductResponse, '', '#deleteNowBtn');
-    })
 
-    function removeProductResponse(response) {
+    $(document).on('click', '#handleEditSpecificationBtn', function (e) {
+        var details = $(this).attr('data-specification');
+        
+        if(details != ''){
+            details = JSON.parse(details);
+
+            $("#specification_id").val(details.id);
+            $("#specification").val(details.specification);
+            $("#sub_specification").val(details.sub_specification);
+            $("#unit").val(details.key);
+            $("#value").val(details.value);
+
+            $("#addSpecififcation_modal").modal('show');
+        }else{
+            toastr.error('Something went wrong...', '', {
+                timeOut: 3000
+            });
+        }
+    });
+
+    var tempSpecifId = '';
+    $(document).on('click', '.deleteSpecificationConfirmBtn', function (e) {
+        var specification_id = $(this).attr('data-id');
+        tempSpecifId = specification_id;
+        $("#confirmationModalSpecification").modal('show');
+    });
+
+    $(document).on('click', '#deleteSpecificationConfirmedBtn', function (e) {
+        var specification_id = tempSpecifId;
+        
+        let form = '';
+        let data = new FormData();
+        data.append('specification_id', specification_id);
+        let type = 'POST';
+        let url = '/admin/products/deleteSpecification';
+        SendAjaxRequestToServer(type, url, data, '', deleteSpecificationResponse, '', '#deleteSpecificationConfirmedBtn');
+    });
+
+    function deleteSpecificationResponse(response){
 
         if (response.status == 200) {
             toastr.success(response.message, '', {
                 timeOut: 3000
-            })
-            InitiateOnLoad();
+            });
+
+            tempSpecifId = '';
+            $("#confirmationModalSpecification").modal('hide');
+            
+            var product_id = $("#product_id").val();
+            getSpecificProductDetail(product_id);
+
         } else {
-            toastr.error('An error occurred. Please try again.', '', {
+            error = response.responseJSON.message;
+            toastr.error(error, '', {
                 timeOut: 3000
-            })
+            });
         }
     }
 
+    // features tab Js start
+    $(document).on('click', '#addNewFeature', function (e) {
+        
+        let form = $('#addFeature_form');
+        form.trigger("reset");
+        setEditorData('#editor2', '');
+        $("#feature_id,#file-input2").val('');
+        $("#imagePreview_div").hide();
+        $("#featureImagePreview").attr('src', '');
 
+        $("#addFeature_modal").modal('show');
+    });
+
+    $('#feature_file').on('change', function() {
+        var file = this.files[0]; // Get the file
+        if (file) {
+            var reader = new FileReader(); // Create a FileReader
+            reader.onload = function(e) {
+                $('#featureImagePreview').attr('src', e.target.result);
+                $('#imagePreview_div').show();
+            };
+            reader.readAsDataURL(file);
+        }else{
+            $('#featureImagePreview').attr('src', '');
+            $('#imagePreview_div').hide();
+        }
+    });
+
+    $(document).on('click', '#addFeature_btn', function (e) {
+        
+        var product_id = $("#product_id").val();
+        let feature_desc = $('#editor2').next().find('.ck-content').html();
+        let form = document.getElementById('addFeature_form');
+        let data = new FormData(form);
+        data.append('product_id', product_id);
+        data.append('feature_description', feature_desc);
+
+        let type = 'POST';
+        let url = '/admin/products/saveProductFeature';
+        SendAjaxRequestToServer(type, url, data, '', saveProductSpecificationsResponse, '', '#addFeature_btn');
+    });
+
+    function saveProductSpecificationsResponse(response) {
+        if (response.status == 200) {
+            // Success: Display success message and reset form
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+
+            let form = $('#addSpecification_form');
+            form.trigger("reset");
+            $("#specification_id").val('');
+
+            $("#addFeature_modal").modal('hide');
+            
+            var product_id = $("#product_id").val();
+            getSpecificProductDetail(product_id);
+
+        } else {
+            if (response.status == 402) {
+                error = response.message;
+            } else {
+                error = response.responseJSON.message;
+                var is_invalid = response.responseJSON.errors;
+        
+                $.each(is_invalid, function (key) {
+                    // Assuming 'key' corresponds to the form field name
+                    var inputField = $('[name="' + key + '"]');
+                    // Add the 'is-invalid' class to the input field's parent or any desired container
+                    inputField.addClass('is-invalid');
+                });
+            }
+            toastr.error(error, '', {
+                timeOut: 3000
+            });
+        }
+    }
+    $(document).on('click', '#handleEditFeatureBtn', function (e) {
+        var details = $(this).attr('data-feature');
+        
+        if(details != ''){
+            details = JSON.parse(details);
+            console.log(details);
+            $("#feature_id").val(details.id);
+            $("#feature_title").val(details.title);
+            setEditorData('#editor2', details.description);
+
+            $('#featureImagePreview').attr('src', base_url+'/storage/'+details.filepath);
+            $('#imagePreview_div').show();
 
     $('body').on('click', '#handleEditProductBtn', async function () {
         try {
@@ -362,8 +687,8 @@ $(document).ready(function () {
             // Populate the form fields with the product data
             $('#product_id').val(item.id);
             $('#sku').val(item.sku);
-            $('#category_id').val(item.category_id); // Assuming 'category_name' is the correct property
-            $('#brand_id').val(item.brand_name); // Assuming 'title' is the correct property
+            $('#category_id').val(category.category_name); // Assuming 'category_name' is the correct property
+            $('#brand_id').val(brand.title); // Assuming 'title' is the correct property
             $('#product_name').val(item.product_name);
             $('#model_name').val(item.model_name);
             $('#price').val(item.price);
@@ -371,6 +696,7 @@ $(document).ready(function () {
             $('#weight').val(item.weight);
             $('#onhand_qty').val(item.onhand_qty);
             $('#description').val(item.description);
+
             // Set the status checkbox
             $('#status').prop('checked', item.status == 1);
 
@@ -384,33 +710,121 @@ $(document).ready(function () {
         }
     });
 
+    var tempFeatureId = '';
+    $(document).on('click', '.deleteFeatureConfirmBtn', function (e) {
+        var feature_id = $(this).attr('data-id');
+        tempFeatureId = feature_id;
+        $("#confirmationModalFeature").modal('show');
+    });
+
+    $(document).on('click', '#deleteFeatureConfirmedBtn', function (e) {
+        var feature_id = tempFeatureId;
+        
+        let form = '';
+        let data = new FormData();
+        data.append('feature_id', feature_id);
+        let type = 'POST';
+        let url = '/admin/products/deleteProductFeature';
+        SendAjaxRequestToServer(type, url, data, '', deleteProductFeatureResponse, '', '#deleteFeatureConfirmedBtn');
+    });
+
+    function deleteProductFeatureResponse(response){
+
+        if (response.status == 200) {
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+
+            tempFeatureId = '';
+            $("#confirmationModalFeature").modal('hide');
+            
+            var product_id = $("#product_id").val();
+            getSpecificProductDetail(product_id);
+
+        } else {
+            error = response.responseJSON.message;
+            toastr.error(error, '', {
+                timeOut: 3000
+            });
+        }
+    }
 
 
-    $('body').on('click', '#handleMarkAsOfferedBtn', function () {
-        const discountedRecord = $(this).attr('data-product-id');
-        $('#product_id_offerd').val(discountedRecord);
-    })
+    $(document).on('click', '.flexSwitchCheckChecked', function (e) {
+    
+        var product_id = $(this).attr('data-id');
+        
+        let data = new FormData();
+        data.append('product_id', product_id);
+        let type = 'POST';
+        let url = '/admin/products/markProductStatus';
+        SendAjaxRequestToServer(type, url, data, '', markProductStatusResponse, '', '.edit_product');
+    });
+    
+    function markProductStatusResponse(response) {
+        toastr.success(response.message, '', {
+            timeOut: 3000
+        });
 
-    $('body').on('click', '#addOfferedValueBtn', function () {
-        const formData = new FormData();
-        formData.append('product_id', $('#product_id_offerd').val());
-        formData.append('is_offered', 1);
-        formData.append('offered_percentage', $('#offered_percentage').val());
-        productUpdateStore(formData);
+        getProductsOnLoad();
+    }
+
+
+
+
+
+
+
+
+
+
+    $(document).on('click', '.close_modal', function (e) {
+        tempFeatureId = '';
+        tempSpecifId = '';
+        
+        $(".modal").modal('hide');
     });
 
 
 
-    $('body').on('click', '#handleMarkAsFeaturedBtn', function () {
-        const discountedRecord = $(this).attr('data-product-featured');
-        const featuredVal = $(this).attr('data-product-featured-value');
 
-        $('#featured_id').val(discountedRecord);
-        if (featuredVal == 1) {
 
-            $("#featured_heading").text("Mark As Unfeatured Now")
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+
+
+
+    $('body').on('click', '#handleMarkAsOfferedBtn', function () {
+        var offered_prod_id = $(this).attr('data-id');
+        var offered_flag = $(this).attr('data-offered-flag');
+        $('#product_id_offered').val(offered_prod_id);
+        $('#product_offered_flag').val(offered_flag == '0' ? '1' : '0');
+        if(offered_flag == '0'){
+            $(".makedAsOffered").modal('show');
+        }else{
+            $("#offered_percentage").val('');
+            $(".removedFromOfferdConfirmModel").modal('show');
         }
-
+        
     })
 
 
@@ -428,7 +842,6 @@ $(document).ready(function () {
                 toastr.success(response.message, '', {
                     timeOut: 3000
                 });
-                $('.makedAsFeaturedConfirmationModel').modal('hide');
                 InitiateOnLoad();
                 //  $('.makedAsFeaturedConfirmationModel').hide();
             } else if (response.status === 422) {
@@ -450,8 +863,82 @@ $(document).ready(function () {
                     timeOut: 3000
                 });
             }
+        }else{
+            offered_percentage = '0';
         }
+
+        let data = new FormData();
+        data.append('product_id', product_id);
+        data.append('offered_flag', offered_flag);
+        data.append('offered_percentage', offered_percentage);
+        let type = 'POST';
+        let url = '/admin/products/changeProductOfferedStatus';
+        SendAjaxRequestToServer(type, url, data, '', changeProductOfferedStatusResponse, '', '.changeProductOfferedStatus');
     });
+    
+    function changeProductOfferedStatusResponse(response) {
+        
+        toastr.success(response.message, '', {
+            timeOut: 3000
+        });
+        
+        $('.modal').modal('hide');
+        getProductsOnLoad();
+    }
+    
+
+
+
+    // $('body').on('click', '#handleMarkAsFeaturedBtn', function () {
+    //     const discountedRecord = $(this).attr('data-product-featured');
+    //     const featuredVal = $(this).attr('data-product-featured-value');
+
+    //     $('#featured_id').val(discountedRecord);
+    //     if (featuredVal == 1) {
+
+    //         $("#featured_heading").text("Mark As Unfeatured Now")
+    //     }
+
+    // })
+
+
+
+    // $('body').on('click', '#featuredNowBtn', function () {
+    //     const formData = document.getElementById('markedAsFeaturedForm');
+    //     const data = new FormData(formData);
+    //     const url = "/admin/product/markAsFeatured";
+
+    //     SendAjaxRequestToServer('POST', url, data, '', handleMarkAsFeaturedResponse, '', '#addOfferedValueBtn');
+
+    //     function handleMarkAsFeaturedResponse(response) {
+    //         var errorMessage = "";
+    //         if (response.status === 200) {
+    //             toastr.success(response.message, '', {
+    //                 timeOut: 3000
+    //             });
+    //             InitiateOnLoad();
+    //             //  $('.makedAsFeaturedConfirmationModel').hide();
+    //         } else if (response.status === 422) {
+    //             // Handle validation errors
+    //             errorMessage = response.responseJSON.message;
+    //             toastr.error(errorMessage || 'An error occurred', '', {
+    //                 timeOut: 3000
+    //             });
+    //             const validationErrors = response.responseJSON.errors || {};
+    //             $.each(validationErrors, function (key, error) {
+    //                 const inputField = $('[name="' + key + '"]');
+    //                 inputField.addClass('is-invalid');
+    //                 // Display validation error message next to the input field
+
+    //             });
+    //         } else {
+    //             // Handle other errors
+    //             toastr.error(response.responseJSON.message || 'An error occurred', '', {
+    //                 timeOut: 3000
+    //             });
+    //         }
+    //     }
+    // });
 
 
 

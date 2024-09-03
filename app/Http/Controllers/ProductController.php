@@ -7,7 +7,8 @@ use App\Models\Brand;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\ProductImage;
-use App\Models\ProductSpecification;;
+use App\Models\ProductSpecification;
+use App\Models\ProductFeature;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ProductRequest;
@@ -31,7 +32,7 @@ class ProductController extends Controller
         $includeTotals = $request->input('includeTotals', false);
 
         // Fetch products
-        $products = Product::all();
+        $products = Product::with(['category', 'brand'])->get();
 
         // Calculate totals if requested
         $totalProducts = $includeTotals ? $products->count() : null;
@@ -66,7 +67,6 @@ class ProductController extends Controller
 
     protected function storeNewProduct(ProductRequest $request)
     {
-
         $request->validate([
             'sku' => 'required|string|max:50,unqiue:products,sku', // Consider whether 'sku' should be an integer or a string with max length
             'product_name' => 'required|string|max:255',
@@ -172,6 +172,20 @@ class ProductController extends Controller
 
     protected function updateExistingProduct(ProductRequest $request)
     {
+        
+        $request->validate([
+            'product_id' => 'required',
+            'sku' => 'required|string|max:50,unqiue:products,sku',
+            'product_name' => 'required|string|max:255',
+            'category_id' => 'required|integer|exists:categories,id',
+            'brand_id' => 'required|integer|exists:brands,id',
+            'model_name' => 'required|string|max:255',
+            'price' => 'required|numeric',
+            'discount_price' => 'required|numeric',
+            'weight' => 'required|numeric',
+            'onhand_qty' => 'required|numeric',
+            'description' => 'required|string|max:3000',
+        ]);
 
         // Find the product by ID
         $product = Product::findOrFail($request->input('product_id'));
@@ -222,6 +236,18 @@ class ProductController extends Controller
         ]);
     }
 
+    public function getSpecificProductDetail(Request $request){
+        $product_id = $request->product_id;
+        
+        $product_detail = Product::where('id', $product_id)->with(['productImages','productSpecifications','productFeatures'])->first();
+        if($product_detail){
+            $data['product_detail'] = $product_detail;
+            return response()->json(['status' => 200, 'message' => "", 'data' => $data]);
+        }else{
+            return response()->json(['status' => 402, 'message' => "Job not found..."]);
+        }
+    }
+
     public function getProductImages(Request $request)
     {
         $productId = $request->query('product_id');
@@ -248,7 +274,15 @@ class ProductController extends Controller
         // Validation rules for image upload
         $request->validate([
             'product_id' => 'required|integer|exists:products,id',
-            'product_images.*' => 'image|mimes:jpeg,png,ico|max:500048'
+            'product_images.*' => 'image|max:2048',
+            'video_url' => [
+                'nullable',
+                function ($attribute, $value, $fail) {
+                    if (!preg_match('/^(https?\:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/', $value)) {
+                        $fail('The ' . $attribute . ' must be a valid YouTube URL.');
+                    }
+                },
+            ]
         ]);
 
         // Find the product by ID
@@ -256,12 +290,16 @@ class ProductController extends Controller
 
         if (!$product) {
             return response()->json([
-                'success' => false,
+                'status' => 400,
                 'message' => 'Product not found'
             ], 404);
         }
 
         try {
+            if($request->video_url != ''){
+                $product->video_url = $request->video_url;
+                $product->save();
+            }
             if ($request->hasFile('product_images')) {
                 // Create a unique folder for the product
                 $productFolder = 'product_images/' . $product->id;
@@ -284,26 +322,16 @@ class ProductController extends Controller
                     $imageIds[] = $productImage->id;
                     $productImages[] = $productImage;
                 }
-
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Images uploaded successfully',
-                    'data' => [
-                        'product_id' => $product->id,
-                        'image_count' => count($imageIds),
-                        'image_ids' => $imageIds,
-                        'productImages' => $productImages,
-                    ]
-                ], 200);
-            } else {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'No images provided'
-                ], 400);
             }
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Product media successfully saved'
+            ], 200);
+            
         } catch (Exception $e) {
             return response()->json([
-                'success' => false,
+                'status' => 400,
                 'message' => 'An error occurred while uploading images',
                 'error' => $e->getMessage()
             ], 500);
@@ -431,30 +459,127 @@ class ProductController extends Controller
         // Validate the request data using $request->validate
         $validatedData = $request->validate([
             'product_id' => 'required|exists:products,id',
-            'specification' => 'nullable|string|max:255',
-            'sub_specification' => 'nullable|string|max:255',
-            'unit' => 'nullable|string|max:50',
-            'value' => 'nullable|string|max:255',
+            'specification' => 'required|string|max:255',
+            'sub_specification' => 'required|string|max:255',
+            'unit' => 'required|string|max:50',
+            'value' => 'required|string|max:255',
         ]);
 
         // Find the product by ID
         $product = Product::findOrFail($validatedData['product_id']);
 
-        // Create the product specification
-        $specification = ProductSpecification::create([
-            'product_id' => $product->id,
-            'specification' => $validatedData['specification'],
-            'sub_specification' => $validatedData['sub_specification'],
-            'key' => $validatedData['unit'],
-            'value' => $validatedData['value'],
-        ]);
+        if($request->specification_id == ''){
+            $specification = new ProductSpecification();
+        }else{
+            $specification = ProductSpecification::where('id', $request->specification_id)->first();
+        }
+        $specification->product_id = $product->id;
+        $specification->specification = $request->specification;
+        $specification->sub_specification = $request->sub_specification;
+        $specification->key = $request->unit;
+        $specification->value = $request->value;
+        $specification->save();
+        
 
         // Return success response
-        return response()->json([
-            'success' => true,
-            'status' => 200,
-            'message' => 'Specification added successfully.',
-            'productSpecifications' => $specification
-        ], 200);
+        if($request->specification_id == ''){
+            return response()->json(['status' => 200, 'message' => 'Specification Added Successfully']);
+        }else{
+            return response()->json(['status' => 200, 'message' => 'Specification Updated Successfully']);
+        }
+    }
+
+    public function deleteSpecification(Request $request)
+    {
+        $product = ProductSpecification::where('id', $request->specification_id)->delete();
+        return response()->json(['status' => 200, 'message' => 'Specification Deleted Successfully']);
+    }
+
+
+    public function storeProductFeature(Request $request)
+    {
+        // Validate the request data using $request->validate
+        $validatedData = $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'feature_title' => 'required|string|max:255',
+            'feature_description' => 'required|string|max:255',
+            'feature_image' => 'required|image|max:2048',
+        ]);
+
+        // Find the product by ID
+        if($request->feature_id == ''){
+            $feature = new ProductFeature();
+        }else{
+            $feature = ProductFeature::where('id', $request->feature_id)->first();
+        }
+        $feature->product_id = $request->product_id;
+        $feature->title = $request->feature_title;
+        $feature->description = $request->feature_description;
+        $feature->save();
+        
+        if ($request->hasFile('feature_image')) {
+            if($feature->filepath != null){
+                Storage::disk('public')->delete($feature->filepath);
+            }
+            $folder = 'product_feature_images/' . $request->product_id;
+            $file = $request->file('feature_image');
+            
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $filePath = $file->storeAs($folder, $fileName, 'public');
+
+            $feature->filename = $file->getClientOriginalName();
+            $feature->filepath = $filePath;
+            $feature->save();
+        }
+
+        // Return success response
+        if($request->feature_id == ''){
+            return response()->json(['status' => 200, 'message' => 'Feature Added Successfully']);
+        }else{
+            return response()->json(['status' => 200, 'message' => 'Feature Updated Successfully']);
+        }
+    }
+    public function deleteProductFeature(Request $request)
+    {   
+        $feature = ProductFeature::where('id', $request->feature_id)->first();
+        if($feature->filepath != null){
+            Storage::disk('public')->delete($feature->filepath);
+        }
+        ProductFeature::where('id', $request->feature_id)->delete();
+        return response()->json(['status' => 200, 'message' => 'Feature Deleted Successfully']);
+    }
+
+    public function markProductStatus(Request $request)
+    {   
+        $product = Product::where('id', $request->product_id)->first();
+
+        if($product->status == '1'){
+            $product->status = '0';
+            $product->save();
+            return response()->json(['status' => 200, 'message' => 'Product Marked In-Active Successfully.']);
+        }else{
+            $product->status = '1';
+            $product->save();
+            return response()->json(['status' => 200, 'message' => 'Product Marked Active Successfully.']);
+        }
+    }
+
+    public function changeProductOfferedStatus(Request $request)
+    {   
+        $product_id = $request->product_id;
+        $offered_flag = $request->offered_flag;
+        $offered_percentage = $request->offered_percentage;
+
+        $product = Product::where('id', $request->product_id)->first();
+
+        $product->is_offered = $offered_flag;
+        $product->offered_percentage = $offered_percentage;
+        $product->save();
+        
+        if($offered_flag == '1'){
+            return response()->json(['status' => 200, 'message' => 'Product Mark as Offered Successfully.']);
+        }else{
+            return response()->json(['status' => 200, 'message' => 'Product Removed From Offered Successfully.']);
+        }
     }
 }

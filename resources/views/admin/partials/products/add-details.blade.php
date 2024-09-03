@@ -10,74 +10,72 @@
                 {{-- update id --}}
 
                 <div class="col-sm-6 mb-3">
-                    <label for="sku" class="form-label">SKU</label>
+                    <label for="sku" class="form-label">SKU<span class="danger">*</span></label>
                     <input type="text" class="form-control" id="sku" maxlength="50" name="sku" placeholder="Enter SKU">
                 </div>
 
                 <div class="col-sm-6 mb-3">
-                    <label for="product_name" class="form-label">Product Name</label>
+                    <label for="product_name" class="form-label">Product Name<span class="danger">*</span></label>
                     <input type="text" class="form-control" id="product_name" maxlength="255" name="product_name"
                         placeholder="Enter product name">
                 </div>
 
                 <div class="col-sm-6 mb-3">
-                    <label for="" class="form-label">Category</label>
+                    <label for="" class="form-label">Category<span class="danger">*</span></label>
                     <select class="form-control" id="category_id" name="category_id">
-                        <option value="" disabled selected>Select a category</option>
+                        <option value="">Select a category</option>
                         <!-- Example options; replace with dynamic data -->
                     </select>
                 </div>
 
                 <div class="col-sm-6 mb-3">
-                    <label for="" class="form-label">Brand Name</label>
+                    <label for="" class="form-label">Brand<span class="danger">*</span></label>
                     <select class="form-control" id="brand_id" name="brand_id">
-                        <option value="" disabled selected>Select a brand</option>
+                        <option value="">Select a brand</option>
                         <!-- Example options; replace with dynamic data -->
                     </select>
                 </div>
 
                 <div class="col-sm-6 mb-3">
-                    <label for="product_name" class="form-label">Model Name</label>
-                    <input type="text" class="form-control" id="model-name" maxlength="255" name="model_name"
+                    <label for="product_name" class="form-label">Model Name<span class="danger">*</span></label>
+                    <input type="text" class="form-control" id="model_name" maxlength="255" name="model_name"
                         placeholder="Enter Model Name">
                 </div>
 
                 <div class="col-sm-6 mb-3">
-                    <label for="price" class="form-label">Price</label>
+                    <label for="price" class="form-label">Price<span class="danger">*</span></label>
                     <input type="number" step="0.01" class="form-control" id="price" maxlength="10" name="price"
                         placeholder="Enter price">
                 </div>
 
                 <div class="col-sm-6 mb-3">
-                    <label for="discount_price" class="form-label">Discount Price</label>
+                    <label for="discount_price" class="form-label">Discount Price<span class="danger">*</span></label>
                     <input type="number" step="0.01" class="form-control" maxlength="10" id="discount_price"
                         name="discount_price" placeholder="Enter discount price">
                 </div>
 
                 <div class="col-sm-6 mb-3">
-                    <label for="weight" class="form-label">Weight (kg)</label>
+                    <label for="weight" class="form-label">Weight (kg)<span class="danger">*</span></label>
                     <input type="number" step="0.01" class="form-control" maxlength="10" id="weight" name="weight"
                         placeholder="Enter weight">
                 </div>
 
                 <div class="col-sm-6 mb-3">
-                    <label for="onhand_qty" class="form-label">On Hand Quantity</label>
+                    <label for="onhand_qty" class="form-label">On Hand Quantity<span class="danger">*</span></label>
                     <input type="number" class="form-control" id="onhand_qty" maxlength="10" name="onhand_qty"
                         placeholder="Enter stock quantity">
                 </div>
 
                 <div class="col-sm-12 mb-3">
-                    <label for="description" class="form-label">Description</label>
+                    <label for="description" class="form-label">Description<span class="danger">*</span></label>
                     <textarea class="form-control" id="description" name="description" maxlength="3000" rows="3"
                         placeholder="Enter description"></textarea>
                 </div>
             </div>
         </div>
         <div class="d-flex justify-content-center mt-4 ">
-            <button type="button" id="backProductBtn" class=" mx-2 btn btn-danger btn-lg px-md-5">Back
-            </button>
-            <button type="button" id="saveProductBtn" class="btn theme-btn-outline btn-lg px-md-5">Save
-            </button>
+            <button type="button" id="backProductBtn" class=" mx-2 btn btn-danger btn-lg px-md-5">Back</button>
+            <button type="button" id="saveProductBtn" class="btn theme-btn-outline btn-lg px-md-5">Save</button>
         </div>
     </form>
 </div>

@@ -84,7 +84,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/delete', [ProductController::class, 'deleteProduct'])->name('admin.products.destroy');
         Route::post('/product/markAsDiscounted/ajax', [ProductController::class, 'markAsDiscounted'])->name('product.markAsDiscounted.ajax');
         Route::post('/product/markAsFeatured/ajax', [ProductController::class, 'markAsFeatured'])->name('product.markAsFeatured.ajax');
-
+        Route::post('/products/getSpecificProductDetail', [ProductController::class, 'getSpecificProductDetail'])->name('admin.products.getSpecificProductDetail');
+        Route::post('/products/markAsFeatured', [ProductController::class, 'markAsFeatured'])->name('admin.products.markAsFeatured');
+        Route::post('/products/markProductStatus', [ProductController::class, 'markProductStatus'])->name('admin.products.markProductStatus');
+        Route::post('/products/changeProductOfferedStatus', [ProductController::class, 'changeProductOfferedStatus'])->name('admin.products.changeProductOfferedStatus');
+      
         // Product Images
         Route::get('/products/images', [ProductController::class, 'getProductImages'])->name('admin.products.images.index');
         Route::post('/product/store/images', [ProductController::class, 'storeProductImages'])->name('admin.product.store.images');
@@ -101,6 +105,7 @@ Route::group(['prefix' => 'admin'], function () {
         // Product Specifications
         Route::post('/products/specifications', [ProductController::class, 'getProductSpecifications'])->name('admin.products.specifications.index');
         Route::post('/products/specifications/store', [ProductController::class, 'storeProductSpecifications'])->name('admin.products.specifications.store');
+
         // Admin Product End //
 
         //contact us
