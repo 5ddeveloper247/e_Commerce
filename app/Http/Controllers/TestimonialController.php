@@ -51,10 +51,10 @@ class TestimonialController extends Controller
         ]);
 
         // Handle file upload if present
-        $mediaPath = null;
-        if ($request->hasFile('file')) {
-            $mediaPath = $request->file('file')->store('testimonials', 'public');
-        }
+        $mediaPath = $request->hasFile('file') ? $request->file('file')->store('testimonials', 'public') : null;
+
+        // Determine the status
+        $status = $request->has('status') ? 1 : 0;
 
         // Check if testimonial_id is provided, not null, and exists
         if (!is_null($validatedData['testimonial_id'])) {
@@ -68,7 +68,7 @@ class TestimonialController extends Controller
                     'description' => $validatedData['description'],
                     'designation' => $validatedData['designation'],
                     'mediaPath' => $mediaPath ?? $testimonial->mediaPath, // Update mediaPath only if a new file is uploaded
-                    'status' => $request->status == "on" ? 1 : 0,
+                    'status' => $status,
                 ]);
 
                 return response()->json([
@@ -88,7 +88,7 @@ class TestimonialController extends Controller
                 'description' => $validatedData['description'],
                 'designation' => $validatedData['designation'],
                 'mediaPath' => $mediaPath,
-                'status' => $request->status == "on" ? 1 : 0,
+                'status' => $status,
             ]);
 
             return response()->json([
@@ -98,6 +98,7 @@ class TestimonialController extends Controller
             ]);
         }
     }
+
 
 
 

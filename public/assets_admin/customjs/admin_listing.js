@@ -138,6 +138,8 @@ $(document).ready(function () {
     }
 
 
+
+
     $('body').on('click', '#handleRemoveAdminBtn', function () {
         const item = JSON.parse($(this).attr('data-remove-admin'));
         $("#delete-admin-id").val(item.id);

@@ -199,9 +199,9 @@ if (!function_exists('getDiscountedProducts')) {
     {
         try {
             $discountedProducts = Product::where('is_offered', '1')
-            ->limit(2)
-            ->with(['productImages'])
-            ->get();
+                ->limit(2)
+                ->with(['productImages'])
+                ->get();
             return $discountedProducts;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
