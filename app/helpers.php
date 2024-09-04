@@ -184,7 +184,7 @@ if (!function_exists('getFeaturedProducts')) {
     function getFeaturedProducts()
     {
         try {
-            $featured = Product::where('featured', '1')->with(['productImages'])->get();
+            $featured = Product::where('featured', '1')->where('status', '1')->with(['productImages'])->get();
             return $featured;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -198,10 +198,17 @@ if (!function_exists('getDiscountedProducts')) {
     function getDiscountedProducts()
     {
         try {
+<<<<<<< HEAD
             $discountedProducts = Product::where('is_offered', '1')
                 ->limit(2)
                 ->with(['productImages'])
                 ->get();
+=======
+            $discountedProducts = Product::where('is_offered', '1')->where('status', '1')
+            ->limit(2)
+            ->with(['productImages'])
+            ->get();
+>>>>>>> 76841fc17b6d5e3bca8fbda448e120f7f1d9512d
             return $discountedProducts;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
