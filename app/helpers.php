@@ -198,17 +198,10 @@ if (!function_exists('getDiscountedProducts')) {
     function getDiscountedProducts()
     {
         try {
-<<<<<<< HEAD
-            $discountedProducts = Product::where('is_offered', '1')
-                ->limit(2)
-                ->with(['productImages'])
-                ->get();
-=======
             $discountedProducts = Product::where('is_offered', '1')->where('status', '1')
             ->limit(2)
             ->with(['productImages'])
             ->get();
->>>>>>> 76841fc17b6d5e3bca8fbda448e120f7f1d9512d
             return $discountedProducts;
         } catch (\Exception $e) {
             Log::error($e->getMessage());
