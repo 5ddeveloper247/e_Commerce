@@ -198,7 +198,7 @@ if (!function_exists('getDiscountedProducts')) {
     function getDiscountedProducts()
     {
         try {
-            $discountedProducts = Product::where('is_offered', '1')
+            $discountedProducts = Product::where('is_offered', '1')->where('status', '1')
             ->limit(2)
             ->with(['productImages'])
             ->get();
