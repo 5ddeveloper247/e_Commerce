@@ -88,7 +88,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/markAsFeatured', [ProductController::class, 'markAsFeatured'])->name('admin.products.markAsFeatured');
         Route::post('/products/markProductStatus', [ProductController::class, 'markProductStatus'])->name('admin.products.markProductStatus');
         Route::post('/products/changeProductOfferedStatus', [ProductController::class, 'changeProductOfferedStatus'])->name('admin.products.changeProductOfferedStatus');
+<<<<<<<<< Temporary merge branch 1
+        Route::post('/products/changeProductFeaturedStatus', [ProductController::class, 'changeProductFeaturedStatus'])->name('admin.products.changeProductFeaturedStatus');
 
+=========
+
+>>>>>>>>> Temporary merge branch 2
         // Product Images
         Route::get('/products/images', [ProductController::class, 'getProductImages'])->name('admin.products.images.index');
         Route::post('/product/store/images', [ProductController::class, 'storeProductImages'])->name('admin.product.store.images');
