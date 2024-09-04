@@ -582,4 +582,26 @@ class ProductController extends Controller
             return response()->json(['status' => 200, 'message' => 'Product Removed From Offered Successfully.']);
         }
     }
+
+    public function changeProductFeaturedStatus(Request $request)
+    {   
+        $product_id = $request->product_id;
+
+        $product = Product::where('id', $request->product_id)->first();
+
+        if($product->featured == '1'){
+            $product->featured = '0';
+        }else{
+            $product->featured = '1';
+        }
+        $product->save();
+        
+        
+        
+        if($product->featured == '1'){
+            return response()->json(['status' => 200, 'message' => 'Product Mark as Featured Successfully.']);
+        }else{
+            return response()->json(['status' => 200, 'message' => 'Product Removed From Featured Successfully.']);
+        }
+    }
 }

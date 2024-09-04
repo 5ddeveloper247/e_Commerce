@@ -49,4 +49,20 @@ class User extends Authenticatable
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
+    public function shippingAddress() {
+        return $this->hasMany(ShippingAddress::class);
+    }
+
+    public function cart() {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function order() {
+        return $this->hasMany(Order::class);
+    }
+
+    public function payments() {
+        return $this->hasMany(OrderPayment::class);
+    }
 }

@@ -58,7 +58,7 @@
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4" type="button">
+                        <button class="btn btn-cancel px-4 close_modal" type="button">
                             Cancel
                         </button>
                         <button class="btn btn-done px-4" type="button" id="addSpecification_btn">Save</button>

@@ -11,4 +11,13 @@ class States extends Model
 
     protected $table = "states";
 
+    public function shippingAddress()
+    {
+        return $this->belongsTo(ShippingAddress::class, 'state_id');
+    }
+
+    public function orderShippingAddress()
+    {
+        return $this->belongsTo(OrderShippingAddress::class, 'state_id');
+    }
 }

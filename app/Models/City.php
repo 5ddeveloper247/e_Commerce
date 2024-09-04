@@ -11,4 +11,13 @@ class City extends Model
 
     protected $table = "cities";
 
+    public function shippingAddress()
+    {
+        return $this->belongsTo(ShippingAddress::class, 'city_id');
+    }
+
+    public function orderShippingAddress()
+    {
+        return $this->belongsTo(OrderShippingAddress::class, 'city_id');
+    }
 }
