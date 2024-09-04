@@ -87,13 +87,14 @@ $(document).ready(function () {
 
         let form = document.getElementById('addEventForm');
         const formData = new FormData(form);
+        console.log(formData)
 
         const url = "/admin/testimonials/createOrUpdate";
         const type = "POST";
-        SendAjaxRequestToServer(type, url, formData, '', updateAdminajaxResponse, '', '#editAdminNow');
+        SendAjaxRequestToServer(type, url, formData, '', updatejaxResponse, '', '#editAdminNow');
     });
 
-    function updateAdminajaxResponse(response) {
+    function updatejaxResponse(response) {
         if (response.status === 200) {
             // Success: Display success message and reset form
             toastr.success(response.message, '', {

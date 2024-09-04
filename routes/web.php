@@ -88,7 +88,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/markAsFeatured', [ProductController::class, 'markAsFeatured'])->name('admin.products.markAsFeatured');
         Route::post('/products/markProductStatus', [ProductController::class, 'markProductStatus'])->name('admin.products.markProductStatus');
         Route::post('/products/changeProductOfferedStatus', [ProductController::class, 'changeProductOfferedStatus'])->name('admin.products.changeProductOfferedStatus');
-      
+
         // Product Images
         Route::get('/products/images', [ProductController::class, 'getProductImages'])->name('admin.products.images.index');
         Route::post('/product/store/images', [ProductController::class, 'storeProductImages'])->name('admin.product.store.images');
@@ -111,7 +111,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/saveProductFeature', [ProductController::class, 'storeProductFeature'])->name('admin.products.saveProductFeature');
         Route::post('/products/deleteProductFeature', [ProductController::class, 'deleteProductFeature'])->name('admin.products.deleteProductFeature');
 
-        // Admin Product End // 
+        // Admin Product End //
 
         //contact us
         Route::post('/contact/storeOrUpdate', [ContactUsController::class, 'storeOrUpdate'])->name('admin.contact.storeUpdate');
@@ -158,20 +158,26 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/verifyOtpForget', [RegisterController::class, 'verifyOtpForget'])->name('user.verifyOtpForget');
     Route::post('/changePassForget', [RegisterController::class, 'changePassForget'])->name('user.changePassForget');
 
-    //ajax request
-    Route::get('products_listing', [WebsiteController::class, 'productsListing'])->name('user.productsListing');
-    Route::get('testimonials', [WebsiteController::class, 'testimonialsListing'])->name('user.testimonials');
 
-   //middleware routes
+    Route::get('/products_listing', [WebsiteController::class, 'productsListing'])->name('user.productsListing');
+    Route::get('/testimonials', [WebsiteController::class, 'testimonialsListing'])->name('user.testimonials');
+    Route::post('/account/update', [WebsiteController::class, 'accountUpdate'])->name('user.accountUpdate');
+    Route::get('/new_products', [WebsiteController::class, 'newProducts'])->name('user.newProducts');
+    Route::get('/product_detail/{catName}/{sku}', [WebsiteController::class, 'productDetail'])->name('user.productDetail');
+
+    //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {
-    /************** PAGE ROUTES ******************/
-     Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
+        /************** PAGE ROUTES ******************/
+        Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
 
 
 
 
 
         /************** AJAX ROUTES ******************/
+        //ajax request
+
+        Route::get('/user', [WebsiteController::class, 'authUser'])->name('authUser');
     });
 });
 
