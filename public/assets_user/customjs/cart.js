@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $('body').on('click', '.AddToCartBtn', function () {
         var product_id = $(this).attr('data-productId');
-        var quantity = $('#quantity').val();
+        var quantity = $(this).attr('data-quantity');
         addToCart(product_id, quantity);
     });
     $('body').on('click', '#quantity_minus_btn', function () {
@@ -26,8 +26,6 @@ $(document).ready(function () {
             $(this).val(1);
         }
     });
-
-
 
     function addToCart(productId, quantity) {
         var data = new FormData();
@@ -98,4 +96,57 @@ $(document).ready(function () {
             });
         }
     }
+
+
+
+    //cart view header
+    cartView();
+    function cartView() {
+        const type = "Post";
+        const url = "/cart/view";
+        const cartId = localStorage.getItem('cart')
+        const data = new FormData()
+        if (is_auth) {
+            data.append('user_id', auth_user.id)
+        }
+        else {
+            const cartId = localStorage.getItem('cart');
+            data.append('cart_id', cartId)
+        }
+        SendAjaxRequestToServer(type, url, data, '', cartViewResponse, '', '#cartView');
+
+    }
+    function cartViewResponse(response) {
+        if (response.status === 200) {
+            let cartHtml = '';
+            response.data.forEach(item => {
+
+
+                // Ensure the product and cart detail data exists before using it
+                if (true) {
+                    cartHtml += `
+                     <div class="">
+                                <div class="px-3 pt-3">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1z" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
+                                        <div>
+                                            <h5 class="card-title mb-1">Wintage Spoon</h5>
+                                            <p class="card-text text-muted mb-0">Aliquam quat voluptatem</p>
+                                            <p class="card-text fw-bold">₹129.95</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    `;
+                }
+            });
+
+            // Inject the generated HTML into the cart menu element
+            $('#cart_menu_item').html(cartHtml);
+        } else {
+            // Handle case when response status is not 200
+            $('#cart_menu_item').html('<p>No items in the cart</p>');
+        }
+    }
+
 });

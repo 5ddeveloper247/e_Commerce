@@ -503,3 +503,4 @@
     }
 </script>
 <script src="{{ asset('assets_user/customjs/news_letters.js') }}"></script>
+<script src="{{ asset('assets_user/customjs/cart.js') }}"></script>

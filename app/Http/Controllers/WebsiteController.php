@@ -267,4 +267,39 @@ class WebsiteController extends Controller
             'cart' => $cart->id // Load cart details with associated product for response
         ]);
     }
+
+    public function cartView(Request $request)
+    {
+        if (Auth::check()) {
+            $cart = Cart::where('user_id', auth()->user()->id)->where('status', 0)->first();
+        } else {
+            if ($request->has('cart_id') && $request->cart_id !== null) {
+                $cart = Cart::where('id', $request->cart_id)->where('status', 0)->first();
+            } else {
+                return response()->json(['status' => 404, 'message' => 'Cart not found']);
+            }
+        }
+
+        if ($cart && $cart !== "") {
+            $cartDetails = CartDetail::where('cart_id', $cart->id)->get();
+            if ($cartDetails->isNotEmpty()) {
+                $cartProducts = [];
+                // Loop through each cart detail and manually fetch the product data
+                foreach ($cartDetails as $cartDetail) {
+                    $product = Product::find($cartDetail->product_id);
+                    if ($product) {
+                        // Merge the cart detail with the product information
+                        $cartProducts[] = [
+                            'cart_detail' => $cartDetail,
+                            'product' => $product
+                        ];
+                    }
+                }
+            return response()->json(['status' => 200, 'data' => $cartProducts]);
+        } else {
+
+            return response()->json(['status' => 404, 'message' => 'Cart Detail not found']);
+        }
+    }
+}
 }

@@ -167,6 +167,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/newsletters/create/ajax', [NewsLetterController::class, 'newLetterCreate'])->name('admin.newsletter.create');
     //cart and listings
     Route::post('/cart/add', [WebsiteController::class, 'cartAdd'])->name('cart.add');
+    Route::post('/cart/view', [WebsiteController::class, 'cartView'])->name('cart.view');
 
     //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {

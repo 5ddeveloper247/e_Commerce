@@ -16,7 +16,7 @@
 <script>
     var base_url = "{{ url('/') }}";
     var auth_user = @json(auth()->user());
-    var is_auth = {{ auth()->check() ? 'true' : 'false' }};
+    var is_auth = {{ auth()->check() ? true : false }};
 </script>
 
 
