@@ -365,8 +365,7 @@
                         </div>
                         <div class="d-flex justify-content-center my-4">
                             <div class="featured-card-images">
-                                <a href="{{'product_detail'}}">
-
+                                <a href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}">
                                     @if(isset($product->productImages[0]->filepath))
                                     <img class="img-fluid"
                                         src="{{url('/').'/storage/'.$product->productImages[0]->filepath}}"
@@ -1823,5 +1822,5 @@ $discountedProducts = getDiscountedProducts();
 </div>
 @endsection
 @push('scripts')
-             <script src=" {{asset("assets_user/customjs/home.js") }}"></script>
+<script src=" {{asset("assets_user/customjs/home.js") }}"></script>
 @endpush

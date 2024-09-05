@@ -4,7 +4,7 @@ $(document).ready(function () {
         var form = document.getElementById('newsLetterForm');
         const formData = new FormData(form);
         const type = "POST";
-        const url = "/admin/newsletters/create/ajax"; // replace with your server-side route
+        const url = "/newsletters/create/ajax"; // replace with your server-side route
 
         SendAjaxRequestToServer(type, url, formData, '', getNewsLetterResponse, 'newsLetterSubscribeBtn');
 

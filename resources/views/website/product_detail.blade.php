@@ -89,8 +89,8 @@
                             d="m142.319 241.027l22.628 22.627L240 188.602V376h32V188.602l75.053 75.052l22.628-22.627L256 127.347z" />
                     </svg>
                 </div>
-                <button class="btn btn-add-to-cart" data-quantity="" data-productId="{{ $product->id }}"
-                    id="mainAddToCartBtn">
+                <button class="btn btn-add-to-cart AddToCartBtn" data-quantity="" data-productId="{{ $product->id }}"
+                    id="AddToCartBtn">
                     Add to Cart
                 </button>
             </div>

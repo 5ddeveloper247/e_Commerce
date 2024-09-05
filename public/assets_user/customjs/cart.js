@@ -1,9 +1,5 @@
-
-
-
-
 $(document).ready(function () {
-    $('body').on('click', '#mainAddToCartBtn', function () {
+    $('body').on('click', '.AddToCartBtn', function () {
         var product_id = $(this).attr('data-productId');
         var quantity = $('#quantity').val();
         addToCart(product_id, quantity);
@@ -103,4 +99,3 @@ $(document).ready(function () {
         }
     }
 });
-

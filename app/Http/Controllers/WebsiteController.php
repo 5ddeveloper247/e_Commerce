@@ -13,6 +13,8 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\ProductSpecification;
 use App\Models\ProductFeature;
+use App\Models\Cart;
+use App\Models\CartDetail;
 
 class WebsiteController extends Controller
 {
@@ -130,7 +132,7 @@ class WebsiteController extends Controller
     public function newProducts(Request $request)
     {
         $newProducts = Product::where('status', 1)
-            ->with('productImages')
+            ->with(['productImages', 'category'])
             ->orderBy('created_at', 'desc')
             ->limit(5)
             ->get();
@@ -182,5 +184,87 @@ class WebsiteController extends Controller
         }
 
         return abort(404);
+    }
+
+
+    public function cartAdd(Request $request)
+    {
+        $product_id = $request->product_id;
+        $quantity = $request->quantity;
+
+        if (!isset($product_id) || !isset($quantity)) {
+            return response()->json(['status' => 400, 'message' => 'Invalid request']);
+        }
+
+        $product = Product::find($product_id);
+
+        if (!$product) {
+            return response()->json(['status' => 404, 'message' => 'Product not found']);
+        }
+
+        // Determine the price and discounted price
+        $price = $product->price;
+        $dis_price = $product->price;
+
+        if ($product->is_offered == '1' && $product->offered_percentage > 0) {
+            $dis_price = $product->price - ($product->price * ($product->offered_percentage / 100));
+        } elseif ($product->discount_price != null && $product->discount_price > 0) {
+            $dis_price = $product->discount_price;
+        }
+
+        // Check if the user is authenticated and fetch the cart accordingly
+        if (Auth::check()) {
+            $cart = Cart::where('user_id', auth()->user()->id)->where('status', 0)->first();
+        } else {
+            if ($request->has('cart_id') && $request->cart_id !== null) {
+                $cart = Cart::where('id', $request->cart_id)->where('status', 0)->first();
+            } else {
+                $cart = [];
+            }
+        }
+        // If the cart exists, update or add the product to the cart details
+        if ($cart && $cart !== "") {
+            $cartDetail = CartDetail::where('cart_id', $cart->id)
+                ->where('product_id', $product_id)
+                ->first();
+
+            if ($cartDetail) {
+                // Update existing cart detail
+                $cartDetail->quantity += $quantity;
+            } else {
+                // Create a new cart detail
+                $cartDetail = new CartDetail();
+                $cartDetail->cart_id = $cart->id;
+                $cartDetail->product_id = $product_id;
+                $cartDetail->quantity = $quantity;
+            }
+
+            // Set price and total amount
+            $cartDetail->price = $price;
+            $cartDetail->discounted_price = $dis_price;
+            $cartDetail->total_amount = $dis_price * $cartDetail->quantity;
+            $cartDetail->save();
+        } else {
+            // Create a new cart and cart detail if no cart exists
+            $cart = new Cart();
+            $cart->user_id = auth()->user()->id ?? null;
+            $cart->status = 0;
+            $cart->save();
+
+            $cartDetail = new CartDetail();
+            $cartDetail->cart_id = $cart->id;
+            $cartDetail->product_id = $product_id;
+            $cartDetail->quantity = $quantity;
+            $cartDetail->price = $price;
+            $cartDetail->discounted_price = $dis_price;
+            $cartDetail->total_amount = $dis_price * $quantity;
+            $cartDetail->save();
+        }
+
+        return response()->json([
+            'status' => 200,
+            'message' => 'Product added to cart successfully',
+            'cart' => $cart->id // Load cart details with associated product for response
+        ]);
     }
 }

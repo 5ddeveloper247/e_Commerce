@@ -56,6 +56,7 @@ $(document).ready(function () {
         if (response.data) {
             console.log(response.data)
             response.data.forEach(product => {
+                console.log(product)
                 newProductHtml += `
                  <div class="swiper-slide mt-5 p-2">
                     <div class="card featured-card border-0">
@@ -77,8 +78,8 @@ $(document).ready(function () {
                         </div>
                         <div class="d-flex justify-content-center my-4">
                             <div class="featured-card-images">
-                                <a href="{{'product_detail'}}">
-                                    <img class="img-fluid" src="${base_url+'/storage/'+product?.product_images[0].filepath}"
+                                <a href="${base_url + '/product_detail/' + (product?.category?.category_name?.replace(/\s/g, '-') || 'default-category') + '/' + (product?.sku || 'default-sku')}">
+                                    <img class="img-fluid" src="${base_url + '/storage/' + product?.product_images[0].filepath}"
                                         alt="Card image">
                                 </a>
                             </div>
@@ -109,7 +110,7 @@ $(document).ready(function () {
                             <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>${product?.product_name}</small></p>
                             <div class="price-and-btn">
                                 <div class="d-flex justify-content-center card-price">
-                                    <h5>${product?.discount_price==''?product?.price:product?.discount_price}</h5>
+                                    <h5>${product?.discount_price == '' ? product?.price : product?.discount_price}</h5>
                                     <p class="text-danger ps-1"><small><del>${product?.price}</del></small></p>
                                 </div>
                                 <button class="btn btn-add-to-cart">

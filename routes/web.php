@@ -122,7 +122,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/getcontact/ajax', [ContactUsController::class, 'getContactUsAjax'])->name('admin.getcontact.ajax');
         Route::post('/contact/status/ajax', [ContactUsController::class, 'updateContactAjax'])->name('contact.update.status.ajax');
         //newsletter
-        Route::post('/newsletters/create/ajax', [NewsLetterController::class, 'newLetterCreate'])->name('admin.newsletter.create');
         Route::get('/newletters/ajax', [NewsLetterController::class, 'newsLetterListing'])->name('admin.newsletter.list');
         Route::post('/newsDelete/ajax', [NewsLetterController::class, 'newsletterDelete'])->name('admin.newsletter.delete');
 
@@ -165,6 +164,9 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/account/update', [WebsiteController::class, 'accountUpdate'])->name('user.accountUpdate');
     Route::get('/new_products', [WebsiteController::class, 'newProducts'])->name('user.newProducts');
     Route::get('/product_detail/{catName}/{sku}', [WebsiteController::class, 'productDetail'])->name('user.productDetail');
+    Route::post('/newsletters/create/ajax', [NewsLetterController::class, 'newLetterCreate'])->name('admin.newsletter.create');
+    //cart and listings
+    Route::post('/cart/add', [WebsiteController::class, 'cartAdd'])->name('cart.add');
 
     //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {
@@ -173,11 +175,7 @@ Route::group(['prefix' => '/'], function () {
 
 
 
-
-
         /************** AJAX ROUTES ******************/
-        //ajax request
-
         Route::get('/user', [WebsiteController::class, 'authUser'])->name('authUser');
     });
 });
