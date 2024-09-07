@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -18,16 +17,16 @@ class ShippingAddress extends Model
 
     public function country()
     {
-        return $this->hasOne(Country::class);
+        return $this->belongsTo(Country::class, 'country_id'); // Correct relationship
     }
 
     public function state()
     {
-        return $this->hasOne(State::class);
+        return $this->belongsTo(States::class, 'state_id'); // Correct relationship
     }
 
     public function city()
     {
-        return $this->hasOne(City::class);
+        return $this->belongsTo(City::class, 'city_id'); // Correct relationship
     }
 }

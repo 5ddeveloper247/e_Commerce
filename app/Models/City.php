@@ -13,11 +13,6 @@ class City extends Model
 
     public function shippingAddress()
     {
-        return $this->belongsTo(ShippingAddress::class, 'city_id');
-    }
-
-    public function orderShippingAddress()
-    {
-        return $this->belongsTo(OrderShippingAddress::class, 'city_id');
+        return $this->hasMany(ShippingAddress::class, 'city_id');
     }
 }

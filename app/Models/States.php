@@ -13,11 +13,6 @@ class States extends Model
 
     public function shippingAddress()
     {
-        return $this->belongsTo(ShippingAddress::class, 'state_id');
-    }
-
-    public function orderShippingAddress()
-    {
-        return $this->belongsTo(OrderShippingAddress::class, 'state_id');
+        return $this->hasMany(ShippingAddress::class, 'state_id');
     }
 }

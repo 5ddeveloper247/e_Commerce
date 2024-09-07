@@ -33,9 +33,12 @@ Route::post('/getRegisterPageData', [RegisterController::class, 'getRegisterPage
 Route::post('/getSpecificStates', [RegisterController::class, 'getSpecificStates'])->name('getSpecificStates');
 Route::post('/getSpecificCities', [RegisterController::class, 'getSpecificCities'])->name('getSpecificCities');
 Route::post('/addUserData', [RegisterController::class, 'saveUserData'])->name('addUserData');
+Route::post('/addAddress', [RegisterController::class, 'addAddress'])->name('addAddress');
+Route::post('/countryData',[RegisterController::class,'countryData'])->name('countryData');
+Route::post('/deleteAddress',[RegisterController::class,'deleteAddress'])->name('deleteAddress');
+
 
 Route::group(['prefix' => 'admin'], function () {
-
     Route::get('/', [AdminController::class, 'login'])->name('login');
     Route::get('/login', [AdminController::class, 'login'])->name('login');
     Route::post('/loginSubmit', [AdminController::class, 'loginSubmit'])->name('loginSubmit');
@@ -168,6 +171,7 @@ Route::group(['prefix' => '/'], function () {
     //cart and listings
     Route::post('/cart/add', [WebsiteController::class, 'cartAdd'])->name('cart.add');
     Route::post('/cart/view', [WebsiteController::class, 'cartView'])->name('cart.view');
+    Route::post('/cart/delete', [WebsiteController::class, 'cartDelete'])->name('cart.delete');
 
     //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {

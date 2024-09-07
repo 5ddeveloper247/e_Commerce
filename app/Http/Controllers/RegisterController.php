@@ -20,6 +20,7 @@ use App\Models\User;
 use App\Models\Country;
 use App\Models\States;
 use App\Models\City;
+use App\Models\ShippingAddress;
 
 
 class RegisterController extends Controller
@@ -45,30 +46,37 @@ class RegisterController extends Controller
         return view('website/forget_password')->with($data);
     }
 
-    public function getRegisterPageData(Request $request){
+    public function getRegisterPageData(Request $request)
+    {
 
         $data['countries'] = Country::where('status', '1')->get();
-        
-        return response()->json(['status' => 200, 'message' => "",'data' => $data]);
+        $data['shippingAddress'] = ShippingAddress::where('user_id', auth()->id())
+            ->with(['user', 'country', 'state', 'city'])
+            ->get();
+
+        return response()->json(['status' => 200, 'message' => "", 'data' => $data]);
     }
 
-    public function getSpecificStates(Request $request){
+    public function getSpecificStates(Request $request)
+    {
 
         $data['states'] = States::where('country_id', $request->country_id)->where('status', '1')->get();
         $data['cities'] = City::where('country_id', $request->country_id)->where('status', '1')->get();
-        
-        return response()->json(['status' => 200, 'message' => "",'data' => $data]);
+
+        return response()->json(['status' => 200, 'message' => "", 'data' => $data]);
     }
 
-    public function getSpecificCities(Request $request){
+    public function getSpecificCities(Request $request)
+    {
 
         $data['cities'] = City::where('state_id', $request->state_id)->orWhere('country_id', $request->country_id)->where('status', '1')->get();
-        
-        return response()->json(['status' => 200, 'message' => "",'data' => $data]);
+
+        return response()->json(['status' => 200, 'message' => "", 'data' => $data]);
     }
 
-    public function saveUserData(Request $request){
-        
+    public function saveUserData(Request $request)
+    {
+
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
@@ -98,10 +106,10 @@ class RegisterController extends Controller
             'recaptcha.required' => '"I am not a robot" check first.',
             'email.regex' => 'The email must be a valid email address with a proper domain.',
             'password_confirmation.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
-        ]); 
-        
+        ]);
+
         $user = new User();
-        $user->username = $request->first_name. ' ' .$request->last_name;
+        $user->username = $request->first_name . ' ' . $request->last_name;
         $user->first_name = $request->first_name;
         $user->last_name = $request->last_name;
         $user->role = '2';
@@ -113,11 +121,10 @@ class RegisterController extends Controller
         $user->state_id = $request->state;
         $user->city_id = $request->city;
         $user->zip_code = $request->zipcode;
-        $user->password= bcrypt($request->password);
+        $user->password = bcrypt($request->password);
         $user->save();
 
         return response()->json(['status' => 200, 'message' => 'User registration successfully completed, now login with your email and password.']);
-        
     }
 
     public function login(Request $request)
@@ -164,20 +171,21 @@ class RegisterController extends Controller
 
         return redirect('login');
     }
-    
-    public function verifyEmailForget(Request $request){
-        
+
+    public function verifyEmailForget(Request $request)
+    {
+
         $validatedData = $request->validate([
             'email' => 'required|email|exists:users',
         ]);
 
         $user = User::where("email", $request->email)->where('role', '2')->first();
-        
-        if(!$user){
+
+        if (!$user) {
             return response()->json(['status' => 402, 'message' => "The selected email is invalid."]);
-        }else{
+        } else {
             $mailData = [];
-            $otp = implode('', array_map(function() {
+            $otp = implode('', array_map(function () {
                 return mt_rand(0, 9);
             }, range(1, 5)));
             $user->otp = $otp;
@@ -188,36 +196,38 @@ class RegisterController extends Controller
             $mailData['username'] = $user->first_name;
             $body = view('emails.forgot_password', $mailData);
             $userEmailsSend[] = $user->email;
-            
+
             sendMail($user->first_name, $userEmailsSend, 'E-commerce', 'Password Reset Request', $body);
         }
-        
+
         return response()->json(['status' => 200, 'message' => 'One Time Password (OTP) successfully send to your given email address.']);
     }
 
-    public function verifyOtpForget(Request $request){
-        
+    public function verifyOtpForget(Request $request)
+    {
+
         $validatedData = $request->validate([
             'email' => 'required|email|exists:users',
             'otp' => 'required',
         ]);
 
         $user = User::where("email", $request->email)->where('role', '2')->first();
-        
-        if($user){
-            if($request->otp == $user->otp){
-                
-                return response()->json(['status' => 200, 'message' => 'One Time Password (OTP) successfully send to your given email address.']); 
-            }else{
+
+        if ($user) {
+            if ($request->otp == $user->otp) {
+
+                return response()->json(['status' => 200, 'message' => 'One Time Password (OTP) successfully send to your given email address.']);
+            } else {
                 return response()->json(['status' => 402, 'message' => "OTP is not valid."]);
             }
-        }else{
+        } else {
             return response()->json(['status' => 402, 'message' => "Something went wrong."]);
         }
     }
 
-    public function changePassForget(Request $request){
-        
+    public function changePassForget(Request $request)
+    {
+
         $validatedData = $request->validate([
             'email' => 'required|email|exists:users',
             'otp' => 'required',
@@ -234,21 +244,99 @@ class RegisterController extends Controller
         ]);
 
         $user = User::where("email", $request->email)->where('role', '2')->first();
-        
-        if($user){
-            if($request->otp == $user->otp){
+
+        if ($user) {
+            if ($request->otp == $user->otp) {
 
                 $user->password = bcrypt($request->password);
                 $user->otp = null;
                 $user->otp_created_at = null;
                 $user->save();
 
-                return response()->json(['status' => 200, 'message' => 'Password change successfully, now login with your new email and password.']); 
-            }else{
+                return response()->json(['status' => 200, 'message' => 'Password change successfully, now login with your new email and password.']);
+            } else {
                 return response()->json(['status' => 402, 'message' => "Something went wrong."]);
             }
-        }else{
+        } else {
             return response()->json(['status' => 402, 'message' => "Something went wrong."]);
+        }
+    }
+
+
+
+
+
+    public function addAddress(Request $request)
+    {
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'fullName' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255',         // Email validation
+            'phoneNumber' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'country' => 'required|exists:countries,id',  // Ensure the country exists in the countries table
+            'state' => 'required|exists:states,id',       // Ensure the state exists in the states table
+            'city' => 'required|exists:cities,id',        // Ensure the city exists in the cities table
+            'postalCode' => 'nullable|string|max:20',
+        ]);
+
+        // Check if 'edit_id' is present in the request (indicating an update operation)
+        if ($request->has('edit_id')) {
+            // Fetch the existing address entry using the 'edit_id'
+            $address = ShippingAddress::find($request->edit_id);
+
+            if (!$address) {
+                return response()->json(['status' => 404, 'message' => 'Address not found'], 404);
+            }
+
+            // Update the address with new data
+            $address->name = $validatedData['fullName'];
+            $address->email = $validatedData['email'];
+            $address->phone_number = $validatedData['phoneNumber'];
+            $address->address = $validatedData['address'];
+            $address->country_id = $validatedData['country'];
+            $address->state_id = $validatedData['state'];
+            $address->city_id = $validatedData['city'];
+            $address->save();
+
+            // Return success response for update
+            return response()->json(['status' => 200, 'message' => 'Address updated successfully']);
+        }
+
+        // Create a new address entry (if 'edit_id' is not present)
+        $address = new ShippingAddress();
+        $address->user_id = auth()->id();  // Save for logged-in user
+        $address->name = $validatedData['fullName'];
+        $address->email = $validatedData['email'];
+        $address->phone_number = $validatedData['phoneNumber'];
+        $address->address = $validatedData['address'];
+        $address->country_id = $validatedData['country'];
+        $address->state_id = $validatedData['state'];
+        $address->city_id = $validatedData['city'];
+        $address->status = 1; // Set status to active (1)
+        $address->save();
+        // Return success response for new entry creation
+        return response()->json(['status' => 200, 'message' => 'Address added successfully']);
+    }
+
+
+    public function countryData(Request $request)
+    {
+        $data['countries'] = Country::all();
+        $data['states'] = States::all();
+        $data['city'] = City::all();
+        return response()->json(['status' => 200, 'data' => $data]);
+    }
+
+
+    public function deleteAddress(Request $request)
+    {
+        $address = ShippingAddress::find($request->id);
+        if ($address) {
+            $address->delete();
+            return response()->json(['status' => 200, 'message' => 'Address deleted successfully']);
+        } else {
+            return response()->json(['status' => 404, 'message' => 'Address not found']);
         }
     }
 }

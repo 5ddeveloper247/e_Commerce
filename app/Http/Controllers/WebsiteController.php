@@ -281,25 +281,52 @@ class WebsiteController extends Controller
         }
 
         if ($cart && $cart !== "") {
-            $cartDetails = CartDetail::where('cart_id', $cart->id)->get();
+            $cartDetails = CartDetail::where('cart_id', $cart->id)
+                ->with(['product' => function ($query) {
+                    $query->with(['productImages', 'category']);
+                }])->get();
+            return response()->json([
+                'status' => 200,
+                'data' => $cartDetails,
+                'cart_id' => $cart->id // Return the cart id for further operations
+            ]);
             if ($cartDetails->isNotEmpty()) {
-                $cartProducts = [];
-                // Loop through each cart detail and manually fetch the product data
-                foreach ($cartDetails as $cartDetail) {
-                    $product = Product::find($cartDetail->product_id);
-                    if ($product) {
-                        // Merge the cart detail with the product information
-                        $cartProducts[] = [
-                            'cart_detail' => $cartDetail,
-                            'product' => $product
-                        ];
-                    }
-                }
-            return response()->json(['status' => 200, 'data' => $cartProducts]);
+                return response()->json(['status' => 200, 'data' => $cartDetails]);
+            }
         } else {
 
             return response()->json(['status' => 404, 'message' => 'Cart Detail not found']);
         }
     }
-}
+
+
+    public function cartDelete(Request $request)
+    {
+
+        $cartid = $request->cart_id;
+        $cartdetailid = $request->item_id;
+        $product_id = $request->product_id;
+
+        if ($cartdetailid) {
+            $cartDetail = CartDetail::where('id', $cartdetailid)->first();
+            if ($cartDetail && $cartDetail->cart_id == $cartid) {
+                $cartDetail->delete();
+                return response()->json([
+                    'cart_id' => $cartid,
+                    'message' => 'Item deleted successfully',
+                    'status' => 200
+                ]);
+            } else {
+                return response()->json([
+                    'message' => 'Invalid cart or item',
+                    'status' => 404
+                ]);
+            }
+        } else {
+            return response()->json([
+                'message' => 'Invalid item',
+                'status' => 404
+            ]);
+        }
+    }
 }

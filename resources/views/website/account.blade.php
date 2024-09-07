@@ -935,33 +935,101 @@
             </div>
             <div class="tab-pane fade py-4" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab"
                 tabindex="0">
-                <div class="row justify-content-md-start justify-content-center">
+                <div class="row justify-content-md-start justify-content-center" id="address_container">
                     <!-- Address List Section -->
-                    <div class="col-md-3 col-11 border rounded-2 m-3">
-                        <div class="p-3">
-                            <h6 class="mb-1">a12@gmail.com</h6>
-                            <h6 class="mb-3">a12@gmail.com</h6>
-                            <p class="text-muted mb-1">a12@gmail.com</p>
-                            <p class="text-muted mb-1">a12@gmail.com</p>
-                            <p class="text-muted mb-1">a12@gmail.com</p>
-                            <p class="text-muted mb-1">a12@gmail.com</p>
-                            <p class="text-muted mb-1">a12@gmail.com</p>
-                            <p class="text-muted mb-3">Pakistan</p>
-                            <p class="text-muted mb-4">Phone: a12@gmail.com</p>
-                            <div class="d-flex justify-content-start">
-                                <button type="button"
-                                    class="btn btn-outline-secondary rounded-pill px-3 py-1 mx-1">Edit</button>
-                                <button type="button"
-                                    class="btn btn-outline-secondary rounded-pill px-3 py-1 mx-1">Delete</button>
-                            </div>
+                    {{-- will be injected here dynamically --}}
+
+                    <!-- New Address Button Section -->
+                    <div type="button" data-bs-toggle="modal" data-bs-target="#addressAddModal"
+                        class="col-md-3 col-11 d-flex align-items-center justify-content-center border rounded-2 m-3">
+                        <div class="p-5 text-center" id="newAddress">
+                            <div class="h1">+</div>
+                            <div>New Address</div>
                         </div>
                     </div>
 
-                    <!-- New Address Button Section -->
-                    <div class="col-md-3 col-11 d-flex align-items-center justify-content-center border rounded-2 m-3">
-                        <div class="p-5 text-center">
-                            <div class="h1">+</div>
-                            <div>New Address</div>
+                    {{-- add addres --}}
+                    <!-- Modal -->
+                    <div class="modal fade" id="addressAddModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="addressAddModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Address</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form id="customerAddressForm">
+                                        <!-- Full Name -->
+                                        <input type="hidden" name="" id="edit_id" name="edit_id">
+                                        <div class="mb-3">
+                                            <label for="fullName" class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" id="fullName" name="fullName"
+                                                placeholder="Enter full name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="text" class="form-control" id="email" name="email"
+                                                placeholder="Enter full name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="phoneNumber" class="form-label">Phone Number</label>
+                                            <input type="number" class="form-control" id="phoneNumber"
+                                                name="phoneNumber" placeholder="Enter phone number" required>
+                                        </div>
+
+
+                                        <!-- Address Line 1 -->
+                                        <div class="mb-3">
+                                            <label for="address" class="form-label">Address</label>
+                                            <textarea type="text" class="form-control" id="address" name="address"
+                                                placeholder="Enter street address" required></textarea>
+                                        </div>
+
+                                        <!-- Country Dropdown -->
+                                        <div class="mb-3">
+                                            <label for="country" class="form-label">Country</label>
+                                            <select class="form-select" id="country" name="country" required>
+                                                <option value="" selected>Select country</option>
+
+                                                <!-- Add more countries or populate dynamically -->
+                                            </select>
+                                        </div>
+
+                                        <!-- State/Province/Region Dropdown -->
+                                        <div class="mb-3">
+                                            <label for="state" class="form-label">State/Province/Region</label>
+                                            <select class="form-select" id="state" name="state" required>
+                                                <option value="" selected>Select state</option>
+
+                                            </select>
+                                        </div>
+
+                                        <!-- City Dropdown -->
+                                        <div class="mb-3">
+                                            <label for="city" class="form-label">City</label>
+                                            <select class="form-select" id="city" name="city" required>
+                                                <option value="" selected>Select city</option>
+
+                                            </select>
+                                        </div>
+
+                                        <!-- Postal Code -->
+                                        <div class="mb-3">
+                                            <label for="postalCode" class="form-label">Postal Code</label>
+                                            <input type="text" class="form-control" id="postalCode" name="postalCode"
+                                                placeholder="Enter postal code" required>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" id="addAddressBtn">Add</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1864,7 +1932,8 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="lastName" name="lastName"
-                                    placeholder="Last Name" required value="{{ old('lastName', $user->last_name ?? '') }}">
+                                    placeholder="Last Name" required
+                                    value="{{ old('lastName', $user->last_name ?? '') }}">
                                 <label for="lastName">Last Name <span class="text-danger">*</span></label>
                             </div>
                         </div>
@@ -1889,7 +1958,8 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="email" class="form-control" id="emailAddress" name="emailAddress"
-                                    placeholder="Email Address" required value="{{ old('emailAddress', $user->email ?? '') }}">
+                                    placeholder="Email Address" required
+                                    value="{{ old('emailAddress', $user->email ?? '') }}">
                                 <label for="emailAddress">Email Address <span class="text-danger">*</span></label>
                             </div>
                         </div>
@@ -1918,7 +1988,8 @@
                         </div>
                     </div>
                     <div class="text-center mt-5">
-                        <button type="button" class="btn btn-add-to-cart py-2" id="updateDetailBtn">Update Details</button>
+                        <button type="button" class="btn btn-add-to-cart py-2" id="updateDetailBtn">Update
+                            Details</button>
                     </div>
                 </form>
 

@@ -36,8 +36,11 @@
                         <th>Total</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="border-top border-bottom">
+                <tbody id="cart_detail_table_body">
+
+                    {{-- dynamically injected here --}}
+                    
+                    {{-- <tr class="border-top border-bottom">
                         <td class="d-flex align-items-center gap-3">
                             <img class="border rounded-3 ms-3"
                                 src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1z"
@@ -85,38 +88,38 @@
                                     d="m8.464 15.535l7.072-7.07m-7.072 0l7.072 7.07" />
                             </svg>
                         </td>
-                    </tr>
+                    </tr> --}}
                 </tbody>
             </table>
         </div>
 
         <div class="d-flex text-start gap-5 justify-content-end py-4">
             <small class="fw-bold">
-                Subtotal:
+                Sub Total
             </small>
 
-            <small>
-                ₹354.90
-            </small>
-        </div>
+            <small id="sub_total">
 
-        <div class="d-flex text-start gap-5 justify-content-end py-4">
-            <small class="fw-bold">
-                Shipping:
-            </small>
-
-            <small>
-                ₹354.90
             </small>
         </div>
 
         <div class="d-flex text-start gap-5 justify-content-end py-4">
             <small class="fw-bold">
-                Coupon Code:
+                Discounted:
             </small>
 
-            <small>
-                ₹354.90
+            <small id="discounted_price">
+
+            </small>
+        </div>
+
+        <div class="d-flex text-start gap-5 justify-content-end py-4">
+            <small class="fw-bold">
+                Total
+            </small>
+
+            <small id="total">
+
             </small>
         </div>
     </div>
@@ -125,3 +128,7 @@
 
 
 @endsection
+
+@push('scripts')
+<script src="{{ asset('assets_user/customjs/cart_detail.js') }}"></script>
+@endpush

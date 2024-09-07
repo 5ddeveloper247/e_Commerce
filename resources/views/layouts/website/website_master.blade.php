@@ -15,8 +15,8 @@
 </head>
 <script>
     var base_url = "{{ url('/') }}";
-    var auth_user = @json(auth()->user());
-    var is_auth = {{ auth()->check() ? true : false }};
+    var auth_user = @json(auth()->check() ? auth()->user() : null);  // Handle the case where no user is logged in
+    var is_auth = {{ auth()->check() ? 'true' : 'false' }};  // Safely output true/false based on auth status
 </script>
 
 

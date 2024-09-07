@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,13 +10,9 @@ class Country extends Model
 
     protected $table = "countries";
 
+    // Remove or adjust this method if there's no foreign key pointing back to ShippingAddress
     public function shippingAddress()
     {
-        return $this->belongsTo(ShippingAddress::class, 'country_id');
-    }
-
-    public function orderShippingAddress()
-    {
-        return $this->belongsTo(OrderShippingAddress::class, 'country_id');
+        return $this->hasMany(ShippingAddress::class, 'country_id');
     }
 }

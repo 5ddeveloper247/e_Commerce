@@ -197,6 +197,7 @@
 <script src="{{ asset('assets_admin/plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{asset('assets_user/customjs/common.js')}}"></script>
 <script src="{{asset('assets_user/customjs/customjs.js')}}"></script>
+<script src="{{ asset('assets_user/customjs/cart.js') }}"></script>
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>
@@ -503,4 +504,3 @@
     }
 </script>
 <script src="{{ asset('assets_user/customjs/news_letters.js') }}"></script>
-<script src="{{ asset('assets_user/customjs/cart.js') }}"></script>

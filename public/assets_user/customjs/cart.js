@@ -54,6 +54,7 @@ $(document).ready(function () {
             toastr.success(response.message, '', {
                 timeOut: 3000
             });
+            cartView();
 
         }
         else {
@@ -105,7 +106,7 @@ $(document).ready(function () {
         const type = "Post";
         const url = "/cart/view";
         const cartId = localStorage.getItem('cart')
-        const data = new FormData()
+        const data = new FormData();
         if (is_auth) {
             data.append('user_id', auth_user.id)
         }
@@ -119,34 +120,68 @@ $(document).ready(function () {
     function cartViewResponse(response) {
         if (response.status === 200) {
             let cartHtml = '';
-            response.data.forEach(item => {
+            let totalAmount = 0;  // Moved outside of the loop
+            let quantity = 0;
+
+            // Check if there are items in the response data
+            if (response.data && response.data.length > 0) {
+                quantity = response.data.length;
+                response.data.forEach(item => {
+                    // Ensure the product and cart detail data exist before using it
+                    if (item?.product && item?.product?.product_images && item.product.product_images[0]) {
+                        let imageUrl = `${base_url}/storage/${item.product.product_images[0].filepath}`;
+                        let productName = item.product.product_name || 'Unnamed Product';
+                        let productPrice = item?.discounted_price || 'Price not available';
+                        totalAmount += parseInt(item?.total_amount || 0);  // Correctly add to totalAmount
 
 
-                // Ensure the product and cart detail data exists before using it
-                if (true) {
-                    cartHtml += `
-                     <div class="">
-                                <div class="px-3 pt-3">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1z" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
-                                        <div>
-                                            <h5 class="card-title mb-1">Wintage Spoon</h5>
-                                            <p class="card-text text-muted mb-0">Aliquam quat voluptatem</p>
-                                            <p class="card-text fw-bold">₹129.95</p>
-                                        </div>
+                        cartHtml += `
+                            <div class="px-3 pt-3">
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
+                                    <div>
+                                        <p class="card-text text-muted mb-0">${productName}</p>
+                                        <p class="card-text fw-bold">${productPrice}</p>
                                     </div>
                                 </div>
                             </div>
-                    `;
-                }
-            });
+                        `;
+                    } else {
+                        cartHtml += `
+                            <div class="px-3 pt-3">
+                                <small>Product details are missing for one of the items.</small>
+                            </div>
+                        `;
+                    }
+                });
+
+                // Update totalAmount once after the loop
+                $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
+                $('#totalQuantity').text(quantity);  // Display total amount with 2 decimal places for better UX
+
+            }
+            else {
+                // No items in the cart
+                cartHtml = `
+                    <div class="px-3 pt-3">
+                        <small>No items in the cart. Please add some items to your cart.</small>
+                    </div>
+                `;
+                $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
+                $('#totalQuantity').text(quantity);
+            }
 
             // Inject the generated HTML into the cart menu element
             $('#cart_menu_item').html(cartHtml);
+
+
         } else {
             // Handle case when response status is not 200
-            $('#cart_menu_item').html('<p>No items in the cart</p>');
+            $('#cart_menu_item').html('<p class="text-center">No items in the cart</p>');
+            $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
+            $('#totalQuantity').text(quantity);
         }
     }
+
 
 });
