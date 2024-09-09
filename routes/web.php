@@ -34,8 +34,8 @@ Route::post('/getSpecificStates', [RegisterController::class, 'getSpecificStates
 Route::post('/getSpecificCities', [RegisterController::class, 'getSpecificCities'])->name('getSpecificCities');
 Route::post('/addUserData', [RegisterController::class, 'saveUserData'])->name('addUserData');
 Route::post('/addAddress', [RegisterController::class, 'addAddress'])->name('addAddress');
-Route::post('/countryData',[RegisterController::class,'countryData'])->name('countryData');
-Route::post('/deleteAddress',[RegisterController::class,'deleteAddress'])->name('deleteAddress');
+Route::post('/countryData', [RegisterController::class, 'countryData'])->name('countryData');
+Route::post('/deleteAddress', [RegisterController::class, 'deleteAddress'])->name('deleteAddress');
 
 
 Route::group(['prefix' => 'admin'], function () {
@@ -177,6 +177,8 @@ Route::group(['prefix' => '/'], function () {
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
         Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
+        Route::post('/continue/checkout/prepayment', [WebsiteController::class, 'continueCheckout'])->name('user.continueCheckout');
+
 
 
 

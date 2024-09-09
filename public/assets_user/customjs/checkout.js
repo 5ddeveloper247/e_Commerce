@@ -19,6 +19,7 @@ $(document).ready(function () {
 
     }
 
+
     function cartDetailResponse(response) {
         if (response.status !== 200) return; // Exit early if the response is not successful
 
@@ -350,6 +351,77 @@ $(document).ready(function () {
         state.value = '';
         phone.value = '';
     });
+
+
+    ///checkout continue handled here
+
+    $('body').on('click', '#checkoutContinueBtn', function () {
+        const type = "Post";
+        const url = "/continue/checkout/prepayment";
+        const shippingAddress = $('#shippingAddress').val();
+        const orderComments = $('#orderComments').val();
+        const formData = new FormData()
+        if (!is_auth) {
+            window.location.href = "/login";
+            return;
+        }
+        else {
+            formData.append('user_id', auth_user.id);
+            formData.append('shipping_address', shippingAddress);
+            formData.append('order_comments', orderComments);
+            SendAjaxRequestToServer(type, url, formData, "", handleCheckoutContinueResponse, "", "#checkoutContinueBtn");
+        }
+
+        function handleCheckoutContinueResponse(response) {
+            if (response.status === 200) {
+                // Success: Display success message and reset form
+                toastr.success(response.message, '', {
+                    timeOut: 3000
+                });
+            } else {
+                // Error Handling
+                let errorMessage = 'An error occurred. Please try again.';
+
+                switch (response.status) {
+                    case 401:
+                        // Unauthorized user error
+                        errorMessage = response.message || 'Unauthorized. Please log in again.';
+                        break;
+                    case 402:
+                        // Specific error related to payment or validation
+                        errorMessage = response.message || 'Payment required or another specific issue occurred.';
+                        break;
+                    case 422:
+                        // Validation errors
+                        errorMessage = response.responseJSON?.message || 'Validation failed.';
+                        const validationErrors = response.responseJSON?.errors || {};
+                        // Optionally, display the validation errors
+                        for (const [field, messages] of Object.entries(validationErrors)) {
+                            messages.forEach(msg => toastr.error(`${field}: ${msg}`, '', { timeOut: 3000 }));
+                        }
+                        break;
+                    case 404:
+                        // Resource not found
+                        errorMessage = response.message || 'Resource not found.';
+                        break;
+                    case 500:
+                        // Handle server error
+                        errorMessage = response.message || 'Internal server error. Please contact support.';
+                        break;
+                    default:
+                        // General error case
+                        errorMessage = response.message || 'An unexpected error occurred.';
+                }
+
+                // Display error message
+                toastr.error(errorMessage, '', {
+                    timeOut: 3000
+                });
+            }
+        }
+
+
+    })
 
 
 

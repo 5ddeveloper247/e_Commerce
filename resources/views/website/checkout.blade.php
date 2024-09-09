@@ -150,86 +150,6 @@
             <div class="new-shipping-address d-none">
                 <h4>Shipping</h4>
 
-                <!-- Shipping Address Section -->
-                <div class="form-floating mb-3">
-                    <select id="addressSelect" class="form-select" aria-label="Floating label select example">
-                        <option selected>Enter a new address</option>
-                        <!-- Additional addresses can be added here -->
-                    </select>
-                    <label for="addressSelect">Shipping Address</label>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-md-6 mb-3">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="firstName" placeholder="First Name">
-                            <label for="firstName">First Name</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="lastName" placeholder="Last Name">
-                            <label for="lastName">Last Name</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="companyName" placeholder="Company Name (Optional)">
-                    <label for="companyName">Company Name (Optional)</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number (Optional)">
-                    <label for="phoneNumber">Phone Number (Optional)</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="address" placeholder="Address">
-                    <label for="address">Address</label>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="apartment"
-                        placeholder="Apartment/Suite/Building (Optional)">
-                    <label for="apartment">Apartment/Suite/Building (Optional)</label>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="city" placeholder="City">
-                            <label for="city">City</label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="postalCode" placeholder="Postal Code">
-                            <label for="postalCode">Postal Code</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-floating mb-3">
-                    <select id="country" class="form-select" aria-label="Floating label select example">
-                        <option selected>Select a country</option>
-                        <!-- Additional countries can be added here -->
-                    </select>
-                    <label for="country">Country</label>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-md-6">
-                        <div class="form-floating">
-                            <select id="state" class="form-select" aria-label="Floating label select example">
-                                <option selected>Select a state</option>
-                                <!-- Additional states can be added here -->
-                            </select>
-                            <label for="state">State/Province (Optional)</label>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="form-check mt-3">
                     <input class="form-check-input" type="checkbox" id="saveAddressCheck">
                     <label class="form-check-label" for="saveAddressCheck">
@@ -252,9 +172,9 @@
             <!-- Order Comments Section -->
             <p class="fw-bold">Order Comments</p>
             <div class="mb-3">
-                <textarea class="form-control" id="orderComments" rows="2">sdfsdf</textarea>
+                <textarea class="form-control" id="orderComments" rows="2">Enter order comment</textarea>
             </div>
-            <button class="btn btn-secondary disabled">Continue</button>
+            <button class="btn btn-secondary " id="checkoutContinueBtn">Continue</button>
             <hr />
             <!-- Billing Section (Placeholder) -->
             <h5 class="mt-4">Billing</h5>

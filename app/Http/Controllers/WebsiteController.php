@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\OrderShippingAddress;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -14,7 +15,12 @@ use App\Models\Category;
 use App\Models\ProductSpecification;
 use App\Models\ProductFeature;
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\CartDetail;
+use App\Models\OrderDetail;
+use App\Models\OrderPayment;
+use App\Models\ShippingAddress;
+
 
 class WebsiteController extends Controller
 {
@@ -327,6 +333,119 @@ class WebsiteController extends Controller
                 'message' => 'Invalid item',
                 'status' => 404
             ]);
+        }
+    }
+
+
+
+    public function continueCheckout(Request $request)
+    {
+        try {
+            // Extract request parameters
+            $shippingAddress = $request->shipping_address;
+            $orderComments = $request->order_comments;
+            $userId = $request->user_id;
+            // return response()->json([
+            //     'user_id' => $userId,
+            //     'auth_user_id' => auth()->user()->id,
+            // ]);
+
+            // Check if the authenticated user is the same as the provided user ID
+            if (!$request->user_id) {
+                return response()->json([
+                    'message' => 'Unauthorized: Invalid user',
+                    'status' => 401
+                ], 401);
+            }
+
+            // Ensure shipping address and user ID are provided
+            if (!$shippingAddress || !$userId) {
+                return response()->json([
+                    'message' => 'Bad request: Missing required parameters',
+                    'status' => 400
+                ], 400);
+            }
+
+            // Fetch the active shipping address
+            $shippingAddressActive = ShippingAddress::find($shippingAddress);
+            if (!$shippingAddressActive) {
+                return response()->json([
+                    'message' => 'Shipping address not found',
+                    'status' => 404
+                ], 404);
+            }
+
+            // Fetch user's cart
+            $cart = Cart::where('user_id', auth()->user()->id)
+                ->where('status', 0)
+                ->first();
+
+            if (!$cart) {
+                return response()->json([
+                    'message' => 'Cart not found',
+                    'status' => 404
+                ], 404);
+            }
+
+            // Create a new order
+            $order = new Order();
+            $order->user_id = $userId;
+            $order->date = now();
+            $order->status = 0;
+            $order->save();
+
+            // Fetch cart details and create corresponding order details
+            $cartDetails = CartDetail::where('cart_id', $cart->id)->get();
+            if ($cartDetails->isEmpty()) {
+                return response()->json([
+                    'message' => 'No items found in the cart',
+                    'status' => 400
+                ], 400);
+            }
+
+            foreach ($cartDetails as $item) {
+                $orderDetail = new OrderDetail();
+                $orderDetail->order_id = $order->id;
+                $orderDetail->product_id = $item->product_id;
+                $orderDetail->quantity = $item->quantity;
+                $orderDetail->price = $item->price;
+                $orderDetail->total_amount = $item->total_amount;
+                $orderDetail->discounted_price = $item->discounted_price;
+                $orderDetail->save();
+            }
+
+            // Create a new order shipping address
+            $orderShippingAddress = new OrderShippingAddress();
+            $orderShippingAddress->order_id = $order->id;
+            $orderShippingAddress->shipping_address_id = $shippingAddressActive->id;
+            $orderShippingAddress->name = $shippingAddressActive->name;
+            $orderShippingAddress->email = $shippingAddressActive->email;
+            $orderShippingAddress->phone_number = $shippingAddressActive->phone_number;
+            $orderShippingAddress->address = $shippingAddressActive->address;
+            $orderShippingAddress->country_id = $shippingAddressActive->country_id;
+            $orderShippingAddress->city_id = $shippingAddressActive->city_id;
+            $orderShippingAddress->state_id = $shippingAddressActive->state_id;
+            $orderShippingAddress->save();
+
+            // Create order payment
+            $orderPayment = new OrderPayment();
+            $orderPayment->order_id = $order->id;
+            $orderPayment->user_id = auth()->user()->id;
+            $orderPayment->status = 0;  // Payment pending
+            $orderPayment->save();
+
+            // Return success response
+            return response()->json([
+                'message' => 'Order successfully created',
+                'status' => 200,
+                'order_id' => $order->id
+            ], 200);
+        } catch (\Exception $e) {
+            // Handle exceptions and return error response
+            return response()->json([
+                'message' => 'An error occurred: ' . $e->getMessage(),
+                'status' => 500
+            ], 500);
         }
     }
 }
