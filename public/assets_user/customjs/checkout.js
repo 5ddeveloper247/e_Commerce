@@ -353,9 +353,28 @@ $(document).ready(function () {
     });
 
 
-    ///checkout continue handled here
 
+    //hadling payment collapse here
+    function toggleCollapse() {
+        const collapseElement = document.getElementById('collapseExample');
+        if (collapseElement.classList.contains('collapse')) {
+            collapseElement.classList.toggle('show');
+        } else {
+            collapseElement.classList.add('collapse');
+            collapseElement.classList.toggle('show');
+        }
+    }
+
+    ///checkout continue handled here
     $('body').on('click', '#checkoutContinueBtn', function () {
+        const totalAmount = $('#total').text();
+        $('#amount').val(totalAmount)
+        toggleCollapse();
+    })
+
+
+    function saveCheckout(paymentResponse) {
+        console.log(paymentResponse, "paymentresponse")
         const type = "Post";
         const url = "/continue/checkout/prepayment";
         const shippingAddress = $('#shippingAddress').val();
@@ -365,63 +384,123 @@ $(document).ready(function () {
             window.location.href = "/login";
             return;
         }
+
         else {
             formData.append('user_id', auth_user.id);
             formData.append('shipping_address', shippingAddress);
             formData.append('order_comments', orderComments);
-            SendAjaxRequestToServer(type, url, formData, "", handleCheckoutContinueResponse, "", "#checkoutContinueBtn");
+            formData.append('paymentResponse', JSON.stringify(paymentResponse));
+
+
+            SendAjaxRequestToServer(type, url, formData, "", handleCheckoutResponse, "", "#checkoutContinueBtn");
         }
+    }
+    function handleCheckoutResponse(response) {
+        if (response.status === 200) {
+            // Success: Display success message and reset form
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
 
-        function handleCheckoutContinueResponse(response) {
-            if (response.status === 200) {
-                // Success: Display success message and reset form
-                toastr.success(response.message, '', {
-                    timeOut: 3000
-                });
-            } else {
-                // Error Handling
-                let errorMessage = 'An error occurred. Please try again.';
+            location.reload();
+        } else {
+            // Error Handling
+            let errorMessage = 'An error occurred. Please try again.';
 
-                switch (response.status) {
-                    case 401:
-                        // Unauthorized user error
-                        errorMessage = response.message || 'Unauthorized. Please log in again.';
-                        break;
-                    case 402:
-                        // Specific error related to payment or validation
-                        errorMessage = response.message || 'Payment required or another specific issue occurred.';
-                        break;
-                    case 422:
-                        // Validation errors
-                        errorMessage = response.responseJSON?.message || 'Validation failed.';
-                        const validationErrors = response.responseJSON?.errors || {};
-                        // Optionally, display the validation errors
-                        for (const [field, messages] of Object.entries(validationErrors)) {
-                            messages.forEach(msg => toastr.error(`${field}: ${msg}`, '', { timeOut: 3000 }));
-                        }
-                        break;
-                    case 404:
-                        // Resource not found
-                        errorMessage = response.message || 'Resource not found.';
-                        break;
-                    case 500:
-                        // Handle server error
-                        errorMessage = response.message || 'Internal server error. Please contact support.';
-                        break;
-                    default:
-                        // General error case
-                        errorMessage = response.message || 'An unexpected error occurred.';
-                }
-
-                // Display error message
-                toastr.error(errorMessage, '', {
-                    timeOut: 3000
-                });
+            switch (response.status) {
+                case 401:
+                    // Unauthorized user error
+                    errorMessage = response.message || 'Unauthorized. Please log in again.';
+                    break;
+                case 402:
+                    // Specific error related to payment or validation
+                    errorMessage = response.message || 'Payment required or another specific issue occurred.';
+                    break;
+                case 422:
+                    // Validation errors
+                    errorMessage = response.responseJSON?.message || 'Validation failed.';
+                    const validationErrors = response.responseJSON?.errors || {};
+                    // Optionally, display the validation errors
+                    for (const [field, messages] of Object.entries(validationErrors)) {
+                        messages.forEach(msg => toastr.error(`${field}: ${msg}`, '', { timeOut: 3000 }));
+                    }
+                    break;
+                case 404:
+                    // Resource not found
+                    errorMessage = response.message || 'Resource not found.';
+                    break;
+                case 500:
+                    // Handle server error
+                    errorMessage = response.message || 'Internal server error. Please contact support.';
+                    break;
+                default:
+                    // General error case
+                    errorMessage = response.message || 'An unexpected error occurred.';
             }
+
+            // Display error message
+            toastr.error(errorMessage, '', {
+                timeOut: 3000
+            });
         }
+    }
 
 
-    })
+
+
+
+
+
+    //handling stripe checkou here
+    const stripe = Stripe('pk_test_51Px1EkP7RhDtH6R9qfRgqfgTyddOKBibU5EDJCrTIjZuC4WwTderbMhzf4NlRxqyHlpLWuNokH5Ba7TKQCncj7Sm00d5ZG55Lt');
+    const elements = stripe.elements();
+    const card = elements.create('card');
+    card.mount('#card-element');
+    // Form submission event listener
+    const form = document.getElementById('payment-form');
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        await handlePayment();
+    });
+
+    async function handlePayment() {
+        try {
+            const { token, error } = await stripe.createToken(card); // Create Stripe token
+            if (error) {
+                document.getElementById('card-errors').textContent = error.message; // Display any errors
+                return;
+            }
+            // Get amount from the form
+            const amount = document.getElementById('amount').value;
+            // Prepare form data
+            const formData = new FormData(form);
+            formData.append('stripeToken', token.id);
+            formData.append('amount', amount);
+
+            const type = "POST";
+            const url = "/payment";
+            // Make the AJAX request
+            SendAjaxRequestToServer(type, url, formData, '', checkOutPaymentResponse, '', '#cartView');
+        }
+        catch (err) {
+            toastr.error("Payment has failed due network error", '', {
+                timeOut: 3000
+            });
+        }
+    }
+    // Function to handle the AJAX response
+    function checkOutPaymentResponse(response) {
+        if (response.success) {
+            // Call a function to handle the successful checkout logic
+            saveCheckout(response.paymentResponse);
+        }
+        else {
+            toastr.error("An error occured on Payment", '', {
+                timeOut: 3000
+            });
+        }
+    }
+
 
 
 

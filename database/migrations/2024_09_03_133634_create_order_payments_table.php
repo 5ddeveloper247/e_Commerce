@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id')->nullable();
             $table->integer('order_id')->nullable();
-            $table->decimal('amount')->nullable();
+            $table->decimal('amount', 20, 5)->nullable();
             $table->integer('status')->nullable()->comment("0 for inprocess 1 for paid");;
             $table->string('transaction_id')->nullable();
             $table->string('transaction_status')->nullable();

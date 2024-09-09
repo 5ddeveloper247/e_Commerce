@@ -178,8 +178,8 @@ $(document).ready(function () {
         } else {
             // Handle case when response status is not 200
             $('#cart_menu_item').html('<p class="text-center">No items in the cart</p>');
-            $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
-            $('#totalQuantity').text(quantity);
+            $('#totalAmount').text('Total: $' + totalAmount);  // Display total amount with 2 decimal places for better UX
+            $('#totalQuantity').text(0);
         }
     }
 

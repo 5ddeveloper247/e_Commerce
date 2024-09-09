@@ -1,7 +1,11 @@
 @extends('layouts.website.website_master')
 
 @push('css')
-
+<style>
+    .ElementsApp input {
+        font-size: 2rem !important
+    }
+</style>
 @endpush
 
 @section('content')
@@ -172,17 +176,35 @@
             <!-- Order Comments Section -->
             <p class="fw-bold">Order Comments</p>
             <div class="mb-3">
-                <textarea class="form-control" id="orderComments" rows="2">Enter order comment</textarea>
+                <textarea class="form-control" id="orderComments" rows="2" placeholder="Enter order comment"></textarea>
             </div>
-            <button class="btn btn-secondary " id="checkoutContinueBtn">Continue</button>
-            <hr />
+            <button class="btn btn-secondary" id="checkoutContinueBtn">Continue</button>
+
+
+
             <!-- Billing Section (Placeholder) -->
-            <h5 class="mt-4">Billing</h5>
-            <div class="placeholder mb-3"></div>
+            {{-- <h5 class="mt-4">Billing</h5>
+            <div class="placeholder mb-3"></div> --}}
             <hr />
+
+
+
             <!-- Payment Section (Placeholder) -->
             <h5 class="mt-4">Payment</h5>
-            <div class="placeholder mb-3"></div>
+            <div class="collapse" id="collapseExample">
+                <form id="payment-form" action="{{ route('payment.make') }}" method="POST">
+                    @csrf
+                    <label for="card-element" style="color: #FFAA3D">Credit or Debit Card</label>
+                    <div class="border px-4 rounded-2 my-3 py-2" id="card-element" class="StripeElement"></div>
+                    <div id="card-errors" role="alert"></div>
+                    <input class="rounded-2 border py-2 px-4 fs-6" type="number" name="amount" id="amount"
+                        placeholder="Amount in dollars" min="1" required disabled>
+                    <br>
+                    <button style="background-color: #ffab3d46; border: 1px solid #FFAA3D"
+                        class="py-2 px-4 rounded-2 mt-3" type="submit">Submit Payment</button>
+                </form>
+            </div>
+
         </div>
         <!-- Order Summary Section -->
         <div class="col-md-4 mt-md-5">
@@ -231,5 +253,6 @@
 @endsection
 
 @push('scripts')
+<script src="https://js.stripe.com/v3/"></script>
 <script src="{{ asset('assets_user/customjs/checkout.js') }}"></script>
 @endpush

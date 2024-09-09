@@ -340,15 +340,15 @@ class WebsiteController extends Controller
 
     public function continueCheckout(Request $request)
     {
+
+
+
         try {
             // Extract request parameters
             $shippingAddress = $request->shipping_address;
             $orderComments = $request->order_comments;
             $userId = $request->user_id;
-            // return response()->json([
-            //     'user_id' => $userId,
-            //     'auth_user_id' => auth()->user()->id,
-            // ]);
+            $paymentResponse = json_decode($request->paymentResponse);
 
             // Check if the authenticated user is the same as the provided user ID
             if (!$request->user_id) {
@@ -386,33 +386,15 @@ class WebsiteController extends Controller
                     'status' => 404
                 ], 404);
             }
+            $cart->status=1;
+            $cart->save();
 
             // Create a new order
             $order = new Order();
             $order->user_id = $userId;
             $order->date = now();
-            $order->status = 0;
+            $order->status = 1;
             $order->save();
-
-            // Fetch cart details and create corresponding order details
-            $cartDetails = CartDetail::where('cart_id', $cart->id)->get();
-            if ($cartDetails->isEmpty()) {
-                return response()->json([
-                    'message' => 'No items found in the cart',
-                    'status' => 400
-                ], 400);
-            }
-
-            foreach ($cartDetails as $item) {
-                $orderDetail = new OrderDetail();
-                $orderDetail->order_id = $order->id;
-                $orderDetail->product_id = $item->product_id;
-                $orderDetail->quantity = $item->quantity;
-                $orderDetail->price = $item->price;
-                $orderDetail->total_amount = $item->total_amount;
-                $orderDetail->discounted_price = $item->discounted_price;
-                $orderDetail->save();
-            }
 
             // Create a new order shipping address
             $orderShippingAddress = new OrderShippingAddress();
@@ -431,7 +413,12 @@ class WebsiteController extends Controller
             $orderPayment = new OrderPayment();
             $orderPayment->order_id = $order->id;
             $orderPayment->user_id = auth()->user()->id;
-            $orderPayment->status = 0;  // Payment pending
+            $orderPayment->amount = $paymentResponse->amount;
+            $orderPayment->transaction_id = $paymentResponse->id;
+            $orderPayment->response = $request->paymentResponse;
+            $orderPayment->transaction_status = $paymentResponse->status == "succeeded" ? 1 : 0;
+            $orderPayment->status = $paymentResponse->status == "succeeded" ? 1 : 0;  // Payment pending
+            $orderPayment->date = now();  // Payment pending
             $orderPayment->save();
 
             // Return success response

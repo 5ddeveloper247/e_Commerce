@@ -8,7 +8,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\TestimonialController;
-
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -239,3 +239,10 @@ Route::get('/privacy-policy', function () {
 Route::get('/faqs', function () {
     return view('website.faqs');
 });
+
+
+Route::get('payment', function () {
+    return view('website.payment');
+});
+
+Route::post('payment', [PaymentController::class, 'makePayment'])->name('payment.make');
