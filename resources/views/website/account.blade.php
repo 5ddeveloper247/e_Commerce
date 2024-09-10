@@ -55,10 +55,12 @@
             </li>
         </ul>
         <div class="tab-content" id="myTabContent">
+
             <div class="tab-pane fade py-4 show active" id="orders-tab-pane" role="tabpanel"
                 aria-labelledby="orders-tab" tabindex="0">
-                <div class="row orders-div">
-                    <div class="col-lg-6">
+                <div class="row orders-div" id="orderDiv">
+
+                    {{-- <div class="col-lg-6">
                         <div class="card mb-3 border-0 py-2">
                             <div class="col-12 d-flex justify-content-between">
                                 <p class="mb-0"><b>Order: </b>&nbsp; 0-202-998</p>
@@ -419,7 +421,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
+
                 </div>
                 <div class="order-detail-div d-none">
                     <div class="back-to-orders-div" style="cursor:pointer">
@@ -466,8 +469,8 @@
                                         <th>Total</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="border-top border-bottom">
+                                <tbody id="product-detail-table-body">
+                                    {{-- <tr class="border-top border-bottom">
                                         <td class="d-flex align-items-center gap-3">
                                             <img class="border rounded-3 ms-3"
                                                 src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1z"
@@ -517,38 +520,21 @@
                                                     d="m8.464 15.535l7.072-7.07m-7.072 0l7.072 7.07" />
                                             </svg>
                                         </td>
-                                    </tr>
+                                    </tr> --}}
                                 </tbody>
                             </table>
                         </div>
 
                         <div class="d-flex text-start gap-5 justify-content-end py-4">
                             <small class="fw-bold">
-                                Subtotal:
+                                Total amount:
                             </small>
 
                             <small>
-                                ₹354.90
-                            </small>
-                        </div>
+                                $
+                                <span id="subTotal">
 
-                        <div class="d-flex text-start gap-5 justify-content-end py-4">
-                            <small class="fw-bold">
-                                Shipping:
-                            </small>
-
-                            <small>
-                                ₹354.90
-                            </small>
-                        </div>
-
-                        <div class="d-flex text-start gap-5 justify-content-end py-4">
-                            <small class="fw-bold">
-                                Coupon Code:
-                            </small>
-
-                            <small>
-                                ₹354.90
+                                </span>
                             </small>
                         </div>
                     </div>
@@ -562,6 +548,8 @@
                     Once you place an order you'll have full access to send messages from this page.
                 </p>
             </div>
+
+
             <div class="tab-pane fade py-4" id="messages-tab-pane" role="tabpanel" aria-labelledby="messages-tab"
                 tabindex="0">
                 <div class="row main-messages">

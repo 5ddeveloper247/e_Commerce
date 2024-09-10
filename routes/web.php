@@ -161,7 +161,6 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/verifyOtpForget', [RegisterController::class, 'verifyOtpForget'])->name('user.verifyOtpForget');
     Route::post('/changePassForget', [RegisterController::class, 'changePassForget'])->name('user.changePassForget');
 
-
     Route::get('/products_listing', [WebsiteController::class, 'productsListing'])->name('user.productsListing');
     Route::get('/testimonials', [WebsiteController::class, 'testimonialsListing'])->name('user.testimonials');
     Route::post('/account/update', [WebsiteController::class, 'accountUpdate'])->name('user.accountUpdate');
@@ -172,6 +171,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/cart/add', [WebsiteController::class, 'cartAdd'])->name('cart.add');
     Route::post('/cart/view', [WebsiteController::class, 'cartView'])->name('cart.view');
     Route::post('/cart/delete', [WebsiteController::class, 'cartDelete'])->name('cart.delete');
+    Route::post('/tempSession', [WebsiteController::class, 'tempSession'])->name('tempSession');
 
     //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {
@@ -184,6 +184,7 @@ Route::group(['prefix' => '/'], function () {
 
         /************** AJAX ROUTES ******************/
         Route::get('/user', [WebsiteController::class, 'authUser'])->name('authUser');
+        Route::Post('/orderListing', [WebsiteController::class, 'orderListing'])->name('orderListing');
     });
 });
 

@@ -88,7 +88,7 @@ $(document).ready(function () {
     }
 
     function handleAddressDataResponse(response) {
-        console.log(response);
+
         handleAddressDataResponseCities(response)
 
         if (response.status !== 200) return; // Exit early if the response status is not 200
@@ -373,80 +373,6 @@ $(document).ready(function () {
     })
 
 
-    function saveCheckout(paymentResponse) {
-        console.log(paymentResponse, "paymentresponse")
-        const type = "Post";
-        const url = "/continue/checkout/prepayment";
-        const shippingAddress = $('#shippingAddress').val();
-        const orderComments = $('#orderComments').val();
-        const formData = new FormData()
-        if (!is_auth) {
-            window.location.href = "/login";
-            return;
-        }
-
-        else {
-            formData.append('user_id', auth_user.id);
-            formData.append('shipping_address', shippingAddress);
-            formData.append('order_comments', orderComments);
-            formData.append('paymentResponse', JSON.stringify(paymentResponse));
-
-
-            SendAjaxRequestToServer(type, url, formData, "", handleCheckoutResponse, "", "#checkoutContinueBtn");
-        }
-    }
-    function handleCheckoutResponse(response) {
-        if (response.status === 200) {
-            // Success: Display success message and reset form
-            toastr.success(response.message, '', {
-                timeOut: 3000
-            });
-
-            location.reload();
-        } else {
-            // Error Handling
-            let errorMessage = 'An error occurred. Please try again.';
-
-            switch (response.status) {
-                case 401:
-                    // Unauthorized user error
-                    errorMessage = response.message || 'Unauthorized. Please log in again.';
-                    break;
-                case 402:
-                    // Specific error related to payment or validation
-                    errorMessage = response.message || 'Payment required or another specific issue occurred.';
-                    break;
-                case 422:
-                    // Validation errors
-                    errorMessage = response.responseJSON?.message || 'Validation failed.';
-                    const validationErrors = response.responseJSON?.errors || {};
-                    // Optionally, display the validation errors
-                    for (const [field, messages] of Object.entries(validationErrors)) {
-                        messages.forEach(msg => toastr.error(`${field}: ${msg}`, '', { timeOut: 3000 }));
-                    }
-                    break;
-                case 404:
-                    // Resource not found
-                    errorMessage = response.message || 'Resource not found.';
-                    break;
-                case 500:
-                    // Handle server error
-                    errorMessage = response.message || 'Internal server error. Please contact support.';
-                    break;
-                default:
-                    // General error case
-                    errorMessage = response.message || 'An unexpected error occurred.';
-            }
-
-            // Display error message
-            toastr.error(errorMessage, '', {
-                timeOut: 3000
-            });
-        }
-    }
-
-
-
 
 
 
@@ -463,6 +389,7 @@ $(document).ready(function () {
         await handlePayment();
     });
 
+
     async function handlePayment() {
         try {
             const { token, error } = await stripe.createToken(card); // Create Stripe token
@@ -472,11 +399,14 @@ $(document).ready(function () {
             }
             // Get amount from the form
             const amount = document.getElementById('amount').value;
+            const shippingAddress = $('#shippingAddress').val();
+            const orderComments = $('#orderComments').val();
             // Prepare form data
             const formData = new FormData(form);
             formData.append('stripeToken', token.id);
             formData.append('amount', amount);
-
+            formData.append('shippingAddress', shippingAddress);
+            formData.append('comments', orderComments);
             const type = "POST";
             const url = "/payment";
             // Make the AJAX request
@@ -488,18 +418,30 @@ $(document).ready(function () {
             });
         }
     }
+
     // Function to handle the AJAX response
     function checkOutPaymentResponse(response) {
         if (response.success) {
-            // Call a function to handle the successful checkout logic
-            saveCheckout(response.paymentResponse);
+            toastr.success(response.message, 'Congratulations ✔️🎉', {
+                timeOut: 10000
+            });
+            setTimeout(() => {
+                const form = document.getElementById('payment-form');
+                form.reset();
+                // Optionally, clear any card-related data
+                card.clear();
+                localStorage.removeItem('cart');
+                window.location.href = "/dashboard";
+            }, 10000)
+
         }
         else {
-            toastr.error("An error occured on Payment", '', {
-                timeOut: 3000
+            toastr.error(response.message, 'Oops! ❌', {
+                timeOut: 10000
             });
         }
     }
+
 
 
 

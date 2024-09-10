@@ -336,103 +336,61 @@ class WebsiteController extends Controller
         }
     }
 
-
-
-    public function continueCheckout(Request $request)
+    public function tempSession(Request $request)
     {
+        // Retrieve URL and cartId from the request
+        $url = $request->url;
+        $cartId = $request->cartId;
 
+        // Store the data in the session with the key 'tempCheckout'
+        session(['tempCheckout' => [
+            'url' => $url,
+            'cartId' => $cartId
+        ]]);
+        // Optionally, return a response confirming the session storage
+        return response()->json([
+            'status' => 200,
+            'success' => true,
+            'message' => 'Session data stored successfully',
+            'data' => session('tempCheckout')  // Return the stored session data
+        ]);
+    }
 
+    public function orderListing(Request $request)
+    {
+        if ($request->has("order_id")) {
+            // Fetch the single order with the specified order_id
+            $order = Order::where('id', $request->order_id)
+                ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
+                ->first(); // Get the first record (which will be only one since order_id is unique)
 
-        try {
-            // Extract request parameters
-            $shippingAddress = $request->shipping_address;
-            $orderComments = $request->order_comments;
-            $userId = $request->user_id;
-            $paymentResponse = json_decode($request->paymentResponse);
-
-            // Check if the authenticated user is the same as the provided user ID
-            if (!$request->user_id) {
+            if (!$order) {
                 return response()->json([
-                    'message' => 'Unauthorized: Invalid user',
-                    'status' => 401
-                ], 401);
+                    'message' => 'Order not found',
+                    'status' => 404,
+                    'order' => $order
+                ]);
             }
 
-            // Ensure shipping address and user ID are provided
-            if (!$shippingAddress || !$userId) {
-                return response()->json([
-                    'message' => 'Bad request: Missing required parameters',
-                    'status' => 400
-                ], 400);
-            }
-
-            // Fetch the active shipping address
-            $shippingAddressActive = ShippingAddress::find($shippingAddress);
-            if (!$shippingAddressActive) {
-                return response()->json([
-                    'message' => 'Shipping address not found',
-                    'status' => 404
-                ], 404);
-            }
-
-            // Fetch user's cart
-            $cart = Cart::where('user_id', auth()->user()->id)
-                ->where('status', 0)
-                ->first();
-
-            if (!$cart) {
-                return response()->json([
-                    'message' => 'Cart not found',
-                    'status' => 404
-                ], 404);
-            }
-            $cart->status=1;
-            $cart->save();
-
-            // Create a new order
-            $order = new Order();
-            $order->user_id = $userId;
-            $order->date = now();
-            $order->status = 1;
-            $order->save();
-
-            // Create a new order shipping address
-            $orderShippingAddress = new OrderShippingAddress();
-            $orderShippingAddress->order_id = $order->id;
-            $orderShippingAddress->shipping_address_id = $shippingAddressActive->id;
-            $orderShippingAddress->name = $shippingAddressActive->name;
-            $orderShippingAddress->email = $shippingAddressActive->email;
-            $orderShippingAddress->phone_number = $shippingAddressActive->phone_number;
-            $orderShippingAddress->address = $shippingAddressActive->address;
-            $orderShippingAddress->country_id = $shippingAddressActive->country_id;
-            $orderShippingAddress->city_id = $shippingAddressActive->city_id;
-            $orderShippingAddress->state_id = $shippingAddressActive->state_id;
-            $orderShippingAddress->save();
-
-            // Create order payment
-            $orderPayment = new OrderPayment();
-            $orderPayment->order_id = $order->id;
-            $orderPayment->user_id = auth()->user()->id;
-            $orderPayment->amount = $paymentResponse->amount;
-            $orderPayment->transaction_id = $paymentResponse->id;
-            $orderPayment->response = $request->paymentResponse;
-            $orderPayment->transaction_status = $paymentResponse->status == "succeeded" ? 1 : 0;
-            $orderPayment->status = $paymentResponse->status == "succeeded" ? 1 : 0;  // Payment pending
-            $orderPayment->date = now();  // Payment pending
-            $orderPayment->save();
-
-            // Return success response
+            // Return response for single order
             return response()->json([
-                'message' => 'Order successfully created',
+                'order' => $order,
                 'status' => 200,
-                'order_id' => $order->id
-            ], 200);
-        } catch (\Exception $e) {
-            // Handle exceptions and return error response
+            ]);
+        }
+        else {
+            // Fetch all orders for the logged-in user with status = 1
+            $orders = Order::where('user_id', Auth::user()->id)
+                ->where('status', 1)
+                ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
+                ->get();
+
+            // Return response for multiple orders
             return response()->json([
-                'message' => 'An error occurred: ' . $e->getMessage(),
-                'status' => 500
-            ], 500);
+                'orders' => $orders,
+                'status' => 200,
+                'count' => $orders->count(),
+            ]);
         }
     }
 }

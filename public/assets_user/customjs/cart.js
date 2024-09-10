@@ -167,20 +167,26 @@ $(document).ready(function () {
                         <small>No items in the cart. Please add some items to your cart.</small>
                     </div>
                 `;
-                $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
-                $('#totalQuantity').text(quantity);
+                $('#totalAmount').text('Total: $' + totalAmount);  // Display total amount with 2 decimal places for better UX
+                $('#totalQuantity').text(0);
             }
 
             // Inject the generated HTML into the cart menu element
             $('#cart_menu_item').html(cartHtml);
 
 
-        } else {
+        }
+        else {
             // Handle case when response status is not 200
             $('#cart_menu_item').html('<p class="text-center">No items in the cart</p>');
-            $('#totalAmount').text('Total: $' + totalAmount);  // Display total amount with 2 decimal places for better UX
-            $('#totalQuantity').text(0);
+
+            // Ensure totalAmount is a number and format it to 2 decimal places
+            let totalAmountFormatted = parseFloat(0);
+
+            $('#totalAmount').text('Total: $' + totalAmountFormatted);  // Display total amount correctly
+            $('#totalQuantity').text(0);  // Reset quantity to 0
         }
+
     }
 
 

@@ -430,7 +430,8 @@
                                 <path fill="currentColor"
                                     d="M17 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2M1 2v2h2l3.6 7.59l-1.36 2.45c-.15.28-.24.61-.24.96a2 2 0 0 0 2 2h12v-2H7.42a.25.25 0 0 1-.25-.25q0-.075.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03l3.58-6.47c.07-.16.12-.33.12-.5a1 1 0 0 0-1-1H5.21l-.94-2M7 18c-1.11 0-2 .89-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2" />
                             </svg>
-                            <span class="position-absolute top-0 start-100 translate-middle  rounded-pill" id="totalQuantity">
+                            <span class="position-absolute top-0 start-100 translate-middle  rounded-pill"
+                                id="totalQuantity">
                                 0
                             </span>
                         </a>
@@ -459,9 +460,9 @@
                                 <hr>
                             </div>
                             <div class="d-flex justify-content-center px-3 pb-2">
-                                <a type="button" href="{{url('cart')}}" class="btn btn-dark me-2 rounded-pill">View Cart</a>
-                                <a type="button" class="btn btn-secondary rounded-pill"
-                                    href="{{url('checkout')}}">Checkout</a>
+                                <a type="button" href="{{url('cart')}}" class="btn btn-dark me-2 rounded-pill">View
+                                    Cart</a>
+                                <a type="button" class="btn btn-secondary rounded-pill" id="checkoutBtn">Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -817,3 +818,9 @@
         </ul>
     </div>
 </div>
+
+
+@push('scripts')
+
+<script src="{{ asset('assets_user/customjs/header.js') }}"></script>
+@endpush

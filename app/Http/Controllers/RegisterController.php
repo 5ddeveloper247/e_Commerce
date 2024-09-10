@@ -20,6 +20,7 @@ use App\Models\User;
 use App\Models\Country;
 use App\Models\States;
 use App\Models\City;
+use App\Models\Cart;
 use App\Models\ShippingAddress;
 
 
@@ -147,6 +148,19 @@ class RegisterController extends Controller
                 if ($user->status == 1) {
                     $request->session()->put('user', $user);
                     // Authentication passed...
+                    $tempCheckout = session('tempCheckout');
+                    if ($tempCheckout && ($tempCheckout !== null && $tempCheckout !== '')) {
+                        $cart = Cart::find($tempCheckout['cartId']);
+                        if ($cart) {
+                            $cart->user_id = $user->id;
+                            $cart->save();
+                            // Clear the session after using it
+                            session(['tempCheckout' => null]);
+                            // Redirect to the stored URL
+                            return redirect()->to($tempCheckout['url']);
+                        }
+                    }
+
                     return redirect()->intended('/home');
                 } else {
                     $request->session()->flash('error', 'The user is not active, please contact admin.');
