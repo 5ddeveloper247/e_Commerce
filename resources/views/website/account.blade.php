@@ -433,25 +433,25 @@
                         </svg>
                     </div>
                     <div class="md-stepper-horizontal orange">
-                        <div class="md-step active done">
+                        <div class="md-step active done" id="step-1">
                             <div class="md-step-circle"><span>1</span></div>
-                            <div class="md-step-title">Placed</div>
+                            <div class="md-step-title ">Placed</div>
                             <div class="md-step-bar-left"></div>
                             <div class="md-step-bar-right"></div>
                         </div>
-                        <div class="md-step active editable">
+                        <div class="md-step  editable" id="step-2">
                             <div class="md-step-circle"><span>2</span></div>
                             <div class="md-step-title">Confirmed</div>
                             <div class="md-step-bar-left"></div>
                             <div class="md-step-bar-right"></div>
                         </div>
-                        <div class="md-step active">
+                        <div class="md-step " id="step-3">
                             <div class="md-step-circle"><span>3</span></div>
                             <div class="md-step-title">Intransit</div>
                             <div class="md-step-bar-left"></div>
                             <div class="md-step-bar-right"></div>
                         </div>
-                        <div class="md-step">
+                        <div class="md-step" id="step-4">
                             <div class="md-step-circle"><span>4</span></div>
                             <div class="md-step-title">Delivered</div>
                             <div class="md-step-bar-left"></div>

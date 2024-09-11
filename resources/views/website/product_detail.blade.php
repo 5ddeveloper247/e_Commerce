@@ -401,7 +401,8 @@
                             <p class="card-title mt-2 border-top pt-3">{{ $relatedProduct->product_name }}</p>
                             <div class="price-and-btn">
                                 <h5 class="card-price">{{ $product->price }}</h5>
-                                <button class="btn btn-add-to-cart">
+                                <button class="btn btn-add-to-cart AddToCartBtn" data-quantity="1"
+                                    data-product-id="{{$product->id}}">
                                     <span class="me-2">+</span>
                                     Add to Cart
                                 </button>
@@ -411,7 +412,6 @@
                 </div>
                 @endforeach
             </div>
-
             <!-- Add Navigation buttons -->
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>

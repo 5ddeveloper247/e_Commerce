@@ -9,7 +9,7 @@ $(document).ready(function () {
 
         function getAdminListing(response) {
 
-            console.log(response);
+
             if (response.status == 200) {
                 let html = '';
                 response.admins.forEach((item, index) => {
@@ -155,14 +155,14 @@ $(document).ready(function () {
                 formData.append(key, data[key]);
             }
         }
-        console.log(...formData);
+
         const url = "/admin/admin/delete/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', removeAdminResponse, '', '#deleteNowBtn');
     })
 
     function removeAdminResponse(response) {
-        console.log(response);
+
         if (response.status == 200) {
             toastr.success(response.message, '', {
                 timeOut: 3000
@@ -185,14 +185,14 @@ $(document).ready(function () {
 
             status: $(this).is(':checked') ? 1 : 0,
         }
-        console.log(data);
+
         const formData = new FormData();
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
                 formData.append(key, data[key]);
             }
         }
-        console.log(...formData);
+
         const url = "/admin/user/status/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', '#flexSwitchCheckChecked');
@@ -202,7 +202,6 @@ $(document).ready(function () {
 
 
     function updateStatusResponse(response) {
-        console.log('Status updated successfully');
         if (response.status == 200) {
             toastr.success(response.message, '', {
                 timeOut: 3000

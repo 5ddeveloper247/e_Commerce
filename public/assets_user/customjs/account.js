@@ -740,6 +740,35 @@ $(document).ready(function () {
 
             let orderDetailHtml = ''
             let subTotal = 0
+            let steps = ['step-1', 'step-2', 'step-3', 'step-4'];
+            function updateSteps(status) {
+                // Clear any existing active classes first
+                steps.forEach(step => {
+                    document.getElementById(step).classList.remove('active');
+                });
+
+                // Apply the active class based on the status
+                if (status === 1) {
+                    document.getElementById('step-1').classList.add('active');
+                }
+                else if (status === 3) {
+                    document.getElementById('step-1').classList.add('active');
+                    document.getElementById('step-2').classList.add('active');
+                }
+                else if (status === 2 || status === 4) {
+                    document.getElementById('step-1').classList.add('active');
+                    document.getElementById('step-2').classList.add('active');
+                    document.getElementById('step-3').classList.add('active');
+                }
+                else if (status === 5) {
+                    steps.forEach(step => {
+                        document.getElementById(step).classList.add('active');
+                    });
+                }
+            } 
+
+            // Example usage based on order status
+            updateSteps(order.status.id);
             order.order_details.forEach(item => {
                 subTotal += parseInt(item.total_amount)
                 const url = base_url + '/storage/' + item?.product.product_images[0]?.filepath;
@@ -777,10 +806,14 @@ $(document).ready(function () {
             $('#product-detail-table-body').html(orderDetailHtml);
             $('#subTotal').text(subTotal);
             $('.order-detail-div').removeClass('d-none');
-           
-
+            $('#orderDiv').hide();
         }
     }
 
+
+    $('body').on('click', '.back-to-orders-div', function () {
+        $('#orderDiv').show();
+        $('.order-detail-div').addClass('d-none');
+    })
 })
 

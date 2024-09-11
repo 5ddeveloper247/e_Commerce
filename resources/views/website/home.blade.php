@@ -365,7 +365,8 @@
                         </div>
                         <div class="d-flex justify-content-center my-4">
                             <div class="featured-card-images">
-                                <a href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}">
+                                <a
+                                    href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}">
                                     @if(isset($product->productImages[0]->filepath))
                                     <img class="img-fluid"
                                         src="{{url('/').'/storage/'.$product->productImages[0]->filepath}}"
@@ -413,7 +414,8 @@
                                                 }}</del></small></p>
                                     @endif
                                 </div>
-                                <button class="btn btn-add-to-cart">
+                                <button class="btn btn-add-to-cart AddToCartBtn " data-quantity="1"
+                                    data-productId="{{ $product->id }}">
                                     <span class="me-2">+</span>
                                     Add to Cart
                                 </button>
@@ -1822,5 +1824,5 @@ $discountedProducts = getDiscountedProducts();
 </div>
 @endsection
 @push('scripts')
-<script src=" {{asset("assets_user/customjs/home.js") }}"></script>
+<script src=" {{asset(" assets_user/customjs/home.js") }}"></script>
 @endpush

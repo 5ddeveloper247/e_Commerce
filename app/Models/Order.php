@@ -10,6 +10,12 @@ class Order extends Model
     use HasFactory;
 
     protected $table = "order";
+    protected $fillable = [
+        'user_id',
+        'status',
+        'date',
+        'comments'
+    ];
 
     public function user()
     {
@@ -26,7 +32,8 @@ class Order extends Model
         return $this->hasOne(OrderPayment::class);
     }
 
-    public function orderDetails() {
+    public function orderDetails()
+    {
         return $this->hasMany(OrderDetail::class);
     }
 

@@ -377,11 +377,9 @@ class WebsiteController extends Controller
                 'order' => $order,
                 'status' => 200,
             ]);
-        }
-        else {
+        } else {
             // Fetch all orders for the logged-in user with status = 1
             $orders = Order::where('user_id', Auth::user()->id)
-                ->where('status', 1)
                 ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
                 ->get();
 

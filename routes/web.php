@@ -9,6 +9,7 @@ use App\Http\Controllers\WebsiteController;
 use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -79,7 +80,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/category/listing/ajax', [AdminController::class, 'categoryListingAjax'])->name('category.listing.ajax');
         Route::post('/category/edit/ajax', [AdminController::class, 'updateCategoryAjax'])->name('user.category.ajax');
         Route::post('/category/status/ajax', [AdminController::class, 'updateCategoryStatusAjax'])->name('admin.category.status.ajax');
-
         // Admin Product Start //
         Route::get('/products', [ProductController::class, 'showProducts'])->name('admin.products.index');
         Route::post('/products/get', [ProductController::class, 'getProducts'])->name('admin.products.get');
@@ -92,31 +92,24 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/markProductStatus', [ProductController::class, 'markProductStatus'])->name('admin.products.markProductStatus');
         Route::post('/products/changeProductOfferedStatus', [ProductController::class, 'changeProductOfferedStatus'])->name('admin.products.changeProductOfferedStatus');
         Route::post('/products/changeProductFeaturedStatus', [ProductController::class, 'changeProductFeaturedStatus'])->name('admin.products.changeProductFeaturedStatus');
-
         // Product Images
         Route::get('/products/images', [ProductController::class, 'getProductImages'])->name('admin.products.images.index');
         Route::post('/product/store/images', [ProductController::class, 'storeProductImages'])->name('admin.product.store.images');
         Route::post('/product/delete/images', [ProductController::class, 'deleteProductImages'])->name('admin.products.images.destroy');
-
         // Product Brands
         Route::get('/brands', [ProductController::class, 'getBrands'])->name('admin.brands.index');
         Route::post('/brands/{id}', [ProductController::class, 'getBrand'])->name('admin.brands.show');
-
         // Product Categories
         Route::get('/categories', [ProductController::class, 'getCategories'])->name('admin.categories.index');
         Route::post('/categories/{id}', [ProductController::class, 'getCategory'])->name('admin.categories.show');
-
         // Product Specifications
         Route::post('/products/specifications', [ProductController::class, 'getProductSpecifications'])->name('admin.products.specifications.index');
         Route::post('/products/saveProductSpecifications', [ProductController::class, 'storeProductSpecifications'])->name('admin.products.saveProductSpecifications');
         Route::post('/products/deleteSpecification', [ProductController::class, 'deleteSpecification'])->name('admin.products.deleteSpecification');
-
         // Product Features
         Route::post('/products/saveProductFeature', [ProductController::class, 'storeProductFeature'])->name('admin.products.saveProductFeature');
         Route::post('/products/deleteProductFeature', [ProductController::class, 'deleteProductFeature'])->name('admin.products.deleteProductFeature');
-
         // Admin Product End //
-
         //contact us
         Route::post('/contact/storeOrUpdate', [ContactUsController::class, 'storeOrUpdate'])->name('admin.contact.storeUpdate');
         //all contact
@@ -127,13 +120,15 @@ Route::group(['prefix' => 'admin'], function () {
         //newsletter
         Route::get('/newletters/ajax', [NewsLetterController::class, 'newsLetterListing'])->name('admin.newsletter.list');
         Route::post('/newsDelete/ajax', [NewsLetterController::class, 'newsletterDelete'])->name('admin.newsletter.delete');
-
-
         //testimonials
         Route::post('/testimonials/createOrUpdate', [TestimonialController::class, 'createOrUpdate'])->name('admin.testimonials.createOrUpdate');
         Route::get('/testimonials/ajax', [TestimonialController::class, 'testimonialListing'])->name('admin.testimonials.list');
         Route::post('/testimonial/delete', [TestimonialController::class, 'testimonialDelete'])->name('admin.testimonial.delete');
         Route::post('/testimonial/status', [TestimonialController::class, 'updateStatus'])->name('admin.testimonial.updateStatus');
+        //order
+        Route::get('/order', [OrderController::class, 'orderIndex'])->name('admin.order');
+        Route::post('/order/listing', [OrderController::class, 'orderListing'])->name('admin.order.listing');
+        Route::post('/order/status/ajax', [OrderController::class, 'orderStatus'])->name('admin.order.status');
     });
 });
 
