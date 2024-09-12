@@ -257,20 +257,20 @@ $(document).ready(function () {
     $('body').on('click', '.statusBtn', function () {
         var status = $(this).attr('data-status');
         var orderId = $(this).attr('data-order-id');
-
+        $('#confrimStatusBtn').attr('data-order-id', orderId);
+        $('#confrimStatusBtn').attr('data-status', status);
         if (status == "In-Transit") {
-            //inputfield will be here
+            $('#confirmationModalRemove').modal('hide');
             $('#transitModal').modal('show');
             $('#transit_order_id').val(orderId);
             $('#transit_status').val(status);
-
         }
         else {
-            updateOrderStatus(status, orderId)
+            $('#confirmationModalRemove').modal('show');
         }
 
+    });
 
-    })
 
     function updateOrderStatus(status, orderId, tracking_id = null) {
         const formData = new FormData()
@@ -291,6 +291,7 @@ $(document).ready(function () {
                 timeOut: 3000
             })
             initialLoad();
+            $('#confirmationModalRemove').modal('hide');
             $('#products').show();
             $('.order-detail-div').addClass('d-none');
         }
@@ -302,7 +303,20 @@ $(document).ready(function () {
 
     }
 
+    $('#confrimStatusBtn').on('click', function () {
+        var status = $(this).attr('data-status');
+        var orderId = $(this).attr('data-order-id');
+        if (status == "In-Transit") {
+            //inputfield will be here
+            $('#transitModal').modal('show');
+            $('#transit_order_id').val(orderId);
+            $('#transit_status').val(status);
+        }
+        else {
+            updateOrderStatus(status, orderId)
+        }
 
+    })
 
 
     $('#trackingIdBtn').on('click', function () {

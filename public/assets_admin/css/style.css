@@ -1258,6 +1258,7 @@ div.dt-container .dt-search input {
     background-color: #2fa992 !important;
     color: #fff;
 }
+
 #filterModal .btn-done:hover {
     background-color: #fff !important;
     color: #2fa992;
@@ -1310,6 +1311,17 @@ div.dt-container .dt-search input {
     color: #fff;
 }
 
+.btn-done {
+    background-color: #2fa992 !important;
+    color: #fff;
+}
+
+.btn-done:hover {
+    background-color: #2fa992 !important;
+    color: #2fa992;
+    border: 1px solid #2fa992;
+}
+
 #view-features .btn-done:hover {
     background-color: #fff !important;
     color: #2fa992;
@@ -1325,6 +1337,17 @@ div.dt-container .dt-search input {
 #view-features .btn-cancel:hover {
     background-color: #ff0000bd !important;
     color: #fff;
+}
+
+.btn-cancel {
+    background-color: #fff;
+    color: #ff0000bd;
+    border: 1px solid #ff0000bd;
+}
+
+.btn-cancel:hover {
+    background-color: #ff0000bd;
+    border: 1px solid #ff0000bd;
 }
 
 .invoice-header {

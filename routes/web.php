@@ -132,6 +132,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/order/listing', [OrderController::class, 'orderListing'])->name('admin.order.listing');
         Route::post('/order/status/ajax', [OrderController::class, 'orderStatus'])->name('admin.order.status');
         // refund
+        Route::post('/refund/listing', [OrderController::class, 'refundListing'])->name('admin.refund.listing');
+
     });
 });
 
@@ -182,8 +184,8 @@ Route::group(['prefix' => '/'], function () {
 
         /************** AJAX ROUTES ******************/
         Route::get('/user', [WebsiteController::class, 'authUser'])->name('authUser');
-        Route::Post('/orderListing', [WebsiteController::class, 'orderListing'])->name('orderListing');
-        Route::Post('/order/status/refund', [WebsiteController::class, 'orderRefund'])->name('order.orderRefund');
+        Route::post('/orderListing', [WebsiteController::class, 'orderListing'])->name('orderListing');
+        Route::post('/order/status/refund', [WebsiteController::class, 'orderRefund'])->name('order.orderRefund');
     });
 });
 

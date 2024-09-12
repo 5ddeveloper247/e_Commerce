@@ -11,14 +11,14 @@ $(document).ready(function () {
 
 
     function fetchOrderDetail() {
-        const url = `/admin/order/listing`;
+        const url = `/admin/refund/listing`;
         const type = "Post";
         const data = new FormData();
         SendAjaxRequestToServer(type, url, data, '', getOrderDetailResponse, '', '');
     }
 
     function getOrderDetailResponse(response) {
-
+        console.log(response);
         if (response.status == 200) {
             createStates(response.orders);
             let html = '';
@@ -57,18 +57,19 @@ $(document).ready(function () {
     }
 
 
+
     //view order detail here
 
     $('body').on('click', '#viewDetailBtn', function () {
         const orderId = JSON.parse($(this).attr('data-detail-order'));
         const data = new FormData();
         data.append('order_id', orderId);
-        const url = `/admin/order/listing`;
+        const url = `/admin/refund/listing`;
         const type = "Post";
         SendAjaxRequestToServer(type, url, data, '', getDetailbyIdResponse, '', '');
 
         // fetch order detail by id and display it here
-    })
+    });
 
     function getDetailbyIdResponse(response) {
         if (response.status === 200) {
@@ -131,6 +132,7 @@ $(document).ready(function () {
             $('#counters').hide();
         }
     }
+
 
     function updateSteps(status) {
         // Clear any existing active classes first
@@ -247,7 +249,15 @@ $(document).ready(function () {
             `
 
         }
-
+        else if (order.status.name == "Refund Request") {
+            statusHtml = `
+            <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
+                        <button class="btn btn-done btn-cancel px-4 statusBtn" type="button" data-status="Refund Cancel" data-order-id="${order.id}" >
+                            Cancel Refund Request
+                        </button>
+                    </div>
+            `
+        }
         $('#statusHandler').html(statusHtml);
     }
 
@@ -257,18 +267,9 @@ $(document).ready(function () {
     $('body').on('click', '.statusBtn', function () {
         var status = $(this).attr('data-status');
         var orderId = $(this).attr('data-order-id');
-
-        if (status == "In-Transit") {
-            //inputfield will be here
-            $('#transitModal').modal('show');
-            $('#transit_order_id').val(orderId);
-            $('#transit_status').val(status);
-
-        }
-        else {
-            updateOrderStatus(status, orderId)
-        }
-
+        $('#confrimStatusBtn').attr('data-order-id', orderId);
+        $('#confrimStatusBtn').attr('data-status', status);
+        $('#confirmationModalRemove').modal('show');
 
     })
 
@@ -282,8 +283,8 @@ $(document).ready(function () {
         const type = 'POST';
         const url = '/admin/order/status/ajax';
         SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', this);
-
     }
+
     function updateStatusResponse(response) {
         //update status here
         if (response.status == 200) {
@@ -291,8 +292,11 @@ $(document).ready(function () {
                 timeOut: 3000
             })
             initialLoad();
+            $('#confirmationModalRemove').modal('hide');
             $('#products').show();
             $('.order-detail-div').addClass('d-none');
+            $('#counters').show();
+
         }
         else {
             toastr.error(response.message, '', {
@@ -303,7 +307,20 @@ $(document).ready(function () {
     }
 
 
+    $('#confrimStatusBtn').on('click', function () {
+        var status = $(this).attr('data-status');
+        var orderId = $(this).attr('data-order-id');
+        if (status == "In-Transit") {
+            //inputfield will be here
+            $('#transitModal').modal('show');
+            $('#transit_order_id').val(orderId);
+            $('#transit_status').val(status);
+        }
+        else {
+            updateOrderStatus(status, orderId)
+        }
 
+    })
 
     $('#trackingIdBtn').on('click', function () {
 
