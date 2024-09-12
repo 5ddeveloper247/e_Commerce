@@ -934,6 +934,17 @@ footer .cards-in-footer {
     color: #ffffff;
 }
 
+.btn-done {
+    background-color: #2fa992 !important;
+    color: #fff;
+}
+
+.btn-done:hover {
+    background-color: #2fa992 !important;
+    color: #2fa992;
+    border: 1px solid #2fa992;
+}
+
 .md-stepper-horizontal.green .md-step.active .md-step-circle {
     background-color: #00ae4d;
 }

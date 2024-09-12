@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\OrderStatus;
+use App\Models\OrderShippingAddress;
+use App\Models\OrderTracking;
 
 
 class OrderController extends Controller
@@ -54,21 +56,49 @@ class OrderController extends Controller
 
     public function orderStatus(Request $request)
     {
-        // Validate the request input;
-
-        // Find the order status based on the provided status name
         $orderStatus = OrderStatus::where('name', 'LIKE', $request->status)->first();
-
-        // Check if the order status was found
         if ($orderStatus) {
             // Find the order by orderId
             $order = Order::find($request->orderId);
-
             // Check if the order was found
             if ($order) {
                 // Update the status and save the order
-                $order->status = $orderStatus->id;
-                $order->save();
+                if ($orderStatus->name == "Refund Cancel") {
+
+                    $orderTracking = OrderTracking::create([
+                        'order_id' => $order->id,
+                        'status_id' => $order->status,
+                        'source' => Auth::user()->role,  // Source could be user/admin
+                        'source_id' => Auth::user()->id, // Authenticated user ID
+                    ]);
+
+                    $order->status = 1;
+                    $order->save();
+                    $orderTracking = OrderTracking::create([
+                        'order_id' => $order->id,
+                        'status_id' => 1,
+                        'source' => Auth::user()->role,  // Source could be user/admin
+                        'source_id' => Auth::user()->id, // Authenticated user ID
+                    ]);
+                } else {
+                    $order->status = $orderStatus->id;
+                    $order->save();
+                }
+
+                if ($request->has('trackingId')) {
+                    $shippingAddress = OrderShippingAddress::where('order_id', $request->orderId)->first();
+                    if ($shippingAddress) {
+                        $shippingAddress->tracking_id = $request->trackingId;
+                        $shippingAddress->save();
+                    }
+                }
+                $orderTracking = OrderTracking::create([
+                    'order_id' => $order->id,
+                    'status_id' => $orderStatus->id,
+                    'source' => Auth::user()->role,  // Source could be user/admin
+                    'source_id' => Auth::user()->id, // Authenticated user ID
+                ]);
+
 
                 return response()->json([
                     'order' => $order,
@@ -87,5 +117,13 @@ class OrderController extends Controller
                 'message' => 'Order status not found',
             ], 404);
         }
+    }
+
+
+
+    public function refundIndex(Request $rquest)
+    {
+        $pageTitle = "Refunds";
+        return view('admin.order_refund', compact('pageTitle'));
     }
 }

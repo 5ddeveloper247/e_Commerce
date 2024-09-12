@@ -17,6 +17,8 @@ use App\Models\ProductFeature;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Models\CartDetail;
+use App\Models\OrderStatus;
+use App\Models\OrderTracking;
 use App\Models\OrderDetail;
 use App\Models\OrderPayment;
 use App\Models\ShippingAddress;
@@ -389,6 +391,57 @@ class WebsiteController extends Controller
                 'status' => 200,
                 'count' => $orders->count(),
             ]);
+        }
+    }
+
+
+    public function orderRefund(Request $request)
+    {
+        // Validate the request input
+        $request->validate([
+            'status' => 'required|string',
+            'orderId' => 'required|integer',
+        ]);
+
+        // Find the order status based on the provided status name
+        $orderStatus = OrderStatus::where('name', 'LIKE', $request->status)->first();
+
+        // Check if the order status was found
+        if ($orderStatus) {
+            // Find the order by orderId
+            $order = Order::find($request->orderId);
+
+            // Check if the order was found
+            if ($order) {
+                // Update the order status and save
+                $order->status = $orderStatus->id;
+                $order->save();
+
+                // Create an entry in the OrderTracking table
+                $orderTracking = OrderTracking::create([
+                    'order_id' => $order->id,
+                    'status_id' => $orderStatus->id,
+                    'source' => Auth::user()->role,  // Source could be user/admin
+                    'source_id' => Auth::user()->id, // Authenticated user ID
+                ]);
+
+                return response()->json([
+                    'order' => $order,  // Return the updated order
+                    'orderTracking' => $orderTracking,  // Return the tracking info if needed
+                    'status' => 200,
+                    'message' => 'Status updated successfully',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Order not found',
+                ], 404);
+            }
+        } else {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Order status not found',
+            ], 404);
         }
     }
 }

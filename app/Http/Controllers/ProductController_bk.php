@@ -42,7 +42,7 @@ class ProductController extends Controller
                 'description' => 'nullable|string',
                 'status' => 'nullable|in:on,off', // Ensure status is either 'on' or 'off'
             ]);
-    
+
             // Update the existing product with validated data
             $product->update([
                 'sku' => $request->input('sku'),
@@ -56,7 +56,7 @@ class ProductController extends Controller
                 'description' => $request->input('description'),
                 'status' => $request->input('status') === 'on' ? 1 : 0, // Store 1 if status is 'on', 0 otherwise
             ]);
-    
+
             return response()->json([
                 'message' => 'Product updated successfully',
                 'status' => 200,
@@ -78,7 +78,7 @@ class ProductController extends Controller
                 'description' => 'nullable|string',
                 'status' => 'nullable|in:on,off', // Ensure status is either 'on' or 'off'
             ]);
-    
+
             // Create the new product with validated data
             $product = Product::create([
                 'sku' => $request->input('sku'),
@@ -93,7 +93,7 @@ class ProductController extends Controller
                 'status' => $request->input('status') === 'on' ? 1 : 0, // Store 1 if status is 'on', 0 otherwise
                 'created_by' => auth()->id(), // Assuming you are using authentication
             ]);
-    
+
             return response()->json([
                 'message' => 'Product stored successfully',
                 'status' => 200,
@@ -122,50 +122,50 @@ class ProductController extends Controller
 
         return response()->json(['status' => 200, 'images' => ['image' => $responseImages]]);
     }
-    
 
-    public function storeProductImages(Request $request) 
+
+    public function storeProductImages(Request $request)
     {
         // Validation rules for image upload
         $request->validate([
             'product_id' => 'required|integer|exists:products,id',
             'product_images.*' => 'image|mimes:jpeg,png,ico|max:2048'
         ]);
-    
+
         // Find the product by ID
         $product = Product::find($request->input('product_id'));
-    
+
         if (!$product) {
             return response()->json([
                 'success' => false,
                 'message' => 'Product not found'
             ], 404);
         }
-    
+
         try {
             if ($request->hasFile('product_images')) {
                 // Create a unique folder for the product
                 $productFolder = 'product_images/' . $product->id;
-    
+
                 // Array to store image IDs
                 $imageIds = [];
-    
+
                 // Upload and save new photos
                 foreach ($request->file('product_images') as $photo) {
                     $photoName = time() . '_' . $photo->getClientOriginalName();
                     $photoPath = $photo->storeAs($productFolder, $photoName, 'public');
-    
+
                     // Save each new photo path in the ProductImage table and get the ID
                     $productImage = ProductImage::create([
                         'product_id' => $product->id,
                         'filename' => $photoName,
                         'filepath' => $photoPath,
                     ]);
-    
+
                     // Store the image ID in the array
                     $imageIds[] = $productImage->id;
                 }
-    
+
                 return response()->json([
                     'success' => true,
                     'message' => 'Images uploaded successfully',
@@ -189,8 +189,8 @@ class ProductController extends Controller
             ], 500);
         }
     }
-    
-    
+
+
     public function deleteProductImages(Request $request)
     {
         try {
@@ -441,9 +441,9 @@ class ProductController extends Controller
     public function getProductSpecifications(Request $request){
         // Find the product by ID
         $product = Product::with('productSpecifications')->findOrFail($request->input('product_id'));
-    
+
         $productSpecifications = $product->productSpecifications->count();
-        
+
         return response()->json([
             'productSpecifications' => $productSpecifications,
             'message' => 'Product specifications fetched successfully',
@@ -461,10 +461,10 @@ class ProductController extends Controller
             'unit' => 'nullable|string|max:50',
             'value' => 'nullable|string|max:255',
         ]);
-    
+
         // Find the product by ID
         $product = Product::findOrFail($validatedData['product_id']);
-    
+
         // Create the product specification
         $specification = ProductSpecification::create([
             'product_id' => $product->id,
@@ -473,7 +473,7 @@ class ProductController extends Controller
             'key' => $validatedData['unit'],
             'value' => $validatedData['value'],
         ]);
-    
+
         // Return success response
         return response()->json([
             'success' => true,

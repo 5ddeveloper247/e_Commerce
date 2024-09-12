@@ -1254,6 +1254,10 @@ div.dt-container .dt-search input {
     color: #fff;
 }
 
+.btn-done {
+    background-color: #2fa992 !important;
+    color: #fff;
+}
 #filterModal .btn-done:hover {
     background-color: #fff !important;
     color: #2fa992;

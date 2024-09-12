@@ -65,6 +65,8 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/newsletter', [NewsLetterController::class, 'newsletterIndex'])->name('admin.newsletter.index');
         //testimonials
         Route::get('/testimonials', [TestimonialController::class, 'testimonialIndex'])->name('admin.testimonials');
+        // refund
+        Route::get('/refund', [OrderController::class, 'refundIndex'])->name('admin.refund');
 
 
         /************** AJAX ROUTES ******************/
@@ -129,6 +131,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/order', [OrderController::class, 'orderIndex'])->name('admin.order');
         Route::post('/order/listing', [OrderController::class, 'orderListing'])->name('admin.order.listing');
         Route::post('/order/status/ajax', [OrderController::class, 'orderStatus'])->name('admin.order.status');
+        // refund
     });
 });
 
@@ -180,6 +183,7 @@ Route::group(['prefix' => '/'], function () {
         /************** AJAX ROUTES ******************/
         Route::get('/user', [WebsiteController::class, 'authUser'])->name('authUser');
         Route::Post('/orderListing', [WebsiteController::class, 'orderListing'])->name('orderListing');
+        Route::Post('/order/status/refund', [WebsiteController::class, 'orderRefund'])->name('order.orderRefund');
     });
 });
 

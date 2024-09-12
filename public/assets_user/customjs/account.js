@@ -736,43 +736,16 @@ $(document).ready(function () {
 
     function handleOrderDetailResponse(response) {
         if (response.status === 200) {
-            const order = response.order;
+            let order = response.order;
 
             let orderDetailHtml = ''
+            let orderStatusBtnHtml = ''
             let subTotal = 0
-            let steps = ['step-1', 'step-2', 'step-3', 'step-4'];
-            function updateSteps(status) {
-                // Clear any existing active classes first
-                steps.forEach(step => {
-                    document.getElementById(step).classList.remove('active');
-                });
-
-                // Apply the active class based on the status
-                if (status === 1) {
-                    document.getElementById('step-1').classList.add('active');
-                }
-                else if (status === 3) {
-                    document.getElementById('step-1').classList.add('active');
-                    document.getElementById('step-2').classList.add('active');
-                }
-                else if (status === 2 || status === 4) {
-                    document.getElementById('step-1').classList.add('active');
-                    document.getElementById('step-2').classList.add('active');
-                    document.getElementById('step-3').classList.add('active');
-                }
-                else if (status === 5) {
-                    steps.forEach(step => {
-                        document.getElementById(step).classList.add('active');
-                    });
-                }
-            } 
-
             // Example usage based on order status
             updateSteps(order.status.id);
             order.order_details.forEach(item => {
                 subTotal += parseInt(item.total_amount)
                 const url = base_url + '/storage/' + item?.product.product_images[0]?.filepath;
-
                 orderDetailHtml += `
                  <tr class="border-top border-bottom">
                                         <td class="d-flex align-items-center gap-3">
@@ -802,7 +775,16 @@ $(document).ready(function () {
                                             $ ${item?.total_amount}
                                         </td>
                                     </tr> `
+
             });
+
+            //showing pending button
+            if (order.status.name == "Pending") {
+                orderStatusBtnHtml = `<div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
+                        <button class="btn btn-done px-4 RefundRequestBtn" type="button" data-status="Refund Request" data-order-id="${order.id}">Refund Request</button>
+                    </div>`
+                $('#refund-btn-container').html(orderStatusBtnHtml);
+            }
             $('#product-detail-table-body').html(orderDetailHtml);
             $('#subTotal').text(subTotal);
             $('.order-detail-div').removeClass('d-none');
@@ -810,10 +792,74 @@ $(document).ready(function () {
         }
     }
 
-
     $('body').on('click', '.back-to-orders-div', function () {
         $('#orderDiv').show();
         $('.order-detail-div').addClass('d-none');
     })
+
+
+    function updateSteps(status) {
+        // Clear any existing active classes first
+        let steps = ['step-1', 'step-2', 'step-3', 'step-4'];
+        steps.forEach(step => {
+            document.getElementById(step).classList.remove('active');
+        });
+
+        // Apply the active class based on the status
+        if (status === 1) {
+            document.getElementById('step-1').classList.add('active');
+        }
+        else if (status === 3) {
+            document.getElementById('step-1').classList.add('active');
+            document.getElementById('step-2').classList.add('active');
+        }
+        else if (status === 2 || status === 4) {
+            document.getElementById('step-1').classList.add('active');
+            document.getElementById('step-2').classList.add('active');
+            document.getElementById('step-3').classList.add('active');
+        }
+        else if (status === 5) {
+            steps.forEach(step => {
+                document.getElementById(step).classList.add('active');
+            });
+        }
+    }
+
+    $('body').on('click', '.RefundRequestBtn', function () {
+        var status = $(this).attr('data-status');
+        var orderId = $(this).attr('data-order-id');
+        markedRefundRequest(status, orderId);
+    });
+
+    function markedRefundRequest(status, orderId) {
+        const formData = new FormData()
+        formData.append('status', status);
+        formData.append('orderId', orderId);
+        const type = 'POST';
+        const url = '/order/status/refund';
+        SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', this);
+
+    }
+    function updateStatusResponse(response) {
+        //update status here
+        if (response.status == 200) {
+            let orderStatusBtnHtml = '';
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            })
+            initialLoad();
+            orderStatusBtnHtml = `<div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
+                        <button class="btn btn-done px-4 type="button">Refund request in process</button>
+                    </div>`
+            $('#refund-btn-container').empty();
+            $('#refund-btn-container').html(orderStatusBtnHtml);
+        }
+        else {
+            toastr.error(response.message, '', {
+                timeOut: 3000
+            })
+        }
+    }
+
 })
 
