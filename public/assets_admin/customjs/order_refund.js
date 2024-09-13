@@ -121,7 +121,7 @@ $(document).ready(function () {
                         ? `<a href="${paymentResponse.receipt_url}" target="_blank">View</a>`
                         : "No Receipt Available"
                     }
-                                    </td>
+                                         </td>
 
                                     </tr >`
             });
@@ -251,18 +251,24 @@ $(document).ready(function () {
         }
         else if (order.status.name == "Refund Request") {
             statusHtml = `
-            <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-done btn-cancel px-4 statusBtn" type="button" data-status="Refund Cancel" data-order-id="${order.id}" >
-                            Cancel Refund Request
-                        </button>
-                    </div>
-            `
+            <div class="row justify-content-end">
+                <div class="col-auto d-flex align-items-center pb-4 px-4 mx-2 my-2 pt-3 pe-0">
+                    <button class="btn btn-done btn-cancel px-4 me-0 statusBtn" type="button" data-status="Refund Cancel" data-order-id="${order.id}">
+                        Cancel Refund Request
+                    </button>
+                </div>
+                <div class="col-auto d-flex align-items-center pb-4 px-4 pt-3 mx-2 my-2 ps-0">
+                    <button class="btn btn-done btn-cancel px-4 statusBtn" type="button" data-status="Refund Confirm" data-order-id="${order.id}">
+                        Refund Confirm
+                    </button>
+                </div>
+            </div>
+        `;
+
+
         }
         $('#statusHandler').html(statusHtml);
     }
-
-
-
 
     $('body').on('click', '.statusBtn', function () {
         var status = $(this).attr('data-status');
