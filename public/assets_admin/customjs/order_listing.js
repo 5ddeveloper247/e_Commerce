@@ -73,9 +73,10 @@ $(document).ready(function () {
     function getDetailbyIdResponse(response) {
         if (response.status === 200) {
             const order = response.order;
+            const orderTrackings = response.orderTrackings;
             createShippingDetail(order)
             createPaymentDetail(order)
-            updateSteps(order.status.id);
+            updateSteps(order.status.id, orderTrackings);
             createOrderStatus(order);
             let orderDetailHtml = ''
             let subTotal = 0
@@ -132,31 +133,23 @@ $(document).ready(function () {
         }
     }
 
-    function updateSteps(status) {
-        // Clear any existing active classes first
-        let steps = ['step-1', 'step-2', 'step-3', 'step-4'];
-        steps.forEach(step => {
-            document.getElementById(step).classList.remove('active');
+    function updateSteps(status, orderTrackings) {
+        // Clear previous steps
+        $('#statusContainer').empty();
+        // Loop through the order trackings
+        let statusTrackHtml = '';
+        orderTrackings.forEach((tracking, index) => {
+            statusTrackHtml += `
+                    <div class="col-2 md-step active done" id="step-1">
+                        <div class="md-step-circle"><span>${index + 1}</span></div>
+                        <div class="md-step-title">${tracking.status.name}</div>
+                        <div class="md-step-bar-left"></div>
+                        <div class="md-step-bar-right"></div>
+                </div>`;
+            // Append the generated HTML for each row
         });
+        $('#statusContainer').html(statusTrackHtml);
 
-        // Apply the active class based on the status
-        if (status === 1) {
-            document.getElementById('step-1').classList.add('active');
-        }
-        else if (status === 3) {
-            document.getElementById('step-1').classList.add('active');
-            document.getElementById('step-2').classList.add('active');
-        }
-        else if (status === 2 || status === 4) {
-            document.getElementById('step-1').classList.add('active');
-            document.getElementById('step-2').classList.add('active');
-            document.getElementById('step-3').classList.add('active');
-        }
-        else if (status === 5) {
-            steps.forEach(step => {
-                document.getElementById(step).classList.add('active');
-            });
-        }
     }
 
     function createShippingDetail(order) {

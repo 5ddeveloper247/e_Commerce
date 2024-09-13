@@ -19,6 +19,7 @@ use App\Models\Order;
 use App\Models\CartDetail;
 use App\Models\OrderStatus;
 use App\Models\OrderTracking;
+use App\Models\Wishlist;
 use App\Models\OrderDetail;
 use App\Models\OrderPayment;
 use App\Models\ShippingAddress;
@@ -365,31 +366,39 @@ class WebsiteController extends Controller
             $order = Order::where('id', $request->order_id)
                 ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
                 ->first(); // Get the first record (which will be only one since order_id is unique)
+            $orderTrackings = OrderTracking::where('order_id', $order->id)->with(['order', 'status'])->get();
+            $wishList = Wishlist::where('user_id', Auth::user()->id)->with(['product.productImages','user'])->get();
 
             if (!$order) {
                 return response()->json([
                     'message' => 'Order not found',
                     'status' => 404,
-                    'order' => $order
+                    'order' => $order,
+                    'orderTrackings' => $orderTrackings,
+                    'wishList' => $wishList,
                 ]);
             }
-
             // Return response for single order
             return response()->json([
                 'order' => $order,
                 'status' => 200,
+                'orderTrackings' => $orderTrackings,
+                'wishList' => $wishList,
             ]);
-        } else {
+        }
+        else {
             // Fetch all orders for the logged-in user with status = 1
             $orders = Order::where('user_id', Auth::user()->id)
                 ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
                 ->get();
 
-            // Return response for multiple orders
+                $wishList = Wishlist::where('user_id', Auth::user()->id)->with(['product.productImages','user'])->get();
+                // Return response for multiple orders
             return response()->json([
                 'orders' => $orders,
                 'status' => 200,
                 'count' => $orders->count(),
+                'wishList' => $wishList,
             ]);
         }
     }
@@ -442,6 +451,39 @@ class WebsiteController extends Controller
                 'status' => 404,
                 'message' => 'Order status not found',
             ], 404);
+        }
+    }
+
+
+
+    public function wishListAdd(Request $request)
+    {
+        // Validate the request input
+        $request->validate([
+            'productId' => 'required|integer',
+        ]);
+
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Check if the product is already in the wishlist
+            $wishList = Wishlist::where('user_id', Auth::user()->id)->where('product_id', $request->productId)->first();
+
+            // If the product is not in the wishlist, add it
+            if (!$wishList) {
+                $wishList = new Wishlist();
+                $wishList->user_id = Auth::user()->id;
+                $wishList->product_id = $request->productId;
+                $wishList->save();
+            }
+            return response()->json([
+                'status' => 200,
+                'message' => 'Product added to wishlist successfully',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'User not authenticated',
+            ], 400);
         }
     }
 }

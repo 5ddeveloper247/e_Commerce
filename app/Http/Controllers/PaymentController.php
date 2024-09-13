@@ -20,6 +20,11 @@ class PaymentController extends Controller
     public function makePayment(Request $request)
     {
         try {
+            $request->validate([
+                'amount' => 'required',
+                'shippingAddress' => 'required'
+
+            ]);
             $comments = $request->comments;
             $shippingAddress = $request->shippingAddress;
             $amount = $request->amount;

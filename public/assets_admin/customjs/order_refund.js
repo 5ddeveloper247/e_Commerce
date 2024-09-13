@@ -74,9 +74,10 @@ $(document).ready(function () {
     function getDetailbyIdResponse(response) {
         if (response.status === 200) {
             const order = response.order;
+            const orderTrackings = response.orderTrackings;
             createShippingDetail(order)
             createPaymentDetail(order)
-            updateSteps(order.status.id);
+            updateSteps(order.status.id, orderTrackings);
             createOrderStatus(order);
             let orderDetailHtml = ''
             let subTotal = 0
@@ -134,31 +135,23 @@ $(document).ready(function () {
     }
 
 
-    function updateSteps(status) {
-        // Clear any existing active classes first
-        let steps = ['step-1', 'step-2', 'step-3', 'step-4'];
-        steps.forEach(step => {
-            document.getElementById(step).classList.remove('active');
+    function updateSteps(status, orderTrackings) {
+        // Clear previous steps
+        $('#statusContainer').empty();
+        // Loop through the order trackings
+        let statusTrackHtml = '';
+        orderTrackings.forEach((tracking, index) => {
+            statusTrackHtml += `
+                    <div class="col-2 md-step active done" id="step-1">
+                        <div class="md-step-circle"><span>${index + 1}</span></div>
+                        <div class="md-step-title">${tracking.status.name}</div>
+                        <div class="md-step-bar-left"></div>
+                        <div class="md-step-bar-right"></div>
+                </div>`;
+            // Append the generated HTML for each row
         });
+        $('#statusContainer').html(statusTrackHtml);
 
-        // Apply the active class based on the status
-        if (status === 1) {
-            document.getElementById('step-1').classList.add('active');
-        }
-        else if (status === 3) {
-            document.getElementById('step-1').classList.add('active');
-            document.getElementById('step-2').classList.add('active');
-        }
-        else if (status === 2 || status === 4) {
-            document.getElementById('step-1').classList.add('active');
-            document.getElementById('step-2').classList.add('active');
-            document.getElementById('step-3').classList.add('active');
-        }
-        else if (status === 5) {
-            steps.forEach(step => {
-                document.getElementById(step).classList.add('active');
-            });
-        }
     }
 
     function createShippingDetail(order) {
@@ -174,10 +167,10 @@ $(document).ready(function () {
         let cancelled = 0;
         let totalOrders = 0
         orders.forEach(order => {
-            if (order.status.name == "Pending") {
+            if (order.status.name == "Refund Request") {
                 pending += 1;
             }
-            else if (order.status.name == "Cancelled") {
+            else if (order.status.name == "Refund Cancel") {
                 cancelled += 1;
             }
             totalOrders += 1
@@ -189,8 +182,6 @@ $(document).ready(function () {
 
     }
 
-
-
     function createPaymentDetail(order) {
         $('#txn').text(order?.order_payment?.transaction_id);
     }
@@ -199,7 +190,7 @@ $(document).ready(function () {
         $('#products').show();
         $('#counters').show();
         $('.order-detail-div').addClass('d-none');
-    })
+    });
 
 
 
@@ -270,6 +261,8 @@ $(document).ready(function () {
         $('#statusHandler').html(statusHtml);
     }
 
+
+
     $('body').on('click', '.statusBtn', function () {
         var status = $(this).attr('data-status');
         var orderId = $(this).attr('data-order-id');
@@ -277,7 +270,7 @@ $(document).ready(function () {
         $('#confrimStatusBtn').attr('data-status', status);
         $('#confirmationModalRemove').modal('show');
 
-    })
+    });
 
     function updateOrderStatus(status, orderId, tracking_id = null) {
         const formData = new FormData()
@@ -312,7 +305,6 @@ $(document).ready(function () {
 
     }
 
-
     $('#confrimStatusBtn').on('click', function () {
         var status = $(this).attr('data-status');
         var orderId = $(this).attr('data-order-id');
@@ -326,7 +318,7 @@ $(document).ready(function () {
             updateOrderStatus(status, orderId)
         }
 
-    })
+    });
 
     $('#trackingIdBtn').on('click', function () {
 

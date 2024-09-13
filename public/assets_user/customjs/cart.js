@@ -190,4 +190,41 @@ $(document).ready(function () {
     }
 
 
+
+
+    $('body').on('click', '.addWishListBtn', function () {
+        let productId = $(this).attr('data-productid');
+        addToWishList(productId);
+    })
+    function addToWishList(productId) {
+        let data = new FormData();
+        data.append('productId', productId);
+        if (!is_auth) {
+            toastr.error('You must have to login first', '', {
+                timeOut: 3000
+            });
+            return false;
+        }
+        const type = "Post";
+        const url = "/wish_list/add";
+        SendAjaxRequestToServer(type, url, data, '', addToWishListResponse, '', '#addWishListBtn_' + productId);
+    }
+
+    function addToWishListResponse(response) {
+        console.log(response);
+        if (response.status == 200) {
+            // success
+            toastr.success('Product added to wishlist successfully', '', {
+                timeOut: 3000
+            });
+        }
+        else {
+            // error
+            toastr.error('An error occurred. Please try again later', '', {
+                timeOut: 3000
+            });
+        }
+    }
+
+
 });

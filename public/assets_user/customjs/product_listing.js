@@ -81,10 +81,10 @@ $(document).ready(function () {
                         </p>
                         <div class="price-and-btn">
                             <div class="d-flex justify-content-center card-price">
-                                <h5>${product?.price ? `$${product.price}` : 'Price Not Available'}</h5>
-                                ${product?.price ? `<p class="text-danger ps-1"><small><del>$${product.price}</del></small></p>` : ''}
+                                <h5>${product?.price ? `$${product?.price}` : 'Price Not Available'}</h5>
+                                ${product?.price ? `<p class="text-danger ps-1"><small><del>$${product?.price}</del></small></p>` : ''}
                             </div>
-                            <button class="btn btn-add-to-cart">
+                            <button class="btn btn-add-to-cart AddToCartBtn" data-quantity="1" data-productid="${product?.id}">
                                 <span class="me-2">+</span>
                                 Add to Cart
                             </button>

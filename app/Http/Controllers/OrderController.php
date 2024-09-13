@@ -26,12 +26,14 @@ class OrderController extends Controller
             $order = Order::where('id', $request->order_id)
                 ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
                 ->first(); // Get the first record (which will be only one since order_id is unique)
+            $orderTrackings = OrderTracking::where('order_id', $order->id)->with(['order', 'status'])->get();
 
             if (!$order) {
                 return response()->json([
                     'message' => 'Order not found',
                     'status' => 404,
-                    'order' => $order
+                    'order' => $order,
+                    'orderTrackings' => $orderTrackings,
                 ]);
             }
 
@@ -39,6 +41,7 @@ class OrderController extends Controller
             return response()->json([
                 'order' => $order,
                 'status' => 200,
+                'orderTrackings' => $orderTrackings,
             ]);
         } else {
             // Fetch all orders for the logged-in user with status = 1
@@ -125,7 +128,6 @@ class OrderController extends Controller
         return view('admin.order_refund', compact('pageTitle'));
     }
 
-
     public function refundListing(Request $request)
     {
         if ($request->has("order_id")) {
@@ -133,12 +135,13 @@ class OrderController extends Controller
             $order = Order::where('id', $request->order_id)
                 ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
                 ->first(); // Get the first record (which will be only one since order_id is unique)
-
+            $orderTrackings = OrderTracking::where('order_id', $order->id)->with(['order', 'status'])->get();
             if (!$order) {
                 return response()->json([
                     'message' => 'Order not found',
                     'status' => 404,
-                    'order' => $order
+                    'order' => $order,
+                    'orderTrackings' => $orderTrackings,
                 ]);
             }
 
@@ -146,6 +149,7 @@ class OrderController extends Controller
             return response()->json([
                 'order' => $order,
                 'status' => 200,
+                'orderTrackings' => $orderTrackings,
             ]);
         } else {
             // Fetch all orders for the logged-in user with status = 1

@@ -89,32 +89,14 @@
         </div>
 
         <div class="md-stepper-horizontal orange mt-5">
-            <div class="md-step  done" id="step-1">
-                <div class="md-step-circle"><span>1</span></div>
-                <div class="md-step-title ">Placed</div>
-                <div class="md-step-bar-left"></div>
-                <div class="md-step-bar-right"></div>
-            </div>
-            <div class="md-step  editable" id="step-2">
-                <div class="md-step-circle"><span>2</span></div>
-                <div class="md-step-title">Confirmed</div>
-                <div class="md-step-bar-left"></div>
-                <div class="md-step-bar-right"></div>
-            </div>
-            <div class="md-step " id="step-3">
-                <div class="md-step-circle"><span>3</span></div>
-                <div class="md-step-title">Intransit</div>
-                <div class="md-step-bar-left"></div>
-                <div class="md-step-bar-right"></div>
-            </div>
-            <div class="md-step" id="step-4">
-                <div class="md-step-circle"><span>4</span></div>
-                <div class="md-step-title">Delivered</div>
-                <div class="md-step-bar-left"></div>
-                <div class="md-step-bar-right"></div>
+            <div class="row" id="statusContainer">
+
             </div>
         </div>
         <div class="row justify-content-end gx-0 gy-2 gap-4 mb-4" id="statusHandler">
+            <div class="statusContainer" id="statusContainer">
+
+            </div>
 
         </div>
         <div class="your-cart container mt-5">
