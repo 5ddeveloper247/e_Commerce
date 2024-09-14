@@ -94,59 +94,8 @@
                         </div>
                     </li>
                     <hr>
-                    <li class="nav-item">
-                        <h6>Color</h6>
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label class="mt-0" for="">Black</label>
-                        </div>
-
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label for="">White</label>
-                        </div>
-
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label for="">Blue</label>
-                        </div>
-
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label for="">Green</label>
-                        </div>
-
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label for="">Red</label>
-                        </div>
-                    </li>
                     <hr>
-                    <li class="nav-item">
-                        <h6>Size</h6>
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label class="mt-0" for="">Large (2)</label>
-                        </div>
-
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label for="">Medium (4)</label>
-                        </div>
-
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label for="">Small (1)</label>
-                        </div>
-                    </li>
                     <hr>
-                    <li class="nav-item">
-                        <h6>Wine Vintage</h6>
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label class="mt-0" for="">1998</label>
-                        </div>
-                    </li>
                     <hr>
                     <li class="nav-item">
                         <h6>Price</h6>
@@ -159,13 +108,6 @@
                         </div>
                     </li>
                     <hr>
-                    <li class="nav-item">
-                        <h6>Vintage</h6>
-                        <div>
-                            <input type="checkbox" name="" id="">
-                            <label class="mt-0" for="">1999 (1)</label>
-                        </div>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -181,86 +123,19 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav d-flex flex-column w-100">
+                    <ul class="navbar-nav d-flex flex-column w-100" id="filter-form">
                         <li class="nav-item">
                             <h6>Brand</h6>
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label class="mt-0" for="">Foodzone</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Mountain Climb</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Premium Quality</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Shoppe Fabs</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Walking Dreams</label>
+                            <!-- Container for dynamically populated brand checkboxes -->
+                            <div id="brand-filter">
+                                <!-- Dynamic brand checkboxes will be added here -->
                             </div>
                         </li>
-                        <hr>
                         <li class="nav-item">
-                            <h6>Color</h6>
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label class="mt-0" for="">Black</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">White</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Blue</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Green</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Red</label>
-                            </div>
-                        </li>
-                        <hr>
-                        <li class="nav-item">
-                            <h6>Size</h6>
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label class="mt-0" for="">Large (2)</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Medium (4)</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label for="">Small (1)</label>
-                            </div>
-                        </li>
-                        <hr>
-                        <li class="nav-item">
-                            <h6>Wine Vintage</h6>
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label class="mt-0" for="">1998</label>
+                            <h6>Category</h6>
+                            <!-- Container for dynamically populated category checkboxes -->
+                            <div id="category-filter">
+                                <!-- Dynamic category checkboxes will be added here -->
                             </div>
                         </li>
                         <hr>
@@ -268,21 +143,14 @@
                             <h6>Price</h6>
                             <div class="d-flex gap-2">
                                 <div class="d-flex">
-                                    <input type="text" class="w-50" placeholder="Min" name="" id="">
-                                    <input type="text" class="w-50" placeholder="Max" name="" id="">
+                                    <input type="text" class="w-50" placeholder="Min" name="minPrice" id="min-price">
+                                    <input type="text" class="w-50" placeholder="Max" name="maxPrice" id="max-price">
                                 </div>
-                                <button class="rounded-5 px-3 py-1">Update</button>
                             </div>
                         </li>
                         <hr>
-                        <li class="nav-item">
-                            <h6>Vintage</h6>
-                            <div>
-                                <input type="checkbox" name="" id="">
-                                <label class="mt-0" for="">1999 (1)</label>
-                            </div>
-                        </li>
                     </ul>
+
                 </div>
             </div>
         </nav>

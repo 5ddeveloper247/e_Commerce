@@ -36,7 +36,7 @@
                 <button class="nav-link px-0" id="wish-list-tab" data-bs-toggle="tab"
                     data-bs-target="#wish-list-tab-pane" type="button" role="tab" aria-controls="wish-list-tab-pane"
                     aria-selected="false">
-                    Wish Lists (0)
+                    Wish Lists <small id="wishListLength"></small>
                 </button>
             </li>
             <li class="nav-item mx-md-2 mx-2" role="presentation">
@@ -971,9 +971,9 @@
                                 <th class="text-nowrap" scope="col">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="wishlist_table_body">
                             <!-- Example row -->
-                            <tr>
+                            {{-- <tr>
                                 <td class="text-nowrap">101</td>
                                 <td class="text-nowrap">Wireless Headphones</td>
                                 <td class="text-nowrap">Electronics</td>
@@ -983,12 +983,12 @@
                                     <button class="btn btn-primary btn-sm">Add to Cart</button>
                                     <button class="btn btn-danger btn-sm">Remove</button>
                                 </td>
-                            </tr>
+                            </tr> --}}
                             <!-- Add more rows as needed -->
                         </tbody>
                     </table>
                 </div>
-                <h3 class="text-center" >Wish List</h3>
+                <h3 class="text-center">Wish List</h3>
                 <div class="row mt-3" id="wishListContainer">
 
                     {{-- <div class="col-lg-3 col-md-4 col-sm-6 my-2">

@@ -854,83 +854,50 @@ $(document).ready(function () {
 
 
     function wishList_Listing(response) {
-        console.log("wihsl")
-        console.log(response.wishList)
-        let wishListHtml = '';
-        let wishlists = response.wishList;
-        wishlists.forEach(wishlist => {
-            // const url = base_url + '/storage/' + wishlist.product?.product_images[0]?.filepath;
-            const product_price = wishlist.product?.price|| '';
-            const product_name = wishlist.product?.product_name|| "";
-            const product_desc = wishlist.product?.description || "";
+        try {
 
-            wishListHtml += ` <div class="col-lg-3 col-md-4 col-sm-6 my-2">
+            // Check if wishList exists and is an array
+            if (!response || !Array.isArray(response.wishList)) {
+                console.error("Invalid wishlist data");
+                return;
+            }
+
+            let wishListHtml = '';
+            let wishListLength = 0;
+            let wishlists = response.wishList;
+            wishListLength = wishlists.length;
+            // Loop through each wishlist item
+            wishlists.forEach(wishlist => {
+                // Safely access product details
+                const product = wishlist.product || {};
+                const product_price = product.price || '';
+                const product_name = product.product_name || "No name available";
+                const product_desc = product.description || "No description available";
+                const product_id = product.id || 0; // Use 0 as a fallback for invalid IDs
+                const product_category = product.category.category_name || ''; // Use 0 as a fallback for invalid IDs
+                const created_at = product.created_at || '';
+                const product_images = product.product_images || [];
+                const image_filepath = product_images.length > 0 ? product_images[0].filepath : 'default_image_path.jpg'; // Provide a default image path
+
+                wishListHtml += `
+                    <div class="col-lg-3 col-md-4 col-sm-6 my-2">
                         <div class="card featured-card border-0">
                             <p class="sale-badge text-black">Sale</p>
                             <div class="actions">
-                                <button class="btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 256 256">
-                                        <path fill="#000"
-                                            d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 24 24">
-                                        <path fill="#000"
-                                            d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5">
-                                        </path>
-                                    </svg>
-                                </button>
+                                <button class="btn" data-productid="${product_id}" id="wishListRemove" >
+                           <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="red" d="M19.3 5.71a4.92 4.92 0 0 0-3.51-1.46a4.92 4.92 0 0 0-3.51 1.46L12 6l-.28-.28a4.95 4.95 0 0 0-7 0a5 5 0 0 0 0 7l6.77 6.79a.75.75 0 0 0 1.06 0l6.77-6.79a5 5 0 0 0-.02-7.01"/></svg>
+                           </button>
                             </div>
                             <div class="d-flex justify-content-center my-4">
                                 <div class="featured-card-imagess">
-                                    <a href="product_detail">
-                                        <img src=""
-                                            alt="Card image">
+                                    <a href="${base_url + '/product_detail/' + (product?.category?.category_name?.replace(/\s/g, '-') || 'default-category') + '/' + (product?.sku || 'default-sku')}">
+                                        <img src="${base_url}/storage/${image_filepath}" alt="Product image">
                                     </a>
                                 </div>
                             </div>
                             <div class="card-body text-center">
                                 <div class="rating border-bottom pb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
+                                    <!-- Star rating SVGs go here -->
                                 </div>
                                 <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>${product_name}</small></p>
                                 <div class="price-and-btn">
@@ -938,17 +905,48 @@ $(document).ready(function () {
                                         <h5>${product_price}</h5>
                                         <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
                                     </div>
-                                    <button class="btn btn-add-to-cart AddToCartBtn" data-quantity="1" data-productid="${wishlist?.product?.id}" >
+                                    <button class="btn btn-add-to-cart AddToCartBtn" data-quantity="1" data-productid="${product_id}">
                                         <span class="me-2">+</span>
                                         Add to Cart
                                     </button>
                                 </div>
                             </div>
                         </div>
-                    </div>`
-        });
-        $('#wishListContainer').html(wishListHtml);
-
+                    </div>`;
+            });
+            // Render the wishlist HTML to the container
+            $('#wishListContainer').html(wishListHtml);
+            $('#wishListLength').html(`(${wishListLength})`);
+        } catch (error) {
+            $('#wishListContainer').html('<p>An error occurred while loading the wishlist. Please try again later.</p>');
+        }
     }
+
+    $('body').on('click', '#wishListRemove', function () {
+        const productId = $(this).data('productid');
+        removeFromWishlist(productId);
+    })
+    function removeFromWishlist(product_id) {
+        const type = 'Post';
+        const url = '/wishList/remove';
+        const data = new FormData()
+        data.append('product_id', product_id);
+        SendAjaxRequestToServer(type, url, data, '', wishListRemoveResponse, '', this);
+    }
+
+    function wishListRemoveResponse(response) {
+        if (response.status == 200) {
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            })
+            initialLoad();
+        }
+        else {
+            toastr.error(response.message, '', {
+                timeOut: 3000
+            })
+        }
+    }
+
 })
 

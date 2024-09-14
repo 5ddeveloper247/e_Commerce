@@ -148,7 +148,6 @@ Route::group(['prefix' => 'admin'], function () {
 
 
 Route::group(['prefix' => '/'], function () {
-
     Route::get('/', [WebsiteController::class, 'home'])->name('home');
     Route::get('/login', [RegisterController::class, 'login'])->name('user.login');
     Route::post('/loginSubmit', [RegisterController::class, 'loginSubmit'])->name('user.loginSubmit');
@@ -186,6 +185,10 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/orderListing', [WebsiteController::class, 'orderListing'])->name('orderListing');
         Route::post('/order/status/refund', [WebsiteController::class, 'orderRefund'])->name('order.orderRefund');
         Route::post('/wish_list/add', [WebsiteController::class, 'wishListAdd'])->name('order.wishListAdd');
+        Route::post('/wishList/remove', [WebsiteController::class, 'wishListRemove'])->name('order.wishListRemove');
+        Route::post('/productListingDetail', [WebsiteController::class, 'productListingDetail'])->name('order.productListingDetail');
+        Route::post('/product/filter', [WebsiteController::class, 'productFilter'])->name('order.productFilter');
+        Route::post('/getFilterData', [WebsiteController::class, 'getFilterData'])->name('order.getFilterData');
     });
 });
 
@@ -206,6 +209,7 @@ Route::get('/cart', function () {
 });
 
 Route::get('/products', function () {
+
     return view('website.products');
 });
 Route::get('/contact_us', function () {

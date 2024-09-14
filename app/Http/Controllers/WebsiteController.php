@@ -19,6 +19,7 @@ use App\Models\Order;
 use App\Models\CartDetail;
 use App\Models\OrderStatus;
 use App\Models\OrderTracking;
+use App\Models\Brand;
 use App\Models\Wishlist;
 use App\Models\OrderDetail;
 use App\Models\OrderPayment;
@@ -367,7 +368,7 @@ class WebsiteController extends Controller
                 ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
                 ->first(); // Get the first record (which will be only one since order_id is unique)
             $orderTrackings = OrderTracking::where('order_id', $order->id)->with(['order', 'status'])->get();
-            $wishList = Wishlist::where('user_id', Auth::user()->id)->with(['product.productImages','user'])->get();
+            $wishList = Wishlist::where('user_id', Auth::user()->id)->with(['product.productImages', 'user'])->get();
 
             if (!$order) {
                 return response()->json([
@@ -385,15 +386,16 @@ class WebsiteController extends Controller
                 'orderTrackings' => $orderTrackings,
                 'wishList' => $wishList,
             ]);
-        }
-        else {
+        } else {
             // Fetch all orders for the logged-in user with status = 1
             $orders = Order::where('user_id', Auth::user()->id)
                 ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
                 ->get();
 
-                $wishList = Wishlist::where('user_id', Auth::user()->id)->with(['product.productImages','user'])->get();
-                // Return response for multiple orders
+            $wishList = Wishlist::where('user_id', Auth::user()->id)
+                ->with(['product.productImages', 'product.category', 'user'])
+                ->get();
+            // Return response for multiple orders
             return response()->json([
                 'orders' => $orders,
                 'status' => 200,
@@ -485,5 +487,103 @@ class WebsiteController extends Controller
                 'message' => 'User not authenticated',
             ], 400);
         }
+    }
+
+    public function wishListRemove(Request $request)
+    {
+        // Validate the request input
+        $request->validate([
+            'product_id' => 'required|integer',
+        ]);
+
+        // Check if the user is authenticated
+        if (Auth::check()) {
+            // Find the wishlist entry by productId
+            $wishList = Wishlist::where('user_id', Auth::user()->id)->where('product_id', $request->product_id)->first();
+
+            // If the wishlist entry exists, delete it
+            if ($wishList) {
+                $wishList->delete();
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Product removed from wishlist successfully',
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Product not found in wishlist',
+                ], 404);
+            }
+        } else {
+            return response()->json([
+                'status' => 400,
+            ]);
+        }
+    }
+
+    public function productListingDetail(Request $request)
+    {
+        $productId = $request->productId;
+        $product = Product::with(['productImages', 'category', 'brand'])->find($productId);
+        return response()->json([
+            'product' => $product,
+            'status' => 200,
+        ]);
+    }
+
+
+    public function productFilter(Request $request)
+    {
+        // Validate the request parameters to ensure the filters are valid
+        $validated = $request->validate([
+            'categories' => 'nullable|array',
+            'brands' => 'nullable|array',
+            'min_price' => 'nullable|numeric|min:0',
+            'max_price' => 'nullable|numeric|min:0',
+            'sort_by'   => 'nullable|string|in:price_asc,price_desc,newest,oldest'
+        ]);
+
+        $filterData = json_decode($request->filter);
+        $categories = $filterData->categories;
+        $brands = $filterData->brands;
+        $min_price = $filterData->min_price;
+        $max_price = $filterData->max_price;
+
+        // Initialize the query with the Product model and its relations
+        $products = Product::with(['productImages', 'category', 'brand'])
+            // Filter by categories if provided
+            ->when($categories, function ($query, $categories) {
+                return $query->whereIn('category_id', $categories);
+            })
+            // Filter by brands if provided
+            ->when($brands, function ($query, $brands) {
+                return $query->whereIn('brand_id', $brands);
+            })
+            // Filter by minimum price if provided
+            ->when($min_price, function ($query, $min_price) {
+                return $query->where('price', '>=', $min_price);
+            })
+            // Filter by maximum price if provided
+            ->when($max_price, function ($query, $max_price) {
+                return $query->where('price', '<=', $max_price);
+            })
+
+            ->where('onhand_qty', '>', 0)->get();
+        // Return the filtered products, for example as a JSON response
+        return response()->json([
+            'data' => $products,
+           'status' => 200,
+        ]);
+    }
+
+
+
+    public function getFilterData(Request $request)
+    {
+        $filters = [
+            'categories' => Category::all(),
+            'brands' => Brand::all(),
+        ];
+        return response()->json($filters);
     }
 }
