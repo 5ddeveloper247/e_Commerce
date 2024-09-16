@@ -188,7 +188,11 @@
                 <a href="{{route('admin.refund')}}" class="nav-link main-links-for-submenu" role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><path fill="currentColor" fill-rule="evenodd" d="M5 2a2 2 0 0 0-2 2v14l3.5-2l3.5 2l3.5-2l3.5 2V4a2 2 0 0 0-2-2zm4.707 3.707a1 1 0 0 0-1.414-1.414l-3 3a1 1 0 0 0 0 1.414l3 3a1 1 0 0 0 1.414-1.414L8.414 9H10a3 3 0 0 1 3 3v1a1 1 0 1 0 2 0v-1a5 5 0 0 0-5-5H8.414z" clip-rule="evenodd"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
+                                <path fill="currentColor" fill-rule="evenodd"
+                                    d="M5 2a2 2 0 0 0-2 2v14l3.5-2l3.5 2l3.5-2l3.5 2V4a2 2 0 0 0-2-2zm4.707 3.707a1 1 0 0 0-1.414-1.414l-3 3a1 1 0 0 0 0 1.414l3 3a1 1 0 0 0 1.414-1.414L8.414 9H10a3 3 0 0 1 3 3v1a1 1 0 1 0 2 0v-1a5 5 0 0 0-5-5H8.414z"
+                                    clip-rule="evenodd" />
+                            </svg>
                         </div>
                         <span class="nav-link-text">Refund</span>
                     </div>
@@ -230,6 +234,19 @@
                             </svg>
                         </div>
                         <span class="nav-link-text">Testimonials</span>
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{route('admin.demo')}}" class="nav-link main-links-for-submenu" role="button">
+                    <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
+                        <div class="nav-link-icon px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                                <path fill="currentColor"
+                                    d="M3 3a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm3 4h6v6H6zm2 2v2h2V9zm10 0h-4V7h4zm-4 4v-2h4v2zm-8 4v-2h12v2z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text">Demo</span>
                     </div>
                 </a>
             </li>

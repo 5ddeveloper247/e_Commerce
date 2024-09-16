@@ -715,8 +715,6 @@ $(document).ready(function () {
     }
 
 
-
-
     //view order detail
 
     $('body').on('click', '.view-order-details', function () {

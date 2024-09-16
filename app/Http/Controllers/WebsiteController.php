@@ -21,6 +21,7 @@ use App\Models\OrderStatus;
 use App\Models\OrderTracking;
 use App\Models\Brand;
 use App\Models\Wishlist;
+use App\Models\Enquiry;
 use App\Models\OrderDetail;
 use App\Models\OrderPayment;
 use App\Models\ShippingAddress;
@@ -572,7 +573,7 @@ class WebsiteController extends Controller
         // Return the filtered products, for example as a JSON response
         return response()->json([
             'data' => $products,
-           'status' => 200,
+            'status' => 200,
         ]);
     }
 
@@ -585,5 +586,42 @@ class WebsiteController extends Controller
             'brands' => Brand::all(),
         ];
         return response()->json($filters);
+    }
+
+
+
+    public function inquiriesIndex(Request $request)
+    {
+
+        if ($request->has('inquiryId')) {
+            $inquiry = Enquiry::where('id', $request->inquiryId)
+                ->with(['enquiryMessage.enquiryAttachments', 'user', 'enquiryMessage.source','enquiryMessage.sourceFrom'])
+                ->first();  // Retrieve the first matching record
+
+            return response()->json([
+                'inquiry' => $inquiry,
+                'status' => 200,
+                'id' => $request->inquiryId
+            ]);
+        }
+
+        $inquiries = Enquiry::with(['enquiryMessage.enquiryAttachments', 'user', 'enquiryMessage.source','enquiryMessage.sourceFrom'])
+          ->get();
+        return response()->json([
+            'inquiries' => $inquiries,
+            'status' => 200,
+        ]);
+    }
+
+
+
+
+
+
+    //for testing purpose for admin inquiries
+    public function demoIndex(Request $request)
+    {
+        $pageTitle = 'Demo Page';
+        return view('admin.demo', compact('pageTitle'));
     }
 }

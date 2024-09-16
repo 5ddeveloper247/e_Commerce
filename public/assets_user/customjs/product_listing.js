@@ -16,7 +16,7 @@ $(document).ready(function () {
     }
 
     function getProductResponse(response) {
-        console.log(response)
+
         if (response.status === 200) {
             // Success: Display products
 
@@ -28,8 +28,7 @@ $(document).ready(function () {
 
             // Add your product display logic here
         } else {
-            // Error: Display error message
-            console.log(response.message);
+
         }
     }
 
@@ -49,7 +48,7 @@ $(document).ready(function () {
                                     d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
                             </svg>
                         </button>
-                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <button type="button" class="btn viewDetailProduct"  data-productid="${product?.id}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                 <path fill="#000"
                                     d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
@@ -91,8 +90,6 @@ $(document).ready(function () {
                         </div>
                     </div>
                 </div>`;
-
-
 
                 htmlList += `
                       <div class="card list-view-card p-2 border-0 my-4">
@@ -198,7 +195,6 @@ $(document).ready(function () {
             const brandDiv = document.createElement('div');
             const brandCheckbox = document.createElement('input');
             const brandLabel = document.createElement('label');
-
             // Assuming each brand has a 'title' property
             brandCheckbox.type = 'checkbox';
             brandCheckbox.name = 'brand';
@@ -208,6 +204,7 @@ $(document).ready(function () {
             // Set label attributes
             brandLabel.htmlFor = `brand-${index + 1}`;
             brandLabel.textContent = brand.title; // Use brand.title for display
+            brandCheckbox.addClass('mx-2')
 
             // Append checkbox and label to the div
             brandDiv.appendChild(brandCheckbox);
@@ -253,8 +250,6 @@ $(document).ready(function () {
     }
 
 
-
-
     // Function to get the filter criteria and send it to the backend
     function applyFilters() {
         // Get selected checkboxes for brand and category
@@ -289,14 +284,9 @@ $(document).ready(function () {
     }
 
 
-
-
     function handleFilterResponse(response) {
-
         // Clear previous products
         makeProductListing(response.data)
-       
-
     }
 
 

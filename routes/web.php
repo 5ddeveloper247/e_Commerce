@@ -44,8 +44,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [AdminController::class, 'login'])->name('login');
     Route::post('/loginSubmit', [AdminController::class, 'loginSubmit'])->name('loginSubmit');
     Route::get('/logout', [AdminController::class, 'logout'])->name('logout');
-
-
+    Route::post('/contact/storeOrUpdate', [ContactUsController::class, 'storeOrUpdate'])->name('admin.contact.storeUpdate');
 
     Route::group(['middleware' => ['AdminAuth']], function () {
         /************** PAGE ROUTES ******************/
@@ -113,7 +112,6 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/products/deleteProductFeature', [ProductController::class, 'deleteProductFeature'])->name('admin.products.deleteProductFeature');
         // Admin Product End //
         //contact us
-        Route::post('/contact/storeOrUpdate', [ContactUsController::class, 'storeOrUpdate'])->name('admin.contact.storeUpdate');
         //all contact
         Route::get('/contact/ajax', [ContactUsController::class, 'contactUsAjax'])->name('admin.contact.ajax');
         //contact by id
@@ -170,6 +168,13 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/cart/view', [WebsiteController::class, 'cartView'])->name('cart.view');
     Route::post('/cart/delete', [WebsiteController::class, 'cartDelete'])->name('cart.delete');
     Route::post('/tempSession', [WebsiteController::class, 'tempSession'])->name('tempSession');
+    Route::post('/product/filter', [WebsiteController::class, 'productFilter'])->name('order.productFilter');
+    Route::post('/getFilterData', [WebsiteController::class, 'getFilterData'])->name('order.getFilterData');
+    Route::post('/productListingDetail', [WebsiteController::class, 'productListingDetail'])->name('order.productListingDetail');
+    Route::post('/inquiries/listing', [WebsiteController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
+
+    //testing purpose for admin enquiries
+    Route::get('/demo', [WebsiteController::class, 'demoIndex'])->name('admin.demo');
 
     //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {
@@ -186,9 +191,6 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/order/status/refund', [WebsiteController::class, 'orderRefund'])->name('order.orderRefund');
         Route::post('/wish_list/add', [WebsiteController::class, 'wishListAdd'])->name('order.wishListAdd');
         Route::post('/wishList/remove', [WebsiteController::class, 'wishListRemove'])->name('order.wishListRemove');
-        Route::post('/productListingDetail', [WebsiteController::class, 'productListingDetail'])->name('order.productListingDetail');
-        Route::post('/product/filter', [WebsiteController::class, 'productFilter'])->name('order.productFilter');
-        Route::post('/getFilterData', [WebsiteController::class, 'getFilterData'])->name('order.getFilterData');
     });
 });
 
