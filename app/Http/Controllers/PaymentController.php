@@ -14,6 +14,7 @@ use App\Models\OrderDetail;
 use App\Models\OrderPayment;
 use App\Models\ShippingAddress;
 use App\Models\OrderShippingAddress;
+use App\Models\OrderTracking;
 
 class PaymentController extends Controller
 {
@@ -247,5 +248,42 @@ class PaymentController extends Controller
     {
         $pageTitle = "Payments";
         return view('admin.payments', compact('pageTitle'));
+    }
+
+    public function paymentsListing(Request $request)
+    {
+        if ($request->has("order_id")) {
+            // Fetch the single order with the specified order_id
+            $payment = OrderPayment::where('order_id', $request->order_id)
+                ->with(['user', 'order.orderDetails.product.productImages']) // Load relationships
+                ->first();
+            $orderShippingAddress = OrderShippingAddress::where('order_id', $payment->order_id)->first();
+            if (!$payment) {
+                return response()->json([
+                    'message' => 'Order not found',
+                    'status' => 404,
+                    'payment' => $payment,
+                    'orderShippingAddress' => $orderShippingAddress,
+                ]);
+            }
+            // Return response for single order
+            return response()->json([
+                'payment' => $payment,
+                'status' => 200,
+                'orderShippingAddress' => $orderShippingAddress,
+            ]);
+        }
+         else {
+            // Fetch all orders for the logged-in user with status = 1
+            $payment = OrderPayment::with(['user', 'order.orderDetails.product.productImages']) // Load relationships
+                ->get();
+
+            // Return response for multiple orders
+            return response()->json([
+                'payments' => $payment,
+                'status' => 200,
+                'count' => $payment->count(),
+            ]);
+        }
     }
 }

@@ -9,14 +9,14 @@
 <div>
     <div>
         <div class="p-md-4 p-3">
-            <form id="add_edit_admin_form">
+            <form id="add_edit_order_form">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Payment</a></li>
+                        <li class="breadcrumb-item"><a href="#">payment</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Payment Listing</li>
                     </ol>
                 </nav>
-                <div class="row justify-content-center gx-0 gy-2 gap-4 mb-4">
+                <div class="row justify-content-center gx-0 gy-2 gap-4 mb-4 counters" id="counters">
                     <div class="col d-flex justify-content-center gap-2 align-items-center d-card py-3 px-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 27 24">
                             <path fill="#2fa992"
@@ -24,9 +24,9 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2" id="active"></span>
+                                <span class="fw-bold fs-2" id="pendingOrders"></span>
                             </h3>
-                            <small>Active</small>
+                            <small>Completed</small>
                         </div>
                     </div>
                     <div class="col d-flex justify-content-center gap-2 align-items-center d-card py-3 px-3">
@@ -36,9 +36,9 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2" id="inactive"></span>
+                                <span class="fw-bold fs-2" id="cancelledOrders"></span>
                             </h3>
-                            <small>InActive</small>
+                            <small>Cancelled</small>
                         </div>
                     </div>
                     <div class="col d-flex justify-content-center gap-2 align-items-center d-card py-3 px-3">
@@ -48,37 +48,25 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2" id="total"></span>
+                                <span class="fw-bold fs-2" id="totalOrders"></span>
                             </h3>
                             <small>Total</small>
                         </div>
                     </div>
-                    {{-- <div class="col d-flex justify-content-center align-items-center d-card py-md-4 py-3 px-3"
-                        data-bs-toggle="modal" data-bs-target=".addUpdateContactModal">
-                        <div class="d-flex flex-column align-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 32 32">
-                                <path fill="currentColor"
-                                    d="M16 3C8.832 3 3 8.832 3 16s5.832 13 13 13s13-5.832 13-13S23.168 3 16 3m0 2c6.087 0 11 4.913 11 11s-4.913 11-11 11S5 22.087 5 16S9.913 5 16 5m-1 5v5h-5v2h5v5h2v-5h5v-2h-5v-5z" />
-                            </svg>
-                            <small class="text-center">Add Now</small>
-                        </div>
-                    </div> --}}
                 </div>
-                <div id="contact">
+                <div id="products">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
-                        <table id="contact-listing" class="table table-responsive">
+                        <table id="order-listing" class="table table-responsive">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th class="text-nowrap" scope="col">NAME</th>
-                                    <th class="text-nowrap" scope="col">PHONE</th>
                                     <th scope="col" data-sort="category">EMAIL</th>
-                                    <th class="text-center" scope="col">STATUS</th>
                                     <th scope="col">CREATED AT</th>
                                     <th class="text-end" scope="col">ACTIONS</th>
                                 </tr>
                             </thead>
-                            <tbody id="contact_listing_table_body">
+                            <tbody id="order_listing_table_body">
                                 {{-- dYNAMIC DATA WILL BE INJECTED HERE --}}
                             </tbody>
                         </table>
@@ -88,86 +76,158 @@
         </div>
     </div>
 
-    <div class="modal fade filterModal addUpdateContactModal" id="filterModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content border">
-                <form id="updateForm" autocomplete="off">
-                    <div class="modal-header justify-content-between border-0 px-4 py-3">
-                        <h4 class="modal-title text-white">Contact</h4>
-                        <button class="btn p-1 btn-outline-light" type="button" data-bs-dismiss="modal"
-                            aria-label="Close">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
-                                <path fill="currentColor"
-                                    d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
-                            </svg>
-                        </button>
-                    </div>
-                    <div class="modal-body pt-4 pb-2 px-4">
-                        <div class="row">
 
-                            <input type="hidden" name="contact_id" id="contact-id">
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="full_name" name="full_name"
-                                    placeholder="name">
-                                <label class="mx-2" for="generalInfo">username</label>
-                            </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="phone_number" name="phone_number"
-                                    placeholder="">
-                                <label class="mx-2" for="generalInfo">phone number</label>
-                            </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="email" class="form-control" id="email" name="email"
-                                    placeholder="name@example.com">
-                                <label class="mx-2" for="generalInfo">email</label>
-                            </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="order_number" name="order_number"
-                                    placeholder="order number">
-                                <label class="mx-2" for="generalInfo">order number</label>
-                            </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="company_name" name="company_name"
-                                    placeholder="company name">
-                                <label class="mx-2" for="generalInfo">company name</label>
-                            </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="rma_number" name="rma_number"
-                                    placeholder="rma number">
-                                <label class="mx-2" for="generalInfo">rma number</label>
-                            </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <textarea type="text" class="form-control" id="comment" name="comment"
-                                    placeholder="comment"></textarea>
-                                <label class="mx-2" for="generalInfo">comment</label>
-                            </div>
-                            <div class="form-floating col-md-12 mb-3">
-                                <textarea type="text" class="form-control" id="reply" name="reply"
-                                    placeholder="reply"></textarea>
-                                <label class="mx-2" for="generalInfo">reply</label>
-                            </div>
 
-                            <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
-                                <input class="form-check-input" type="checkbox" role="switch" name="status" id="status">
-                                <label class="form-check-label ms-2" for="status">status</label>
-                            </div>
+    <div class="order-detail-div d-none">
 
-                        </div>
-                    </div>
-                    <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4" type="button" data-bs-dismiss="modal" aria-label="Close">
-                            Cancel
-                        </button>
-                        <button class="btn btn-done px-4" type="button" id="editContactNow">Done</button>
-                    </div>
-                </form>
+        <div class="back-to-orders-div" style="cursor:pointer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512">
+                <path fill="#000"
+                    d="M48 256c0 114.87 93.13 208 208 208s208-93.13 208-208S370.87 48 256 48S48 141.13 48 256m212.65-91.36a16 16 0 0 1 .09 22.63L208.42 240H342a16 16 0 0 1 0 32H208.42l52.32 52.73A16 16 0 1 1 238 347.27l-79.39-80a16 16 0 0 1 0-22.54l79.39-80a16 16 0 0 1 22.65-.09">
+                </path>
+            </svg>
+        </div>
+
+        <div class="md-stepper-horizontal orange mt-5">
+            <div class="row" id="statusContainer">
+
+            </div>
+        </div>
+        <div class="row justify-content-end gx-0 gy-2 gap-4 mb-4" id="statusHandler">
+            <div class="statusContainer" id="statusContainer">
+
+            </div>
+
+        </div>
+        <div class="your-cart container mt-5">
+            <div class="table-responsive add-to-cart">
+                <table class="w-100">
+                    <thead class="py-3">
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="product-detail-table-body">
+                        {{-- will be injected dynamically here --}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+        {{-- order related detail --}}
+
+        <div class="row py-5 px-4">
+            <!-- Left Column: Name, Email, Phone, Address -->
+            <div class="col-6">
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Name:
+                    </small>
+                    <small>
+                        <span id="address_name"></span>
+                    </small>
+                </div>
+
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Email:
+                    </small>
+                    <small>
+                        <span id="address_email"></span>
+                    </small>
+                </div>
+
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Phone:
+                    </small>
+                    <small>
+                        <span id="address_phone"></span>
+                    </small>
+                </div>
+
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Address:
+                    </small>
+                    <small>
+                        <span id="address_address"></span>
+                    </small>
+                </div>
+            </div>
+
+            <!-- Right Column: Total Amount, Transaction ID, Invoice, Status -->
+            <div class="col-6">
+                <!-- Total Amount -->
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Total amount:
+                    </small>
+                    <small>
+                        $ <span id="subTotal"></span>
+                    </small>
+                </div>
+
+                <!-- Transaction ID -->
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Transaction Id:
+                    </small>
+                    <small>
+                        <span id="txn"></span>
+                    </small>
+                </div>
+
+                <!-- Invoice -->
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Invoice:
+                    </small>
+                    <small id="invoicePayment">
+                        {{-- will be injected dynamically --}}
+                    </small>
+                </div>
+
+                <!-- Payment Status -->
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Status:
+                    </small>
+                    <small id="paymentStatus">
+                        {{-- will be injected dynamically --}}
+                    </small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="transitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" placeholder="" name="transit_order_id" id="transit_order_id">
+                    <input type="hidden" placeholder="" name="transit_status" id="transit_status">
+                    <input class="form-control" type="text" placeholder="Enter Tracking Id" name="trackingId"
+                        id="trackingId">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="trackingIdBtn">Save</button>
+                </div>
             </div>
         </div>
     </div>
 
-
-    {{-- <div class="modal fade" id="confirmationModalRemove" tabindex="-1"
-        aria-labelledby="confirmationModalRemoveLabel" aria-hidden="true">
+    <div class="modal fade" id="confirmationModalRemove" tabindex="-1" aria-labelledby="confirmationModalRemoveLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content text-center">
                 <div class="modal-header bg-danger text-white">
@@ -177,8 +237,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="d-flex align-items-center justify-content-center my-4">
-                        <h6 class="mb-0 me-2">Are Sure Want to Delete</h6>
-                        <input type="hidden" name="delete-id" id="delete-admin-id">
+                        <h6 class="mb-0 me-2">Are Sure Want to Update the order status</h6>
+                        <input type="hidden" name="order-id" id="order-id">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
                             <g fill="none">
                                 <path
@@ -191,12 +251,12 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
                     <button type="button" class="btn btn-danger px-md-3" data-bs-dismiss="modal">NO</button>
-                    <button type="button" class="btn btn-outline-danger px-md-3" id="deleteNowBtn">YES</button>
+                    <button type="button" class="btn btn-outline-danger px-md-3" data-order-id="" data-status=""
+                        id="confrimStatusBtn">YES</button>
                 </div>
             </div>
         </div>
-    </div> --}}
-
+    </div>
 </div>
 
 <script>
@@ -213,5 +273,5 @@
 </script>
 @endsection
 @push('scripts')
-<script src="{{ asset('assets_admin/customjs/demo.js') }}"></script>
+<script src="{{ asset('assets_admin/customjs/payments.js') }}"></script>
 @endpush

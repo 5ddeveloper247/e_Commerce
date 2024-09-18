@@ -108,60 +108,10 @@
                             <th>Price</th>
                             <th>Quantity</th>
                             <th>Total</th>
-                            <th>Payment Status</th>
-                            <th>Reciept</th>
                         </tr>
                     </thead>
                     <tbody id="product-detail-table-body">
-                        {{-- <tr class="border-top border-bottom">
-                            <td class="d-flex align-items-center gap-3">
-                                <img class="border rounded-3 ms-3"
-                                    src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1z"
-                                    width="120" alt="">
-                                <div>
-                                    <small>
-                                        Shoppe Fabs
-                                    </small>
-                                    <br>
-                                    <small class="fw-semibold">
-                                        Quis autem veleuminium
-                                    </small>
-                                </div>
-                            </td>
-                            <td>₹119.95</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <svg type="button" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="cuurentColor"
-                                            d="M256 16C123.452 16 16 123.452 16 256s107.452 240 240 240s240-107.452 240-240S388.548 16 256 16m147.078 387.078a207.253 207.253 0 1 1 44.589-66.125a207.3 207.3 0 0 1-44.589 66.125">
-                                        </path>
-                                        <path fill="cuurentColor"
-                                            d="M272.112 314.481V128h-32v186.481l-75.053-75.052l-22.627 22.627l113.68 113.68l113.681-113.68l-22.627-22.627z">
-                                        </path>
-                                    </svg>
-                                    <input type="number" class="form-control qty text-center border-0" value="1" min="1"
-                                        id="quantity">
-                                    <svg type="button" xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="cuurentColor"
-                                            d="M256 16C123.452 16 16 123.452 16 256s107.452 240 240 240s240-107.452 240-240S388.548 16 256 16m147.078 387.078a207.253 207.253 0 1 1 44.589-66.125a207.3 207.3 0 0 1-44.589 66.125">
-                                        </path>
-                                        <path fill="cuurentColor"
-                                            d="m142.319 241.027l22.628 22.627L240 188.602V376h32V188.602l75.053 75.052l22.628-22.627L256 127.347z">
-                                        </path>
-                                    </svg>
-                                </div>
-                            </td>
-
-                            <td>
-                                ₹239.90
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                    <path fill="none" stroke="black" stroke-linecap="round" stroke-width="1.5"
-                                        d="m8.464 15.535l7.072-7.07m-7.072 0l7.072 7.07" />
-                                </svg>
-                            </td>
-                        </tr> --}}
+                        {{-- will be injected here dynamically --}}
                     </tbody>
                 </table>
             </div>
@@ -171,85 +121,90 @@
 
         {{-- order related detail --}}
 
-        <div class="row py-5">
-            <div class="col-8">
-                <div class="d-flex text-start gap-5 justify-content-start py-2">
+        <div class="row py-5 px-4">
+            <!-- Left Column: Name, Email, Phone, Address -->
+            <div class="col-6">
+                <div class="d-flex justify-content-between py-2">
                     <small class="fw-bold">
                         Name:
                     </small>
-
                     <small>
-
-                        <span id="address_name">
-
-                        </span>
+                        <span id="address_name"></span>
                     </small>
                 </div>
-                <div class="d-flex text-start gap-5 justify-content-start py-2">
+
+                <div class="d-flex justify-content-between py-2">
                     <small class="fw-bold">
                         Email:
                     </small>
-
                     <small>
-
-                        <span id="address_email">
-
-                        </span>
+                        <span id="address_email"></span>
                     </small>
                 </div>
-                <div class="d-flex text-start gap-5 justify-content-start py-2">
+
+                <div class="d-flex justify-content-between py-2">
                     <small class="fw-bold">
                         Phone:
                     </small>
-
                     <small>
-
-                        <span id="address_phone">
-
-                        </span>
+                        <span id="address_phone"></span>
                     </small>
                 </div>
-                <div class="d-flex text-start gap-5 justify-content-start py-2">
+
+                <div class="d-flex justify-content-between py-2">
                     <small class="fw-bold">
                         Address:
                     </small>
-
                     <small>
-
-                        <span id="address_address">
-                        </span>
+                        <span id="address_address"></span>
                     </small>
                 </div>
             </div>
 
-            <div class="col-4 ">
-                <div class="d-flex text-start gap-5 justify-content-start py-2">
+            <!-- Right Column: Total Amount and Transaction ID -->
+            <div class="col-6">
+                <!-- Total Amount -->
+                <div class="d-flex justify-content-between py-2">
                     <small class="fw-bold">
                         Total amount:
                     </small>
-
                     <small>
-                        $
-                        <span id="subTotal">
-
-                        </span>
+                        $ <span id="subTotal"></span>
                     </small>
                 </div>
-                <div class="d-flex text-start gap-5 justify-content-end py-2">
+
+                <!-- Transaction ID -->
+                <div class="d-flex justify-content-between py-2">
                     <small class="fw-bold">
                         Transaction Id:
                     </small>
-
                     <small>
+                        <span id="txn"></span>
+                    </small>
+                </div>
 
-                        <span id="txn">
-                            25324532
-                        </span>
+                <!-- Invoice -->
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Invoice:
+                    </small>
+                    <small id="invoicePayment">
+                        {{-- will be injected dynamically --}}
+                    </small>
+                </div>
+
+                <!-- Payment Status -->
+                <div class="d-flex justify-content-between py-2">
+                    <small class="fw-bold">
+                        Status:
+                    </small>
+                    <small id="paymentStatus">
+                        {{-- will be injected dynamically --}}
                     </small>
                 </div>
             </div>
-
         </div>
+
     </div>
 
     <div class="modal fade" id="transitModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

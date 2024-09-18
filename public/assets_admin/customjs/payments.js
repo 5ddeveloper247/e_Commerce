@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 
     function fetchOrderDetail() {
-        const url = `/admin/order/listing`;
+        const url = `/admin/payments/listing`;
         const type = "Post";
         const data = new FormData();
         SendAjaxRequestToServer(type, url, data, '', getOrderDetailResponse, '', '');
@@ -20,15 +20,17 @@ $(document).ready(function () {
     function getOrderDetailResponse(response) {
 
         if (response.status == 200) {
-            createStates(response.orders);
+            createStates(response.payments);
             let html = '';
-            response.orders.forEach((order, index) => {
+            response.payments.forEach((payment, index) => {
+                console.log(payment.order_id)
+                console.log(payment)
                 html += `
                 <tr>
                     <td class="ps-3">${index + 1}</td> <!-- Changed item.id to index + 1 -->
-                    <td class="ps-3">${order.user.username}</td>
-                    <td class="ps-3">${order.user.email}</td>
-                    <td class="ps-3 text-nowrap">${new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                    <td class="ps-3">${payment?.user?.username}</td>
+                    <td class="ps-3">${payment?.user?.email}</td>
+                    <td class="ps-3 text-nowrap">${new Date(payment.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(payment.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
                     <td class="text-end">
                         <div class="btn-reveal-trigger position-static">
                             <button class="btn btn-sm dropdown-toggle" type="button"
@@ -41,9 +43,9 @@ $(document).ready(function () {
                                     </path>
                                 </svg>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end">
+                            <div class="dropdown-menu dropdown-menu-end viewDetailBtn" data-detail-order='${payment?.order_id}'>
                                 <a class="dropdown-item modal-edit-btn" type="button"
-                                    data-detail-order='${JSON.stringify(order.id)}' id="viewDetailBtn">View Detail</a>
+                                     >View Detail</a>
                                 <div class="dropdown-divider"></div>
                             </div>
                         </div>
@@ -59,11 +61,13 @@ $(document).ready(function () {
 
     //view order detail here
 
-    $('body').on('click', '#viewDetailBtn', function () {
-        const orderId = JSON.parse($(this).attr('data-detail-order'));
+    $('body').on('click', '.viewDetailBtn', function () {
+        const orderId = $(this).attr('data-detail-order');
+        console.log(orderId)
+
         const data = new FormData();
         data.append('order_id', orderId);
-        const url = `/admin/order/listing`;
+        const url = `/admin/payments/listing`;
         const type = "Post";
         SendAjaxRequestToServer(type, url, data, '', getDetailbyIdResponse, '', '');
 
@@ -72,18 +76,16 @@ $(document).ready(function () {
 
     function getDetailbyIdResponse(response) {
         if (response.status === 200) {
-            const order = response.order;
-            const orderTrackings = response.orderTrackings;
-            createShippingDetail(order)
-            createPaymentDetail(order)
-            updateSteps(order.status.id, orderTrackings);
-            createOrderStatus(order);
-            let orderDetailHtml = ''
-            let subTotal = 0
-            if (order.order_payment.response) {
-                var paymentResponse = JSON.parse(order?.order_payment?.response);
+            const payment = response.payment;
+            const shippingAddress = response.orderShippingAddress;
+            createShippingDetail(shippingAddress);
+            createPaymentDetail(payment);
+            let orderDetailHtml = '';
+            let subTotal = 0;
+            if (payment?.response) {
+                var paymentResponse = JSON.parse(payment?.response);
             }
-            order.order_details.forEach(item => {
+            payment?.order?.order_details?.forEach(item => {
                 subTotal += parseInt(item?.total_amount)
                 const url = base_url + '/storage/' + item?.product?.product_images[0]?.filepath;
                 orderDetailHtml += `
@@ -113,6 +115,7 @@ $(document).ready(function () {
                                         <td>
                                             $ ${item?.total_amount}
                                         </td>
+
                                     </tr >`
             });
             $('#product-detail-table-body').html(orderDetailHtml);
@@ -122,49 +125,27 @@ $(document).ready(function () {
             $('#counters').hide();
         }
     }
-
-    function updateSteps(status, orderTrackings) {
-        // Clear previous steps
-        $('#statusContainer').empty();
-        // Loop through the order trackings
-        let statusTrackHtml = '';
-        orderTrackings.forEach((tracking, index) => {
-            statusTrackHtml += `
-                    <div class="col-2 md-step active done" id="step-1">
-                        <div class="md-step-circle"><span>${index + 1}</span></div>
-                        <div class="md-step-title">${tracking.status.name}</div>
-                        <div class="md-step-bar-left"></div>
-                        <div class="md-step-bar-right"></div>
-                </div>`;
-            // Append the generated HTML for each row
-        });
-        $('#statusContainer').html(statusTrackHtml);
-
+    function createShippingDetail(shippingAddress) {
+        $('#address_name').text(shippingAddress?.name);
+        $('#address_email').text(shippingAddress?.email);
+        $('#address_phone').text(shippingAddress?.phone_number);
+        $('#address_address').text(shippingAddress?.address);
     }
-
-    function createShippingDetail(order) {
-
-        $('#address_name').text(order?.shipping_address?.name);
-        $('#address_email').text(order?.shipping_address?.email);
-        $('#address_phone').text(order?.shipping_address?.phone_number);
-        $('#address_address').text(order?.shipping_address?.address);
-    }
-
-    function createStates(orders) {
-        let pending = 0;
+    function createStates(payments) {
+        let completed = 0;
         let cancelled = 0;
         let totalOrders = 0
-        orders.forEach(order => {
-            if (order.status.name == "Pending") {
-                pending += 1;
+        payments.forEach(payment => {
+            if (payment?.status == 1) {
+                completed += 1;
             }
-            else if (order.status.name == "Cancelled") {
+            else if (payment?.status == 0) {
                 cancelled += 1;
             }
             totalOrders += 1
         })
 
-        $('#pendingOrders').text(pending);
+        $('#pendingOrders').text(completed);
         $('#cancelledOrders').text(cancelled);
         $('#totalOrders').text(totalOrders);
 
@@ -172,81 +153,29 @@ $(document).ready(function () {
 
 
 
-    function createPaymentDetail(order) {
-        let paymentResponse = JSON.parse(order?.order_payment?.response);
+    function createPaymentDetail(payment) {
+        const paymentResponse = JSON.parse(payment?.response);
         let invvoiceHtml = `
         <span><a href="${paymentResponse?.receipt_url}">view</a> </span>
         `
         let paymentStatusHtml = `
          <span>
-            ${order?.order_payment?.status == 1 ? "✅ Paid" : "❌ Unpaid"}
+            ${payment?.status == 1 ? "✅ Paid" : "❌ Unpaid"}
         </span>
+
         `
-        $('#txn').text(order?.order_payment?.transaction_id);
+        $('#txn').text(payment?.transaction_id);
         $('#invoicePayment').html(invvoiceHtml);
         $('#paymentStatus').html(paymentStatusHtml);
     }
+
 
 
     $('body').on('click', '.back-to-orders-div', function () {
         $('#products').show();
         $('#counters').show();
         $('.order-detail-div').addClass('d-none');
-    })
-
-
-
-    function createOrderStatus(order) {
-
-        let statusHtml = ''
-
-        if (order.status.name == "Pending") {
-            statusHtml = `
-             <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
-                            Cancel
-                        </button>
-                        <button class="btn btn-done px-4 statusBtn" type="button" data-status="Confirmed" data-order-id="${order.id}">Confirm</button>
-                    </div>`
-
-        }
-        else if (order.status.name == "Confirmed") {
-            statusHtml = `
-            <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
-                            Cancel
-                        </button>
-                        <button class="btn btn-done px-4 statusBtn" type="button" data-status="In-Transit" data-order-id="${order.id}">In-Transit</button>
-                    </div>
-            `
-
-        }
-        else if (order.status.name == "In-Transit") {
-            statusHtml = `
-            <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
-                            Cancel
-                        </button>
-                        <button class="btn btn-done px-4 statusBtn" type="button" data-status="Shipped" data-order-id="${order.id}">Shipped</button>
-                    </div>
-            `
-
-        }
-        else if (order.status.name == "Shipped") {
-            statusHtml = `
-            <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
-                            Cancel
-                        </button>
-                    </div>
-            `
-
-        }
-
-        $('#statusHandler').html(statusHtml);
-    }
-
-
+    });
 
 
     $('body').on('click', '.statusBtn', function () {

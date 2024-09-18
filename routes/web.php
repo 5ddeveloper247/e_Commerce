@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdminEnquiryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\RegisterController;
@@ -136,6 +137,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/order/status/ajax', [OrderController::class, 'orderStatus'])->name('admin.order.status');
         // refund
         Route::post('/refund/listing', [OrderController::class, 'refundListing'])->name('admin.refund.listing');
+        //payments
+        Route::post('/payments/listing', [PaymentController::class, 'paymentsListing'])->name('admin.paymentsListing');
+        //enquiries
+        Route::post('/inquiries/listing', [AdminEnquiryController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
+        Route::post('/admin/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('admin.enquiryMessageCreate');
+
     });
 });
 
@@ -196,7 +203,6 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/wish_list/add', [WebsiteController::class, 'wishListAdd'])->name('order.wishListAdd');
         Route::post('/wishList/remove', [WebsiteController::class, 'wishListRemove'])->name('order.wishListRemove');
         Route::post('/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('order.enquiryMessageCreate');
-
     });
 });
 
