@@ -79,7 +79,7 @@ $(document).ready(function () {
         // if ($.fn.DataTable.isDataTable('#productListing_table')) {
         //     $('#productListing_table').DataTable().destroy();
         // }
-        
+
         let html = '';
         response.forEach(item => {
             // Determine the text for "Mark as Featured" based on the item's featured status
@@ -116,9 +116,9 @@ $(document).ready(function () {
                                 <a class="dropdown-item" type="button" data-id='${item.id}' data-offered-flag='${item.is_offered}' id="handleMarkAsOfferedBtn">${offeredText}</a>
                                 <hr>
                                 <a class="dropdown-item" type="button" data-id='${item.id}' data-featured-flag='${item.featured}'  id="hacndleMarkAsFeaturedBtn">${featuredText}</a>
-                                
-                                
-                                
+
+
+
                             </div>
                         </div>
                     </td>
@@ -128,20 +128,6 @@ $(document).ready(function () {
 
         $('#product_listing_table_body').html(html);
 
-        // setTimeout(function(){
-        //     $('#productListing_table').DataTable({
-        //         "scrollY": "400px",
-        //         "scrollCollapse": true,
-        //         "fixedHeader": true ,
-        //         dom: 'Bfrtip',
-        //         pageLength: 10,
-        //         buttons: [{
-        //             extend: 'csv',
-        //             text: 'Export'
-        //         }],
-        //         lengthMenu: [5, 10, 25, 50, 75, 100]
-        //     });
-        // }, 500);
     }
 
     function populateCategories(response) {
@@ -185,13 +171,13 @@ $(document).ready(function () {
 
             populateTotals(response);
         } else {
-            
+
             if (response.status == 402) {
                 error = response.message;
             } else {
                 error = response.responseJSON.message;
                 var is_invalid = response.responseJSON.errors;
-        
+
                 $.each(is_invalid, function (key) {
                     // Assuming 'key' corresponds to the form field name
                     var inputField = $('[name="' + key + '"]');
@@ -213,18 +199,18 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.edit_product', function (e) {
-    
+
         var product_id = $(this).attr('data-id');
-        
+
         let data = new FormData();
         data.append('product_id', product_id);
         let type = 'POST';
         let url = '/admin/products/getSpecificProductDetail';
         SendAjaxRequestToServer(type, url, data, '', getSpecificProductDetailResponse, '', '.edit_product');
     });
-    
+
     function getSpecificProductDetailResponse(response) {
-        
+
         var data = response.data;
         var product_detail = data.product_detail;
 
@@ -273,7 +259,7 @@ $(document).ready(function () {
         let html = '';
         if(product_specifications.length > 0 ){
             product_specifications.forEach(item => {
-           
+
                 html += `<tr>
                             <td class="ps-3">${item.id}</td>
                             <td class="ps-3">${item.specification}</td>
@@ -315,7 +301,7 @@ $(document).ready(function () {
         let html = '';
         if(product_features.length > 0 ){
             product_features.forEach(item => {
-           
+
                 html += `<tr>
                             <td class="ps-3">${item.id}</td>
                             <td class="ps-3">${item.title}</td>
@@ -376,7 +362,7 @@ $(document).ready(function () {
     function displaySelectedFiles_product() {
         var imageContainerselected = $('.image-container-selected');
         imageContainerselected.empty(); // Clear previous images
-        
+
         selectedFiles.forEach((file, index) => {
             const reader = new FileReader();
             reader.onload = function (e) {
@@ -389,13 +375,14 @@ $(document).ready(function () {
             reader.readAsDataURL(file);
         });
     }
+    
 
     $(document).on('click', '.remove_file_section', function (e) {
-        
+
         $(this).closest('.file_section').remove();
         if($(this).attr('data-id')){
             var image_id = $(this).attr('data-id');
-            
+
             let data = new FormData();
             data.append('id', image_id);
             let type = 'POST';
@@ -462,7 +449,7 @@ $(document).ready(function () {
     function getSpecificProductDetail(product_id){
 
         var product_id = product_id;
-        
+
         let data = new FormData();
         data.append('product_id', product_id);
         let type = 'POST';
@@ -472,7 +459,7 @@ $(document).ready(function () {
 
     // specifications tab Js start
     $(document).on('click', '#addNewSpecification', function (e) {
-        
+
         let form = $('#addSpecification_form');
         form.trigger("reset");
         $("#specification_id").val('');
@@ -482,9 +469,9 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#addSpecification_btn', function (e) {
-        
+
         var product_id = $("#product_id").val();
-        
+
         let form = document.getElementById('addSpecification_form');
         let data = new FormData(form);
         data.append('product_id', product_id);
@@ -505,7 +492,7 @@ $(document).ready(function () {
             $("#specification_id").val('');
 
             $(".modal").modal('hide');
-            
+
             var product_id = $("#product_id").val();
             getSpecificProductDetail(product_id);
 
@@ -515,7 +502,7 @@ $(document).ready(function () {
             } else {
                 error = response.responseJSON.message;
                 var is_invalid = response.responseJSON.errors;
-        
+
                 $.each(is_invalid, function (key) {
                     // Assuming 'key' corresponds to the form field name
                     var inputField = $('[name="' + key + '"]');
@@ -532,7 +519,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#handleEditSpecificationBtn', function (e) {
         var details = $(this).attr('data-specification');
-        
+
         if(details != ''){
             details = JSON.parse(details);
 
@@ -559,7 +546,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#deleteSpecificationConfirmedBtn', function (e) {
         var specification_id = tempSpecifId;
-        
+
         let form = '';
         let data = new FormData();
         data.append('specification_id', specification_id);
@@ -577,7 +564,7 @@ $(document).ready(function () {
 
             tempSpecifId = '';
             $("#confirmationModalSpecification").modal('hide');
-            
+
             var product_id = $("#product_id").val();
             getSpecificProductDetail(product_id);
 
@@ -591,7 +578,7 @@ $(document).ready(function () {
 
     // features tab Js start
     $(document).on('click', '#addNewFeature', function (e) {
-        
+
         let form = $('#addFeature_form');
         form.trigger("reset");
         setEditorData('#editor2', '');
@@ -619,7 +606,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#addFeature_btn', function (e) {
-        
+
         var product_id = $("#product_id").val();
         let feature_desc = $('#editor2').next().find('.ck-content').html();
         let form = document.getElementById('addFeature_form');
@@ -644,7 +631,7 @@ $(document).ready(function () {
             $("#specification_id").val('');
 
             $("#addFeature_modal").modal('hide');
-            
+
             var product_id = $("#product_id").val();
             getSpecificProductDetail(product_id);
 
@@ -654,7 +641,7 @@ $(document).ready(function () {
             } else {
                 error = response.responseJSON.message;
                 var is_invalid = response.responseJSON.errors;
-        
+
                 $.each(is_invalid, function (key) {
                     // Assuming 'key' corresponds to the form field name
                     var inputField = $('[name="' + key + '"]');
@@ -669,7 +656,7 @@ $(document).ready(function () {
     }
     $(document).on('click', '#handleEditFeatureBtn', function (e) {
         var details = $(this).attr('data-feature');
-        
+
         if(details != ''){
             details = JSON.parse(details);
             console.log(details);
@@ -697,7 +684,7 @@ $(document).ready(function () {
 
     $(document).on('click', '#deleteFeatureConfirmedBtn', function (e) {
         var feature_id = tempFeatureId;
-        
+
         let form = '';
         let data = new FormData();
         data.append('feature_id', feature_id);
@@ -715,7 +702,7 @@ $(document).ready(function () {
 
             tempFeatureId = '';
             $("#confirmationModalFeature").modal('hide');
-            
+
             var product_id = $("#product_id").val();
             getSpecificProductDetail(product_id);
 
@@ -729,16 +716,16 @@ $(document).ready(function () {
 
 
     $(document).on('click', '.flexSwitchCheckChecked', function (e) {
-    
+
         var product_id = $(this).attr('data-id');
-        
+
         let data = new FormData();
         data.append('product_id', product_id);
         let type = 'POST';
         let url = '/admin/products/markProductStatus';
         SendAjaxRequestToServer(type, url, data, '', markProductStatusResponse, '', '.edit_product');
     });
-    
+
     function markProductStatusResponse(response) {
         toastr.success(response.message, '', {
             timeOut: 3000
@@ -750,7 +737,7 @@ $(document).ready(function () {
     $(document).on('click', '.close_modal', function (e) {
         tempFeatureId = '';
         tempSpecifId = '';
-        
+
         $(".modal").modal('hide');
     });
 
@@ -768,7 +755,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '.changeProductOfferedStatus', function (e) {
-        
+
         var product_id = $("#product_id_offered").val();
         var offered_flag = $("#product_offered_flag").val();
         var offered_percentage = $("#offered_percentage").val();
@@ -776,7 +763,7 @@ $(document).ready(function () {
             if(offered_percentage == ''){
                 toastr.error('Offer Percentage is required.', '', {timeOut: 3000});
                 return;
-            } 
+            }
             if(offered_percentage <= 0 || offered_percentage > 100){
                 toastr.error('Offer Percentage must be in between 0 to 100.', '', {timeOut: 3000});
                 return;
@@ -793,13 +780,13 @@ $(document).ready(function () {
         let url = '/admin/products/changeProductOfferedStatus';
         SendAjaxRequestToServer(type, url, data, '', changeProductOfferedStatusResponse, '', '.changeProductOfferedStatus');
     });
-    
+
     function changeProductOfferedStatusResponse(response) {
-        
+
         toastr.success(response.message, '', {
             timeOut: 3000
         });
-        
+
         $('.modal').modal('hide');
         getProductsOnLoad();
     }
@@ -808,7 +795,7 @@ $(document).ready(function () {
         var product_id = $(this).attr('data-id');
         var featured_flag = $(this).attr('data-featured-flag');
         $('#featured_product_id').val(product_id);
-        
+
         if(featured_flag == '1'){
             $("#featured_heading").html('Are you sure you want to remove this product from featured.');
         }else{
@@ -820,7 +807,7 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#featuredNowBtn', function (e) {
-        
+
         var product_id = $("#featured_product_id").val();
         if(product_id != ''){
             let data = new FormData();
@@ -829,19 +816,19 @@ $(document).ready(function () {
             let url = '/admin/products/changeProductFeaturedStatus';
             SendAjaxRequestToServer(type, url, data, '', changeProductFeaturedStatusResponse, '', '#featuredNowBtn');
         }
-        
+
     });
-    
+
     function changeProductFeaturedStatusResponse(response) {
-        
+
         toastr.success(response.message, '', {
             timeOut: 3000
         });
-        
+
         $('.modal').modal('hide');
         getProductsOnLoad();
     }
-    
+
 
 
 

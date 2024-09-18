@@ -171,6 +171,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/product/filter', [WebsiteController::class, 'productFilter'])->name('order.productFilter');
     Route::post('/getFilterData', [WebsiteController::class, 'getFilterData'])->name('order.getFilterData');
     Route::post('/productListingDetail', [WebsiteController::class, 'productListingDetail'])->name('order.productListingDetail');
+    Route::post('/inquiries/add', [WebsiteController::class, 'inquiriesCreate'])->name('admin.inquiriesCreate');
     Route::post('/inquiries/listing', [WebsiteController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
 
     //testing purpose for admin enquiries
@@ -191,6 +192,8 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/order/status/refund', [WebsiteController::class, 'orderRefund'])->name('order.orderRefund');
         Route::post('/wish_list/add', [WebsiteController::class, 'wishListAdd'])->name('order.wishListAdd');
         Route::post('/wishList/remove', [WebsiteController::class, 'wishListRemove'])->name('order.wishListRemove');
+        Route::post('/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('order.enquiryMessageCreate');
+
     });
 });
 

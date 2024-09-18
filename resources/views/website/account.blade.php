@@ -127,32 +127,44 @@
                     <div class="col-md-3 col-sm-4">
                         <div class="mail-categories">
                             <div class="mail-menu m-0 p-0">
+                                <!-- Status toggle -->
                                 <div class="mail-menu-item mail-categories" data-bs-toggle="collapse"
-                                    href="#enquiriesStatus" role="button" aria-expanded="false"
-                                    aria-controls="enquiriesStatus">
+                                     href="#enquiriesStatus" role="button" aria-expanded="false"
+                                     aria-controls="enquiriesStatus">
                                     <span class="mail-text">Status</span>
                                     <span class="mail-icon">▾</span>
                                 </div>
+                                <!-- Status options -->
                                 <div class="collapse show" id="enquiriesStatus">
                                     <div class="mail-menu-item mail-sub-categories">
                                         <div class="form-check">
                                             <input class="form-check-input enquiryActiveList" type="radio"
-                                                name="flexRadioDefault" id="flexRadioDefault1">
+                                                   name="flexRadioDefault" id="flexRadioDefault1">
                                         </div>
                                         <span class="mail-text">Active</span>
                                     </div>
                                     <div class="mail-menu-item mail-sub-categories">
                                         <div class="form-check">
                                             <input class="form-check-input enquiryInActiveList" type="radio"
-                                                name="flexRadioDefault" id="flexRadioDefault2">
+                                                   name="flexRadioDefault" id="flexRadioDefault2">
                                         </div>
                                         <span class="mail-text">InActive</span>
                                     </div>
-
                                 </div>
+
+                                <!-- New Enquiry Button -->
+                                <div class="d-flex align-items-center justify-content-center mt-3">
+                                    <div class="w-100 text-center border rounded-2 p-3" style="cursor: pointer;"
+                                         data-bs-toggle="modal" data-bs-target="#enquiryAddModal">
+                                        <div class="h1">+</div>
+                                        <div>New Enquiry</div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-9 col-sm-8 ">
                         <div
                             class="px-4 px-lg-6 bg-white border-top border-bottom border-translucent position-relative top-1">
@@ -268,6 +280,61 @@
                     </svg>
                     You haven't placed any orders with us. When you do, their status will appear on this page.
                 </p>
+
+
+
+                {{-- add enquiry modal --}}
+                <div class="modal fade" id="enquiryAddModal" data-bs-backdrop="static" data-bs-keyboard="false"
+                tabindex="-1" aria-labelledby="enquiryAddModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Submit Enquiry</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="enquiryAddModalForm">
+                                <!-- Full Name -->
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title</label>
+                                    <input type="text" class="form-control" id="enquiry_title" name="enquiry_title"
+                                        placeholder="Enter Enquiry Title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fullName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="enquiry_fullName" name="enquiry_fullName"
+                                        placeholder="Enter full name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" class="form-control" id="enquiry_email" name="enquiry_email"
+                                        placeholder="Enter full name" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="phoneNumber" class="form-label">Phone Number</label>
+                                    <input type="number" class="form-control" id="enquiry_phoneNumber"
+                                        name="enquiry_phoneNumber" placeholder="Enter phone number" required>
+                                </div>
+
+
+                                <!-- Address Line 1 -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea type="text" class="form-control" id="enquiry_description" name="enquiry_description"
+                                        placeholder="Enter Description" required></textarea>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" id="addEnquiryBtn">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             </div>
             <div class="tab-pane fade py-4" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab"
                 tabindex="0">

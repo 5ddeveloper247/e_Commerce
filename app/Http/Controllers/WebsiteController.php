@@ -25,6 +25,8 @@ use App\Models\Enquiry;
 use App\Models\OrderDetail;
 use App\Models\OrderPayment;
 use App\Models\ShippingAddress;
+use App\Models\EnquiryMessages;
+use App\Models\EnquiryAttachments;
 
 
 class WebsiteController extends Controller
@@ -592,12 +594,11 @@ class WebsiteController extends Controller
 
     public function inquiriesIndex(Request $request)
     {
-
-        if ($request->has('inquiryId')) {
-            $inquiry = Enquiry::where('id', $request->inquiryId)
+        if ($request->has('inquiryid')) {
+            $inquiry = Enquiry::where('id', $request->inquiryid)
+                 ->where('user_id',Auth::user()->id)
                 ->with(['enquiryMessage.enquiryAttachments', 'user', 'enquiryMessage.source','enquiryMessage.sourceFrom'])
                 ->first();  // Retrieve the first matching record
-
             return response()->json([
                 'inquiry' => $inquiry,
                 'status' => 200,
@@ -606,13 +607,96 @@ class WebsiteController extends Controller
         }
 
         $inquiries = Enquiry::with(['enquiryMessage.enquiryAttachments', 'user', 'enquiryMessage.source','enquiryMessage.sourceFrom'])
-          ->get();
+        ->where('user_id',Auth::user()->id)
+        ->get();
         return response()->json([
             'inquiries' => $inquiries,
             'status' => 200,
         ]);
     }
 
+
+    public function inquiriesCreate(Request $request)
+    {
+        // Validate the incoming request
+        $request->validate([
+            'enquiry_title' => 'required|string|max:255',
+            'enquiry_fullName' => 'required|string|max:255',
+            'enquiry_email' => 'required|email|max:255',
+            'enquiry_phoneNumber' => 'required|numeric',
+            'enquiry_description' => 'required|string|max:1000',
+        ]);
+
+        // Create a new enquiry
+        $enquiry = Enquiry::create([
+            'user_id' => Auth::id(), // Authenticated user ID
+            'title' => $request->enquiry_title,
+            'name' => $request->enquiry_fullName,
+            'email' => $request->enquiry_email,
+            'phone' => $request->enquiry_phoneNumber,
+            'description' => $request->enquiry_description,
+            'status' => 1, // Status set to 1 (pending or active)
+        ]);
+
+        // Check if enquiry was successfully created
+        if ($enquiry) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Enquiry created successfully',
+                'enquiry' => $enquiry,
+            ]);
+        } else {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Failed to create enquiry',
+            ]);
+        }
+    }
+
+
+
+    public function enquiryMessageCreate(Request $request)
+    {
+        $files = $request->file('files'); // Retrieve the files
+
+        // Create the enquiry message
+        $enquiryMessage = EnquiryMessages::create([
+            'enquiry_id' => $request->inquiryid,
+            'message' => $request->inquirymessage,
+            'source_id' => Auth::user()->id,
+            'source_from' => Auth::user()->id,
+        ]);
+
+        // Check if files are provided and process each file
+        if ($files && is_array($files)) {
+            foreach ($files as $file) {
+                // Store the file in the 'enquiry' directory
+                $path = $file->store('enquiry', 'public');
+
+                // Save the file information in EnquiryAttachments table
+                EnquiryAttachments::create([
+                    'enquirymessage_id' => $enquiryMessage->id,
+                    'filepath' => $path,
+                    'filetype' => $file->getClientMimeType(), // Get the MIME type of the file
+                ]);
+            }
+        }
+
+        // Return success response
+        if ($enquiryMessage) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Message sent successfully',
+                'enquiryMessage' => $enquiryMessage,
+            ]);
+        }
+
+        // Return error response if the message creation failed
+        return response()->json([
+            'status' => 400,
+            'message' => 'Failed to send message',
+        ]);
+    }
 
 
 

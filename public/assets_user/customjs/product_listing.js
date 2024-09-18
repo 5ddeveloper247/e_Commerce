@@ -204,8 +204,6 @@ $(document).ready(function () {
             // Set label attributes
             brandLabel.htmlFor = `brand-${index + 1}`;
             brandLabel.textContent = brand.title; // Use brand.title for display
-            brandCheckbox.addClass('mx-2')
-
             // Append checkbox and label to the div
             brandDiv.appendChild(brandCheckbox);
             brandDiv.appendChild(brandLabel);
