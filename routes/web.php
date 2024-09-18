@@ -66,6 +66,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/testimonials', [TestimonialController::class, 'testimonialIndex'])->name('admin.testimonials');
         // refund
         Route::get('/refund', [OrderController::class, 'refundIndex'])->name('admin.refund');
+        //payment
+        Route::get('/payments', [PaymentController::class, 'paymentIndex'])->name('admin.paymentIndex');
+        //enquiry
+        Route::get('/enquiry', [AdminController::class, 'enquiryIndex'])->name('admin.enquiryIndex');
+
 
 
         /************** AJAX ROUTES ******************/
@@ -174,14 +179,12 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/inquiries/add', [WebsiteController::class, 'inquiriesCreate'])->name('admin.inquiriesCreate');
     Route::post('/inquiries/listing', [WebsiteController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
 
-    //testing purpose for admin enquiries
-    Route::get('/demo', [WebsiteController::class, 'demoIndex'])->name('admin.demo');
-
     //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
         Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
         Route::post('/continue/checkout/prepayment', [WebsiteController::class, 'continueCheckout'])->name('user.continueCheckout');
+
 
 
 

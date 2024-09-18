@@ -58,6 +58,7 @@ $(document).ready(function () {
 
     function handleInquiriesDataResponse(response) {
         if (response.status == 200) {
+            inquiries = [];
             inquiries.push(response.inquiries);
             $('#enquiryCount').text(`(${inquiries[0].length})`)
             displayInquiriesInActive();
@@ -67,63 +68,6 @@ $(document).ready(function () {
 
         }
     }
-
-//add enquiry
-$('#addEnquiryBtn').on('click',function(){
-    const form=document.getElementById('enquiryAddModalForm');
-    const formData=new FormData(form);
-    const url='/inquiries/add';
-    const type='Post';
-    SendAjaxRequestToServer(type,url,formData,'',handleAddEnquiryResponse,'','#addEnquiryBtn');
-})
-
-function handleAddEnquiryResponse(response){
-    if(response.status==200){
-        alert("helllll")
-        initialLoad();
-        $('#enquiryAddModal').modal('hide');
-        const form=document.getElementById('enquiryAddModalForm');
-        form.reset();
-    }
-    else {
-        // Error Handling
-        let errorMessage = 'An error occurred. Please try again.';
-
-        if (response.status === 402) {
-            // Handle specific error status
-            errorMessage = response.message;
-        } else if (response.status == 422) {
-            // Validation errors
-
-            errorMessage = response.responseJSON.message || 'Validation failed.';
-            const validationErrors = response.responseJSON.errors || {};
-
-            // Log the response for debugging
-
-
-            // Highlight the invalid fields
-            $.each(validationErrors, function (key, error) {
-
-                const inputField = $('[name="' + key + '"]');
-
-                inputField.addClass('is-invalid');
-                // Optionally, show error messages next to each field
-                // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
-            });
-        } else if (response.status === 500) {
-            // Handle server error
-            errorMessage = response.message || 'Internal server error. Please contact support.';
-        }
-
-        // Display error message
-        toastr.error(errorMessage, '', {
-            timeOut: 3000
-        });
-    }
-}
-
-
-
 
     $('body').on('click', '.enquiryActiveList', function () {
         displayInquiriesActive();
@@ -135,27 +79,19 @@ function handleAddEnquiryResponse(response){
     })
 
     $('body').on('click', '.inquiryDetailBtn', function () {
-        $('.main-messages').addClass('d-none');
-        $('#inquiry-detail-view').removeClass('d-none');
         const inquiryid = $(this).attr('data-inquiryid');
 
         fetchInuiryById(inquiryid);
     });
 
-    $('body').on('click', '.back-to-ticket-list', function () {
-        $('.main-messages').removeClass('d-none');
-        $('#inquiry-detail-view').addClass('d-none');
-    });
 
 
 
-
-
-    function fetchInuiryById(Id){
+    function fetchInuiryById(Id) {
         const url = '/inquiries/listing';
         const type = 'Post';
         const data = new FormData();
-        data.append('inquiryid',Id);
+        data.append('inquiryid', Id);
         SendAjaxRequestToServer(type, url, data, '', handleInquiriesById, '', '#refreshInquiriesBtn');
     }
 
@@ -163,32 +99,33 @@ function handleAddEnquiryResponse(response){
     function handleInquiriesById(response) {
         let inquiryDetailHtml = '';
         let Messagehtml = ''
-          console.log(response)
         if (response.status == 200) {
+            $('.main-messages').addClass('d-none');
+            $('#inquiry-detail-view').removeClass('d-none');
             let inquiry = response?.inquiry;
             let inquiryMessages = inquiry?.enquiry_message
             const title = inquiry?.title;
 
-            inquiryMessages.forEach(message=>{
-                 let attachmentsHtml=''
-                const sourceUsername=message?.source?.username;
-                const sourceFromUsername=message?.source_from?.username;
-                const messageContent=message?.message;
-                const messageDate=message?.created_at;
-                const messageAttachments=message.enquiry_attachments
+            inquiryMessages.forEach(message => {
+                let attachmentsHtml = ''
+                const sourceUsername = message?.source?.username;
+                const sourceFromUsername = message?.source_from?.username;
+                const messageContent = message?.message;
+                const messageDate = message?.created_at;
+                const messageAttachments = message.enquiry_attachments
 
-                messageAttachments.forEach(attachment=>{
+                messageAttachments.forEach(attachment => {
                     attachmentsHtml += `
                     <div class="image-item-land file_section" style="width: 80px; height: 80px; margin: 20px;">
-                        <img src="${base_url+'/storage/'+attachment?.filepath}" style="height: 100%; width: auto;">
+                        <img src="${base_url + '/storage/' + attachment?.filepath}" style="height: 100%; width: auto;">
                     </div>`;
                 })
 
 
-            Messagehtml += `
+                Messagehtml += `
             <div class="d-flex align-items-start justify-content-between profile-area mt-2">
                             <div class="d-flex mail-profile-detail">
-                                <img src="${base_url+'/storage/common/person.png'}" alt="">
+                                <img src="${base_url + '/storage/common/person.png'}" alt="">
                                 <div class="ms-2">
                                     <h6>Source: ${sourceUsername}</h6>
                                     <h6>Source From: ${sourceFromUsername}</h6>
@@ -209,7 +146,7 @@ function handleAddEnquiryResponse(response){
                               ${attachmentsHtml}
                             </div>
             `
-        })
+            })
             inquiryDetailHtml += `
                 <div class="d-flex align-items-center mb-4">
                         <div class="back-to-ticket-list" style="cursor:pointer">
@@ -268,17 +205,17 @@ function handleAddEnquiryResponse(response){
         }
     }
 
-
-
-        // ---------------------------------file handling -----------------------------
-
+    $('body').on('click', '.back-to-ticket-list', function () {
+        $('.main-messages').removeClass('d-none');
+        $('#inquiry-detail-view').addClass('d-none');
+    });
+    // ---------------------------------file handling -----------------------------
     var selectedFiles = [];
     // Handle file input change
     $('body').on('change', '#file-input1', function (event) {
         console.log("change in file upload");
         const files = event.target.files;
         const existing = $('.uploaded_files');
-
         var allfileslength = existing.length + files.length + selectedFiles.length;
         if (allfileslength > 7) {
             toastr.error('You can upload a maximum of 7 images.');
@@ -323,48 +260,102 @@ function handleAddEnquiryResponse(response){
     }
 
     // Event delegation for removing files
-    $('body').on('click', '.removeAttachment', function() {
+    $('body').on('click', '.removeAttachment', function () {
         const index = $(this).data('id');
         selectedFiles.splice(index, 1); // Remove the file from the array
         displaySelectedFiles(); // Refresh display
     });
-
-
     // ---------------------------------file handling -----------------------------
+    // ---------------------------------file handling add enquiry -----------------------------
+    var addSelectedFiles = [];
+    // Handle file input change
+    $('body').on('change', '#file-input2', function (event) {
+        console.log("change in file upload");
+        const addFiles = event.target.files;
+        const existing = $('.uploaded_files');
+        var allfileslength = existing.length + addFiles.length + addSelectedFiles.length;
+        if (allfileslength > 7) {
+            toastr.error('You can upload a maximum of 7 images.');
+            // Reset the input to allow reselecting the same file again
+            event.target.value = ''; // This clears the selected file
+            return;
+        }
 
+        // Validate and add selected files to selectedFiles array
+        for (let i = 0; i < addFiles.length; i++) {
+            const file = addFiles[i];
+            if (!file.type.startsWith('image/')) {
+                toastr.error('Please select only image files.');
+                continue;
+            }
+            addSelectedFiles.push(file);
+        }
 
+        // Update the display
+        displayAddSelectedFiles();
+        // Reset the input to allow reselecting the same file again
+        event.target.value = ''; // This clears the selected file
+    });
 
-    $('body').on('click','#enquirySendBtn',function(){
-        const inquiryId=$(this).attr('data-enquiryid');
-        const enquiryMessage=$('#inquiryTextBox').val();
-        saveEnquiryMessage(inquiryId,enquiryMessage);
+    // Function to display selected files
+    function displayAddSelectedFiles() {
+        var imageContainerselected = $('.add-image-container');
+        imageContainerselected.empty(); // Clear previous images
+
+        addSelectedFiles.forEach((file, index) => {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                var image_html = `
+                    <div class="image-item-land file_section" style="width: 80px; height: 80px; margin: 20px;">
+                        <img src="${e.target.result}" style="height: 100%; width: auto;">
+                        <span class="cancel-icon text-danger removeAddAttachment" data-id="${index}" style="cursor: pointer;">×</span>
+                    </div>`;
+                imageContainerselected.append(image_html);
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+
+    // Event delegation for removing files
+    $('body').on('click', '.removeAddAttachment', function () {
+        const index = $(this).data('id');
+        addSelectedFiles.splice(index, 1); // Remove the file from the array
+        displayAddSelectedFiles(); // Refresh display
+    });
+
+    // ---------------------------------file handling add enquiry-----------------------------
+
+    $('body').on('click', '#enquirySendBtn', function () {
+        const inquiryId = $(this).attr('data-enquiryid');
+        const enquiryMessage = $('#inquiryTextBox').val();
+        saveEnquiryMessage(inquiryId, enquiryMessage);
     })
 
-    function saveEnquiryMessage(inquiryid,inquirymessage){
-        const type="Post";
-        const url="/enquiry/message/create";
-        const formData=new FormData();
-        formData.append('inquiryid',inquiryid);
-        formData.append('inquirymessage',inquirymessage);
+    function saveEnquiryMessage(inquiryid, inquirymessage) {
+        const type = "Post";
+        const url = "/enquiry/message/create";
+        const formData = new FormData();
+        formData.append('inquiryid', inquiryid);
+        formData.append('inquirymessage', inquirymessage);
         // Append each file individually
-    selectedFiles.forEach((file, index) => {
-        formData.append(`files[]`, file); // `files[]` will create an array of files
-    });
+        selectedFiles.forEach((file, index) => {
+            formData.append(`files[]`, file); // `files[]` will create an array of files
+        });
         SendAjaxRequestToServer(type, url, formData, '', saveEnquiryMessageResponse, '', '#enquirySendBtn');
 
     }
 
-    function saveEnquiryMessageResponse(response){
-        if(response.status==200){
-            const inquiryId=response.enquiryMessage.enquiry_id;
+    function saveEnquiryMessageResponse(response) {
+        if (response.status == 200) {
+            const inquiryId = response.enquiryMessage.enquiry_id;
             console.log(inquiryId);
             $('#inquiryTextBox').val('');
             removeSelectedFiles()
-            if(inquiryId){
+            if (inquiryId) {
                 fetchInuiryById(inquiryId)
             }
-            else{
-                const inquiryId=$('#enquirySendBtn').attr('data-enquiryid');
+            else {
+                const inquiryId = $('#enquirySendBtn').attr('data-enquiryid');
                 fetchInuiryById(inquiryId)
             }
 
@@ -372,16 +363,83 @@ function handleAddEnquiryResponse(response){
                 timeOut: 3000
             });
         }
-        else{
+        else {
             toastr.error(response.message, '', {
                 timeOut: 3000
             });
         }
     }
-    function removeSelectedFiles(){
-        selectedFiles=[];
+
+    function removeSelectedFiles() {
+        selectedFiles = [];
         var imageContainerselected = $('.image-container-selected');
         imageContainerselected.empty();
     }
 
+    //add enquiry
+    $('#addEnquiryBtn').on('click', function () {
+        const form = document.getElementById('enquiryAddModalForm');
+        const formData = new FormData(form);
+        addSelectedFiles.forEach((file, index) => {
+            formData.append(`files[]`, file); // `files[]` will create an array of files
+        });
+        const url = '/inquiries/add';
+        const type = 'Post';
+        SendAjaxRequestToServer(type, url, formData, '', handleAddEnquiryResponse, '', '#addEnquiryBtn');
+    })
+
+    function handleAddEnquiryResponse(response) {
+        if (response.status == 200) {
+            const recentEnquiry = response.enquiry;
+            initialLoad();
+            fetchInuiryById(recentEnquiry.id);
+            addSelectedFiles = [];
+            displayAddSelectedFiles();
+            $('#enquiryAddModalForm').hide();
+            $('.main-messages').show();
+            const form = document.getElementById('enquiryAddModalForm');
+            form.reset();
+        }
+        else {
+            // Error Handling
+            let errorMessage = 'An error occurred. Please try again.';
+            if (response.status === 402) {
+                // Handle specific error status
+                errorMessage = response.message;
+            } else if (response.status == 422) {
+                // Validation errors
+
+                errorMessage = response.responseJSON.message || 'Validation failed.';
+                const validationErrors = response.responseJSON.errors || {};
+
+                // Log the response for debugging
+
+
+                // Highlight the invalid fields
+                $.each(validationErrors, function (key, error) {
+                    const inputField = $('[name="' + key + '"]');
+                    inputField.addClass('is-invalid');
+                    // Optionally, show error messages next to each field
+                    // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
+                });
+            } else if (response.status === 500) {
+                // Handle server error
+                errorMessage = response.message || 'Internal server error. Please contact support.';
+            }
+            // Display error message
+            toastr.error(errorMessage, '', {
+                timeOut: 3000
+            });
+        }
+    }
+    $('.newEnquiryBtn').on('click', function () {
+        $('#enquiryAddModalForm').removeClass('d-none');
+        $('#enquiryAddModalForm').show();
+        $('.main-messages').hide();
+    })
+    $('.back-to-enquiry').on('click', function () {
+        $('.main-messages').show();
+        $('#enquiryAddModalForm').addClass('d-none');
+        $('#enquiryAddModalForm').hide();
+    })
 });

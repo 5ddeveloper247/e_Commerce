@@ -20,6 +20,10 @@ use App\Models\User;
 use App\Models\SiteSetting;
 use App\Models\SiteSettingsFiles;
 use App\Models\Category;
+use App\Models\Enquiry;
+use App\Models\EnquiryMessages;
+use App\Models\EnquiryAttachments;
+
 
 class AdminController extends Controller
 {
@@ -602,10 +606,6 @@ class AdminController extends Controller
         }
     }
 
-
-
-
-
     public function updateCategoryStatusAjax(Request $request)
     {
         $id = $request->id;
@@ -623,5 +623,12 @@ class AdminController extends Controller
             // Return error response if user not found
             return response()->json(['message' => 'Category not found', 'status' => 404]);
         }
+    }
+
+
+    public function enquiryIndex(Request $request)
+    {
+        $pageTitle = 'Enquiries';
+        return view('admin.enquiry_listing', compact('pageTitle'));
     }
 }

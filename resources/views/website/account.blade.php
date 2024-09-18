@@ -123,14 +123,78 @@
 
             <div class="tab-pane fade py-4" id="messages-tab-pane" role="tabpanel" aria-labelledby="messages-tab"
                 tabindex="0">
+                {{-- enquiry add form --}}
+                <form id="enquiryAddModalForm" class="d-none" style="width: 50%; margin: auto;">
+                    <!-- Full Name -->
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="back-to-enquiry" style="cursor:pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512">
+                                <path fill="#000"
+                                    d="M48 256c0 114.87 93.13 208 208 208s208-93.13 208-208S370.87 48 256 48S48 141.13 48 256m212.65-91.36a16 16 0 0 1 .09 22.63L208.42 240H342a16 16 0 0 1 0 32H208.42l52.32 52.73A16 16 0 1 1 238 347.27l-79.39-80a16 16 0 0 1 0-22.54l79.39-80a16 16 0 0 1 22.65-.09" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="enquiry_title" name="enquiry_title"
+                            placeholder="Enter Enquiry Title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="fullName" class="form-label">Full Name</label>
+                        <input type="text" class="form-control" id="enquiry_fullName" name="enquiry_fullName"
+                            placeholder="Enter full name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="text" class="form-control" id="enquiry_email" name="enquiry_email"
+                            placeholder="Enter full name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <input type="number" class="form-control" id="enquiry_phoneNumber" name="enquiry_phoneNumber"
+                            placeholder="Enter phone number" required>
+                    </div>
+                    <!-- Address Line 1 -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description</label>
+                        <textarea type="text" class="form-control" id="enquiry_description" name="enquiry_description"
+                            placeholder="Enter Description" required></textarea>
+                    </div>
+                    <div class="white add-image-container d-flex mx-2" id="add-image-container"
+                        data-page-name="products">
+                    </div>
+                    <hr>
+
+                    <div class="col-xs-2 p-0 mb-5">
+                        <div onclick="document.getElementById('file-input2').click();"
+                            class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center"
+                            style="height: 50px; cursor: pointer;">
+                            <input type="file" id="file-input2" class="form-control d-none" name="add-enquiry_images"
+                                accept="image/*" single aria-describedby="file-input-label">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                                class="bi bi-upload text-primary cursor-pointer" viewBox="0 0 16 16">
+                                <path
+                                    d="M.5 9.9a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4h-4a.5.5 0 0 1 0-1h4.5a.5.5 0 0 1 .5.5V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.9z" />
+                                <path
+                                    d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V13.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 0 1-.708-.708l3-3z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end ">
+                        <button type="button" class="btn btn-primary my-5" id="addEnquiryBtn">Add</button>
+                    </div>
+                </form>
+
+
                 <div class="row main-messages">
                     <div class="col-md-3 col-sm-4">
                         <div class="mail-categories">
                             <div class="mail-menu m-0 p-0">
                                 <!-- Status toggle -->
                                 <div class="mail-menu-item mail-categories" data-bs-toggle="collapse"
-                                     href="#enquiriesStatus" role="button" aria-expanded="false"
-                                     aria-controls="enquiriesStatus">
+                                    href="#enquiriesStatus" role="button" aria-expanded="false"
+                                    aria-controls="enquiriesStatus">
                                     <span class="mail-text">Status</span>
                                     <span class="mail-icon">▾</span>
                                 </div>
@@ -139,14 +203,14 @@
                                     <div class="mail-menu-item mail-sub-categories">
                                         <div class="form-check">
                                             <input class="form-check-input enquiryActiveList" type="radio"
-                                                   name="flexRadioDefault" id="flexRadioDefault1">
+                                                name="flexRadioDefault" id="flexRadioDefault1">
                                         </div>
                                         <span class="mail-text">Active</span>
                                     </div>
                                     <div class="mail-menu-item mail-sub-categories">
                                         <div class="form-check">
                                             <input class="form-check-input enquiryInActiveList" type="radio"
-                                                   name="flexRadioDefault" id="flexRadioDefault2">
+                                                name="flexRadioDefault" id="flexRadioDefault2">
                                         </div>
                                         <span class="mail-text">InActive</span>
                                     </div>
@@ -154,8 +218,8 @@
 
                                 <!-- New Enquiry Button -->
                                 <div class="d-flex align-items-center justify-content-center mt-3">
-                                    <div class="w-100 text-center border rounded-2 p-3" style="cursor: pointer;"
-                                         data-bs-toggle="modal" data-bs-target="#enquiryAddModal">
+                                    <div class="w-100 text-center border rounded-2 p-3 newEnquiryBtn"
+                                        style="cursor: pointer;">
                                         <div class="h1">+</div>
                                         <div>New Enquiry</div>
                                     </div>
@@ -175,8 +239,6 @@
                         </div>
                     </div>
                 </div>
-
-
                 {{-- inquiry detail --}}
                 <div class="row ticket-detail d-none" id="inquiry-detail-view">
                     {{-- <div class="d-flex align-items-center mb-4">
@@ -280,61 +342,6 @@
                     </svg>
                     You haven't placed any orders with us. When you do, their status will appear on this page.
                 </p>
-
-
-
-                {{-- add enquiry modal --}}
-                <div class="modal fade" id="enquiryAddModal" data-bs-backdrop="static" data-bs-keyboard="false"
-                tabindex="-1" aria-labelledby="enquiryAddModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Submit Enquiry</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="enquiryAddModalForm">
-                                <!-- Full Name -->
-                                <div class="mb-3">
-                                    <label for="title" class="form-label">Title</label>
-                                    <input type="text" class="form-control" id="enquiry_title" name="enquiry_title"
-                                        placeholder="Enter Enquiry Title" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="fullName" class="form-label">Full Name</label>
-                                    <input type="text" class="form-control" id="enquiry_fullName" name="enquiry_fullName"
-                                        placeholder="Enter full name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="email" class="form-label">Email</label>
-                                    <input type="text" class="form-control" id="enquiry_email" name="enquiry_email"
-                                        placeholder="Enter full name" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="phoneNumber" class="form-label">Phone Number</label>
-                                    <input type="number" class="form-control" id="enquiry_phoneNumber"
-                                        name="enquiry_phoneNumber" placeholder="Enter phone number" required>
-                                </div>
-
-
-                                <!-- Address Line 1 -->
-                                <div class="mb-3">
-                                    <label for="description" class="form-label">Description</label>
-                                    <textarea type="text" class="form-control" id="enquiry_description" name="enquiry_description"
-                                        placeholder="Enter Description" required></textarea>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary"
-                                data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" id="addEnquiryBtn">Add</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
             </div>
             <div class="tab-pane fade py-4" id="address-tab-pane" role="tabpanel" aria-labelledby="address-tab"
                 tabindex="0">
@@ -453,107 +460,12 @@
                         </thead>
                         <tbody id="wishlist_table_body">
                             <!-- Example row -->
-                            {{-- <tr>
-                                <td class="text-nowrap">101</td>
-                                <td class="text-nowrap">Wireless Headphones</td>
-                                <td class="text-nowrap">Electronics</td>
-                                <td class="text-nowrap">$99</td>
-                                <td class="text-nowrap">2024-08-13</td>
-                                <td class="text-nowrap">
-                                    <button class="btn btn-primary btn-sm">Add to Cart</button>
-                                    <button class="btn btn-danger btn-sm">Remove</button>
-                                </td>
-                            </tr> --}}
                             <!-- Add more rows as needed -->
                         </tbody>
                     </table>
                 </div>
                 <h3 class="text-center">Wish List</h3>
                 <div class="row mt-3" id="wishListContainer">
-
-                    {{-- <div class="col-lg-3 col-md-4 col-sm-6 my-2">
-                        <div class="card featured-card border-0">
-                            <p class="sale-badge text-black">Sale</p>
-                            <div class="actions">
-                                <button class="btn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 256 256">
-                                        <path fill="#000"
-                                            d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn" data-bs-toggle="modal"
-                                    data-bs-target="#staticBackdrop">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 24 24">
-                                        <path fill="#000"
-                                            d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5">
-                                        </path>
-                                    </svg>
-                                </button>
-                            </div>
-                            <div class="d-flex justify-content-center my-4">
-                                <div class="featured-card-imagess">
-                                    <a href="product_detail">
-                                        <img src="http://127.0.0.1:8000/assets/images/category-img.png"
-                                            alt="Card image">
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="card-body text-center">
-                                <div class="rating border-bottom pb-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                        viewBox="0 0 512 512">
-                                        <path fill="none" stroke="currentColor" stroke-linejoin="round"
-                                            stroke-width="32"
-                                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                        </path>
-                                    </svg>
-                                </div>
-                                <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>Ramsond 15000 BTU PTAC AC
-                                        HEAT PUMP WITH 5K BACKUP HEAT STRIP COMBO</small></p>
-                                <div class="price-and-btn">
-                                    <div class="d-flex justify-content-center card-price">
-                                        <h5>$12.99</h5>
-                                        <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
-                                    </div>
-                                    <button class="btn btn-add-to-cart">
-                                        <span class="me-2">+</span>
-                                        Add to Cart
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
 
                 </div>
                 <p class="mb-0 d-flex align-items-center bg-secondary p-3 text-white rounded-2 mt-5">

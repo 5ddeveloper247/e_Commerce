@@ -596,8 +596,8 @@ class WebsiteController extends Controller
     {
         if ($request->has('inquiryid')) {
             $inquiry = Enquiry::where('id', $request->inquiryid)
-                 ->where('user_id',Auth::user()->id)
-                ->with(['enquiryMessage.enquiryAttachments', 'user', 'enquiryMessage.source','enquiryMessage.sourceFrom'])
+                ->where('user_id', Auth::user()->id)
+                ->with(['enquiryMessage.enquiryAttachments', 'user', 'enquiryMessage.source', 'enquiryMessage.sourceFrom'])
                 ->first();  // Retrieve the first matching record
             return response()->json([
                 'inquiry' => $inquiry,
@@ -606,9 +606,9 @@ class WebsiteController extends Controller
             ]);
         }
 
-        $inquiries = Enquiry::with(['enquiryMessage.enquiryAttachments', 'user', 'enquiryMessage.source','enquiryMessage.sourceFrom'])
-        ->where('user_id',Auth::user()->id)
-        ->get();
+        $inquiries = Enquiry::with(['enquiryMessage.enquiryAttachments', 'user', 'enquiryMessage.source', 'enquiryMessage.sourceFrom'])
+            ->where('user_id', Auth::user()->id)
+            ->get();
         return response()->json([
             'inquiries' => $inquiries,
             'status' => 200,
@@ -619,6 +619,7 @@ class WebsiteController extends Controller
     public function inquiriesCreate(Request $request)
     {
         // Validate the incoming request
+        $files = $request->file('files'); // Retrieve the files
         $request->validate([
             'enquiry_title' => 'required|string|max:255',
             'enquiry_fullName' => 'required|string|max:255',
@@ -637,6 +638,24 @@ class WebsiteController extends Controller
             'description' => $request->enquiry_description,
             'status' => 1, // Status set to 1 (pending or active)
         ]);
+        $enquiryMessage = EnquiryMessages::create([
+            'enquiry_id' => $enquiry->id,
+            'message' => $request->enquiry_description,
+            'source_id' => Auth::user()->id,
+            'source_from' => Auth::user()->id,
+        ]);
+        if ($files && is_array($files)) {
+            foreach ($files as $file) {
+                // Store the file in the 'enquiry' directory
+                $path = $file->store('enquiry', 'public');
+                // Save the file information in EnquiryAttachments table
+                EnquiryAttachments::create([
+                    'enquirymessage_id' => $enquiryMessage->id,
+                    'filepath' => $path,
+                    'filetype' => $file->getClientMimeType(), // Get the MIME type of the file
+                ]);
+            }
+        }
 
         // Check if enquiry was successfully created
         if ($enquiry) {

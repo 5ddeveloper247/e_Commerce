@@ -240,4 +240,12 @@ class PaymentController extends Controller
             ];
         }
     }
+
+
+
+    public function paymentIndex()
+    {
+        $pageTitle = "Payments";
+        return view('admin.payments', compact('pageTitle'));
+    }
 }

@@ -12,8 +12,8 @@
             <form id="add_edit_admin_form">
                 <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Contact</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Contact Listing</li>
+                        <li class="breadcrumb-item"><a href="#">Payment</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Payment Listing</li>
                     </ol>
                 </nav>
                 <div class="row justify-content-center gx-0 gy-2 gap-4 mb-4">
