@@ -19,29 +19,28 @@ $(document).ready(function () {
 
     function getOrderDetailResponse(response) {
         try {
-            // Check if the response status is 200 (success)
-            if (response.status === 200) {
-                // Ensure that the orders array is present and is an array
-                if (Array.isArray(response.orders) && response.orders.length > 0) {
-                    createStates(response.orders);  // Assuming createStates is defined elsewhere
+            console.log(response); // Log the response for debugging
 
+            // Check if the response status is 200 (successful response)
+            if (response.status === 200) {
+                // Check if the orders field exists and is an array
+                if (Array.isArray(response.orders) && response.orders.length > 0) {
+                    createStates(response.orders);
                     let html = '';
 
                     response.orders.forEach((order, index) => {
-                        // Safely access user properties with optional chaining and default to 'N/A' if values are missing
-                        const username = order?.user?.username || 'N/A';
-                        const email = order?.user?.email || 'N/A';
-                        const createdAt = order?.created_at
-                            ? new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
-                              new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-                            : 'N/A';
+                        // Safeguard against missing fields
+                        const username = order?.user?.username || 'N/A'; // Default to 'N/A' if username is missing
+                        const email = order?.user?.email || 'N/A'; // Default to 'N/A' if email is missing
+                        const createdAt = order?.created_at ? new Date(order.created_at) : null; // Check for valid date
 
+                        // Generate table row for each order
                         html += `
                             <tr>
-                                <td class="ps-3">${index + 1}</td> <!-- Changed index + 1 for numbering -->
-                                <td class="ps-3">${username}</td> <!-- Safely handled username -->
-                                <td class="ps-3">${email}</td> <!-- Safely handled email -->
-                                <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely handled date -->
+                                <td class="ps-3">${index + 1}</td> <!-- Display index instead of order ID -->
+                                <td class="ps-3">${username}</td>
+                                <td class="ps-3">${email}</td>
+                                <td class="ps-3 text-nowrap">${createdAt ? createdAt.toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' + createdAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : 'N/A'}</td>
                                 <td class="text-end">
                                     <div class="btn-reveal-trigger position-static">
                                         <button class="btn btn-sm dropdown-toggle" type="button"
@@ -56,7 +55,7 @@ $(document).ready(function () {
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-end">
                                             <a class="dropdown-item modal-edit-btn" type="button"
-                                                data-detail-order='${JSON.stringify(order?.id)}' id="viewDetailBtn">View Detail</a>
+                                                data-detail-order='${JSON.stringify(order.id)}' id="viewDetailBtn">View Detail</a>
                                             <div class="dropdown-divider"></div>
                                         </div>
                                     </div>
@@ -65,22 +64,21 @@ $(document).ready(function () {
                         `;
                     });
 
-                    // Insert the generated HTML into the table body
+                    // Append the generated HTML to the table body
                     $('#order_listing_table_body').html(html);
-
                 } else {
-                    // Handle case where no orders are found
-                    $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">No orders found.</td></tr>');
+                    // Handle case where orders array is empty or not provided
+                    $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">No orders found</td></tr>');
                 }
             } else {
-                // Handle non-200 response status
-                console.error('Error: Response status is not 200. Actual status:', response.status);
-                $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">Failed to load orders. Please try again later.</td></tr>');
+                // Handle cases where response status is not 200
+                console.error('Unexpected response status:', response.status);
+                $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">Error loading orders</td></tr>');
             }
         } catch (error) {
-            // Catch any unexpected errors and log them
-            console.error('An unexpected error occurred:', error);
-            $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">An error occurred while processing the order data.</td></tr>');
+            // Catch and log any unexpected errors during execution
+            console.error('Error processing order details:', error);
+            $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">An error occurred while loading orders</td></tr>');
         }
     }
 

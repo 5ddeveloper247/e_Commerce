@@ -8,51 +8,83 @@ $(document).ready(function () {
         SendAjaxRequestToServer(type, url, '', '', getInitialContactListingResponse, '', '');
         contact_listing_table_body
         function getInitialContactListingResponse(response) {
-            if (response.status == 200) {
-                $('#active').text(response.active)
-                $('#inactive').text(response.inactive)
-                $('#total').text(response.total);
-                let html = '';
-                response.contacts.forEach((item, index) => {
-                    html += `
-                        <tr>
-                            <td class="ps-3">${index + 1}</td>
-                            <td class="ps-3">${item.full_name}</td>
-                            <td class="ps-3">${item.phone_number}</td>
-                            <td class="ps-3">${item.email_address}</td>
-                            <td class="text-center">
-                                <div class="form-check form-switch">
-                                    <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
-                                           id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
-                                </div>
-                            </td>
-                            <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
-                            <td class="text-end">
-                                <div class="btn-reveal-trigger position-static">
-                                    <button class="btn btn-sm dropdown-toggle" type="button"
-                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
-                                             data-prefix="fas" data-icon="ellipsis" role="img"
-                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                            <path fill="currentColor"
-                                                  d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
-                                            </path>
-                                        </svg>
-                                    </button>
-                                    <div class="dropdown-menu dropdown-menu-end">
-                                        <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
-                                           data-bs-target="#filterModal" data-edit-contact='${JSON.stringify(item.id)}' id="handleEditAddBtn">Edit</a>
-                                        <div class="dropdown-divider"></div>
+            try {
+                // Check if response status is 200 (success)
+                if (response.status === 200) {
+                    // Update UI elements with active, inactive, and total counts
+                    $('#active').text(response?.active ?? 'N/A');
+                    $('#inactive').text(response?.inactive ?? 'N/A');
+                    $('#total').text(response?.total ?? 'N/A');
 
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    `;
-                });
-                $('#contact_listing_table_body').html(html);
+                    // Check if the contacts array exists and is not empty
+                    if (Array.isArray(response.contacts) && response.contacts.length > 0) {
+                        let html = '';
+
+                        response.contacts.forEach((item, index) => {
+                            // Safely access item properties with optional chaining and defaults
+                            const fullName = item?.full_name || 'N/A';
+                            const phoneNumber = item?.phone_number || 'N/A';
+                            const emailAddress = item?.email_address || 'N/A';
+                            const statusChecked = item?.status === 1 ? 'checked' : '';
+                            const createdAt = item?.created_at
+                                ? new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
+                                  new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                                : 'N/A';
+
+                            html += `
+                                <tr>
+                                    <td class="ps-3">${index + 1}</td> <!-- Display row number -->
+                                    <td class="ps-3">${fullName}</td> <!-- Display full name safely -->
+                                    <td class="ps-3">${phoneNumber}</td> <!-- Display phone number safely -->
+                                    <td class="ps-3">${emailAddress}</td> <!-- Display email address safely -->
+                                    <td class="text-center">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+                                                   id="flexSwitchCheckChecked${item?.id}" ${statusChecked}>
+                                        </div>
+                                    </td>
+                                    <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely handled created_at -->
+                                    <td class="text-end">
+                                        <div class="btn-reveal-trigger position-static">
+                                            <button class="btn btn-sm dropdown-toggle" type="button"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                                     data-prefix="fas" data-icon="ellipsis" role="img"
+                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                                    <path fill="currentColor"
+                                                          d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
+                                                   data-bs-target="#filterModal" data-edit-contact='${JSON.stringify(item?.id)}' id="handleEditAddBtn">Edit</a>
+                                                <div class="dropdown-divider"></div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+
+                        // Insert the generated HTML into the table body
+                        $('#contact_listing_table_body').html(html);
+                    } else {
+                        // If no contacts are found, show a message
+                        $('#contact_listing_table_body').html('<tr><td colspan="7" class="text-center">No contacts found.</td></tr>');
+                    }
+                } else {
+                    // Handle non-200 response status
+                    console.error('Error: Response status is not 200. Actual status:', response.status);
+                    $('#contact_listing_table_body').html('<tr><td colspan="7" class="text-center">Failed to load contacts. Please try again later.</td></tr>');
+                }
+            } catch (error) {
+                // Catch any unexpected errors and log them
+                console.error('An unexpected error occurred:', error);
+                $('#contact_listing_table_body').html('<tr><td colspan="7" class="text-center">An error occurred while processing the contact data.</td></tr>');
             }
         }
+
     }
 
 

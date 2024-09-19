@@ -108,7 +108,7 @@
                             <input type="hidden" name="testimonial_id" id="testimonial-id">
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="text" class="form-control" id="name" name="name" placeholder="name">
-                                <label class="mx-2" for="name">Name</label>
+                                <label class="mx-2 required-asterisk" for="name">Name</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="text" class="form-control" id="designation" name="designation"
@@ -118,11 +118,11 @@
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="text" class="form-control" id="description" name="description"
                                     placeholder="description">
-                                <label class="mx-2" for="description">Description</label>
+                                <label class="mx-2 required-asterisk" for="description">Description</label>
                             </div>
 
                             <div class="col-3 mb-3">
-                                <label for="file" class="form-label mb-2 small ">Upload Image</label>
+                                <label for="file" class="form-label mb-2 small ">Upload Image <small>jpeg,jpg,png,gif max-size:10mb</small></label>
                                 <div class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center p-1"
                                     style="cursor: pointer;"
                                     onclick="document.getElementById('file').click();">

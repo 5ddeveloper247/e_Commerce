@@ -1,23 +1,4 @@
 //  ____________________SideBar________________________
-//  <script>
-//     $(document).ready(function() {
-//         function checkScreenSize() {
-//             if ($(window).width() < 992) {
-//                 $('.sidebar').hide();
-//             } else {
-//                 $('.sidebar').show();
-//             }
-//         }
-
-//         // Check on initial load
-//         checkScreenSize();
-
-//         // Check on resize
-//         $(window).resize(function() {
-//             checkScreenSize();
-//         });
-//     });
-// </script>
 
 //  icon rotate
 $(document).ready(function () {
@@ -300,7 +281,7 @@ function resetModalForm(selector = '#filterModal') {
 
 
 
-// var files = [];
+var files = [];
 var selectedFiles = [];
 $('#file-input').on('change', function (event) {
     const files = event.target.files;
@@ -358,7 +339,6 @@ function removeExistedFiles(fileIndex, url) {
     // Remove the file from the files array
     const removedfile = files[fileIndex]; // Directly use fileIndex to get the file object
     files.splice(fileIndex, 1); // Remove the file from the array
-
     if (removedfile !== undefined) {
         var url = url;
         const type = "POST";
@@ -417,7 +397,6 @@ function displayExistedFiles() {
         const $imageDiv = $('<div>').addClass('image-item-land');
         const $image = $('<img>').attr('src', file.name);
         $imageDiv.append($image);
-
         const $fileName = $('<p>').text(file.name); // Display the file name
         $imageDiv.append($fileName);
 

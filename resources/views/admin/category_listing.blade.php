@@ -110,12 +110,12 @@
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="text" class="form-control" id="category_name" name="category_name"
                                     placeholder="name">
-                                <label class="mx-2" for="generalInfo">category name</label>
+                                <label class="mx-2 required-asterisk" for="generalInfo">category name</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="text" class="form-control" id="category_description"
                                     name="category_description" placeholder="name">
-                                <label class="mx-2" for="generalInfo">category description</label>
+                                <label class="mx-2 required-asterisk" for="generalInfo">category description</label>
                             </div>
 
                             <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">

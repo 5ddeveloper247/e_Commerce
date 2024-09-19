@@ -3,7 +3,7 @@
     <div class="container py-5">
         <div class="row justify-content-md-between justify-content-center align-items-center">
             <div class="col-md-6">
-                <div class=" justify-content-centerd-flex align-items-center">
+                <div class="d-flex justify-content-center align-items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 48 48">
                         <g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4">
                             <path fill="currentColor"
@@ -14,6 +14,7 @@
                     <h4 class="text-white ps-2 mb-0">Sign Up For NewsLetter</h4>
                 </div>
             </div>
+
             <div class="col-md-6">
                 <form class="d-flex mt-md-0 mt-3" id="newsLetterForm">
                     <input class="form-control me-2 nav-search" name="email" id="email" type="search"
@@ -27,6 +28,18 @@
         </div>
     </div>
 </div>
+@php
+// Call the siteCommonData helper and extract the data
+$siteData = siteCommonData();
+// Extract specific variables from the returned data array
+$settings = $siteData['settings'];
+$products = $siteData['products'];
+$categories = $siteData['categories'];
+$brands = $siteData['brands'];
+// dd()
+
+@endphp
+
 <footer class="bg-light text-dark pt-md-5 pt-3">
     <div class="container">
         <div class="row">
@@ -41,10 +54,7 @@
                     </svg>
                     <p class="ms-2">
 
-                        Acme Widgets<br>
-                        123 Widget Street<br>
-                        Acmeville, AC 12345<br>
-                        United States of America
+                        {{ @$settings->address }}
                     </p>
                 </div>
                 <div class="d-flex align-items-center mt-1">
@@ -53,7 +63,7 @@
                             d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7L4 8v10h16V8zm0-2l8-5H4zM4 8V6v12z" />
                     </svg>
                     <p class="ms-2 mb-0">
-                        support@gmail.com
+                        {{ @$settings->email }}
                     </p>
                 </div>
                 <div class="d-flex align-items-center mt-3 mb-0 mb-5">
@@ -62,16 +72,14 @@
                             d="m19.23 15.26l-2.54-.29a1.99 1.99 0 0 0-1.64.57l-1.84 1.84a15.05 15.05 0 0 1-6.59-6.59l1.85-1.85c.43-.43.64-1.03.57-1.64l-.29-2.52a2 2 0 0 0-1.99-1.77H5.03c-1.13 0-2.07.94-2 2.07c.53 8.54 7.36 15.36 15.89 15.89c1.13.07 2.07-.87 2.07-2v-1.73c.01-1.01-.75-1.86-1.76-1.98" />
                     </svg>
                     <h5 class="ms-2 mb-0">
-                        9876543210
+                        {{ @$settings->phone }}
                     </h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-4">
                 <h5>Navigate</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#">Specials</a></li>
                     <li><a href="{{'contact_us'}}">Contact Us</a></li>
-                    <li><a href={{url('blogs')}}>Our Blogs</a></li>
                     <li><a href={{url('shipping-returns')}}>Shipping & Returns</a></li>
                     <li><a href={{url('privacy-policy')}}>Privacy Policy</a></li>
                     <li><a href={{url('terms-conditions')}}>Terms & Conditions</a></li>
@@ -84,26 +92,19 @@
                 <h5>Categories</h5>
                 <ul class="list-unstyled">
                     <li><a href="{{url('/products')}}">Shop All</a></li>
-                    <li><a href="#">Computers</a></li>
-                    <li><a href="#">Beagle</a></li>
-                    <li><a href="#">Barbet</a></li>
-                    <li><a href="#">Ipods</a></li>
-                    <li><a href="#">Gadgets</a></li>
-                    <li><a href="#">Cell Phones</a></li>
-                    <li><a href="#">Video Games</a></li>
+                    @foreach ($categories as $category )
+                    <li><a href="{{ url('/products'.'/'. $category->category_name) }}">{{ $category->category_name
+                            }}</a></li>
+                    @endforeach
                 </ul>
             </div>
             <div class="col-lg-3 col-md-4 footer-brands">
                 <h5>Popular Brands</h5>
                 <ul class="list-unstyled">
-                    <li><a href="#">Shoppe Fabs</a></li>
-                    <li><a href="#">Mountain Climbing</a></li>
-                    <li><a href="#">Premium Quality</a></li>
-                    <li><a href="#">Summer Camping</a></li>
-                    <li><a href="#">Wintage Spoon</a></li>
-                    <li><a href="#">Foodzone</a></li>
-                    <li><a href="#">Walking Dreams</a></li>
-                    <li><a href="#">View All</a></li>
+                    @foreach ($brands as $brand )
+                    <li><a href="{{ $brand->url?? " #" }}">{{ $brand->title }}</a></li>
+                    @endforeach
+
                 </ul>
             </div>
         </div>

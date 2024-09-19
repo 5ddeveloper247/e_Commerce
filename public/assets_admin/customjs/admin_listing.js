@@ -2,15 +2,17 @@ $(document).ready(function () {
 
     fetchInitialLoad();
     function fetchInitialLoad() {
-        const url = "/admin/admin/listing/ajax";
+        const url = "/admin/listing/ajax";
         const type = "Get";
         let data = {}; // Your data to send to the server here
         SendAjaxRequestToServer(type, url, data, '', getAdminListing, '', '#contactReply_submit');
 
         function getAdminListing(response) {
-
-
             if (response.status == 200) {
+                const active=response.active;
+                const inactive=response.inactive;
+                const total=response.count;
+                console.log(active,inactive,total)
                 let html = '';
                 response.admins.forEach((item, index) => {
                     html += `
@@ -50,6 +52,9 @@ $(document).ready(function () {
                 `;
                 });
 
+                $('#active').text(active)
+                $('#inactive').text(inactive)
+                $('#total').text(total)
                 $('#admin_listing_table_body').html(html);
             }
 
@@ -58,12 +63,22 @@ $(document).ready(function () {
 
     // Define additional functions for editing and removing admins
     $('body').on('click', '#handleEditAdminBtn', function () {
+        const form = document.getElementById('addEventForm');
+        // Remove all 'is-invalid' classes from form inputs and their error messages
+        $('.p-label').removeClass('required-asterisk');
+        $('.p-confirm-label').removeClass('required-asterisk');
+        $(form).find('.is-invalid').removeClass('is-invalid');
+        $(form).find('.invalid-feedback').remove(); // Assuming you're using Bootstrap-style error messages
+        // Reset the form fields
+        form.reset();
+        // Retrieve the admin data from the clicked button and populate the form fields
         const item = JSON.parse($(this).attr('data-edit-admin'));
         $('#admin_name').val(item.username);
         $('#admin_email').val(item.email);
         $('#admin_status').prop('checked', item.status == 1);
         $('#admin-id').val(item.id);
     });
+
 
     $('body').on('click', '#editAdminNow', function () {
         const data = {
@@ -96,40 +111,26 @@ $(document).ready(function () {
             form.reset();
             $("#filterModal").modal('hide');
             fetchInitialLoad();
-
-            // Uncomment and define this function if you want to reload the admin list data
-            // loadJobsPageData();
         }
         else {
             // Error Handling
             let errorMessage = 'An error occurred. Please try again.';
-
             if (response.status === 402) {
                 // Handle specific error status
                 errorMessage = response.message;
             } else if (response.status == 422) {
                 // Validation errors
-
                 errorMessage = response.responseJSON.message || 'Validation failed.';
                 const validationErrors = response.responseJSON.errors || {};
 
-                // Log the response for debugging
-
-
-                // Highlight the invalid fields
                 $.each(validationErrors, function (key, error) {
-
                     const inputField = $('[name="' + key + '"]');
-
                     inputField.addClass('is-invalid');
-                    // Optionally, show error messages next to each field
-                    // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
                 });
             } else if (response.status === 500) {
                 // Handle server error
                 errorMessage = response.message || 'Internal server error. Please contact support.';
             }
-
             // Display error message
             toastr.error(errorMessage, '', {
                 timeOut: 3000
@@ -167,6 +168,8 @@ $(document).ready(function () {
             toastr.success(response.message, '', {
                 timeOut: 3000
             })
+
+            $('#confirmationModalRemove').modal('hide');
             fetchInitialLoad();
         }
         else {

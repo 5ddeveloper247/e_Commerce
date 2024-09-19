@@ -18,45 +18,71 @@ $(document).ready(function () {
     }
 
     function getOrderDetailResponse(response) {
+        try {
+            // Check if response status is 200 (success)
+            if (response.status === 200) {
+                // Call createStates function with the payments data
+                if (response?.payments && Array.isArray(response.payments)) {
+                    createStates(response.payments);
+                    let html = '';
 
-        if (response.status == 200) {
-            createStates(response.payments);
-            let html = '';
-            response.payments.forEach((payment, index) => {
-                console.log(payment.order_id)
-                console.log(payment)
-                html += `
-                <tr>
-                    <td class="ps-3">${index + 1}</td> <!-- Changed item.id to index + 1 -->
-                    <td class="ps-3">${payment?.user?.username}</td>
-                    <td class="ps-3">${payment?.user?.email}</td>
-                    <td class="ps-3 text-nowrap">${new Date(payment.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(payment.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
-                    <td class="text-end">
-                        <div class="btn-reveal-trigger position-static">
-                            <button class="btn btn-sm dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
-                                     data-prefix="fas" data-icon="ellipsis" role="img"
-                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                    <path fill="currentColor"
-                                          d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end viewDetailBtn" data-detail-order='${payment?.order_id}'>
-                                <a class="dropdown-item modal-edit-btn" type="button"
-                                     >View Detail</a>
-                                <div class="dropdown-divider"></div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            `;
-            });
+                    response.payments.forEach((payment, index) => {
+                        // Safely access payment data with optional chaining and fallback values
+                        const username = payment?.user?.username || 'N/A';
+                        const email = payment?.user?.email || 'N/A';
+                        const createdAt = payment?.created_at
+                            ? new Date(payment.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
+                              new Date(payment.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                            : 'N/A';
+                        const orderId = payment?.order_id || 'N/A';
 
-            $('#order_listing_table_body').html(html);
+                        // Append each payment row to the HTML string
+                        html += `
+                            <tr>
+                                <td class="ps-3">${index + 1}</td> <!-- Display row number -->
+                                <td class="ps-3">${username}</td> <!-- Safely display username -->
+                                <td class="ps-3">${email}</td> <!-- Safely display email -->
+                                <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely display created_at -->
+                                <td class="text-end">
+                                    <div class="btn-reveal-trigger position-static">
+                                        <button class="btn btn-sm dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                                 data-prefix="fas" data-icon="ellipsis" role="img"
+                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                                <path fill="currentColor"
+                                                      d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                        <div class="dropdown-menu dropdown-menu-end viewDetailBtn" data-detail-order='${orderId}'>
+                                            <a class="dropdown-item modal-edit-btn" type="button">View Detail</a>
+                                            <div class="dropdown-divider"></div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                    });
+
+                    // Insert the generated HTML into the table body
+                    $('#order_listing_table_body').html(html);
+                } else {
+                    // If no payments are found, display a message
+                    $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">No orders found.</td></tr>');
+                }
+            } else {
+                // Handle non-200 response status
+                console.error('Error: Response status is not 200. Actual status:', response.status);
+                $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">Failed to load orders. Please try again later.</td></tr>');
+            }
+        } catch (error) {
+            // Catch any unexpected errors and log them
+            console.error('An unexpected error occurred:', error);
+            $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">An error occurred while processing the order data.</td></tr>');
         }
     }
+
 
 
     //view order detail here

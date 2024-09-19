@@ -40,6 +40,14 @@
 
         }
     }
+
+    #brand-filter input {
+        margin-right: 5px
+    }
+
+    #category-filter input {
+        margin-right: 5px
+    }
 </style>
 @endpush
 
@@ -113,52 +121,66 @@
         </div>
     </nav>
 
-    <div class="d-flex py-5">
-        <nav class="navbar d-none d-lg-block border rounded-4 w-50 navbar-expand-lg"
-            style="height:fit-content; width:fit-content">
-            <div class="container">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav d-flex flex-column w-100" id="filter-form">
-                        <li class="nav-item">
-                            <h6>Brand</h6>
-                            <!-- Container for dynamically populated brand checkboxes -->
-                            <div id="brand-filter">
-                                <!-- Dynamic brand checkboxes will be added here -->
-                            </div>
-                        </li>
-                        <li class="nav-item">
-                            <h6>Category</h6>
-                            <!-- Container for dynamically populated category checkboxes -->
-                            <div id="category-filter">
-                                <!-- Dynamic category checkboxes will be added here -->
-                            </div>
-                        </li>
-                        <hr>
-                        <li class="nav-item">
-                            <h6>Price</h6>
-                            <div class="d-flex gap-2">
-                                <div class="d-flex">
-                                    <input type="text" class="w-50" placeholder="Min" name="minPrice" id="min-price">
-                                    <input type="text" class="w-50" placeholder="Max" name="maxPrice" id="max-price">
-                                </div>
-                            </div>
-                        </li>
-                        <hr>
-                    </ul>
+    <div class="row py-5">
+        <div id="categorySearchItem">
+            @if(isset($notFound) && $notFound)
+            <p id="categorySearchItemId">404</p>
+            @else
+            @if($category)
+            <p id="categorySearchItemId">{{ $category->id }}</p>
+            <p id="categorySearchItemName">{{ $category->category_name }}</p>
+            @else
+            @endif
+            @endif
+        </div>
 
+        <div class="col-md-3">
+            <nav class="navbar d-none d-lg-block border rounded-4 navbar-expand-lg"
+                style="height:fit-content; width:fit-content">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav d-flex flex-column w-100" id="filter-form">
+                            <li class="nav-item">
+                                <h6>Brand</h6>
+                                <!-- Container for dynamically populated brand checkboxes -->
+                                <div id="brand-filter">
+                                    <!-- Dynamic brand checkboxes will be added here -->
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <h6 class="mt-3">Category</h6>
+                                <!-- Container for dynamically populated category checkboxes -->
+                                <div id="category-filter">
+                                    <!-- Dynamic category checkboxes will be added here -->
+                                </div>
+                            </li>
+                            <hr>
+                            <li class="nav-item">
+                                <h6>Price</h6>
+                                <div class="d-flex gap-2">
+                                    <div class="d-flex">
+                                        <input type="text" class="w-50" placeholder="Min" name="minPrice"
+                                            id="min-price">
+                                        <input type="text" class="w-50" placeholder="Max" name="maxPrice"
+                                            id="max-price">
+                                    </div>
+                                </div>
+                            </li>
+                            <hr>
+                        </ul>
+
+                    </div>
                 </div>
-            </div>
-        </nav>
-        <div>
-            <div class="d-flex flex-column flex-md-row gap-3 mx-3">
-                <img class="border rounded-3 p-1"
-                    src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/p/category-img-06__37886.original.jpg"
-                    width="200" alt="">
+            </nav>
+        </div>
+
+        <div class="col-md-9">
+            <div class="d-flex flex-column flex-md-row gap-3 mx-3 d-none">
                 <div>
                     <h6>
                         Shop All
@@ -273,7 +295,6 @@
 
 
 @endsection
-
 @push('scripts')
 
 <script src="{{ asset('assets_user/customjs/product_listing.js') }}"></script>

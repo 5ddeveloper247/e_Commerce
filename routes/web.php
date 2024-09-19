@@ -11,6 +11,8 @@ use App\Http\Controllers\NewsLetterController;
 use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\DashboardController;
+use App\Models\Category;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,7 +55,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/profile', [AdminController::class, 'profileIndex'])->name('admin.profile');
         Route::post('/profile/update', [AdminController::class, 'profileUpdate'])->name('admin.profile.update');
         Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
-        Route::get('/admin/listing', [AdminController::class, 'adminListing'])->name('admin.listing');
+        Route::get('/listing', [AdminController::class, 'adminListing'])->name('admin.listing');
         Route::get('/user/listing', [AdminController::class, 'userListing'])->name('user.listing');
         Route::get('/site/settings', [AdminController::class, 'siteSettings'])->name('admin.site.settings');
         Route::get('/category', [AdminController::class, 'categoryGet'])->name('admin.category.get');
@@ -75,7 +77,7 @@ Route::group(['prefix' => 'admin'], function () {
 
 
         /************** AJAX ROUTES ******************/
-        Route::get('/admin/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
+        Route::get('/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
         Route::get('/user/listing/ajax', [AdminController::class, 'userListingAjax'])->name('user.listing.ajax');
         Route::post('/admin/edit/ajax', [AdminController::class, 'updateAdminAjax'])->name('admin.edit.ajax');
         Route::post('/user/edit/ajax', [AdminController::class, 'updateUserAjax'])->name('user.edit.ajax');
@@ -141,10 +143,13 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/payments/listing', [PaymentController::class, 'paymentsListing'])->name('admin.paymentsListing');
         //enquiries
         Route::post('/inquiries/listing', [AdminEnquiryController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
-        Route::post('/admin/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('admin.enquiryMessageCreate');
+        Route::post('/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('admin.enquiryMessageCreate');
 
+        //dashboard
+        Route::get('/getDashboardData', action: [DashboardController::class, 'getDashboard'])->name('admin.getDashboard');
     });
 });
+
 
 
 
@@ -222,10 +227,25 @@ Route::get('/cart', function () {
     return view('website.cart');
 });
 
-Route::get('/products', function () {
-
-    return view('website.products');
+Route::get('/products/{category?}', function ($categoryName = null) {
+    if ($categoryName !== null) {
+        $category = Category::where('category_name', $categoryName)->first();
+        if ($category) {
+            // Pass the category object if found
+            return view('website.products', ['category' => $category]);
+        } else {
+            // If category not found, pass a value indicating no category
+            return view('website.products', ['category' => null, 'notFound' => true]);
+        }
+    } else {
+        // If no category was provided, pass a default value
+        return view('website.products', ['category' => null, 'notFound' => true]);
+    }
 });
+
+
+
+
 Route::get('/contact_us', function () {
     return view('website.contact_us');
 });

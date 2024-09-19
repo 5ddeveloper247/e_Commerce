@@ -51,4 +51,43 @@ class AdminEnquiryController extends Controller
             'status' => 200,
         ]);
     }
+
+    public function enquiryMessageCreate(Request $request)
+    {
+        $files = $request->file('files'); // Retrieve the files
+        // Create the enquiry message
+        $enquiryMessage = EnquiryMessages::create([
+            'enquiry_id' => $request->inquiryid,
+            'message' => $request->inquirymessage,
+            'source_id' => Auth::user()->id,
+            'source_from' => Auth::user()->id,
+        ]);
+        // Check if files are provided and process each file
+        if ($files && is_array($files)) {
+            foreach ($files as $file) {
+                // Store the file in the 'enquiry' directory
+                $path = $file->store('enquiry', 'public');
+                // Save the file information in EnquiryAttachments table
+                EnquiryAttachments::create([
+                    'enquirymessage_id' => $enquiryMessage->id,
+                    'filepath' => $path,
+                    'filetype' => $file->getClientMimeType(), // Get the MIME type of the file
+                ]);
+            }
+        }
+
+        // Return success response
+        if ($enquiryMessage) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Message sent successfully',
+                'enquiryMessage' => $enquiryMessage,
+            ]);
+        }
+        // Return error response if the message creation failed
+        return response()->json([
+            'status' => 400,
+            'message' => 'Failed to send message',
+        ]);
+    }
 }

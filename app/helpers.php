@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Mail;
 use App\Models\Roles;
 use App\Models\SiteSetting;
 use App\Models\Product;
+use App\Models\Category;
+use App\Models\Brand;
+use App\Models\Testimonial;
+
 
 if (!function_exists('saveMultipleImages')) {
 
@@ -207,5 +211,30 @@ if (!function_exists('getDiscountedProducts')) {
             Log::error($e->getMessage());
             return false;
         }
+    }
+
+
+    if (!function_exists('siteCommonData')) {
+        function siteCommonData()
+        {
+            $data = [];
+            // Fetch site settings, products, categories, and brands
+            $data['settings'] = SiteSetting::first();
+            $data['products'] = Product::all(); // Consider limiting or paginating if needed
+            $data['categories'] = Category::all(); // You can also optimize queries
+            $data['brands'] = Brand::all(); // Use consistent lowercase for the key
+            return $data;
+        }
+    }
+
+
+
+    if (!function_exists('testimonials')) {
+
+        function testimonials(){
+            $testimonials = Testimonial::where('status', '1')->get();
+            return $testimonials;
+        }
+
     }
 }

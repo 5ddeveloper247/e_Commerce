@@ -1,11 +1,9 @@
 @extends('layouts.admin.admin_master')
 
 @push('css')
-
 @endpush
 
 @section('content')
-
 <div>
     <div>
         <div class="p-md-4 p-3">
@@ -24,7 +22,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2">{{ $adminsActive }}</span>
+                                <span class="fw-bold fs-2" id="active"></span>
                             </h3>
                             <small>Active</small>
                         </div>
@@ -36,7 +34,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2">{{ $adminsInactive }}</span>
+                                <span class="fw-bold fs-2" id="inactive"></span>
                             </h3>
                             <small>InActive</small>
                         </div>
@@ -48,7 +46,7 @@
                         </svg>
                         <div class="ms-3">
                             <h3 class="mb-0 text-center">
-                                <span class="fw-bold fs-2">{{ $adminsListingRecord->count() }}</span>
+                                <span class="fw-bold fs-2" id="total"></span>
                             </h3>
                             <small>Total</small>
                         </div>
@@ -107,29 +105,29 @@
                             <input type="hidden" name="admin_id" id="admin-id">
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="text" class="form-control" id="admin_name" name="admin_name"
-                                    placeholder="name">
-                                <label class="mx-2" for="generalInfo">username</label>
+                                    placeholder="name shuold not greater than 15 characters">
+                                <label class="mx-2 required-asterisk"  for="generalInfo">username</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="email" class="form-control" id="admin_email" name="admin_email"
                                     placeholder="name@example.com">
-                                <label class="mx-2" for="generalInfo">email</label>
+                                <label class="mx-2 required-asterisk" for="generalInfo">email</label>
                             </div>
 
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="password" class="form-control" id="admin_password" name="admin_password"
                                     placeholder="">
-                                <label class="mx-2" for="edit-admin-password">Password</label>
+                                <label class="mx-2 p-label required-asterisk" for="edit-admin-password">Password</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
                                 <input type="password" class="form-control" id="admin_confirm_password"
                                     name="admin_confirm_password" placeholder="">
-                                <label class="mx-2" for="edit-admin-confirm-password">confirm Password</label>
+                                <label class="mx-2 p-confirm-label required-asterisk" for="edit-admin-confirm-password">confirm Password</label>
                             </div>
                             <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
                                 <input class="form-check-input" type="checkbox" role="switch" name="admin_status"
                                     id="admin_status">
-                                <label class="form-check-label ms-2" for="status">status</label>
+                                <label class="form-check-label ms-2 " for="status">status</label>
                             </div>
 
                         </div>

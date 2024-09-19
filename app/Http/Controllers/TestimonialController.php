@@ -43,7 +43,7 @@ class TestimonialController extends Controller
     {
         // Validate request inputs
         $validatedData = $request->validate([
-            'name' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
             'description' => 'required|string',
             'designation' => 'nullable|string',
             'file' => 'nullable|mimes:jpeg,jpg,png,gif|max:10240', // only allow these file types and limit the size to 10 MB

@@ -179,54 +179,104 @@ class AdminController extends Controller
     public function userListingAjax(Request $request)
     {
         $usersListingRecord = User::where('role', 2)->get();
+        $inactive = User::where('status', 0)->where('role', 2)->count();
+        $active = User::where('status', 1)->where('role', 2)->count();
         return response()->json([
             'users' => $usersListingRecord,
             'count' => count($usersListingRecord),
-            'status' => 200
+            'status' => 200,
+            'inactive' => $inactive,
+            'active' => $active
         ]);
     }
 
     public function adminListingAjax(Request $request)
     {
         $adminsListingRecord = User::where('role', 1)->get();
+        $active=User::where('role',1)->where('status',1)->count();
+        $inactive=User::where('role',1)->where('status',0)->count();
         return response()->json([
             'admins' => $adminsListingRecord,
             'count' => count($adminsListingRecord),
-            'status' => 200
+            'status' => 200,
+            'active' => $active,
+            'inactive'=>$inactive
         ]);
     }
 
 
+
+
     public function updateAdminAjax(Request $request)
     {
-        // Define validation rules based on the presence of the 'id' field
-        $rules = [
-            'id' => 'nullable|integer|exists:users,id', // If present, 'id' must be an integer and exist in the 'users' table
-            'admin_name' => 'required|string|max:15',
-            'admin_email' => [
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('users', 'email')->ignore($request->id), // If 'id' is present, ignore it while checking for unique emails
-            ],
-            'admin_password' => [
+        // Define validation rules based on whether the 'id' exists (update) or not (create)
+        if (!$request->filled('id')) {
+            // Creating a new admin
+            $rules = [
+                'admin_name' => 'required|string|max:15',
+                'admin_email' => [
+                    'required',
+                    'email',
+                    'max:255',
+                    Rule::unique('users', 'email'), // Email must be unique when creating a new admin
+                ],
+                'admin_password' => [
+                    'required',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Password requirements
+                ],
+                'admin_confirm_password' => 'required|same:admin_password', // Must confirm the password
+                'admin_status' => 'required|integer|in:0,1'
+            ];
+        }
+        else {
+            // Updating an existing admin
+            $rules = [
+                'id' => 'required|integer|exists:users,id',
+                'admin_name' => 'required|string|max:15',
+                'admin_email' => [
+                    'required',
+                    'email',
+                    'max:255',
+                    Rule::unique('users', 'email')->ignore($request->id), // Ignore current admin's email for uniqueness
+                ],
+                'admin_status' => 'required|integer|in:0,1'
+            ];
+             // If the password is provided during update, validate it
+        if ($request->filled('admin_password')) {
+            $rules['admin_password'] = [
                 'nullable',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
-            ],
-            'admin_password_confirm' => 'nullable|same:admin_password',
-            'admin_status' => 'required|integer|in:0,1'
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Password requirements
+            ];
+            $rules['admin_confirm_password'] = 'nullable|same:admin_password'; // Must confirm the password
+        }
+            if($request->admin_password !==null){
+                if($request->admin_confirm_password ==null || $request->admin_confirm_password==''  ){
+                    return response()->json([
+                        'message' => 'Confirm password is required',
+                        'status'=>422,
+                        'errors'=>[
+                            'admin_confirm_password' =>[
+                                'Confirm password is required'
+                            ]
+                        ]
+                        ],422);
+                }
+            }
+        }
+        // Custom messages for validation errors
+        $messages = [
+            'admin_password.regex' => 'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.',
+            'admin_confirm_password.same' => 'Password confirmation must match the password.',
         ];
-
         // Validate the incoming request data
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($rules, $messages);
 
         try {
             // Check if we are updating an existing user or creating a new one
-            if ($request->has('id') && !is_null($request->id)) {
-                // Find the user by ID
+            if ($request->filled('id')) {
+                // Update the existing user
                 $user = User::find($validatedData['id']);
                 if ($user) {
-                    // Update user details
                     $user->username = $validatedData['admin_name'];
                     $user->email = $validatedData['admin_email'];
 
@@ -238,58 +288,97 @@ class AdminController extends Controller
                     $user->status = $validatedData['admin_status'];
                     $user->save();
 
-                    // Return success response for update
+                    // Return success response
                     return response()->json(['message' => 'Admin updated successfully', 'status' => 200]);
                 } else {
-                    // User not found
                     return response()->json(['message' => 'User not found', 'status' => 404]);
                 }
             } else {
-                // Create a new user if 'id' is not present
+                // Create a new admin
                 $user = new User();
                 $user->username = $validatedData['admin_name'];
                 $user->email = $validatedData['admin_email'];
                 $user->password = Hash::make($validatedData['admin_password']);
                 $user->status = $validatedData['admin_status'];
-                $user->role = 1; //0 for super admin 1 for admin 2 for user
+                $user->role = 1; // 0 for super admin, 1 for admin, 2 for user
                 $user->save();
 
-                // Return success response for creation
+                // Return success response
                 return response()->json(['message' => 'Admin created successfully', 'status' => 200]);
             }
         } catch (Exception $e) {
-            // Log the error for debugging
-            Log::error('Error updating admin: ' . $e->getMessage());
-
-            // Return server error response
+            Log::error('Error updating or creating admin: ' . $e->getMessage());
             return response()->json(['message' => 'Something went wrong. Please try again.', 'status' => 500]);
         }
     }
+
 
 
     //updateUserAjax
     public function updateUserAjax(Request $request)
     {
         // Define validation rules based on the presence of the 'id' field
-        $rules = [
-            'id' => 'nullable|integer|exists:users,id', // If present, 'id' must be an integer and exist in the 'users' table
-            'user_name' => 'required|string|max:15',
-            'user_email' => [
-                'required',
-                'email',
-                'max:255',
-                Rule::unique('users', 'email')->ignore($request->id), // If 'id' is present, ignore it while checking for unique emails
-            ],
-            'user_password' => [
+        if (!$request->filled('id')) {
+            // Creating a new admin
+            $rules = [
+                'user_name' => 'required|string|max:15',
+                'user_email' => [
+                    'required',
+                    'email',
+                    'max:255',
+                    Rule::unique('users', 'email'), // Email must be unique when creating a new admin
+                ],
+                'user_password' => [
+                    'required',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Password requirements
+                ],
+                'user_confirm_password' => 'required|same:user_password', // Must confirm the password
+                'user_status' => 'required|integer|in:0,1'
+            ];
+        }
+        else {
+            // Updating an existing admin
+            $rules = [
+                'id' => 'required|integer|exists:users,id',
+                'user_name' => 'required|string|max:15',
+                'user_email' => [
+                    'required',
+                    'email',
+                    'max:255',
+                    Rule::unique('users', 'email')->ignore($request->id), // Ignore current admin's email for uniqueness
+                ],
+                'user_status' => 'required|integer|in:0,1'
+            ];
+             // If the password is provided during update, validate it
+        if ($request->filled('user_password')) {
+            $rules['user_password'] = [
                 'nullable',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
-            ],
-            'user_password_confirm' => 'nullable|same:user_password',
-            'user_status' => 'required|integer|in:0,1'
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Password requirements
+            ];
+            $rules['user_confirm_password'] = 'nullable|same:user_password'; // Must confirm the password
+        }
+            if($request->user_password !==null){
+                if($request->user_confirm_password ==null || $request->user_confirm_password==''  ){
+                    return response()->json([
+                        'message' => 'Confirm password is required',
+                        'status'=>422,
+                        'errors'=>[
+                            'user_confirm_password' =>[
+                                'Confirm password is required'
+                            ]
+                        ]
+                        ],422);
+                }
+            }
+        }
+        // Custom messages for validation errors
+        $messages = [
+            'user_password.regex' => 'Password must contain at least one lowercase letter, one uppercase letter, one number, and one special character.',
+            'user_confirm_password.same' => 'Password confirmation must match the password.',
         ];
-
         // Validate the incoming request data
-        $validatedData = $request->validate($rules);
+        $validatedData = $request->validate($rules, $messages);
+
 
         try {
             // Check if we are updating an existing user or creating a new one
@@ -393,14 +482,14 @@ class AdminController extends Controller
     {
         // Validate the incoming request
         $validatedData = $request->validate([
-            'logo' => 'nullable|image|max:2048',
+            'logo' => 'nullable|mimes:jpg,jpeg,png,gif,bmp,svg,webp|max:10240', // 10 MB and image types for logo
             'phone' => 'required|regex:/^[0-9]{9,15}$/|max:15|min:9',
             'email' => 'required|email|max:50',
             'address' => 'required|string|max:255',
             'website_name' => 'required|string|max:50',
             'banner_heading' => 'required|string|max:255',
             'sub_heading' => 'required|string|max:255',
-            'banner_images.*' => 'image|max:2048',
+            'banner_images.*' => 'mimes:jpg,jpeg,png,gif,bmp,svg,webp|max:10240', // 10 MB and image types for banner images
         ]);
 
         try {

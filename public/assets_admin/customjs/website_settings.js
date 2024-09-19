@@ -1,9 +1,5 @@
 $(document).ready(function () {
-
-
-
     SendAjaxRequestToServer("Get", "/admin/site/settings/get", '', '', getSiteSettings, '');
-
     function getSiteSettings(response) {
         if (response.status === 200) {
             // Process the response to populate the files array
@@ -12,12 +8,13 @@ $(document).ready(function () {
                     id: file.id,
                     name: base_url + '/storage/' + file.file_path
                 };
-                files.push(imgdata);
+                files.push(imgdata); //defined in common.js file
             });
 
             displayExistedFiles(); // Call to display the initial files
         }
     }
+
 
     //logo handling started
     // JavaScript to dynamically preview the uploaded image
@@ -26,7 +23,6 @@ $(document).ready(function () {
 
         if (file) {
             const reader = new FileReader(); // Create a new FileReader object
-
             // Define the onload event for the reader
             reader.onload = function (e) {
                 // Set the src attribute of the image preview element
@@ -44,7 +40,6 @@ $(document).ready(function () {
     //site_settings_form
 
     $('body').on('click', '#saveSettingsBtn', function () {
-
         const settingForm = document.getElementById('site_settings_form'); // get the jQuery object for the form
         var formData = new FormData(settingForm);
         if (selectedFiles.length > 0) {
@@ -65,11 +60,7 @@ $(document).ready(function () {
                     timeOut: 3000
                 });
 
-                // Reset the form and hide the modal
-                window.location.reload();
-
-                // Uncomment and define this function if you want to reload the admin list data
-                // loadJobsPageData();
+                   window.location.reload();
 
             } else {
                 // Error Handling

@@ -199,7 +199,7 @@ $(document).ready(function () {
             brandCheckbox.type = 'checkbox';
             brandCheckbox.name = 'brand';
             brandCheckbox.value = brand.id; // Use brand.id for the value
-            brandCheckbox.id = `brand-${index + 1}`;
+            brandCheckbox.id = `brand-${brand.id}`;
 
             // Set label attributes
             brandLabel.htmlFor = `brand-${index + 1}`;
@@ -225,7 +225,7 @@ $(document).ready(function () {
             categoryCheckbox.type = 'checkbox';
             categoryCheckbox.name = 'category';
             categoryCheckbox.value = category.id; // Use category.id for the value
-            categoryCheckbox.id = `category-${index + 1}`;
+            categoryCheckbox.id = `category-${category.id}`;
 
             // Set label attributes
             categoryLabel.htmlFor = `category-${index + 1}`;
@@ -288,5 +288,53 @@ $(document).ready(function () {
     }
 
 
+//handling categorysearching
+const id = $('#categorySearchItemId').text().trim();
+if (id !== '404') {
+    // Directly mark the checkbox with the matching ID as checked
+    setTimeout(() => {
+        console.log(id)
+        console.log( $(`#category-${id}`).val());
+        $(`#category-${id}`).prop('checked',true);
+        $(`#category-${id}`).click();
+
+    }, 5000);
+
+}
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

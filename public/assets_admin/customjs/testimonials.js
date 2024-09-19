@@ -8,55 +8,86 @@ $(document).ready(function () {
         SendAjaxRequestToServer(type, url, '', '', getTestimonialsListing, '', '#contactReply_submit');
 
         function getTestimonialsListing(response) {
-            console.log(response);
-            if (response.status == 200) {
-                let html = '';
-                $('#state_active').text(response?.active)
-                $('#state_inactive').text(response?.inactive)
-                $('#state_total').text(response?.total)
-                response.data.forEach((item, index) => {
-                    html += `
-                    <tr>
-                        <td class="ps-3">${index + 1}</td> <!-- Changed item.id to index + 1 -->
-                        <td class="ps-3">${item.name}</td>
-                        <td class="ps-3">${item.designation}</td>
-                        <td class="ps-3">${item.description}</td>
-                        <td class="text-center">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
-                                       id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
-                            </div>
-                        </td>
-                        <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
-                        <td class="text-end">
-                            <div class="btn-reveal-trigger position-static">
-                                <button class="btn btn-sm dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
-                                         data-prefix="fas" data-icon="ellipsis" role="img"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <path fill="currentColor"
-                                              d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#filterModal" data-edit-testimonial='${JSON.stringify(item)}' id="handleEditTestimonialBtn">Edit</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#confirmationModalRemove" data-remove-testimonial='${JSON.stringify(item)}' id="handleRemoveTestimonialBtn">Remove</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-                });
+            try {
+                // Check if response status is 200 (success)
+                if (response.status === 200) {
+                    // Update UI elements for active, inactive, and total counts safely
+                    $('#state_active').text(response?.active ?? 'N/A');
+                    $('#state_inactive').text(response?.inactive ?? 'N/A');
+                    $('#state_total').text(response?.total ?? 'N/A');
 
-                $('#testimonials_listing_table_body').html(html);
+                    // Check if the response data array exists and is not empty
+                    if (Array.isArray(response.data) && response.data.length > 0) {
+                        let html = '';
+
+                        response.data.forEach((item, index) => {
+                            // Safely access item properties with optional chaining and defaults
+                            const name = item?.name || 'N/A';
+                            const designation = item?.designation || 'N/A';
+                            const description = item?.description || 'N/A';
+                            const statusChecked = item?.status === 1 ? 'checked' : '';
+                            const createdAt = item?.created_at
+                                ? new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
+                                  new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                                : 'N/A';
+
+                            // Append each testimonial row to the HTML string
+                            html += `
+                                <tr>
+                                    <td class="ps-3">${index + 1}</td> <!-- Display row number -->
+                                    <td class="ps-3">${name}</td> <!-- Display name safely -->
+                                    <td class="ps-3">${designation}</td> <!-- Display designation safely -->
+                                    <td class="ps-3">${description}</td> <!-- Display description safely -->
+                                    <td class="text-center">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+                                                   id="flexSwitchCheckChecked${item?.id}" ${statusChecked}>
+                                        </div>
+                                    </td>
+                                    <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely handled created_at -->
+                                    <td class="text-end">
+                                        <div class="btn-reveal-trigger position-static">
+                                            <button class="btn btn-sm dropdown-toggle" type="button"
+                                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                                     data-prefix="fas" data-icon="ellipsis" role="img"
+                                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                                    <path fill="currentColor"
+                                                          d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                                    </path>
+                                                </svg>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-end">
+                                                <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
+                                                   data-bs-target="#filterModal" data-edit-testimonial='${JSON.stringify(item)}' id="handleEditTestimonialBtn">Edit</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+                                                   data-bs-target="#confirmationModalRemove" data-remove-testimonial='${JSON.stringify(item)}' id="handleRemoveTestimonialBtn">Remove</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            `;
+                        });
+
+                        // Insert the generated HTML into the table body
+                        $('#testimonials_listing_table_body').html(html);
+                    } else {
+                        // If no testimonials are found, display a message
+                        $('#testimonials_listing_table_body').html('<tr><td colspan="7" class="text-center">No testimonials found.</td></tr>');
+                    }
+                } else {
+                    // Handle non-200 response status
+                    console.error('Error: Response status is not 200. Actual status:', response.status);
+                    $('#testimonials_listing_table_body').html('<tr><td colspan="7" class="text-center">Failed to load testimonials. Please try again later.</td></tr>');
+                }
+            } catch (error) {
+                // Catch any unexpected errors and log them
+                console.error('An unexpected error occurred:', error);
+                $('#testimonials_listing_table_body').html('<tr><td colspan="7" class="text-center">An error occurred while processing the testimonials data.</td></tr>');
             }
-
         }
+
     }
 
     // Define additional functions for editing and removing admins

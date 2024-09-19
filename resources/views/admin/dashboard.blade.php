@@ -8,7 +8,6 @@
 
 <div>
     <div class="container py-5">
-        <h2 class="fw-bold">Projects Dashboard</h2>
         <p>
             Here’s what’s going on at your business right now
         </p>
@@ -21,9 +20,9 @@
                 </svg>
                 <div>
                     <h3 class="mb-0">
-                        <span class="fw-bold fs-2">32</span><small class="fw-normal"> Projects</small>
+                        <span class="fw-bold fs-2" id="totalUsers"></span><small class="fw-normal">Users</small>
                     </h3>
-                    <small>Awating processing</small>
+                    <small>Active Users</small>
                 </div>
             </div>
 
@@ -35,9 +34,9 @@
                 </svg>
                 <div>
                     <h3 class="mb-0">
-                        <span class="fw-bold fs-2">94</span><small class="fw-normal"> Members</small>
+                        <span class="fw-bold fs-2" id="totalProducts"></span><small class="fw-normal">Products</small>
                     </h3>
-                    <small>Working hard</small>
+                    <small>Active Products</small>
                 </div>
             </div>
 
@@ -52,9 +51,9 @@
                 </svg>
                 <div>
                     <h3 class="mb-0">
-                        <span class="fw-bold fs-2">23</span><small class="fw-normal"> Invoices</small>
+                        <span class="fw-bold fs-2" id="totalOrders"></span><small class="fw-normal">Orders</small>
                     </h3>
-                    <small>Soon to be cleared</small>
+                    <small>Site Orders</small>
                 </div>
             </div>
 
@@ -66,9 +65,9 @@
                 </svg>
                 <div>
                     <h3 class="mb-0">
-                        <span class="fw-bold fs-2">3</span><small class="fw-normal"> Refunds</small>
+                        <span class="fw-bold fs-2" id="totalAmount"></span><small class="fw-normal"></small>
                     </h3>
-                    <small>Fresh start</small>
+                    <small>Total amount</small>
                 </div>
             </div>
         </div>
@@ -76,23 +75,23 @@
         <ul class="nav nav-links my-3 mb-lg-2 mx-n3">
             <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#"><span>All </span><span
-                        class="text-body-tertiary fw-semibold">(68817)</span></a>
+                        class="text-body-tertiary fw-semibold" id="allProducts"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span>Published </span><span
-                        class="text-body-tertiary fw-semibold">(70348)</span></a>
+                <a class="nav-link" href="#"><span>Published </span><span class="text-body-tertiary fw-semibold"
+                        id="productsPublished"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span>Drafts </span><span
-                        class="text-body-tertiary fw-semibold">(17)</span></a>
+                <a class="nav-link" href="#"><span>Drafts </span><span class="text-body-tertiary fw-semibold"
+                        id="productsUnpublished"></span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><span>On discount </span><span
-                        class="text-body-tertiary fw-semibold">(810)</span></a>
+                <a class="nav-link" href="#"><span>On discount </span><span class="text-body-tertiary fw-semibold"
+                        id="productsDiscounted"></span></a>
             </li>
         </ul>
 
-        <div class="d-flex flex-wrap justify-content-md-between justify-content-center gap-3 my-4">
+        {{-- <div class="d-flex flex-wrap justify-content-md-between justify-content-center gap-3 my-4">
             <div class="search-box">
                 <form class="position-relative"><input class="form-control search-input search" type="search"
                         placeholder="Search products" aria-label="Search">
@@ -104,8 +103,8 @@
                         </path>
                     </svg>
                 </form>
-            </div>
-            <div class="scrollbar overflow-hidden-y">
+            </div> --}}
+            {{-- <div class="scrollbar overflow-hidden-y">
                 <div class="btn-group position-static" role="group">
                     <div class="btn-group position-static text-nowrap">
                         <button class="btn btn-outline-secondary px-md-5 px-2 py-2 flex-shrink-0" type="button"
@@ -170,10 +169,10 @@
                     <button class="btn btn-sm btn-outline-secondary px-md-5 px-2 py-2 flex-shrink-0">More
                         filters</button>
                 </div>
-            </div>
+            </div> --}}
         </div>
 
-        <div id="products">
+        {{-- <div id="products">
             <div class="px-4 px-lg-6 bg-white border-top border-bottom border-translucent position-relative top-1">
                 <div class="table-responsive scrollbar px-1">
                     <table class="table fs-9 mb-0">
@@ -895,10 +894,12 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 
 
 @endsection
+@push('scripts')
 <script src="{{ asset('assets_admin/customjs/dashboard.js') }}"></script>
+@endpush

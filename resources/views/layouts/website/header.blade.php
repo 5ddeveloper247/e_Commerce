@@ -86,9 +86,6 @@
             </div>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 bottom-header-ul d-flex align-items-center flex-wrap">
                 <li class="nav-item px-lg-3 px-2">
-                    <a class="nav-link px-3 py-2" aria-current="page" href="#">Specials</a>
-                </li>
-                <li class="nav-item px-lg-3 px-2">
                     <a class="nav-link px-3 py-2" aria-current="page" href="#">Contact Us</a>
                 </li>
                 <li class="nav-item px-lg-3 px-2">
@@ -269,7 +266,7 @@
                 <p class="text-white mb-0 lh-1 me-2">
                     <small class="text-nowrap">Delivered to</small>
                     <br>
-                    Pakistan
+                    USA
                 </p>
             </a>
             <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
@@ -313,12 +310,15 @@
             <div class="justify-content-center w-50">
                 <form class="d-flex">
                     <input class="form-control me-2 nav-search" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn nav-search-btn d-flex align-items-center justify-content-center" type="submit">
+                    <button id="nav-search-btn"
+                        class="btn nav-search-btn d-flex align-items-center justify-content-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
                             <path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6" />
                         </svg>
+                        <span class="ps-2"></span>
                     </button>
+
                 </form>
             </div>
 
@@ -332,7 +332,7 @@
                             <path fill="currentColor" d="m7 10l5 5l5-5z" />
                         </svg>
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"
+                    {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"
                         style="width : 17rem; margin-left:-8rem;margin-top:9px">
                         <div class="currency-box">
                             <div class="d-flex flex-column justify-content-between">
@@ -350,7 +350,7 @@
                             <a href="#" class="currency-change d-block mt-2 text-decoration-none text-center">Change
                                 country/region</a>
                         </div>
-                    </ul>
+                    </ul> --}}
                 </div>
                 <div class="dropdown-center">
                     <a class="px-2 text-decoration-none d-flex align-items-end" type="button" data-bs-toggle="dropdown"
@@ -511,18 +511,7 @@
                         <span class="ms-1">All</span>
                     </a>
                 </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link px-3 py-2" aria-current="page" href="#">Best Seller</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link px-3 py-2" aria-current="page" href="#">New Releases</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link px-3 py-2" href="#">Books</a>
-                </li>
-                <li class="nav-item px-2">
-                    <a class="nav-link px-3 py-2" aria-current="page" href="#">Specials</a>
-                </li>
+
                 <li class="nav-item px-2">
                     <a class="nav-link px-3 py-2" aria-current="page" href="{{'contact_us'}}">Contact Us</a>
                 </li>
@@ -539,12 +528,6 @@
                         </svg>
                     </a>
                     <div class="position-absolute rounded-3 ps-3 pe-5 py-3">
-                        <div class="navPages-item-page">
-                            <a class="link-action" href={{url('blogs')}}>Our Blogs</a>
-                        </div>
-                        <div class="navPages-item-page">
-                            <a class="link-action" href="#"> Gift Certificates</a>
-                        </div>
                         <div class="navPages-item-page">
                             <a class="link-action" href={{url('shipping-returns')}}>Shipping &amp; Returns</a>
                         </div>
@@ -743,78 +726,6 @@
                     </svg>
                 </a>
             </li>
-            <li class="px-md-3 px-2 py-1">
-                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom" href="#">
-                    Another action
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                            d="m184 112l144 144l-144 144" />
-                    </svg>
-                </a>
-            </li>
-            <li class="px-md-3 px-2 py-1">
-                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom" href="#">
-                    Something else here
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                            d="m184 112l144 144l-144 144" />
-                    </svg>
-                </a>
-            </li>
-            <li class="px-md-3 px-2 py-1">
-                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom" href="#">
-                    Action
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                            d="m184 112l144 144l-144 144" />
-                    </svg>
-                </a>
-            </li>
-            <li class="px-md-3 px-2 py-1">
-                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom" href="#">
-                    Another action
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                            d="m184 112l144 144l-144 144" />
-                    </svg>
-                </a>
-            </li>
-            <li class="px-md-3 px-2 py-1">
-                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom" href="#">
-                    Something else here
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                            d="m184 112l144 144l-144 144" />
-                    </svg>
-                </a>
-            </li>
-            <li class="px-md-3 px-2 py-1">
-                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom" href="#">
-                    Action
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                            d="m184 112l144 144l-144 144" />
-                    </svg>
-                </a>
-            </li>
-            <li class="px-md-3 px-2 py-1">
-                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom" href="#">
-                    Another action
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                            d="m184 112l144 144l-144 144" />
-                    </svg>
-                </a>
-            </li>
-            <li class="px-md-3 px-2 py-1">
-                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom" href="#">
-                    Something else here
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="48"
-                            d="m184 112l144 144l-144 144" />
-                    </svg>
-                </a>
-            </li>
         </ul>
     </div>
 </div>
@@ -823,4 +734,14 @@
 @push('scripts')
 
 <script src="{{ asset('assets_user/customjs/header.js') }}"></script>
+<script>
+    $(document).ready(function() {
+        // Ensure this script runs after the document is ready
+        $('#nav-search-btn').on('click', function(e) {
+            event.preventDefault();
+            // Redirect to /products when the button is clicked
+            window.location.href = '/products';
+        });
+    });
+</script>
 @endpush

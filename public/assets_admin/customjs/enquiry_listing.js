@@ -98,32 +98,36 @@ $(document).ready(function () {
 
     function handleInquiriesById(response) {
         let inquiryDetailHtml = '';
-        let Messagehtml = ''
-        if (response.status == 200) {
-            $('.main-messages').addClass('d-none');
-            $('#inquiry-detail-view').removeClass('d-none');
-            let inquiry = response?.inquiry;
-            let inquiryMessages = inquiry?.enquiry_message
-            const title = inquiry?.title;
+        let Messagehtml = '';
 
-            inquiryMessages.forEach(message => {
-                let attachmentsHtml = ''
-                const sourceUsername = message?.source?.username;
-                const sourceFromUsername = message?.source_from?.username;
-                const messageContent = message?.message;
-                const messageDate = message?.created_at;
-                const messageAttachments = message.enquiry_attachments
+        if (response.status === 200 && response?.inquiry) {
+            try {
+                $('.main-messages').addClass('d-none');
+                $('#inquiry-detail-view').removeClass('d-none');
 
-                messageAttachments.forEach(attachment => {
-                    attachmentsHtml += `
-                    <div class="image-item-land file_section" style="width: 80px; height: 80px; margin: 20px;">
-                        <img src="${base_url + '/storage/' + attachment?.filepath}" style="height: 100%; width: auto;">
-                    </div>`;
-                })
+                let inquiry = response.inquiry;
+                let inquiryMessages = inquiry.enquiry_message || [];
+                const title = inquiry.title || 'No Title';
 
+                inquiryMessages.forEach(message => {
+                    let attachmentsHtml = '';
+                    const sourceUsername = message?.source?.username || 'Unknown';
+                    const sourceFromUsername = message?.source_from?.username || 'Unknown';
+                    const messageContent = message?.message || 'No Message Content';
+                    const messageDate = message?.created_at || 'Unknown Date';
+                    const messageAttachments = message.enquiry_attachments || [];
 
-                Messagehtml += `
-            <div class="d-flex align-items-start justify-content-between profile-area mt-2">
+                    messageAttachments.forEach(attachment => {
+                        if (attachment?.filepath) {
+                            attachmentsHtml += `
+                            <div class="image-item-land file_section" style="width: 80px; height: 80px; margin: 20px;">
+                                <img src="${base_url + '/storage/' + attachment?.filepath}" style="height: 100%; width: auto;">
+                            </div>`;
+                        }
+                    });
+
+                    Messagehtml += `
+                        <div class="d-flex align-items-start justify-content-between profile-area mt-2">
                             <div class="d-flex mail-profile-detail">
                                 <img src="${base_url + '/storage/common/person.png'}" alt="">
                                 <div class="ms-2">
@@ -133,22 +137,19 @@ $(document).ready(function () {
                                 </div>
                             </div>
                         </div>
-                            <div class="d-flex align-items-center justify-content-between">
-                                <p>
-                                    <b>${title}</b>
-                                </p>
-                            </div>
-                            <p class="pt-2">
-                                ${messageContent}
-                            </p>
-                            <br>
-                             <div class="white attachment-container d-flex mx-2" id="attachment-container">
-                              ${attachmentsHtml}
-                            </div>
-            `
-            })
-            inquiryDetailHtml += `
-                <div class="d-flex align-items-center mb-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <p><b>${title}</b></p>
+                        </div>
+                        <p class="pt-2">${messageContent}</p>
+                        <br>
+                        <div class="white attachment-container d-flex mx-2" id="attachment-container">
+                            ${attachmentsHtml}
+                        </div>
+                    `;
+                });
+
+                inquiryDetailHtml = `
+                    <div class="d-flex align-items-center mb-4">
                         <div class="back-to-ticket-list" style="cursor:pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512">
                                 <path fill="#000"
@@ -156,18 +157,16 @@ $(document).ready(function () {
                             </svg>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-4">
-                    </div>
-                    <div class="col-md-9 col-sm-8 ">
-
+                    <div class="col-md-3 col-sm-4"></div>
+                    <div class="col-md-9 col-sm-8">
                         <div class="mail-structure">
-                        ${Messagehtml}
+                            ${Messagehtml}
                         </div>
                         <hr>
                         <h5 class="my-2">Reply</h5>
                         <div class="form_blk">
                             <textarea name="" id="inquiryTextBox" class="text_box p-3 rounded"
-                                placeholder="eg: Details about your dealership brand &amp; service"></textarea>
+                                placeholder="eg: Details about your dealership brand & service"></textarea>
                         </div>
                         <div class="attachments mt-3">
                             <div class="d-flex align-items-center mb-2">
@@ -185,25 +184,31 @@ $(document).ready(function () {
                             <hr>
                             <div class="col-xs-12 p-0 mb-5">
                                 <div onclick="document.getElementById('file-input1').click();" class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center"
-                                style="height: 50px; cursor: pointer;">
-                                <!-- Adjusted height to provide space for centering -->
-                                <input type="file" id="file-input1" class="form-control d-none" name="product_images" accept="image/*" single aria-describedby="file-input-label">
-                                <!-- SVG Icon acting as button -->
-                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-upload text-primary cursor-pointer" viewBox="0 0 16 16">
-                                    <path d="M.5 9.9a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4h-4a.5.5 0 0 1 0-1h4.5a.5.5 0 0 1 .5.5V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.9z" />
-                                    <path d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V13.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 0 1-.708-.708l3-3z" />
-                                </svg>
-                            </div>
+                                    style="height: 50px; cursor: pointer;">
+                                    <input type="file" id="file-input1" class="form-control d-none" name="product_images" accept="image/*" single aria-describedby="file-input-label">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-upload text-primary cursor-pointer" viewBox="0 0 16 16">
+                                        <path d="M.5 9.9a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H1v4a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-4h-4a.5.5 0 0 1 0-1h4.5a.5.5 0 0 1 .5.5V14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V9.9z" />
+                                        <path d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V13.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 0 1-.708-.708l3-3z" />
+                                    </svg>
+                                </div>
                             </div>
                         </div>
                         <div class="text-center">
                             <a class="btn btn-success my-4 px-md-5" id="enquirySendBtn" data-enquiryid="${inquiry?.id}">Send</a>
                         </div>
-            </div>
-            `;
-            $('#inquiry-detail-view').html(inquiryDetailHtml);
+                    </div>
+                `;
+                $('#inquiry-detail-view').html(inquiryDetailHtml);
+            } catch (error) {
+                console.error('Error processing inquiry details:', error);
+                $('#inquiry-detail-view').html('<p>Error loading inquiry details. Please try again later.</p>');
+            }
+        } else {
+            console.error('Failed to retrieve inquiry details:', response);
+            $('#inquiry-detail-view').html('<p>Failed to load inquiry details. Please try again later.</p>');
         }
     }
+
 
     $('body').on('click', '.back-to-ticket-list', function () {
         $('.main-messages').removeClass('d-none');

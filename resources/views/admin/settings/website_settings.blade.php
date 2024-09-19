@@ -16,17 +16,17 @@
                     <h4>Contact Details</h4>
                     <div class="row">
                         <div class="col-sm-6 mb-3">
-                            <label for="phone" class="form-label">Phone No</label>
+                            <label for="phone" class="form-label required-asterisk ">Phone No</label>
                             <input type="number" class="form-control" id="phone" value="{{ @$siteSettings->phone }}"
                                 name="phone" placeholder="Enter contact links">
                         </div>
                         <div class="col-sm-6 mb-3">
-                            <label for="Email" class="form-label">Email</label>
+                            <label for="Email" class="form-label required-asterisk">Email</label>
                             <input type="email" class="form-control" id="email" name="email"
                                 value="{{ @$siteSettings->email }}" placeholder="Email">
                         </div>
                         <div class="col-sm-6 mb-3">
-                            <label for="address" class="form-label">Address</label>
+                            <label for="address" class="form-label required-asterisk">Address</label>
                             <textarea class="form-control" id="address" rows="3" value="{{ @$siteSettings->address }}"
                                 name="address"
                                 placeholder="Enter contact information">{{ @$siteSettings->address }}</textarea>
@@ -34,19 +34,19 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-6 mb-3">
-                            <label for="website_name" class="form-label">Website Name</label>
+                            <label for="website_name" class="form-label required-asterisk">Website Name</label>
                             <input type="text" class="form-control" id="website_name"
                                 value="{{ @$siteSettings->website_name }}" name="website_name"
                                 placeholder="Enter website name">
                         </div>
                         <div class="col-sm-6 mb-3">
-                            <label for="banner_heading" class="form-label">Banner Heading</label>
+                            <label for="banner_heading" class="form-label required-asterisk">Banner Heading</label>
                             <input type="text" class="form-control" name="banner_heading"
                                 value="{{ @$siteSettings->banner_heading }}" id="banner_heading"
                                 placeholder="Enter website name">
                         </div>
                         <div class="col-sm-6 mb-3">
-                            <label for="sub_heading" class="form-label">Sub Heading</label>
+                            <label for="sub_heading" class="form-label required-asterisk">Sub Heading</label>
                             <input type="text" class="form-control" id="sub_heading" name="sub_heading"
                                 value="{{ @$siteSettings->sub_heading}}" placeholder="Enter website name">
                         </div>
@@ -54,7 +54,7 @@
                     <div class="row">
                         <!-- Upload Logo Section -->
                         <div class="col-2 mb-3">
-                            <label for="logo" class="form-label fw-bold mb-2">Upload Logo</label>
+                            <label for="logo" class="form-label   ">Upload Logo <small>(jpg,jpeg,png,gif,bmp,svg,webp| max-size:10mb)</small></label>
                             <div onclick="document.getElementById('logo').click();" class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center p-2"
                                 style="height: 50px; cursor: pointer;">
                                 <!-- Hidden file input for logo -->
@@ -73,23 +73,22 @@
                         </div>
 
                         <!-- Logo Preview Section -->
-                        <div class="col-10  p-3 d-flex align-items-center">
-                            <img 
+                        <div class="col-10 mt-4  p-5 d-flex align-items-center">
+                            <img
                                 class="logo-preview img-fluid border rounded-circle shadow-sm"
                                 style="width: 50px; height: 50px;"
-                                src="{{ url('/') . '/storage/' . @$siteSettings->logo }}"
+                                src="{{ url('/') . '/storage/' . @$siteSettings["logo"] }}"
                                 alt="Logo Preview"
                                 id="logo-preview"
                                 onerror="this.onerror=null;this.src='{{ asset('assets_admin/images/user-icon.webp') }}';"
                             >
-                        </div>                    
+                        </div>
                     </div>
-                    
                     <div class="row">
                         {{--Banner upload --}}
                         <div class="col-2 mb-3">
-                            <label for="file-input" class="form-label fw-bold mb-2">Upload Banner</label>
-                            <div onclick="document.getElementById('file-input').click();" class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center" 
+                            <label for="file-input" class="form-label  mb-2">Upload Banner <small>(jpg,jpeg,png,gif,bmp,svg,webp| max-size:10mb)</small></label>
+                            <div onclick="document.getElementById('file-input').click();" class="input-group position-relative border border-primary rounded shadow-sm overflow-hidden d-flex align-items-center justify-content-center"
                                 style="height: 50px; cursor: pointer;">
                                 <!-- Adjusted height to provide space for centering -->
                                 <input type="file" id="file-input" class="form-control d-none" name="banner_images" accept="image/*" multiple aria-describedby="file-input-label">
@@ -103,7 +102,7 @@
                                         d="M7.646 4.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V13.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 0 1-.708-.708l3-3z" />
                                 </svg>
                             </div>
-                        </div>    
+                        </div>
 
                         {{-- Banner Preview --}}
                         <div class="col-10 p-3 d-flex align-items-center">

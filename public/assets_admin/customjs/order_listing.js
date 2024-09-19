@@ -18,43 +18,65 @@ $(document).ready(function () {
     }
 
     function getOrderDetailResponse(response) {
+        try {
+            // Check if the response status is 200 (success)
+            if (response.status === 200) {
+                // Check if the orders array is present
+                if (Array.isArray(response.orders) && response.orders.length > 0) {
+                    createStates(response.orders); // Assuming createStates is defined elsewhere
+                    let html = '';
 
-        if (response.status == 200) {
-            createStates(response.orders);
-            let html = '';
-            response.orders.forEach((order, index) => {
-                html += `
-                <tr>
-                    <td class="ps-3">${index + 1}</td> <!-- Changed item.id to index + 1 -->
-                    <td class="ps-3">${order.user.username}</td>
-                    <td class="ps-3">${order.user.email}</td>
-                    <td class="ps-3 text-nowrap">${new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
-                    <td class="text-end">
-                        <div class="btn-reveal-trigger position-static">
-                            <button class="btn btn-sm dropdown-toggle" type="button"
-                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
-                                     data-prefix="fas" data-icon="ellipsis" role="img"
-                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                    <path fill="currentColor"
-                                          d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
-                                    </path>
-                                </svg>
-                            </button>
-                            <div class="dropdown-menu dropdown-menu-end">
-                                <a class="dropdown-item modal-edit-btn" type="button"
-                                    data-detail-order='${JSON.stringify(order.id)}' id="viewDetailBtn">View Detail</a>
-                                <div class="dropdown-divider"></div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            `;
-            });
+                    response.orders.forEach((order, index) => {
+                        html += `
+                        <tr>
+                            <td class="ps-3">${index + 1}</td> <!-- Index starts from 1 -->
+                            <td class="ps-3">${order?.user?.username || 'N/A'}</td>
+                            <td class="ps-3">${order?.user?.email || 'N/A'}</td>
+                            <td class="ps-3 text-nowrap">
+                                ${order?.created_at ?
+                                    new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
+                                    new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                                    : 'N/A'}
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-reveal-trigger position-static">
+                                    <button class="btn btn-sm dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                             data-prefix="fas" data-icon="ellipsis" role="img"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="currentColor"
+                                                  d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item modal-edit-btn" type="button"
+                                            data-detail-order='${JSON.stringify(order?.id)}' id="viewDetailBtn">View Detail</a>
+                                        <div class="dropdown-divider"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>`;
+                    });
 
-            $('#order_listing_table_body').html(html);
+                    // Populate the table body with the generated HTML
+                    $('#order_listing_table_body').html(html);
+                } else {
+                    // Handle case where no orders are found
+                    $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">No orders found.</td></tr>');
+                }
+            } else {
+                // Handle unsuccessful response
+                console.error('Error: Response status is not 200. Actual status:', response.status);
+                $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">Failed to load orders. Please try again later.</td></tr>');
+            }
+        } catch (error) {
+            // Handle any unexpected errors
+            console.error('An unexpected error occurred:', error);
+            $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">An error occurred while processing the order data.</td></tr>');
         }
     }
+
 
 
     //view order detail here

@@ -1,15 +1,17 @@
 $(document).ready(function () {
-
-
-    const url = "/admin/user/listing/ajax";
-    const type = "Get";
-    let data = {}; // Your data to send to the server here
-    SendAjaxRequestToServer(type, url, data, '', getUsersListing, '', '#contactReply_submit');
+    fetchInitalListing();
+    function fetchInitalListing() {
+        const url = "/admin/user/listing/ajax";
+        const type = "Get";
+        let data = {}; // Your data to send to the server here
+        SendAjaxRequestToServer(type, url, data, '', getUsersListing, '', '#contactReply_submit');
+    }
 
     function getUsersListing(response) {
-
-        console.log(response);
         if (response.status == 200) {
+            const active=response.active;
+            const inactive=response.inactive;
+            const total=response.count;
             let html = '';
             response.users.forEach(item => {
                 html += `
@@ -48,6 +50,9 @@ $(document).ready(function () {
                     </tr>
                 `;
             });
+            $('#active').text(active)
+            $('#inactive').text(inactive)
+            $('#total').text(total)
             $('#user_listing_table_body').html(html);
         }
 
@@ -57,6 +62,13 @@ $(document).ready(function () {
 
     $('body').on('click', '#handleEditUserBtn', function () {
         const item = JSON.parse($(this).attr('data-edit-user'));
+        const form = document.getElementById('addEventForm');
+        $('.p-label').removeClass('required-asterisk');
+        $('.p-confirm-label').removeClass('required-asterisk');
+        $(form).find('.is-invalid').removeClass('is-invalid');
+        // Reset the form fields
+        form.reset();
+
         $('#user_name').val(item.username);
         $('#user_email').val(item.email);
         $('#user_status').prop('checked', item.status == 1);
@@ -98,10 +110,7 @@ $(document).ready(function () {
             // Reset the form and hide the modal
             $('#addEventForm').trigger("reset");
             $("#filterModal").modal('hide');
-            window.location.reload();
-
-            // Uncomment and define this function if you want to reload the admin list data
-            // loadJobsPageData();
+            fetchInitalListing();
 
         } else {
             // Error Handling
@@ -115,22 +124,15 @@ $(document).ready(function () {
 
                 errorMessage = response.responseJSON.message || 'Validation failed.';
                 const validationErrors = response.responseJSON.errors || {};
-
-                // Log the response for debugging
-
-
-                // Highlight the invalid fields
                 $.each(validationErrors, function (key, error) {
                     const inputField = $('[name="' + key + '"]');
                     inputField.addClass('is-invalid');
-                    // Optionally, show error messages next to each field
-                    // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
+
                 });
             } else if (response.status === 500) {
                 // Handle server error
                 errorMessage = response.message || 'Internal server error. Please contact support.';
             }
-
             // Display error message
             toastr.error(errorMessage, '', {
                 timeOut: 3000
@@ -154,7 +156,6 @@ $(document).ready(function () {
                 formData.append(key, data[key]);
             }
         }
-        console.log(...formData);
         const url = "/admin/admin/delete/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', removeUserResponse, '', '#deleteNowBtn');
@@ -166,7 +167,8 @@ $(document).ready(function () {
             toastr.success(response.message, '', {
                 timeOut: 3000
             })
-            location.reload();
+            $('#confirmationModal').modal('hide');
+            fetchInitalListing();
         }
         else {
             toastr.error('An error occurred. Please try again.', '', {
@@ -176,39 +178,31 @@ $(document).ready(function () {
     }
 
 
-
-    //update user status
-      //update status
-
     $('body').on('change', '.flexSwitchCheckChecked', function () {
         const data = {
             id: $(this).attr('id').split('flexSwitchCheckChecked')[1],
 
             status: $(this).is(':checked') ? 1 : 0,
         }
-        console.log(data);
+
         const formData = new FormData();
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
                 formData.append(key, data[key]);
             }
         }
-        console.log(...formData);
         const url = "/admin/user/status/ajax";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', '#flexSwitchCheckChecked');
     });
 
 
-
-
     function updateStatusResponse(response) {
-        console.log('Status updated successfully');
         if (response.status == 200) {
             toastr.success(response.message, '', {
                 timeOut: 3000
             });
-            location.reload();
+            fetchInitalListing();
         }
         else {
             toastr.error(response.message, '', {

@@ -147,61 +147,7 @@
 
 <div class="container my-2">
     <!-- _______________________Feature Card_________________________ -->
-    <!-- <div class="row features g-3">
-        <div class="col-lg-3 col-6">
-            <div class="card-custom text-center p-md-3 p-sm-2 p-1">
-                <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M3 3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm1 6V5h5v4zm-1 4a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1zm1 6v-4h5v4zm9-15a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1zm2 1v4h5V5zm-1 8a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1v-6a1 1 0 0 0-1-1zm1 6v-4h5v4z" />
-                    </svg>
-                </div>
-                <h5>Millions of business offerings</h5>
-                <p>Explore products and suppliers for your business from millions of offerings worldwide.</p>
-            </div>
-        </div>
-        <div class="col-lg-3 col-6">
-            <div class="card-custom text-center p-md-3 p-sm-2 p-1">
-                <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor">
-                            <path d="M14.262 3.6C13.196 2.532 12.662 2 12 2s-1.196.533-2.262 1.6c-.64.64-1.274.936-2.186.936c-.796 0-1.93-.154-2.552.473c-.618.623-.464 1.752-.464 2.543c0 .912-.297 1.546-.937 2.186C2.533 10.804 2 11.338 2 12s.533 1.196 1.6 2.262c.716.717.936 1.18.936 2.186c0 .796-.154 1.93.473 2.552c.623.617 1.752.464 2.543.464c.971 0 1.44.19 2.133.883c.59.59 1.381 1.653 2.315 1.653s1.725-1.063 2.315-1.653c.694-.693 1.162-.883 2.133-.883c.791 0 1.92.154 2.543-.464m1.41-9.262C21.467 10.804 22 11.338 22 12s-.533 1.196-1.6 2.262c-.716.717-.936 1.18-.936 2.186c0 .796.154 1.93-.473 2.552m0 0H19" />
-                            <path d="M8 10.308S10.25 10 12 14c0 0 5.059-10 10-12" />
-                        </g>
-                    </svg>
-                </div>
-                <h5>Assured quality and transactions</h5>
-                <p>Ensure production quality from verified suppliers, with your orders protected from payment to delivery.</p>
-            </div>
-        </div>
-        <div class="col-lg-3 col-6">
-            <div class="card-custom text-center p-md-3 p-sm-2 p-1">
-                <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor">
-                            <path d="M2 19s1 0 2 2c0 0 3.176-5 6-6m.5 6H16c2.828 0 4.243 0 5.121-.879C22 19.243 22 17.828 22 15v-2c0-2.828 0-4.243-.879-5.121C20.243 7 18.828 7 16 7h-6m-8 8v-4c0-3.771 0-5.657 1.172-6.828S6.229 3 10 3h4c.93 0 1.395 0 1.777.102a3 3 0 0 1 2.12 2.122C18 5.605 18 6.07 18 7" />
-                            <path d="M16 13.5a1.5 1.5 0 1 0 3 0a1.5 1.5 0 0 0-3 0" />
-                        </g>
-                    </svg>
-                </div>
-                <h5>One-stop trading solution</h5>
-                <p>Order seamlessly from product/supplier search to order management, payment, and fulfillment.</p>
-            </div>
-        </div>
-        <div class="col-lg-3 col-6">
-            <div class="card-custom text-center p-md-3 p-sm-2 p-1">
-                <div class="card-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
-                        <g fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="m9.853 14.633l-6.201-3.946a2 2 0 0 1 0-3.374l6.2-3.946a4 4 0 0 1 4.296 0l6.2 3.946a2 2 0 0 1 0 3.374l-6.2 3.946a4 4 0 0 1-4.296 0Z" />
-                            <path d="m18.286 12l2.063 1.313a2 2 0 0 1 0 3.374l-6.201 3.946a4 4 0 0 1-4.296 0l-6.2-3.946a2 2 0 0 1 0-3.374L5.714 12" />
-                        </g>
-                    </svg>
-                </div>
-                <h5>Tailored trading experience</h5>
-                <p>Get curated benefits, such as exclusive discounts, enhanced protection, and extra support, to help grow your business every step of the way.</p>
-            </div>
-        </div>
-    </div> -->
+
     <!-- _______________________Categories Card Slider_________________________ -->
     <div class="swiper mySwiper2 mt-5 d-none">
         <div class="swiper-wrapper">
@@ -333,7 +279,7 @@
     <!-- _______________________Featured Card Slider_________________________ -->
     <div class="featured-cards-div mt-4">
         <h3 class="main-headings position-relative text-start">
-            Featured Productsx
+            Featured Products
             <div class="border-under-main-heading"></div>
         </h3>
         <div class="swiper mySwiper3">
@@ -1062,198 +1008,29 @@ $discountedProducts = getDiscountedProducts();
             <div class="border-under-main-heading"></div>
         </h3>
         <div class="swiper mySwiper8 mt-5">
+
             <div class="swiper-wrapper" id="testimonial-slider-element">
-                {{-- <div class="swiper-slide p-2">
+                @php
+                $testimonials= testimonials();
+                @endphp
+                @foreach($testimonials as $testimonial)
+                <div class="swiper-slide p-2">
                     <div
                         class="testimonial d-flex flex-lg-nowrap flex-wrap justify-content-md-start justify-content-center align-items-center">
-                        <img src="https://s.alicdn.com/@img/imgextra/i3/O1CN01wllRR11a9Uiq6syoP_!!6000000003287-2-tps-352-352.png_350x350.jpg"
-                            alt="Dr. Sayed Ibrahim">
+                        <img src="{{ url('/storage').'/'.$testimonial->mediaPath }}" alt="">
                         <div class="testimonial-content d-flex flex-column flex-lg-nowrap flex-wrap">
-                            <p class="quote">“Once I discovered Alibaba.com, I was amazed at how many options I had with
-                                suppliers from all over the world.”</p>
-                            <h6>Dr. Sayed Ibrahim</h6>
-                            <p>Founder of SprinJene</p>
+                            <p class="quote">{{ @$testimonial->description }}</p>
+                            <h6>{{ @$testimonial->name }}</h6>
+                            <p>{{ @$testimonial->designation }}</p>
                         </div>
                     </div>
-                </div> --}}
+                </div>
+                @endforeach
             </div>
             <!-- <div class="swiper-pagination"></div> -->
         </div>
     </div>
     <!-- _______________________Latest Blogs Card Slider_________________________ -->
-    <div class="best-seller-cards-div my-4">
-        <h3 class="main-headings position-relative text-start">
-            Latest Blogs
-            <div class="border-under-main-heading"></div>
-        </h3>
-        <div class="swiper mySwiper6">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide mt-5">
-                    <div class="card latest-blogs-cards mb-3">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-md-5 d-flex justify-content-center g-0 ps-3">
-                                <div class="latest-blogs-images">
-                                    <svg class="search-icon-blogs" xmlns="http://www.w3.org/2000/svg" width="1em"
-                                        height="1em" viewBox="0 0 15 15">
-                                        <path fill="none" stroke="currentColor"
-                                            d="m8.5 8.5l2 2M7 9.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Zm.5 5a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z" />
-                                    </svg>
-                                    <div class="overlay-blogs"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-7 ms-0">
-                                <div class="card-body  px-md-0 px-2">
-                                    <h6 class="card-title text-start mb-0 line-clamp-1">tempora incidunt utlabore</h6>
-                                    <p class="card-text text-start mb-0"><small>This is a wider card with supporting
-                                            text below as a natural lead-in to additional content.</small></p>
-                                    <p class="card-text text-start mb-0 d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            viewBox="0 0 24 24">
-                                            <path fill="rgb(33 37 41 / 75%)"
-                                                d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2m0 7c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-2.97 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1" />
-                                        </svg>
-                                        <small class="text-body-secondary ms-2">Admin</small>
-                                    </p>
-                                    <p class="card-text text-start mb-0 d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            viewBox="0 0 24 24">
-                                            <path fill="none" stroke="#000" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="1.5"
-                                                d="M16.5 5V3m-9 2V3M3.25 8h17.5M3 10.044c0-2.115 0-3.173.436-3.981a3.9 3.9 0 0 1 1.748-1.651C6.04 4 7.16 4 9.4 4h5.2c2.24 0 3.36 0 4.216.412c.753.362 1.364.94 1.748 1.65c.436.81.436 1.868.436 3.983v4.912c0 2.115 0 3.173-.436 3.981a3.9 3.9 0 0 1-1.748 1.651C17.96 21 16.84 21 14.6 21H9.4c-2.24 0-3.36 0-4.216-.412a3.9 3.9 0 0 1-1.748-1.65C3 18.128 3 17.07 3 14.955z" />
-                                        </svg>
-                                        <small class="text-body-secondary ms-2">8th May 2020</small>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide mt-5">
-                    <div class="card latest-blogs-cards mb-3">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-md-5 d-flex justify-content-center g-0 ps-3">
-                                <div class="latest-blogs-images">
-                                    <svg class="search-icon-blogs" xmlns="http://www.w3.org/2000/svg" width="1em"
-                                        height="1em" viewBox="0 0 15 15">
-                                        <path fill="none" stroke="currentColor"
-                                            d="m8.5 8.5l2 2M7 9.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Zm.5 5a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z" />
-                                    </svg>
-                                    <div class="overlay-blogs"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-7 ms-0">
-                                <div class="card-body  px-md-0 px-2">
-                                    <h6 class="card-title text-start mb-0 line-clamp-1">tempora incidunt utlabore</h6>
-                                    <p class="card-text text-start mb-0"><small>This is a wider card with supporting
-                                            text below as a natural lead-in to additional content.</small></p>
-                                    <p class="card-text text-start mb-0 d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            viewBox="0 0 24 24">
-                                            <path fill="rgb(33 37 41 / 75%)"
-                                                d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2m0 7c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-2.97 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1" />
-                                        </svg>
-                                        <small class="text-body-secondary ms-2">Admin</small>
-                                    </p>
-                                    <p class="card-text text-start mb-0 d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            viewBox="0 0 24 24">
-                                            <path fill="none" stroke="#000" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="1.5"
-                                                d="M16.5 5V3m-9 2V3M3.25 8h17.5M3 10.044c0-2.115 0-3.173.436-3.981a3.9 3.9 0 0 1 1.748-1.651C6.04 4 7.16 4 9.4 4h5.2c2.24 0 3.36 0 4.216.412c.753.362 1.364.94 1.748 1.65c.436.81.436 1.868.436 3.983v4.912c0 2.115 0 3.173-.436 3.981a3.9 3.9 0 0 1-1.748 1.651C17.96 21 16.84 21 14.6 21H9.4c-2.24 0-3.36 0-4.216-.412a3.9 3.9 0 0 1-1.748-1.65C3 18.128 3 17.07 3 14.955z" />
-                                        </svg>
-                                        <small class="text-body-secondary ms-2">8th May 2020</small>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide mt-5">
-                    <div class="card latest-blogs-cards mb-3">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-md-5 d-flex justify-content-center g-0 ps-3">
-                                <div class="latest-blogs-images">
-                                    <svg class="search-icon-blogs" xmlns="http://www.w3.org/2000/svg" width="1em"
-                                        height="1em" viewBox="0 0 15 15">
-                                        <path fill="none" stroke="currentColor"
-                                            d="m8.5 8.5l2 2M7 9.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Zm.5 5a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z" />
-                                    </svg>
-                                    <div class="overlay-blogs"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-7 ms-0">
-                                <div class="card-body  px-md-0 px-2">
-                                    <h6 class="card-title text-start mb-0 line-clamp-1">tempora incidunt utlabore</h6>
-                                    <p class="card-text text-start mb-0"><small>This is a wider card with supporting
-                                            text below as a natural lead-in to additional content.</small></p>
-                                    <p class="card-text text-start mb-0 d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            viewBox="0 0 24 24">
-                                            <path fill="rgb(33 37 41 / 75%)"
-                                                d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2m0 7c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-2.97 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1" />
-                                        </svg>
-                                        <small class="text-body-secondary ms-2">Admin</small>
-                                    </p>
-                                    <p class="card-text text-start mb-0 d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            viewBox="0 0 24 24">
-                                            <path fill="none" stroke="#000" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="1.5"
-                                                d="M16.5 5V3m-9 2V3M3.25 8h17.5M3 10.044c0-2.115 0-3.173.436-3.981a3.9 3.9 0 0 1 1.748-1.651C6.04 4 7.16 4 9.4 4h5.2c2.24 0 3.36 0 4.216.412c.753.362 1.364.94 1.748 1.65c.436.81.436 1.868.436 3.983v4.912c0 2.115 0 3.173-.436 3.981a3.9 3.9 0 0 1-1.748 1.651C17.96 21 16.84 21 14.6 21H9.4c-2.24 0-3.36 0-4.216-.412a3.9 3.9 0 0 1-1.748-1.65C3 18.128 3 17.07 3 14.955z" />
-                                        </svg>
-                                        <small class="text-body-secondary ms-2">8th May 2020</small>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide mt-5">
-                    <div class="card latest-blogs-cards mb-3">
-                        <div class="row align-items-center justify-content-center">
-                            <div class="col-md-5 d-flex justify-content-center g-0 ps-3">
-                                <div class="latest-blogs-images">
-                                    <svg class="search-icon-blogs" xmlns="http://www.w3.org/2000/svg" width="1em"
-                                        height="1em" viewBox="0 0 15 15">
-                                        <path fill="none" stroke="currentColor"
-                                            d="m8.5 8.5l2 2M7 9.5a2.5 2.5 0 1 1 0-5a2.5 2.5 0 0 1 0 5Zm.5 5a7 7 0 1 1 0-14a7 7 0 0 1 0 14Z" />
-                                    </svg>
-                                    <div class="overlay-blogs"></div>
-                                </div>
-                            </div>
-                            <div class="col-md-7 ms-0">
-                                <div class="card-body  px-md-0 px-2">
-                                    <h6 class="card-title text-start mb-0 line-clamp-1">tempora incidunt utlabore</h6>
-                                    <p class="card-text text-start mb-0"><small>This is a wider card with supporting
-                                            text below as a natural lead-in to additional content.</small></p>
-                                    <p class="card-text text-start mb-0 d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            viewBox="0 0 24 24">
-                                            <path fill="rgb(33 37 41 / 75%)"
-                                                d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 2a2 2 0 0 0-2 2a2 2 0 0 0 2 2a2 2 0 0 0 2-2a2 2 0 0 0-2-2m0 7c2.67 0 8 1.33 8 4v3H4v-3c0-2.67 5.33-4 8-4m0 1.9c-2.97 0-6.1 1.46-6.1 2.1v1.1h12.2V17c0-.64-3.13-2.1-6.1-2.1" />
-                                        </svg>
-                                        <small class="text-body-secondary ms-2">Admin</small>
-                                    </p>
-                                    <p class="card-text text-start mb-0 d-flex align-items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                            viewBox="0 0 24 24">
-                                            <path fill="none" stroke="#000" stroke-linecap="round"
-                                                stroke-linejoin="round" stroke-width="1.5"
-                                                d="M16.5 5V3m-9 2V3M3.25 8h17.5M3 10.044c0-2.115 0-3.173.436-3.981a3.9 3.9 0 0 1 1.748-1.651C6.04 4 7.16 4 9.4 4h5.2c2.24 0 3.36 0 4.216.412c.753.362 1.364.94 1.748 1.65c.436.81.436 1.868.436 3.983v4.912c0 2.115 0 3.173-.436 3.981a3.9 3.9 0 0 1-1.748 1.651C17.96 21 16.84 21 14.6 21H9.4c-2.24 0-3.36 0-4.216-.412a3.9 3.9 0 0 1-1.748-1.65C3 18.128 3 17.07 3 14.955z" />
-                                        </svg>
-                                        <small class="text-body-secondary ms-2">8th May 2020</small>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Add Navigation buttons -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-        </div>
-    </div>
 </div>
 
 </div>
