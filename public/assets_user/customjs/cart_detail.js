@@ -34,7 +34,7 @@ $(document).ready(function () {
                     // Ensure product and images exist in the item
                     if (item?.product && item?.product?.product_images && item.product.product_images[0]) {
                         // Extract necessary details
-                        let imageUrl = `${base_url}/storage/${item.product.product_images[0].filepath}`;
+                        let imageUrl = `${base_url}/public/${item.product.product_images[0].filepath}`;
                         let productName = item.product.product_name || 'Unnamed Product';
                         let category = item?.product?.category?.category_name || '';
                         let price = item?.price;
@@ -185,7 +185,7 @@ $(document).ready(function () {
                 response.data.forEach(item => {
                     // Ensure the product and cart detail data exist before using it
                     if (item?.product && item?.product?.product_images && item.product.product_images[0]) {
-                        let imageUrl = `${base_url}/storage/${item.product.product_images[0].filepath}`;
+                        let imageUrl = `${base_url}/public/${item.product.product_images[0].filepath}`;
                         let productName = item.product.product_name || 'Unnamed Product';
                         let productPrice = item?.discounted_price || 'Price not available';
                         totalAmount += parseInt(item?.total_amount || 0);  // Correctly add to totalAmount

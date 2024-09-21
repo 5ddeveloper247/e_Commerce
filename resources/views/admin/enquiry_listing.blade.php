@@ -30,30 +30,32 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" fieldType="alphanumeric" maxlength="50" class="required-asterisk  form-control" id="enquiry_title" name="enquiry_title"
-                                placeholder="Enter Enquiry Title" required>
+                            <label for="title" class="form-label required-asterisk">Title</label>
+                            <input type="text" fieldType="alphanumeric" maxlength="50" class="  form-control"
+                                id="enquiry_title" name="enquiry_title" placeholder="Enter Enquiry Title" required>
                         </div>
                         <div class="mb-3">
-                            <label for="fullName" class="form-label">Full Name</label>
-                            <input type="text" fieldType="alphabet" maxlength="15" class=" required-asterisk form-control" id="enquiry_fullName" name="enquiry_fullName"
-                                placeholder="Enter full name" required>
+                            <label for="fullName" class="form-label required-asterisk">Full Name</label>
+                            <input type="text" fieldType="alphabet" maxlength="15" class=" form-control"
+                                id="enquiry_fullName" name="enquiry_fullName" placeholder="Enter full name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="email" class="form-label">Email</label>
-                            <input type="text" fieldType="alphanumeric" maxlength="50" class=" required-asterisk form-control" id="enquiry_email" name="enquiry_email"
-                                placeholder="Enter full name" required>
+                            <label for="email" class="form-label required-asterisk">Email</label>
+                            <input type="text" fieldType="alphanumeric" maxlength="50" class="  form-control"
+                                id="enquiry_email" name="enquiry_email" placeholder="Enter full name" required>
                         </div>
                         <div class="mb-3">
-                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input type="number" fieldType="number" maxlength="15" class=" required-asterisk form-control" id="enquiry_phoneNumber"
-                                name="enquiry_phoneNumber" placeholder="Enter phone number" required>
+                            <label for="phoneNumber" class="form-label required-asterisk">Phone Number</label>
+                            <input type="number" fieldType="number" maxlength="15" class="  form-control"
+                                id="enquiry_phoneNumber" name="enquiry_phoneNumber" placeholder="Enter phone number"
+                                required>
                         </div>
                         <!-- Address Line 1 -->
                         <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea type="text" fieldType="alphanumeric" maxlength="255" class=" required-asterisk form-control" id="enquiry_description"
-                                name="enquiry_description" placeholder="Enter Description" required></textarea>
+                            <label for="description" class="form-label required-asterisk">Description</label>
+                            <textarea type="text" fieldType="alphanumeric" maxlength="255" class="  form-control"
+                                id="enquiry_description" name="enquiry_description" placeholder="Enter Description"
+                                required></textarea>
                         </div>
                         <div class="white add-image-container d-flex mx-2" id="add-image-container"
                             data-page-name="products">

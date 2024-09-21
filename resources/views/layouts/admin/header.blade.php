@@ -1,3 +1,7 @@
+@php
+$siteData=siteCommonData();
+$siteLogo=$siteData['settings']->logo;
+@endphp
 <nav class="navbar navbar-top navbar-expand px-3" id="navbarDefault">
     <div class="collapse navbar-collapse justify-content-between">
 
@@ -511,8 +515,7 @@
             <a class="navbar-brand d-flex me-1 me-sm-3" href="{{ route('admin.dashboard') }}">
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center">
-                        <img src="{{ asset('/common/logo4.png') }}"
-                            alt="phoenix" width="60">
+                        <img src="{{ url('/').'/'.@$siteLogo }}" alt="phoenix" width="60">
                         <!-- <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5> -->
                     </div>
                 </div>
@@ -1368,7 +1371,8 @@
                         <div class="card-body p-0">
                             <div class="text-center py-2">
                                 <div class="avatar avatar-xl ">
-                                    <img class="rounded-circle " src="{{ asset('assets_admin/images/user-icon-md.jpg') }}" alt="">
+                                    <img class="rounded-circle "
+                                        src="{{ asset('assets_admin/images/user-icon-md.jpg') }}" alt="">
                                 </div>
                                 <h6 class="mt-2 text-body-emphasis">{{ auth()->user()->name }}</h6>
                             </div>
@@ -1396,7 +1400,8 @@
                             </ul>
                         </div>
                         <div class="card-footer p-0 border-top border-translucent">
-                            <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100" href="{{route('admin.logout')}}">
+                            <div class="px-3"> <a class="btn btn-phoenix-secondary d-flex flex-center w-100"
+                                    href="{{route('admin.logout')}}">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
                                         viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                         stroke-linecap="round" stroke-linejoin="round"

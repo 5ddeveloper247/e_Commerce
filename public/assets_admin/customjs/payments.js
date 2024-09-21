@@ -32,7 +32,7 @@ $(document).ready(function () {
                         const email = payment?.user?.email || 'N/A';
                         const createdAt = payment?.created_at
                             ? new Date(payment.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
-                              new Date(payment.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                            new Date(payment.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
                             : 'N/A';
                         const orderId = payment?.order_id || 'N/A';
 
@@ -113,7 +113,7 @@ $(document).ready(function () {
             }
             payment?.order?.order_details?.forEach(item => {
                 subTotal += parseInt(item?.total_amount)
-                const url = base_url + '/storage/' + item?.product?.product_images[0]?.filepath;
+                const url = base_url + '/public/' + item?.product?.product_images[0]?.filepath;
                 orderDetailHtml += `
                  <tr class="border-top border-bottom">
                                         <td class="d-flex align-items-center gap-3">

@@ -44,8 +44,9 @@ class OrderController extends Controller
                 'orderTrackings' => $orderTrackings,
             ]);
         } else {
-            // Fetch all orders for the logged-in user with status = 1
+            // Fetch all orders for the logged-in user with status = 1, ordered by latest first
             $orders = Order::with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
+                ->orderBy('created_at', 'desc') // Order by latest first
                 ->get();
 
             // Return response for multiple orders
@@ -56,6 +57,7 @@ class OrderController extends Controller
             ]);
         }
     }
+
 
     public function orderStatus(Request $request)
     {

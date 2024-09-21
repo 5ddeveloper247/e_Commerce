@@ -50,11 +50,13 @@ class AdminEnquiryController extends Controller
             'inquiries' => $inquiries,
             'status' => 200,
         ]);
+
     }
 
     public function enquiryMessageCreate(Request $request)
     {
         $files = $request->file('files'); // Retrieve the files
+
         // Create the enquiry message
         $enquiryMessage = EnquiryMessages::create([
             'enquiry_id' => $request->inquiryid,
@@ -62,11 +64,15 @@ class AdminEnquiryController extends Controller
             'source_id' => Auth::user()->id,
             'source_from' => Auth::user()->id,
         ]);
+
         // Check if files are provided and process each file
         if ($files && is_array($files)) {
             foreach ($files as $file) {
-                // Store the file in the 'enquiry' directory
-                $path = $file->store('enquiry', 'public');
+                // Move the file to the public/enquiry directory
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('enquiry'), $fileName);
+                $path = 'enquiry/' . $fileName; // File path to be stored in the database
+
                 // Save the file information in EnquiryAttachments table
                 EnquiryAttachments::create([
                     'enquirymessage_id' => $enquiryMessage->id,
@@ -84,6 +90,7 @@ class AdminEnquiryController extends Controller
                 'enquiryMessage' => $enquiryMessage,
             ]);
         }
+
         // Return error response if the message creation failed
         return response()->json([
             'status' => 400,

@@ -27,7 +27,7 @@ $(document).ready(function () {
             testimonialsHtml += `
                 <div class="swiper-slide p-2">
                     <div class="testimonial d-flex flex-lg-nowrap flex-wrap justify-content-md-start justify-content-center align-items-center">
-                        <img src="${base_url + '/storage/' + item?.mediaPath}"
+                        <img src="${base_url + '/' + item?.mediaPath}"
                             alt="${item.name}">
                         <div class="testimonial-content d-flex flex-column flex-lg-nowrap flex-wrap">
                             <p class="quote">“${item?.description}”</p>
@@ -37,7 +37,6 @@ $(document).ready(function () {
                     </div>
                 </div>`;
         });
-
         // Update the testimonial slider element with new HTML
         $('#testimonial-slider-element').html(testimonialsHtml);
     }
@@ -56,7 +55,6 @@ $(document).ready(function () {
         if (response.data) {
             console.log(response.data)
             response.data.forEach(product => {
-
                 newProductHtml += `
                  <div class="swiper-slide mt-5 p-2">
                     <div class="card featured-card border-0">
@@ -79,7 +77,7 @@ $(document).ready(function () {
                         <div class="d-flex justify-content-center my-4">
                             <div class="featured-card-images">
                                 <a href="${base_url + '/product_detail/' + (product?.category?.category_name?.replace(/\s/g, '-') || 'default-category') + '/' + (product?.sku || 'default-sku')}">
-                                    <img class="img-fluid" src="${base_url + '/storage/' + product?.product_images[0].filepath}"
+                                    <img class="img-fluid" src="${base_url + '/public/' + product?.product_images[0].filepath}"
                                         alt="Card image">
                                 </a>
                             </div>
@@ -149,10 +147,10 @@ $(document).ready(function () {
             const product_category_name = product.category.category_name;
             const product_images = product.product_images;  // Assuming this is an array of image URLs
             let viewDetailModalContentHtml = '';
-            let mainImage = product_images.length > 0 ? base_url + '/storage/' + product_images[0]?.filepath : '';
+            let mainImage = product_images.length > 0 ? base_url + '/public/' + product_images[0]?.filepath : '';
             let imageThumbnailsHtml = product_images.slice(1, 5).map((img, index) => `
                 <div class="col-3">
-                    <img src="${base_url + '/storage/' + img?.filepath}" class="img-thumbnail thumbnail-img" alt="Thumbnail ${index + 1}">
+                    <img src="${base_url + '/public/' + img?.filepath}" class="img-thumbnail thumbnail-img" alt="Thumbnail ${index + 1}">
                 </div>
             `).join('');
 
@@ -244,15 +242,7 @@ $(document).ready(function () {
                 </button>
             </div>
 
-                        <div class="d-flex">
-                            <button class="btn btn-outline-secondary rounded-pill dropdown-toggle"
-                                data-bs-toggle="dropdown">Add to Wish List</button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Wishlist 1</a></li>
-                                <li><a class="dropdown-item" href="#">Wishlist 2</a></li>
-                                <li><a class="dropdown-item" href="#">Wishlist 3</a></li>
-                            </ul>
-                        </div>
+
                         <div class="d-flex align-items-center mt-3">
                             <a href="#" class="mx-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em"

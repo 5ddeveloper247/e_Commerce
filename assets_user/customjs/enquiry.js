@@ -117,7 +117,7 @@ $(document).ready(function () {
                 messageAttachments.forEach(attachment => {
                     attachmentsHtml += `
                     <div class="image-item-land file_section" style="width: 80px; height: 80px; margin: 20px;">
-                        <img src="${base_url + '/storage/' + attachment?.filepath}" style="height: 100%; width: auto;">
+                        <img src="${base_url + '/public/' + attachment?.filepath}" style="height: 100%; width: auto;">
                     </div>`;
                 })
 
@@ -125,7 +125,7 @@ $(document).ready(function () {
                 Messagehtml += `
             <div class="d-flex align-items-start justify-content-between profile-area mt-2">
                             <div class="d-flex mail-profile-detail">
-                                <img src="${base_url + '/storage/common/person.png'}" alt="">
+                                <img src="${base_url + '/public/common/person.png'}" alt="">
                                 <div class="ms-2">
                                     <h6>Source: ${sourceUsername}</h6>
                                     <h6>Source From: ${sourceFromUsername}</h6>
@@ -164,9 +164,9 @@ $(document).ready(function () {
                         ${Messagehtml}
                         </div>
                         <hr>
-                        <h5 class="my-2">Reply</h5>
+                        <h5 class="my-2 required-asterisk">Reply</h5>
                         <div class="form_blk">
-                            <textarea name="" id="inquiryTextBox" class="text_box p-3 rounded"
+                            <textarea name="inquiryTextBox" id="inquiryTextBox" fieldType="alphanumeric" maxlength="255"  class="text_box p-3 rounded"
                                 placeholder="eg: Details about your dealership brand &amp; service"></textarea>
                         </div>
                         <div class="attachments mt-3">
@@ -335,6 +335,18 @@ $(document).ready(function () {
         const type = "Post";
         const url = "/enquiry/message/create";
         const formData = new FormData();
+        if (!inquirymessage) {
+            toastr.error('Please enter a message.', '', {
+                timeOut: 3000
+            });
+            return;
+        }
+        if (!inquiryid) {
+            toastr.error('We cannot handle your enquiry this time a aritical error occured please contact to support.', 'Opps!', {
+                timeOut: 3000
+            });
+            return;
+        }
         formData.append('inquiryid', inquiryid);
         formData.append('inquirymessage', inquirymessage);
         // Append each file individually

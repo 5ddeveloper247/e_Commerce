@@ -33,7 +33,7 @@ $(document).ready(function () {
             response.data.forEach(item => {
                 // Check if the product and its images exist in the item
                 if (item?.product) {
-                    let imageUrl = `${base_url}/storage/${item.product.product_images[0].filepath}`;
+                    let imageUrl = `${base_url}/public/${item.product.product_images[0].filepath}`;
                     let productName = item.product.product_name || 'Unnamed Product';
                     let category = item?.product?.category?.category_name || '';
                     let price = parseInt(item?.price) || 0;
@@ -401,6 +401,19 @@ $(document).ready(function () {
             const amount = document.getElementById('amount').value;
             const shippingAddress = $('#shippingAddress').val();
             const orderComments = $('#orderComments').val();
+
+            if (!shippingAddress) {
+                toastr.error('Shipping Address is required', '', {
+                    timeOut: 3000
+                })
+                return;
+            }
+            if (!amount) {
+                toastr.error('Amount is required', '', {
+                    timeOut: 3000
+                })
+                return;
+            }
             // Prepare form data
             const formData = new FormData(form);
             formData.append('stripeToken', token.id);

@@ -12,56 +12,14 @@
         <div class="swiper-slide mx-3">
             <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/carousel/13/slider-02__42161.jpg?c=1"
                 alt="">
-            <!-- <div class="overlay"></div>
-                <div class="content px-md-5">
-                    <div class="left-content-on-swiper">
-                        <h4>Big Sale <br>
-                            Buy Home Pod
-                        </h4>
-                        <button class="small-button">Shop Now</button>
-                    </div>
-                    <div class="right-content-on-swiper">
-                        <h4>Product Name <br>
-                        </h4>
-                         <h5 class="right-price-on-carosal">$99.99</h5>
-                    </div>
-                </div> -->
         </div>
         <div class="swiper-slide mx-3">
             <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/carousel/12/slider-01__80936.jpg?c=1"
                 alt="">
-            <!-- <div class="overlay"></div>
-                <div class="content px-md-5">
-                    <div class="left-content-on-swiper">
-                        <h4>Big Sale <br>
-                            Buy Home Pod
-                        </h4>
-                        <button class="small-button">Shop Now</button>
-                    </div>
-                    <div class="right-content-on-swiper">
-                        <h4>Product Name <br>
-                        </h4>
-                         <h5 class="right-price-on-carosal">$99.99</h5>
-                    </div>
-                </div> -->
         </div>
         <div class="swiper-slide mx-3">
             <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/original/carousel/14/slider-03__76582.jpg?c=1"
                 alt="">
-            <!-- <div class="overlay"></div>
-                <div class="content px-md-5">
-                    <div class="left-content-on-swiper">
-                        <h4>Big Sale <br>
-                            Buy Home Pod
-                        </h4>
-                        <button class="small-button">Shop Now</button>
-                    </div>
-                    <div class="right-content-on-swiper">
-                        <h4>Product Name <br>
-                        </h4>
-                         <h5 class="right-price-on-carosal">$99.99</h5>
-                    </div>
-                </div> -->
         </div>
     </div>
     <!-- <div class="swiper-button-next"></div>
@@ -116,11 +74,6 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="position-absolute">
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-            </div>
-        </div> -->
     </div>
     <div class="col-lg-6 px-md-0">
         <div class="swiper mySwiper10" id="hero-slider">
@@ -128,7 +81,7 @@
                 @if(@$banner_images)
                 @foreach($banner_images as $value)
                 <div class="swiper-slide">
-                    <img class="new-hero-banner-img" src="{{url('/storage/'.$value->file_path)}}" alt="">
+                    <img class="new-hero-banner-img" src="{{url('/'.$value->file_path)}}" alt="">
                 </div>
                 @endforeach
                 @else
@@ -314,7 +267,7 @@
                                     href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}">
                                     @if(isset($product->productImages[0]->filepath))
                                     <img class="img-fluid"
-                                        src="{{url('/').'/storage/'.$product->productImages[0]->filepath}}"
+                                        src="{{url('/').'/public/'.$product->productImages[0]->filepath}}"
                                         alt="Card image">
                                     @else
                                     <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}"
@@ -511,7 +464,7 @@ $discountedProducts = getDiscountedProducts();
                             <div class="promo-text d-flex flex-column align-items-center">
                                 <h4 class="text-white">{{ $product->product_name ?? 'Product Name' }}</h4>
                                 <p class="text-white">Get up to {{ $product->offered_percentage ?? '0' }}% Save</p>
-                                <button class="btn btn-shop">Shop Now</button>
+                                {{-- <button class="btn btn-shop">Shop Now</button> --}}
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -1042,5 +995,5 @@ $discountedProducts = getDiscountedProducts();
 </div>
 @endsection
 @push('scripts')
-<script src=" {{asset(" assets_user/customjs/home.js") }}"></script>
+<script src=" {{asset("assets_user/customjs/home.js") }}"></script>
 @endpush

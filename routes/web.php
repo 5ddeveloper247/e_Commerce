@@ -143,8 +143,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/payments/listing', [PaymentController::class, 'paymentsListing'])->name('admin.paymentsListing');
         //enquiries
         Route::post('/inquiries/listing', [AdminEnquiryController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
-        Route::post('/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('admin.enquiryMessageCreate');
-
+        Route::post('/enquiry/message/create', [AdminEnquiryController::class, 'enquiryMessageCreate'])->name('admin.enquiryMessageCreate');
         //dashboard
         Route::get('/getDashboardData', action: [DashboardController::class, 'getDashboard'])->name('admin.getDashboard');
     });

@@ -134,9 +134,13 @@ $(document).ready(function () {
         var html = '<option value="">Choose Category</option>';
 
         response.forEach(item => {
-            html += `
+
+            if (item.status == 1) {
+                html += `
                 <option value="${item.id}">${item.category_name}</option>
             `;
+            }
+
         });
         $('#category_id').html(html);
     }
@@ -394,12 +398,16 @@ $(document).ready(function () {
     function deleteProductImageResponse(response) {
 
         if (response.status == 200) {
-            toastr.error(response.message, '', {
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
+        }
+        else {
+            toastr.error("Something went wrong", '', {
                 timeOut: 3000
             });
         }
     }
-
     $('body').on('click', '#saveProductAssetsBtn', function () {
         // Get the product ID from the hidden input field
         const productId = $("input[name='product_id']").val();

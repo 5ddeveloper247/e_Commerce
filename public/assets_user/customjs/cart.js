@@ -347,15 +347,7 @@ $(document).ready(function () {
                 </button>
             </div>
 
-                        <div class="d-flex">
-                            <button class="btn btn-outline-secondary rounded-pill dropdown-toggle"
-                                data-bs-toggle="dropdown">Add to Wish List</button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Wishlist 1</a></li>
-                                <li><a class="dropdown-item" href="#">Wishlist 2</a></li>
-                                <li><a class="dropdown-item" href="#">Wishlist 3</a></li>
-                            </ul>
-                        </div>
+                       
                         <div class="d-flex align-items-center mt-3">
                             <a href="#" class="mx-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em"

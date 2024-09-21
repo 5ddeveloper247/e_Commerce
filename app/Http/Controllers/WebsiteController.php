@@ -291,34 +291,43 @@ class WebsiteController extends Controller
 
     public function cartView(Request $request)
     {
+        // Check if the user is authenticated
         if (Auth::check()) {
             $cart = Cart::where('user_id', auth()->user()->id)->where('status', 0)->first();
-        } else {
+            $wishlist = WishList::where('user_id', auth()->user()->id)->count();
+        }
+        else {
             if ($request->has('cart_id') && $request->cart_id !== null) {
                 $cart = Cart::where('id', $request->cart_id)->where('status', 0)->first();
             } else {
                 return response()->json(['status' => 404, 'message' => 'Cart not found']);
             }
+
+            // Set wishlist count to 0 for guest users
+            $wishlist = 0;
         }
 
-        if ($cart && $cart !== "") {
+        // Check if the cart exists
+        if ($cart) {
+            // Fetch cart details with product relationships
             $cartDetails = CartDetail::where('cart_id', $cart->id)
                 ->with(['product' => function ($query) {
                     $query->with(['productImages', 'category']);
                 }])->get();
+
+            // Return cart details and wishlist count
             return response()->json([
                 'status' => 200,
                 'data' => $cartDetails,
-                'cart_id' => $cart->id // Return the cart id for further operations
+                'cart_id' => $cart->id,
+                'wishlist' => $wishlist,
             ]);
-            if ($cartDetails->isNotEmpty()) {
-                return response()->json(['status' => 200, 'data' => $cartDetails]);
-            }
-        } else {
-
-            return response()->json(['status' => 404, 'message' => 'Cart Detail not found']);
         }
+
+        // If cart doesn't exist, return an error response
+        return response()->json(['status' => 404, 'message' => 'Cart Detail not found']);
     }
+
 
 
     public function cartDelete(Request $request)
@@ -651,16 +660,23 @@ class WebsiteController extends Controller
             'description' => $request->enquiry_description,
             'status' => 1, // Status set to 1 (pending or active)
         ]);
+
+        // Create an enquiry message
         $enquiryMessage = EnquiryMessages::create([
             'enquiry_id' => $enquiry->id,
             'message' => $request->enquiry_description,
             'source_id' => Auth::user()->id,
             'source_from' => Auth::user()->id,
         ]);
+
+        // Handle file uploads if files are provided
         if ($files && is_array($files)) {
             foreach ($files as $file) {
-                // Store the file in the 'enquiry' directory
-                $path = $file->store('enquiry', 'public');
+                // Move the file to the public/enquiry directory
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('enquiry'), $fileName);
+                $path = 'enquiry/' . $fileName; // File path to be stored in the database
+
                 // Save the file information in EnquiryAttachments table
                 EnquiryAttachments::create([
                     'enquirymessage_id' => $enquiryMessage->id,
@@ -687,10 +703,10 @@ class WebsiteController extends Controller
 
 
 
+
     public function enquiryMessageCreate(Request $request)
     {
         $files = $request->file('files'); // Retrieve the files
-
         // Create the enquiry message
         $enquiryMessage = EnquiryMessages::create([
             'enquiry_id' => $request->inquiryid,
@@ -700,10 +716,15 @@ class WebsiteController extends Controller
         ]);
 
         // Check if files are provided and process each file
-        if ($files && is_array($files)) {
+        if ($files) {
+            // If it's not an array, convert it to an array for consistency
+            $files = is_array($files) ? $files : [$files];
+
             foreach ($files as $file) {
-                // Store the file in the 'enquiry' directory
-                $path = $file->store('enquiry', 'public');
+                // Move the file to the public/enquiry directory
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->move(public_path('enquiry'), $fileName);
+                $path = 'enquiry/' . $fileName; // File path to be stored in the database
 
                 // Save the file information in EnquiryAttachments table
                 EnquiryAttachments::create([
@@ -729,6 +750,7 @@ class WebsiteController extends Controller
             'message' => 'Failed to send message',
         ]);
     }
+
 
 
 

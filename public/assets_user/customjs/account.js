@@ -938,6 +938,7 @@ $(document).ready(function () {
                 timeOut: 3000
             })
             initialLoad();
+            cartView();
         }
         else {
             toastr.error(response.message, '', {

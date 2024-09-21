@@ -124,14 +124,18 @@ $(document).ready(function () {
             let cartHtml = '';
             let totalAmount = 0;  // Moved outside of the loop
             let quantity = 0;
+            let wishlist = 0;
+
+
 
             // Check if there are items in the response data
             if (response.data && response.data.length > 0) {
                 quantity = response.data.length;
+                wishlist = response.wishlist;
                 response.data.forEach(item => {
                     // Ensure the product and cart detail data exist before using it
                     if (item?.product && item?.product?.product_images && item.product.product_images[0]) {
-                        let imageUrl = `${base_url}/storage/${item.product.product_images[0].filepath}`;
+                        let imageUrl = `${base_url}/public/${item.product.product_images[0].filepath}`;
                         let productName = item.product.product_name || 'Unnamed Product';
                         let productPrice = item?.discounted_price || 'Price not available';
                         totalAmount += parseInt(item?.total_amount || 0);  // Correctly add to totalAmount
@@ -160,7 +164,7 @@ $(document).ready(function () {
                 // Update totalAmount once after the loop
                 $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
                 $('#totalQuantity').text(quantity);  // Display total amount with 2 decimal places for better UX
-
+                $('#wishListHeader').text(wishlist);
             }
             else {
                 // No items in the cart
@@ -214,10 +218,11 @@ $(document).ready(function () {
 
     function addToWishListResponse(response) {
         if (response.status == 200) {
-            // success
+            // successwish
             toastr.success('Product added to wishlist successfully', '', {
                 timeOut: 3000
             });
+            cartView();
         }
         else {
             // error
@@ -252,10 +257,10 @@ $(document).ready(function () {
             const product_category_name = product.category.category_name;
             const product_images = product.product_images;  // Assuming this is an array of image URLs
             let viewDetailModalContentHtml = '';
-            let mainImage = product_images.length > 0 ? base_url + '/storage/' + product_images[0]?.filepath : '';
+            let mainImage = product_images.length > 0 ? base_url + '/public/' + product_images[0]?.filepath : '';
             let imageThumbnailsHtml = product_images.slice(1, 5).map((img, index) => `
                 <div class="col-3">
-                    <img src="${base_url + '/storage/' + img?.filepath}" class="img-thumbnail thumbnail-img" alt="Thumbnail ${index + 1}">
+                    <img src="${base_url + '/public/' + img?.filepath}" class="img-thumbnail thumbnail-img" alt="Thumbnail ${index + 1}">
                 </div>
             `).join('');
 
@@ -347,15 +352,7 @@ $(document).ready(function () {
                 </button>
             </div>
 
-                        <div class="d-flex">
-                            <button class="btn btn-outline-secondary rounded-pill dropdown-toggle"
-                                data-bs-toggle="dropdown">Add to Wish List</button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Wishlist 1</a></li>
-                                <li><a class="dropdown-item" href="#">Wishlist 2</a></li>
-                                <li><a class="dropdown-item" href="#">Wishlist 3</a></li>
-                            </ul>
-                        </div>
+
                         <div class="d-flex align-items-center mt-3">
                             <a href="#" class="mx-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em"
