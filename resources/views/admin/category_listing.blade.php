@@ -108,12 +108,12 @@
 
                             <input type="hidden" name="category_id" id="category_id">
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="category_name" name="category_name"
+                                <input type="text" fieldType="alphanumeric" maxlength="100" class="form-control" id="category_name" name="category_name"
                                     placeholder="name">
                                 <label class="mx-2 required-asterisk" for="generalInfo">category name</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="category_description"
+                                <input type="text" fieldType="alphanumeric" maxlength="255" class="form-control" id="category_description"
                                     name="category_description" placeholder="name">
                                 <label class="mx-2 required-asterisk" for="generalInfo">category description</label>
                             </div>

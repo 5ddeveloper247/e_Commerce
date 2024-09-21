@@ -193,14 +193,14 @@ class AdminController extends Controller
     public function adminListingAjax(Request $request)
     {
         $adminsListingRecord = User::where('role', 1)->get();
-        $active=User::where('role',1)->where('status',1)->count();
-        $inactive=User::where('role',1)->where('status',0)->count();
+        $active = User::where('role', 1)->where('status', 1)->count();
+        $inactive = User::where('role', 1)->where('status', 0)->count();
         return response()->json([
             'admins' => $adminsListingRecord,
             'count' => count($adminsListingRecord),
             'status' => 200,
             'active' => $active,
-            'inactive'=>$inactive
+            'inactive' => $inactive
         ]);
     }
 
@@ -227,8 +227,7 @@ class AdminController extends Controller
                 'admin_confirm_password' => 'required|same:admin_password', // Must confirm the password
                 'admin_status' => 'required|integer|in:0,1'
             ];
-        }
-        else {
+        } else {
             // Updating an existing admin
             $rules = [
                 'id' => 'required|integer|exists:users,id',
@@ -241,25 +240,25 @@ class AdminController extends Controller
                 ],
                 'admin_status' => 'required|integer|in:0,1'
             ];
-             // If the password is provided during update, validate it
-        if ($request->filled('admin_password')) {
-            $rules['admin_password'] = [
-                'nullable',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Password requirements
-            ];
-            $rules['admin_confirm_password'] = 'nullable|same:admin_password'; // Must confirm the password
-        }
-            if($request->admin_password !==null){
-                if($request->admin_confirm_password ==null || $request->admin_confirm_password==''  ){
+            // If the password is provided during update, validate it
+            if ($request->filled('admin_password')) {
+                $rules['admin_password'] = [
+                    'nullable',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Password requirements
+                ];
+                $rules['admin_confirm_password'] = 'nullable|same:admin_password'; // Must confirm the password
+            }
+            if ($request->admin_password !== null) {
+                if ($request->admin_confirm_password == null || $request->admin_confirm_password == '') {
                     return response()->json([
                         'message' => 'Confirm password is required',
-                        'status'=>422,
-                        'errors'=>[
-                            'admin_confirm_password' =>[
+                        'status' => 422,
+                        'errors' => [
+                            'admin_confirm_password' => [
                                 'Confirm password is required'
                             ]
                         ]
-                        ],422);
+                    ], 422);
                 }
             }
         }
@@ -335,8 +334,7 @@ class AdminController extends Controller
                 'user_confirm_password' => 'required|same:user_password', // Must confirm the password
                 'user_status' => 'required|integer|in:0,1'
             ];
-        }
-        else {
+        } else {
             // Updating an existing admin
             $rules = [
                 'id' => 'required|integer|exists:users,id',
@@ -349,25 +347,25 @@ class AdminController extends Controller
                 ],
                 'user_status' => 'required|integer|in:0,1'
             ];
-             // If the password is provided during update, validate it
-        if ($request->filled('user_password')) {
-            $rules['user_password'] = [
-                'nullable',
-                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Password requirements
-            ];
-            $rules['user_confirm_password'] = 'nullable|same:user_password'; // Must confirm the password
-        }
-            if($request->user_password !==null){
-                if($request->user_confirm_password ==null || $request->user_confirm_password==''  ){
+            // If the password is provided during update, validate it
+            if ($request->filled('user_password')) {
+                $rules['user_password'] = [
+                    'nullable',
+                    'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/', // Password requirements
+                ];
+                $rules['user_confirm_password'] = 'nullable|same:user_password'; // Must confirm the password
+            }
+            if ($request->user_password !== null) {
+                if ($request->user_confirm_password == null || $request->user_confirm_password == '') {
                     return response()->json([
                         'message' => 'Confirm password is required',
-                        'status'=>422,
-                        'errors'=>[
-                            'user_confirm_password' =>[
+                        'status' => 422,
+                        'errors' => [
+                            'user_confirm_password' => [
                                 'Confirm password is required'
                             ]
                         ]
-                        ],422);
+                    ], 422);
                 }
             }
         }
@@ -482,14 +480,14 @@ class AdminController extends Controller
     {
         // Validate the incoming request
         $validatedData = $request->validate([
-            'logo' => 'nullable|mimes:jpg,jpeg,png,gif,bmp,svg,webp|max:10240', // 10 MB and image types for logo
+            'logo' => 'nullable|mimes:jpg,jpeg,png,gif,bmp,svg,webp|max:10240', // 10 MB for logo
             'phone' => 'required|regex:/^[0-9]{9,15}$/|max:15|min:9',
             'email' => 'required|email|max:50',
             'address' => 'required|string|max:255',
             'website_name' => 'required|string|max:50',
             'banner_heading' => 'required|string|max:255',
             'sub_heading' => 'required|string|max:255',
-            'banner_images.*' => 'mimes:jpg,jpeg,png,gif,bmp,svg,webp|max:10240', // 10 MB and image types for banner images
+            'banner_images.*' => 'mimes:jpg,jpeg,png,gif,bmp,svg,webp|max:10240', // 10 MB for banner images
         ]);
 
         try {
@@ -503,13 +501,17 @@ class AdminController extends Controller
                 // Handle logo upload if a new logo is provided
                 if ($request->hasFile('logo')) {
                     // Delete the old logo if it exists
-                    if ($siteSetting->logo) {
-                        Storage::disk('public')->delete($siteSetting->logo);
+                    if ($siteSetting->logo && file_exists(public_path($siteSetting->logo))) {
+                        unlink(public_path($siteSetting->logo)); // Remove the old logo from public directory
                     }
 
-                    // Store the new logo
+                    // Store the new logo directly in the public directory
                     $logo = $request->file('logo');
-                    $logoPath = $logo->store('logo', 'public');
+                    $logoName = time() . '_' . $logo->getClientOriginalName();
+                    $logoPath = 'public/logo/' . $logoName;
+
+                    // Move the new logo to public/logo directory
+                    $logo->move(public_path('logo'), $logoName);
 
                     // Update the SiteSetting record with the new logo path
                     $siteSetting->update(['logo' => $logoPath]);
@@ -517,11 +519,14 @@ class AdminController extends Controller
 
                 // Handle banner images
                 if ($request->hasFile('banner_images')) {
-                    // Upload and save new photos
                     foreach ($request->banner_images as $photo) {
                         $photoName = time() . '_' . $photo->getClientOriginalName();
-                        $photoPath = $photo->storeAs('banner_images', $photoName, 'public');
-                        // Save each new photo path in the SiteSettingsFiles table
+                        $photoPath = 'public/banner_images/' . $photoName;
+
+                        // Move each banner image to the public/banner_images directory
+                        $photo->move(public_path('banner_images'), $photoName);
+
+                        // Save the new banner image path in the SiteSettingsFiles table
                         SiteSettingsFiles::create([
                             'settings_id' => $siteSetting->id,
                             'file_path' => $photoPath,
@@ -531,7 +536,7 @@ class AdminController extends Controller
             } else {
                 // Create a new SiteSetting record if it doesn't exist
                 $siteSetting = SiteSetting::create([
-                    'logo' => $request->hasFile('logo') ? $request->file('logo')->store('logo', 'public') : null,
+                    'logo' => $request->hasFile('logo') ? 'public/logo/' . time() . '_' . $request->file('logo')->getClientOriginalName() : null,
                     'phone' => $request->phone,
                     'email' => $request->email,
                     'address' => $request->address,
@@ -540,12 +545,23 @@ class AdminController extends Controller
                     'sub_heading' => $request->sub_heading,
                 ]);
 
+                // Move the logo to the public directory if provided
+                if ($request->hasFile('logo')) {
+                    $logoName = time() . '_' . $request->file('logo')->getClientOriginalName();
+                    $request->file('logo')->move(public_path('logo'), $logoName);
+                    $siteSetting->update(['logo' => 'public/logo/' . $logoName]);
+                }
+
                 // Handle banner images upload for the new record
                 if ($request->hasFile('banner_images')) {
                     foreach ($request->file('banner_images') as $photo) {
                         $photoName = time() . '_' . $photo->getClientOriginalName();
-                        $photoPath = $photo->storeAs('public/banners', $fileName);
-                        // Save each new photo path in the SiteSettingsFiles table
+                        $photoPath = 'public/banner_images/' . $photoName;
+
+                        // Move each banner image to the public/banner_images directory
+                        $photo->move(public_path('banner_images'), $photoName);
+
+                        // Save the new banner image path in the SiteSettingsFiles table
                         SiteSettingsFiles::create([
                             'settings_id' => $siteSetting->id,
                             'file_path' => $photoPath,
@@ -560,6 +576,7 @@ class AdminController extends Controller
             return response()->json(['message' => 'Something went wrong. Please try again.', 'status' => 500]);
         }
     }
+
 
 
 

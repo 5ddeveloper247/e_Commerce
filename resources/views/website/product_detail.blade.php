@@ -12,7 +12,7 @@
             <div class="row align-items-center justify-content-center">
                 <figure class="zoom" onmousemove="zoom(event)" onmouseleave="resetZoom(event)"
                     style="width: 100%; height: 23rem;">
-                    <img id="mainImage" src="{{ asset('storage/' . $product->productImages[0]->filepath) }}"
+                    <img id="mainImage" src="{{ asset('public/' . $product->productImages[0]->filepath) }}"
                         alt="Card image" class="w-100" style="height: 23rem; width: 100%; height: auto;">
                 </figure>
                 <div class="row mt-3">
@@ -20,7 +20,7 @@
 
                     @endforeach
                     <div class="col-3">
-                        <img src="{{ asset('storage/' . $image->filepath) }}" class="img-thumbnail thumbnail-img"
+                        <img src="{{ asset('public/' . $image->filepath) }}" class="img-thumbnail thumbnail-img"
                             alt="Thumbnail 1">
                     </div>
                 </div>
@@ -241,7 +241,7 @@
 
                             </div>
                             <div class="col-md-6 text-center">
-                                <img src="{{ asset('storage/' . $feature->filepath) }}" alt="AHRI Certified"
+                                <img src="{{ asset('public/' . $feature->filepath) }}" alt="AHRI Certified"
                                     class="img-fluid">
                             </div>
 
@@ -249,7 +249,7 @@
                         @else
                         <div class="row g-4 mt-2 align-items-center">
                             <div class="col-md-6 text-center">
-                                <img src="{{ asset('storage/'.$feature->filepath) }}" class="img-fluid">
+                                <img src="{{ asset('public/'.$feature->filepath) }}" class="img-fluid">
                             </div>
                             <div class="col-md-6 feature-item d-flex">
                                 <div>
@@ -363,7 +363,7 @@
                                 <a
                                     href="{{ url('/product_detail/' . str_replace(' ', '-', $relatedProduct->category->category_name) . '/' . $relatedProduct->sku) }}">
                                     <img class="img-fluid"
-                                        src="{{ url('/storage/' . $relatedProduct->productImages[0]->filepath) }}"
+                                        src="{{ url('/public/' . $relatedProduct->productImages[0]->filepath) }}"
                                         alt="Card image">
                                 </a>
 

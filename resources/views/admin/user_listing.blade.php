@@ -106,22 +106,22 @@
 
                         <input type="hidden" name="user_id" id="user_id">
                         <div class="form-floating col-md-12 mb-3">
-                            <input type="text" class="form-control" id="user_name" name="user_name" placeholder="name">
+                            <input type="text" class="form-control" fieldType="alphabet" maxlength="15" id="user_name" name="user_name" placeholder="name">
                             <label class="mx-2 required-asterisk" for="generalInfo">username</label>
                         </div>
                         <div class="form-floating col-md-12 mb-3">
-                            <input type="email" class="form-control" id="user_email" name="user_email"
+                            <input type="email" class="form-control" fieldType="alphanumeric" maxlength="50" id="user_email" name="user_email"
                                 placeholder="name@example.com">
                             <label class="mx-2 required-asterisk" for="generalInfo">email</label>
                         </div>
 
                         <div class="form-floating col-md-12 mb-3">
-                            <input type="password" class="form-control" id="user_password" name="user_password"
+                            <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15" id="user_password" name="user_password"
                                 placeholder="">
                             <label class="mx-2 p-label required-asterisk" for="edit-admin-password">Password</label>
                         </div>
                         <div class="form-floating col-md-12 mb-3">
-                            <input type="password" class="form-control" id="user_confirm_password"
+                            <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15" id="user_confirm_password"
                                 name="user_confirm_password" placeholder="">
                             <label class="mx-2 p-confirm-label required-asterisk" for="edit-admin-confirm-password">confirm Password</label>
                         </div>

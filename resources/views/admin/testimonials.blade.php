@@ -107,16 +107,16 @@
                         <div class="row">
                             <input type="hidden" name="testimonial_id" id="testimonial-id">
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="name">
+                                <input type="text" class="form-control" fieldType="alphabet" maxlength="15" id="name" name="name" placeholder="name">
                                 <label class="mx-2 required-asterisk" for="name">Name</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="designation" name="designation"
+                                <input type="text" class="form-control" fieldType="alphanumeric" maxlength="255" id="designation" name="designation"
                                     placeholder="designation">
                                 <label class="mx-2" for="designation">Designation</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="description" name="description"
+                                <input type="text" class="form-control" fieldType="alphanumeric" maxlength="255" id="description" name="description"
                                     placeholder="description">
                                 <label class="mx-2 required-asterisk" for="description">Description</label>
                             </div>

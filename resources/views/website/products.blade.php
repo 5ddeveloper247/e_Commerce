@@ -122,7 +122,7 @@
     </nav>
 
     <div class="row py-5">
-        <div id="categorySearchItem">
+        <div id="categorySearchItem" class="d-none">
             @if(isset($notFound) && $notFound)
             <p id="categorySearchItemId">404</p>
             @else
@@ -296,6 +296,5 @@
 
 @endsection
 @push('scripts')
-
 <script src="{{ asset('assets_user/customjs/product_listing.js') }}"></script>
 @endpush

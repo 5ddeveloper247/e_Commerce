@@ -97,42 +97,42 @@
 
                             <input type="hidden" name="contact_id" id="contact-id">
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="full_name" name="full_name"
+                                <input type="text" fieldType="alphabet" maxlength="15" class="form-control" id="full_name" name="full_name"
                                     placeholder="name">
                                 <label class="mx-2 required-asterisk" for="generalInfo">username</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="phone_number" name="phone_number"
+                                <input type="number" class="form-control" fieldType="number" maxlength="15"  id="phone_number" name="phone_number"
                                     placeholder="">
                                 <label class="mx-2 required-asterisk" for="generalInfo">phone number</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="email" class="form-control" id="email" name="email"
+                                <input type="email" class="form-control" fieldType="alphanumeric" maxlength="50" id="email" name="email"
                                     placeholder="name@example.com">
                                 <label class="mx-2 required-asterisk" for="generalInfo">email</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="order_number" name="order_number"
+                                <input type="text" class="form-control" fieldType="alphanumeric" maxlength="50" id="order_number" name="order_number"
                                     placeholder="order number">
                                 <label class="mx-2 required-asterisk" for="generalInfo">order number</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="company_name" name="company_name"
+                                <input type="text" class="form-control" fieldType="alphanumeric" maxlength="50" id="company_name" name="company_name"
                                     placeholder="company name">
                                 <label class="mx-2 required-asterisk" for="generalInfo">company name</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <input type="text" class="form-control" id="rma_number" name="rma_number"
+                                <input type="text" class="form-control" id="rma_number" fieldType="alphanumeric" maxlength="50" name="rma_number"
                                     placeholder="rma number">
                                 <label class="mx-2 required-asterisk" for="generalInfo">rma number</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <textarea type="text" class="form-control" id="comment" name="comment"
+                                <textarea type="text" class="form-control" fieldType="alphanumeric" maxlength="255" id="comment" name="comment"
                                     placeholder="comment"></textarea>
                                 <label class="mx-2 required-asterisk" for="generalInfo">comment</label>
                             </div>
                             <div class="form-floating col-md-12 mb-3">
-                                <textarea type="text" class="form-control" id="reply" name="reply"
+                                <textarea type="text" class="form-control" fieldType="alphanumeric" maxlength="255" id="reply" name="reply"
                                     placeholder="reply"></textarea>
                                 <label class="mx-2 required-asterisk" for="generalInfo">reply</label>
                             </div>

@@ -50,13 +50,20 @@ class TestimonialController extends Controller
             'testimonial_id' => 'nullable|exists:testimonials,id', // Ensure testimonial_id, if provided, exists in the database
         ]);
 
-        // Handle file upload if present
-        $mediaPath = $request->hasFile('file') ? $request->file('file')->store('testimonials', 'public') : null;
+        // Handle file upload if present, store in root/public/testimonials
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('testimonials'), $fileName);
+            $mediaPath = 'public/testimonials/' . $fileName;
+        } else {
+            $mediaPath = null;
+        }
 
         // Determine the status
         $status = $request->has('status') ? 1 : 0;
 
-        // Check if testimonial_id is provided, not null, and exists
+        // Check if testimonial_id is provided and not null
         if (!is_null($validatedData['testimonial_id'])) {
             // Find the existing testimonial
             $testimonial = Testimonial::find($validatedData['testimonial_id']);
@@ -98,6 +105,7 @@ class TestimonialController extends Controller
             ]);
         }
     }
+
 
 
 

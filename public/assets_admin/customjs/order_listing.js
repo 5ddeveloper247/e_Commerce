@@ -34,9 +34,9 @@ $(document).ready(function () {
                             <td class="ps-3">${order?.user?.email || 'N/A'}</td>
                             <td class="ps-3 text-nowrap">
                                 ${order?.created_at ?
-                                    new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
-                                    new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
-                                    : 'N/A'}
+                                new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
+                                new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                                : 'N/A'}
                             </td>
                             <td class="text-end">
                                 <div class="btn-reveal-trigger position-static">
@@ -107,7 +107,7 @@ $(document).ready(function () {
             }
             order.order_details.forEach(item => {
                 subTotal += parseInt(item?.total_amount)
-                const url = base_url + '/storage/' + item?.product?.product_images[0]?.filepath;
+                const url = base_url + '/public/' + item?.product?.product_images[0]?.filepath;
                 orderDetailHtml += `
                  <tr class="border-top border-bottom">
                                         <td class="d-flex align-items-center gap-3">

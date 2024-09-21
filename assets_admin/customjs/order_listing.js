@@ -11,7 +11,7 @@ $(document).ready(function () {
 
 
     function fetchOrderDetail() {
-        const url = `/admin/refund/listing`;
+        const url = `/admin/order/listing`;
         const type = "Post";
         const data = new FormData();
         SendAjaxRequestToServer(type, url, data, '', getOrderDetailResponse, '', '');
@@ -19,69 +19,63 @@ $(document).ready(function () {
 
     function getOrderDetailResponse(response) {
         try {
-            console.log(response); // Log the response for debugging
-
-            // Check if the response status is 200 (successful response)
+            // Check if the response status is 200 (success)
             if (response.status === 200) {
-                // Check if the orders field exists and is an array
+                // Check if the orders array is present
                 if (Array.isArray(response.orders) && response.orders.length > 0) {
-                    createStates(response.orders);
+                    createStates(response.orders); // Assuming createStates is defined elsewhere
                     let html = '';
 
                     response.orders.forEach((order, index) => {
-                        // Safeguard against missing fields
-                        const username = order?.user?.username || 'N/A'; // Default to 'N/A' if username is missing
-                        const email = order?.user?.email || 'N/A'; // Default to 'N/A' if email is missing
-                        const createdAt = order?.created_at ? new Date(order.created_at) : null; // Check for valid date
-
-                        // Generate table row for each order
                         html += `
-                            <tr>
-                                <td class="ps-3">${index + 1}</td> <!-- Display index instead of order ID -->
-                                <td class="ps-3">${username}</td>
-                                <td class="ps-3">${email}</td>
-                                <td class="ps-3 text-nowrap">${createdAt ? createdAt.toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' + createdAt.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }) : 'N/A'}</td>
-                                <td class="text-end">
-                                    <div class="btn-reveal-trigger position-static">
-                                        <button class="btn btn-sm dropdown-toggle" type="button"
-                                                data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
-                                                 data-prefix="fas" data-icon="ellipsis" role="img"
-                                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                                <path fill="currentColor"
-                                                      d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
-                                                </path>
-                                            </svg>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end">
-                                            <a class="dropdown-item modal-edit-btn" type="button"
-                                                data-detail-order='${JSON.stringify(order.id)}' id="viewDetailBtn">View Detail</a>
-                                            <div class="dropdown-divider"></div>
-                                        </div>
+                        <tr>
+                            <td class="ps-3">${index + 1}</td> <!-- Index starts from 1 -->
+                            <td class="ps-3">${order?.user?.username || 'N/A'}</td>
+                            <td class="ps-3">${order?.user?.email || 'N/A'}</td>
+                            <td class="ps-3 text-nowrap">
+                                ${order?.created_at ?
+                                new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
+                                new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                                : 'N/A'}
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-reveal-trigger position-static">
+                                    <button class="btn btn-sm dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                             data-prefix="fas" data-icon="ellipsis" role="img"
+                                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                            <path fill="currentColor"
+                                                  d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z"></path>
+                                        </svg>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item modal-edit-btn" type="button"
+                                            data-detail-order='${JSON.stringify(order?.id)}' id="viewDetailBtn">View Detail</a>
+                                        <div class="dropdown-divider"></div>
                                     </div>
-                                </td>
-                            </tr>
-                        `;
+                                </div>
+                            </td>
+                        </tr>`;
                     });
 
-                    // Append the generated HTML to the table body
+                    // Populate the table body with the generated HTML
                     $('#order_listing_table_body').html(html);
                 } else {
-                    // Handle case where orders array is empty or not provided
-                    $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">No orders found</td></tr>');
+                    // Handle case where no orders are found
+                    $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">No orders found.</td></tr>');
                 }
             } else {
-                // Handle cases where response status is not 200
-                console.error('Unexpected response status:', response.status);
-                $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">Error loading orders</td></tr>');
+                // Handle unsuccessful response
+                console.error('Error: Response status is not 200. Actual status:', response.status);
+                $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">Failed to load orders. Please try again later.</td></tr>');
             }
         } catch (error) {
-            // Catch and log any unexpected errors during execution
-            console.error('Error processing order details:', error);
-            $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">An error occurred while loading orders</td></tr>');
+            // Handle any unexpected errors
+            console.error('An unexpected error occurred:', error);
+            $('#order_listing_table_body').html('<tr><td colspan="5" class="text-center">An error occurred while processing the order data.</td></tr>');
         }
     }
-
 
 
 
@@ -91,12 +85,12 @@ $(document).ready(function () {
         const orderId = JSON.parse($(this).attr('data-detail-order'));
         const data = new FormData();
         data.append('order_id', orderId);
-        const url = `/admin/refund/listing`;
+        const url = `/admin/order/listing`;
         const type = "Post";
         SendAjaxRequestToServer(type, url, data, '', getDetailbyIdResponse, '', '');
 
         // fetch order detail by id and display it here
-    });
+    })
 
     function getDetailbyIdResponse(response) {
         if (response.status === 200) {
@@ -113,7 +107,7 @@ $(document).ready(function () {
             }
             order.order_details.forEach(item => {
                 subTotal += parseInt(item?.total_amount)
-                const url = base_url + '/storage/' + item?.product?.product_images[0]?.filepath;
+                const url = base_url + '/public/' + item?.product?.product_images[0]?.filepath;
                 orderDetailHtml += `
                  <tr class="border-top border-bottom">
                                         <td class="d-flex align-items-center gap-3">
@@ -141,16 +135,6 @@ $(document).ready(function () {
                                         <td>
                                             $ ${item?.total_amount}
                                         </td>
-                                        <td>
-                                            ${order?.order_payment?.status == 1 ? "✅ Paid" : "❌ Unpaid"}
-                                        </td>
-                                    <td>
-                                        ${paymentResponse?.receipt_url
-                        ? `<a href="${paymentResponse.receipt_url}" target="_blank">View</a>`
-                        : "No Receipt Available"
-                    }
-                                         </td>
-
                                     </tr >`
             });
             $('#product-detail-table-body').html(orderDetailHtml);
@@ -160,7 +144,6 @@ $(document).ready(function () {
             $('#counters').hide();
         }
     }
-
 
     function updateSteps(status, orderTrackings) {
         // Clear previous steps
@@ -194,10 +177,10 @@ $(document).ready(function () {
         let cancelled = 0;
         let totalOrders = 0
         orders.forEach(order => {
-            if (order.status.name == "Refund Request") {
+            if (order.status.name == "Pending") {
                 pending += 1;
             }
-            else if (order.status.name == "Refund Cancel") {
+            else if (order.status.name == "Cancelled") {
                 cancelled += 1;
             }
             totalOrders += 1
@@ -209,15 +192,29 @@ $(document).ready(function () {
 
     }
 
+
+
     function createPaymentDetail(order) {
+        let paymentResponse = JSON.parse(order?.order_payment?.response);
+        let invvoiceHtml = `
+        <span><a href="${paymentResponse?.receipt_url}">view</a> </span>
+        `
+        let paymentStatusHtml = `
+         <span>
+            ${order?.order_payment?.status == 1 ? "✅ Paid" : "❌ Unpaid"}
+        </span>
+        `
         $('#txn').text(order?.order_payment?.transaction_id);
+        $('#invoicePayment').html(invvoiceHtml);
+        $('#paymentStatus').html(paymentStatusHtml);
     }
+
 
     $('body').on('click', '.back-to-orders-div', function () {
         $('#products').show();
         $('#counters').show();
         $('.order-detail-div').addClass('d-none');
-    });
+    })
 
 
 
@@ -267,26 +264,10 @@ $(document).ready(function () {
             `
 
         }
-        else if (order.status.name == "Refund Request") {
-            statusHtml = `
-            <div class="row justify-content-end">
-                <div class="col-auto d-flex align-items-center pb-4 px-4 mx-2 my-2 pt-3 pe-0">
-                    <button class="btn btn-done btn-cancel px-4 me-0 statusBtn" type="button" data-status="Refund Cancel" data-order-id="${order.id}">
-                        Cancel Refund Request
-                    </button>
-                </div>
-                <div class="col-auto d-flex align-items-center pb-4 px-4 pt-3 mx-2 my-2 ps-0">
-                    <button class="btn btn-done btn-cancel px-4 statusBtn" type="button" data-status="Refund Confirm" data-order-id="${order.id}">
-                        Refund Confirm
-                    </button>
-                </div>
-            </div>
-        `;
 
-
-        }
         $('#statusHandler').html(statusHtml);
     }
+
 
 
 
@@ -295,9 +276,18 @@ $(document).ready(function () {
         var orderId = $(this).attr('data-order-id');
         $('#confrimStatusBtn').attr('data-order-id', orderId);
         $('#confrimStatusBtn').attr('data-status', status);
-        $('#confirmationModalRemove').modal('show');
+        if (status == "In-Transit") {
+            $('#confirmationModalRemove').modal('hide');
+            $('#transitModal').modal('show');
+            $('#transit_order_id').val(orderId);
+            $('#transit_status').val(status);
+        }
+        else {
+            $('#confirmationModalRemove').modal('show');
+        }
 
     });
+
 
     function updateOrderStatus(status, orderId, tracking_id = null) {
         const formData = new FormData()
@@ -309,8 +299,8 @@ $(document).ready(function () {
         const type = 'POST';
         const url = '/admin/order/status/ajax';
         SendAjaxRequestToServer(type, url, formData, '', updateStatusResponse, '', this);
-    }
 
+    }
     function updateStatusResponse(response) {
         //update status here
         if (response.status == 200) {
@@ -321,8 +311,6 @@ $(document).ready(function () {
             $('#confirmationModalRemove').modal('hide');
             $('#products').show();
             $('.order-detail-div').addClass('d-none');
-            $('#counters').show();
-
         }
         else {
             toastr.error(response.message, '', {
@@ -345,7 +333,8 @@ $(document).ready(function () {
             updateOrderStatus(status, orderId)
         }
 
-    });
+    })
+
 
     $('#trackingIdBtn').on('click', function () {
 

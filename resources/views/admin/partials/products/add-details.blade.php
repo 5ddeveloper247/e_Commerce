@@ -11,13 +11,14 @@
 
                 <div class="col-sm-6 mb-3">
                     <label for="sku" class="form-label">SKU<span class="danger">*</span></label>
-                    <input type="text" class="form-control" id="sku" maxlength="50" name="sku" placeholder="Enter SKU">
+                    <input type="text" fieldType="alphanumeric" maxlength="30" class="form-control" id="sku"
+                        maxlength="50" name="sku" placeholder="Enter SKU">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="product_name" class="form-label">Product Name<span class="danger">*</span></label>
-                    <input type="text" class="form-control" id="product_name" maxlength="255" name="product_name"
-                        placeholder="Enter product name">
+                    <input type="text" fieldType="alphanumeric" maxlength="255" class="form-control" id="product_name"
+                        maxlength="255" name="product_name" placeholder="Enter product name">
                 </div>
 
                 <div class="col-sm-6 mb-3">
@@ -38,38 +39,43 @@
 
                 <div class="col-sm-6 mb-3">
                     <label for="product_name" class="form-label">Model Name<span class="danger">*</span></label>
-                    <input type="text" class="form-control" id="model_name" maxlength="255" name="model_name"
-                        placeholder="Enter Model Name">
+                    <input type="text" class="form-control" id="model_name" fieldType="alphanumeric" maxlength="255"
+                        name="model_name" placeholder="Enter Model Name">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="price" class="form-label">Price<span class="danger">*</span></label>
-                    <input type="number" step="0.01" class="form-control" id="price" maxlength="10" name="price"
-                        placeholder="Enter price">
+                    <input type="number" step="0.01" class="form-control" id="price" fieldType="number" maxlength="15"
+                        name="price" placeholder="Enter price">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="discount_price" class="form-label">Discount Price<span class="danger">*</span></label>
-                    <input type="number" step="0.01" class="form-control" maxlength="10" id="discount_price"
-                        name="discount_price" placeholder="Enter discount price">
+                    <input type="number" step="0.01" class="form-control" fieldType="number" maxlength="15"
+                        id="discount_price" name="discount_price" placeholder="Enter discount price">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="weight" class="form-label">Weight (kg)<span class="danger">*</span></label>
-                    <input type="number" step="0.01" class="form-control" maxlength="10" id="weight" name="weight"
-                        placeholder="Enter weight">
+                    <input type="number" step="0.01" class="form-control" fieldType="number" maxlength="10" id="weight"
+                        name="weight" placeholder="Enter weight">
                 </div>
 
                 <div class="col-sm-6 mb-3">
                     <label for="onhand_qty" class="form-label">On Hand Quantity<span class="danger">*</span></label>
-                    <input type="number" class="form-control" id="onhand_qty" maxlength="10" name="onhand_qty"
-                        placeholder="Enter stock quantity">
+                    <input type="number" class="form-control" id="onhand_qty" fieldType="number" maxlength="10"
+                        name="onhand_qty" placeholder="Enter stock quantity">
                 </div>
 
                 <div class="col-sm-12 mb-3">
                     <label for="description" class="form-label">Description<span class="danger">*</span></label>
-                    <textarea class="form-control" id="description" name="description" maxlength="3000" rows="3"
-                        placeholder="Enter description"></textarea>
+                    <textarea class="form-control" id="description" name="description" fieldType="alphanumeric"
+                        maxlength="255" rows="3" placeholder="Enter description"></textarea>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label for="description" class="form-label">Extra Info</label>
+                    <textarea class="form-control" id="productExtraInfoEditor" name="productExtraInfo"
+                        rows="3"></textarea>
                 </div>
             </div>
         </div>

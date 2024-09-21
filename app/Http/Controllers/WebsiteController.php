@@ -157,47 +157,55 @@ class WebsiteController extends Controller
         return response()->json(['status' => 404, 'data' => []]);
     }
 
-
     public function productDetail(Request $request, $category, $sku)
     {
+        // Check if category is set and get the corresponding category details
         if (isset($category)) {
             $productCategory = str_replace('-', ' ', $category);
             $categoryDetail = Category::where('category_name', $productCategory)->first();
-            if (!$category) {
+
+            // If category is not found, return a 404
+            if (!$categoryDetail) {
                 return abort(404);
             }
         } else {
             return abort(404);
         }
 
-        if (isset($sku) && isset($categoryDetail)) {
-            $productSku = $sku;
-            $productDetail = Product::where('status', 1)->first();
-            if (!$productDetail) {
-                return abort(404);
-            }
-            if ($productDetail->category_id !== $categoryDetail->id) {
+        // Check if SKU is set and fetch the product details
+        if (isset($sku)) {
+            $product = Product::where('status', 1)
+                ->where('sku', $sku)
+                // ->where('category_id', $categoryDetail->id)
+                ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures'])
+                ->first();
+
+            // If product is not found, return a 404
+            if (!$product) {
                 return abort(404);
             }
         } else {
             return abort(404);
         }
-        $product = Product::where('status', 1)
-            ->where('category_id', $categoryDetail->id)
-            ->where('sku', $sku)
+
+        // Fetch related specifications and features
+        $specifications = ProductSpecification::where('product_id', $product->id)->get();
+        $features = ProductFeature::where('product_id', $product->id)->get();
+
+        // Fetch related products within the same category
+        $relatedProducts = Product::where('category_id', $categoryDetail->id)
             ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures'])
-            ->first();
+            ->get();
 
-        if ($product) {
-            $specifications = ProductSpecification::where('product_id', $product->id)->get();
-            $features = ProductFeature::where('product_id', $product->id)->get();
-            $relatedProducts = Product::where('category_id', $categoryDetail->id)
-                ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures'])->get();
-            return view('website.product_detail', ['product' => $product, 'specifications' => $specifications, 'features' => $features, 'relatedProducts' => $relatedProducts]);
-        }
-
-        return abort(404);
+        // Return the product detail view with the fetched data
+        return view('website.product_detail', [
+            'product' => $product,
+            'specifications' => $specifications,
+            'features' => $features,
+            'relatedProducts' => $relatedProducts
+        ]);
     }
+
 
 
     public function cartAdd(Request $request)
@@ -547,13 +555,15 @@ class WebsiteController extends Controller
         ]);
 
         $filterData = json_decode($request->filter);
-        $categories = $filterData->categories;
-        $brands = $filterData->brands;
-        $min_price = $filterData->min_price;
-        $max_price = $filterData->max_price;
+        $categories = $filterData->categories ?? null;
+        $brands = $filterData->brands ?? null;
+        $min_price = $filterData->min_price ?? null;
+        $max_price = $filterData->max_price ?? null;
 
-        // Initialize the query with the Product model and its relations
+        // Initialize the query with the Product model and its relations, ensuring status = 1
         $products = Product::with(['productImages', 'category', 'brand'])
+            // Always enforce active status
+            ->where('status', 1)
             // Filter by categories if provided
             ->when($categories, function ($query, $categories) {
                 return $query->whereIn('category_id', $categories);
@@ -570,14 +580,17 @@ class WebsiteController extends Controller
             ->when($max_price, function ($query, $max_price) {
                 return $query->where('price', '<=', $max_price);
             })
+            // Only return products that are in stock
+            ->where('onhand_qty', '>', 0)
+            ->get();
 
-            ->where('onhand_qty', '>', 0)->get();
-        // Return the filtered products, for example as a JSON response
+        // Return the filtered products, or all active products if no filters applied
         return response()->json([
             'data' => $products,
             'status' => 200,
         ]);
     }
+
 
 
 

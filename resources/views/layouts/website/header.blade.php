@@ -4,7 +4,7 @@
         <div class="container">
             <!-- Logo on the left side -->
             <a class="navbar-brand" href="{{url('/')}}">
-                <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/220x70/logo_01_1596263683__90290.original.png"
+                <img src="{{ asset('/common/logo4.png') }}"
                     alt="Logo">
             </a>
 
@@ -163,8 +163,8 @@
 
             <!-- Center Logo -->
             <a class="navbar-brand mx-auto" href="#">
-                <img class="img-fluid"
-                    src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/220x70/logo_01_1596263683__90290.original.png"
+                <img class="img-fluid rounded-4"
+                    src="{{ asset('/common/logo4.png') }}"
                     alt="">
             </a>
 
@@ -251,7 +251,7 @@
         <div class="container">
             <!-- Logo on the left side -->
             <a class="navbar-brand" href="{{url('/')}}">
-                <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/220x70/logo_01_1596263683__90290.original.png"
+                <img class="rounded-4" src="{{ asset('/common/logo4.png') }}"
                     alt="Logo">
             </a>
             <a href="#" type="button" class="d-flex align-items-center text-decoration-none"
@@ -562,8 +562,8 @@
             <!-- Center Logo -->
             <a class="navbar-brand mx-auto" href="{{url('/')}}">
                 <img class="img-fluid"
-                    src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/220x70/logo_01_1596263683__90290.original.png"
-                    alt="">
+
+                src="{{ asset('/common/logo4.png') }}" alt="">
             </a>
 
             <!-- Right Side Icons -->

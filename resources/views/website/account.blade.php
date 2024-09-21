@@ -135,28 +135,28 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="enquiry_title" name="enquiry_title"
+                        <label for="title" class="form-label required-asterisk ">Title</label>
+                        <input type="text" class="form-control " fileType="alphanumeric" maxlength="50" id="enquiry_title" name="enquiry_title"
                             placeholder="Enter Enquiry Title" required>
                     </div>
                     <div class="mb-3">
-                        <label for="fullName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="enquiry_fullName" name="enquiry_fullName"
+                        <label for="fullName" class="form-label required-asterisk">Full Name</label>
+                        <input type="text" class="form-control " fileType="alphabet" maxlength="15" id="enquiry_fullName" name="enquiry_fullName"
                             placeholder="Enter full name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" id="enquiry_email" name="enquiry_email"
+                        <label for="email" class="form-label required-asterisk">Email</label>
+                        <input type="text" class="form-control" fileType="alphanumeric" maxlength="50" id="enquiry_email" name="enquiry_email"
                             placeholder="Enter full name" required>
                     </div>
                     <div class="mb-3">
-                        <label for="phoneNumber" class="form-label">Phone Number</label>
+                        <label for="phoneNumber" class="form-label required-asterisk" fileType="number" maxlength="15">Phone Number</label>
                         <input type="number" class="form-control" id="enquiry_phoneNumber" name="enquiry_phoneNumber"
                             placeholder="Enter phone number" required>
                     </div>
                     <!-- Address Line 1 -->
                     <div class="mb-3">
-                        <label for="description" class="form-label">Description</label>
+                        <label for="description" class="form-label required-asterisk" fileType="alphanumeric" maxlength="255">Description</label>
                         <textarea type="text" class="form-control" id="enquiry_description" name="enquiry_description"
                             placeholder="Enter Description" required></textarea>
                     </div>
@@ -281,32 +281,32 @@
                                         <!-- Full Name -->
                                         <input type="hidden" name="" id="edit_id" name="edit_id">
                                         <div class="mb-3">
-                                            <label for="fullName" class="form-label">Full Name</label>
-                                            <input type="text" class="form-control" id="fullName" name="fullName"
+                                            <label for="fullName" class="form-label required-asterisk ">Full Name</label>
+                                            <input type="text" class="form-control" fieldType="alphabet" maxlength="15" id="fullName" name="fullName"
                                                 placeholder="Enter full name" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="email" class="form-label">Email</label>
-                                            <input type="text" class="form-control" id="email" name="email"
+                                            <label for="email" class="form-label required-asterisk">Email</label>
+                                            <input type="text" class="form-control" fieldType="alphanumeric" maxlength="50" id="email"  name="email"
                                                 placeholder="Enter full name" required>
                                         </div>
                                         <div class="mb-3">
-                                            <label for="phoneNumber" class="form-label">Phone Number</label>
-                                            <input type="number" class="form-control" id="phoneNumber"
+                                            <label for="phoneNumber" class="form-label required-asterisk" >Phone Number</label>
+                                            <input type="number" class="form-control" id="phoneNumber" fieldType="number" maxlength="15"
                                                 name="phoneNumber" placeholder="Enter phone number" required>
                                         </div>
 
 
                                         <!-- Address Line 1 -->
                                         <div class="mb-3">
-                                            <label for="address" class="form-label">Address</label>
-                                            <textarea type="text" class="form-control" id="address" name="address"
+                                            <label for="address" class="form-label required-asterisk">Address</label>
+                                            <textarea type="text" class="form-control" fieldType="alphanumeric" maxlength="255" id="address" name="address"
                                                 placeholder="Enter street address" required></textarea>
                                         </div>
 
                                         <!-- Country Dropdown -->
                                         <div class="mb-3">
-                                            <label for="country" class="form-label">Country</label>
+                                            <label for="country" class="form-label required-asterisk">Country</label>
                                             <select class="form-select" id="country" name="country" required>
                                                 <option value="" selected>Select country</option>
 
@@ -316,7 +316,7 @@
 
                                         <!-- State/Province/Region Dropdown -->
                                         <div class="mb-3">
-                                            <label for="state" class="form-label">State/Province/Region</label>
+                                            <label for="state" class="form-label required-asterisk">State/Province/Region</label>
                                             <select class="form-select" id="state" name="state" required>
                                                 <option value="" selected>Select state</option>
 
@@ -325,7 +325,7 @@
 
                                         <!-- City Dropdown -->
                                         <div class="mb-3">
-                                            <label for="city" class="form-label">City</label>
+                                            <label for="city" class="form-label required-asterisk">City</label>
                                             <select class="form-select" id="city" name="city" required>
                                                 <option value="" selected>Select city</option>
 
@@ -815,14 +815,14 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="firstName" name="firstName"
+                                <input type="text" class="form-control" fieldType="alphabet" maxlength="15" id="firstName" name="firstName"
                                     placeholder="First Name" required value=" {{$user->first_name }}">
                                 <label for="firstName">First Name <span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="lastName" name="lastName"
+                                <input type="text" class="form-control" fieldType="alphabet" maxlength="15" id="lastName" name="lastName"
                                     placeholder="Last Name" required
                                     value="{{ old('lastName', $user->last_name ?? '') }}">
                                 <label for="lastName">Last Name <span class="text-danger">*</span></label>
@@ -832,14 +832,14 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="company" name="company"
+                                <input type="text" class="form-control" fieldType="alphanumeric" maxlength="15" id="company" name="company"
                                     placeholder="Company" value="{{ old('company', $user->company_name ?? '') }}">
                                 <label for="company">Company</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="phoneNumber" name="phoneNumber"
+                                <input type="text" class="form-control" id="phoneNumber" fieldType="number" maxlength="15" name="phoneNumber"
                                     placeholder="Phone Number" value="{{ old('phoneNumber', $user->phone ?? '') }}">
                                 <label for="phoneNumber">Phone Number</label>
                             </div>
@@ -848,7 +848,7 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="email" class="form-control" id="emailAddress" name="emailAddress"
+                                <input type="email" class="form-control" fieldType="alphanumeric" maxlength="50" id="emailAddress" name="emailAddress"
                                     placeholder="Email Address" required
                                     value="{{ old('emailAddress', $user->email ?? '') }}">
                                 <label for="emailAddress">Email Address <span class="text-danger">*</span></label>
@@ -856,7 +856,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="password" name="password"
+                                <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15" id="password" name="password"
                                     placeholder="Password">
                                 <label for="password">Password</label>
                             </div>
@@ -865,14 +865,14 @@
                     <div class="row g-3 mb-3">
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                                <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15" id="confirmPassword" name="confirmPassword"
                                     placeholder="Confirm Password">
                                 <label for="confirmPassword">Confirm Password</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
-                                <input type="password" class="form-control" id="currentPassword" name="currentPassword"
+                                <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15" id="currentPassword" name="currentPassword"
                                     placeholder="Current Password">
                                 <label for="currentPassword">Current Password</label>
                             </div>

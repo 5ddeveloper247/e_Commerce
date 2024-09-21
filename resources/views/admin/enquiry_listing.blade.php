@@ -9,16 +9,12 @@
 <div>
     <div>
         <div class="p-md-4 p-3">
-
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">enquiry</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Enquiry Listing</li>
                 </ol>
             </nav>
-
-
-
             {{-- //enquiry tab --}}
             <div class="row justify-content-center gx-0 gy-2 gap-4 mb-4">
                 <div class="py-4" id="messages-tab-pane">
@@ -35,28 +31,28 @@
                         </div>
                         <div class="mb-3">
                             <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" id="enquiry_title" name="enquiry_title"
+                            <input type="text" fieldType="alphanumeric" maxlength="50" class="required-asterisk  form-control" id="enquiry_title" name="enquiry_title"
                                 placeholder="Enter Enquiry Title" required>
                         </div>
                         <div class="mb-3">
                             <label for="fullName" class="form-label">Full Name</label>
-                            <input type="text" class="form-control" id="enquiry_fullName" name="enquiry_fullName"
+                            <input type="text" fieldType="alphabet" maxlength="15" class=" required-asterisk form-control" id="enquiry_fullName" name="enquiry_fullName"
                                 placeholder="Enter full name" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="enquiry_email" name="enquiry_email"
+                            <input type="text" fieldType="alphanumeric" maxlength="50" class=" required-asterisk form-control" id="enquiry_email" name="enquiry_email"
                                 placeholder="Enter full name" required>
                         </div>
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone Number</label>
-                            <input type="number" class="form-control" id="enquiry_phoneNumber"
+                            <input type="number" fieldType="number" maxlength="15" class=" required-asterisk form-control" id="enquiry_phoneNumber"
                                 name="enquiry_phoneNumber" placeholder="Enter phone number" required>
                         </div>
                         <!-- Address Line 1 -->
                         <div class="mb-3">
                             <label for="description" class="form-label">Description</label>
-                            <textarea type="text" class="form-control" id="enquiry_description"
+                            <textarea type="text" fieldType="alphanumeric" maxlength="255" class=" required-asterisk form-control" id="enquiry_description"
                                 name="enquiry_description" placeholder="Enter Description" required></textarea>
                         </div>
                         <div class="white add-image-container d-flex mx-2" id="add-image-container"
@@ -141,7 +137,7 @@
                     <div class="row ticket-detail d-none" id="inquiry-detail-view">
                         {{-- dynamically injected here --}}
                     </div>
-                   
+
                 </div>
 
 

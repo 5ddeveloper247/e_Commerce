@@ -17,7 +17,7 @@
 
             <div class="col-md-6">
                 <form class="d-flex mt-md-0 mt-3" id="newsLetterForm">
-                    <input class="form-control me-2 nav-search" name="email" id="email" type="search"
+                    <input class="form-control me-2 nav-search" maxlength="50" name="email" id="email" type="search"
                         placeholder="Your email address" aria-label="Search">
                     <button class="btn nav-search-btn d-flex align-items-center justify-content-center" type="button"
                         id="newsLetterSubscribeBtn">
