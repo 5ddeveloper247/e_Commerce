@@ -95,7 +95,7 @@
                 </button>
             </div>
 
-           
+
             <div class="d-flex align-items-center mt-3">
                 <a href="#" class="mx-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24">
@@ -350,17 +350,23 @@
                                 </svg>
                             </button> --}}
                         </div>
-                        <div class="d-flex justify-content-center my-4">
-                            <div class="featured-card-images">
-                                <a
-                                    href="{{ url('/product_detail/' . str_replace(' ', '-', $relatedProduct->category->category_name) . '/' . $relatedProduct->sku) }}">
-                                    <img class="img-fluid"
-                                        src="{{ url('/public/' . $relatedProduct->productImages[0]->filepath) }}"
-                                        alt="Card image">
-                                </a>
-
-                            </div>
+                        <div class="featured-card-images">
+                            @if(isset($relatedProduct->productImages) && count($relatedProduct->productImages) > 0 &&
+                            isset($relatedProduct->productImages[0]->filepath))
+                            <a
+                                href="{{ url('/product_detail/' . str_replace(' ', '-', $relatedProduct->category->category_name ?? 'unknown-category') . '/' . $relatedProduct->sku) }}">
+                                <img class="img-fluid"
+                                    src="{{ url('/public/' . $relatedProduct->productImages[0]->filepath) }}"
+                                    alt="{{ $relatedProduct->productImages[0]->alt_text ?? 'Product Image' }}">
+                            </a>
+                            @else
+                            <a href="#">
+                                <img class="img-fluid" src="{{ url('/public/images/placeholder.png') }}"
+                                    alt="Placeholder Image">
+                            </a>
+                            @endif
                         </div>
+
                         <div class="card-body text-center">
                             <div class="rating border-bottom pb-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">

@@ -199,6 +199,7 @@ $brands = $siteData['brands'];
 <script src="{{asset('assets_user/customjs/common.js')}}"></script>
 <script src="{{asset('assets_user/customjs/customjs.js')}}"></script>
 <script src="{{ asset('assets_user/customjs/cart.js') }}"></script>
+<script src="{{ asset('assets_user/customjs/rating.js') }}"></script>
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>

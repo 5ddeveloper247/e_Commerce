@@ -1,0 +1,10 @@
+//routes
+all the routes of the application (user and admin) is defined in \routes\web.php
+//views
+views of this application is divided into subviews for admin side and user side
+ // js
+ each views has seperate js file
+// there is main css file for admin site and user site
+// the add to cart functionality of whole user site is controlled by the single js file cart.js globally
+// each js file of user side and admin side has a initialLoadFunction which fetch the page data on initial load of the page
+// the cart.js file is responsible for adding and removing items from cart and also for updating the cart

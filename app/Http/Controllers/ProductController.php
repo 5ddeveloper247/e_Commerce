@@ -339,7 +339,6 @@ class ProductController extends Controller
                 'message' => 'Product media successfully saved',
                 'image_ids' => $imageIds, // Return image IDs for confirmation if needed
             ], 200);
-
         } catch (Exception $e) {
             return response()->json([
                 'status' => 500,

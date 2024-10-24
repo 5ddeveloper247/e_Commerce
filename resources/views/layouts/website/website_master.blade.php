@@ -11,6 +11,11 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="{{ asset('assets_admin/plugins/toastr/toastr.min.css') }}" />
+
+    <link rel="stylesheet" href="{{ asset('assets_user/plugins/rating-plugin/ratings/src/raty.css') }}">
+    <script src="{{ asset('assets_user/plugins/rating-plugin/ratings/src/raty.js') }}"></script>
+
+    <!-- jQuery Version (V3) -->
     @stack('styles')
 </head>
 <script>

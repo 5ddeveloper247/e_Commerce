@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ContactUs;
+use App\Models\ContactUs; 
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -24,9 +24,9 @@ class ContactUsController extends Controller
             'full_name' => 'required|string|max:255',
             'phone_number' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'order_number' => 'required|string|max:255',
-            'company_name' => 'required|string|max:255',
-            'rma_number' => 'required|string|max:255',
+            'order_number' => 'nullable|string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'rma_number' => 'nullable|string|max:255',
             'comment' => 'required|string|max:255',
             'status' => 'nullable|in:on,off,0,1',
         ];

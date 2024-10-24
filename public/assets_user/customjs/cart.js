@@ -57,12 +57,10 @@ $(document).ready(function () {
                 timeOut: 3000
             });
             cartView();
-
         }
         else {
             // Error Handling
             let errorMessage = 'An error occurred. Please try again.';
-
             if (response.status === 402) {
                 // Handle specific error status
                 errorMessage = response.message;
@@ -143,7 +141,7 @@ $(document).ready(function () {
                                     <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
                                     <div>
                                         <p class="card-text text-muted mb-0">${productName}</p>
-                                        <p class="card-text fw-bold">${productPrice}</p>
+                                        <p class="card-text fw-bold"><small>$</small> ${productPrice}</p>
                                     </div>
                                 </div>
                             </div>
@@ -347,7 +345,7 @@ $(document).ready(function () {
                 </button>
             </div>
 
-                       
+
                         <div class="d-flex align-items-center mt-3">
                             <a href="#" class="mx-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em"

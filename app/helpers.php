@@ -231,10 +231,18 @@ if (!function_exists('getDiscountedProducts')) {
 
     if (!function_exists('testimonials')) {
 
-        function testimonials(){
+        function testimonials()
+        {
             $testimonials = Testimonial::where('status', '1')->get();
             return $testimonials;
         }
+    }
+    if (!function_exists('calculateDiscount')) {
 
+        function calculateDiscount($price, $percentage)
+        {
+            $discount = ($price * $percentage) / 100;
+            return $price - $discount;
+        }
     }
 }

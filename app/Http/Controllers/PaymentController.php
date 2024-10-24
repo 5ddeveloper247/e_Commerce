@@ -15,6 +15,7 @@ use App\Models\OrderPayment;
 use App\Models\ShippingAddress;
 use App\Models\OrderShippingAddress;
 use App\Models\OrderTracking;
+use App\Models\Product;
 
 class PaymentController extends Controller
 {
@@ -24,7 +25,6 @@ class PaymentController extends Controller
             $request->validate([
                 'amount' => 'required',
                 'shippingAddress' => 'required'
-
             ]);
             $comments = $request->comments;
             $shippingAddress = $request->shippingAddress;
@@ -42,7 +42,6 @@ class PaymentController extends Controller
             if ($response['order_id']) {
                 // Set Stripe secret API key
                 Stripe::setApiKey(env('STRIPE_SECRET'));
-
                 // Create the charge
                 $charge = Charge::create([
                     'amount' => $request->amount * 100, // amount in cents
@@ -70,12 +69,21 @@ class PaymentController extends Controller
                     $orderPayment->date = now();
                     $orderPayment->save();
 
-
                     $cart = Cart::where('user_id', auth()->user()->id)
                         ->where('status', 0)
                         ->first();
                     $cart->status = 1;
                     $cart->save();
+
+                    $cartDetails = CartDetail::where('cart_id', $cart->id)->get();
+                    foreach ($cartDetails as $cartDetail) {
+                        $product = Product::where('id', $cartDetail->product_id)->first();
+                        if ($product->onhand_qty > 0) {
+                            $product->onhand_qty -= $cartDetail->quantity;
+                            $product->save();
+                        }
+                    }
+
                     // Log the charge response
                     Log::info('Payment response:', [
                         'id' => $charge->id,
@@ -272,8 +280,7 @@ class PaymentController extends Controller
                 'status' => 200,
                 'orderShippingAddress' => $orderShippingAddress,
             ]);
-        }
-         else {
+        } else {
             // Fetch all orders for the logged-in user with status = 1
             $payment = OrderPayment::with(['user', 'order.orderDetails.product.productImages']) // Load relationships
                 ->get();

@@ -27,8 +27,6 @@ $(document).ready(function () {
             if (response.status == 200) {
                 let html = '';
                 response.category.forEach((item, index) => {
-
-
                     html += `
                         <tr>
                             <td class="ps-3">${index + 1}</td>
@@ -127,12 +125,10 @@ $(document).ready(function () {
             toastr.error(response.message, '', {
                 timeOut: 3000
             });
-
         } else if (response.status === 422) {
             // Validation errors
             let errorMessage = response.responseJSON.message || 'Validation failed.';
             const validationErrors = response.responseJSON.errors || {};
-
             // Highlight the invalid fields
             $.each(validationErrors, function (key, error) {
                 const inputField = $('[name="' + key + '"]');
@@ -140,11 +136,9 @@ $(document).ready(function () {
                 // Optionally, show error messages next to each field
                 // inputField.after('<div class="invalid-feedback">' + error[0] + '</div>');
             });
-
             toastr.error(errorMessage, '', {
                 timeOut: 3000
             });
-
         } else if (response.status === 500) {
             // Handle server error
             toastr.error(response.message || 'Internal server error. Please contact support.', '', {

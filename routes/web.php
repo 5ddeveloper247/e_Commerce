@@ -179,7 +179,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/new_products', [WebsiteController::class, 'newProducts'])->name('user.newProducts');
     Route::get('/product_detail/{catName}/{sku}', [WebsiteController::class, 'productDetail'])->name('user.productDetail');
     Route::post('/newsletters/create/ajax', [NewsLetterController::class, 'newLetterCreate'])->name('admin.newsletter.create');
-    //cart and listings
+    //cart and listing
     Route::post('/cart/add', [WebsiteController::class, 'cartAdd'])->name('cart.add');
     Route::post('/cart/view', [WebsiteController::class, 'cartView'])->name('cart.view');
     Route::post('/cart/delete', [WebsiteController::class, 'cartDelete'])->name('cart.delete');
@@ -199,7 +199,6 @@ Route::group(['prefix' => '/'], function () {
 
 
 
-
         /************** AJAX ROUTES ******************/
         Route::get('/user', [WebsiteController::class, 'authUser'])->name('authUser');
         Route::post('/orderListing', [WebsiteController::class, 'orderListing'])->name('orderListing');
@@ -207,6 +206,7 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/wish_list/add', [WebsiteController::class, 'wishListAdd'])->name('order.wishListAdd');
         Route::post('/wishList/remove', [WebsiteController::class, 'wishListRemove'])->name('order.wishListRemove');
         Route::post('/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('order.enquiryMessageCreate');
+        Route::post('payment', [PaymentController::class, 'makePayment'])->name('payment.make');
     });
 });
 
@@ -283,5 +283,3 @@ Route::get('/faqs', function () {
 Route::get('payment', function () {
     return view('website.payment');
 });
-
-Route::post('payment', [PaymentController::class, 'makePayment'])->name('payment.make');

@@ -69,7 +69,7 @@
 
                 <div class="col-sm-12 mb-3">
                     <label for="description" class="form-label">Description<span class="danger">*</span></label>
-                    <textarea class="form-control" id="description" name="description" fieldType="alphanumeric"
+                    <textarea class="form-control productDecription" id="description" name="description" fieldType="alphanumeric"
                         maxlength="255" rows="3" placeholder="Enter description"></textarea>
                 </div>
                 <div class="col-sm-12 mb-3">

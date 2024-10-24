@@ -50,7 +50,6 @@ class AdminEnquiryController extends Controller
             'inquiries' => $inquiries,
             'status' => 200,
         ]);
-
     }
 
     public function enquiryMessageCreate(Request $request)

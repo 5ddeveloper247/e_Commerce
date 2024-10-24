@@ -737,8 +737,4 @@ class AdminController extends Controller
         $pageTitle = 'Enquiries';
         return view('admin.enquiry_listing', compact('pageTitle'));
     }
-
-
-
-   
 }

@@ -38,9 +38,9 @@ class DashboardController extends Controller
         $ordersCount = Order::count();
         $usersCount = User::count();
         $productsCount = Product::count();
-        $productsPublished=Product::where('status',1)->count();
-        $productsUnpublished=Product::where('status',0)->count();
-        $productsDiscounted=Product::where('is_offered',1)->count();
+        $productsPublished = Product::where('status', 1)->count();
+        $productsUnpublished = Product::where('status', 0)->count();
+        $productsDiscounted = Product::where('is_offered', 1)->count();
 
         // Sum the 'amount' field from the OrderPayment model
         $totalAmount = OrderPayment::where('transaction_status', 1)->sum('amount');
@@ -78,6 +78,4 @@ class DashboardController extends Controller
             return $amount;
         }
     }
-
-
 }

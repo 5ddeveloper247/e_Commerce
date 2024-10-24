@@ -78,7 +78,7 @@
     <div class="col-lg-6 px-md-0">
         <div class="swiper mySwiper10" id="hero-slider">
             <div class="swiper-wrapper">
-                @if(@$banner_images)
+                @if($banner_images)
                 @foreach($banner_images as $value)
                 <div class="swiper-slide">
                     <img class="new-hero-banner-img" src="{{url('/'.$value->file_path)}}" alt="">
@@ -239,13 +239,31 @@
             <div class="swiper-wrapper">
                 <?php
                     $featured_products = getFeaturedProducts();
+
                     // dd($featured_products);
                 ?>
                 @if($featured_products != null)
                 @foreach(@$featured_products as $product)
+                @php
+                $is_offered = $product->is_offered==1?true:false;
+                $offeredPrice = null;
+
+                if ($is_offered) {
+                $offeredPercentage = $product->offered_percentage;
+                // $offeredPrice = calculateDiscount($product->price, $offeredPercentage);
+                $offeredPrice = $product->price;
+                }
+                @endphp
                 <div class="swiper-slide mt-5 p-2">
                     <div class="card featured-card border-0">
-                        <p class="sale-badge text-black">Sale</p>
+                        @if($is_offered)
+                        <p class="sale-badge text-black">{{$offeredPercentage.' '.'%'.'Off'}}</p>
+                        @endif
+                        @if(!$is_offered && $product->discount_price>0)
+                        <p class="sale-badge text-black">{{"Discount"}}</p>
+                        @else
+                        <p class="sale-badge text-black">{{"New"}}</p>
+                        @endif
                         <div class="actions">
                             <button class="btn addWishListBtn" data-productid="{{ $product->id }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
@@ -278,7 +296,7 @@
                             </div>
                         </div>
                         <div class="card-body text-center mt-5">
-                            <div class="rating border-bottom pb-2">
+                            <div class="rating border-bottom pb-2 demo-rating">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
                                         d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
@@ -470,7 +488,7 @@ $discountedProducts = getDiscountedProducts();
                         <div class="col-md-5">
                             <div class="d-flex justify-content-center mt-md-0 mt-4">
                                 @if($product->productImages->isNotEmpty())
-                                <img src="{{ url('/storage/' . $product->productImages->first()->filepath) }}"
+                                <img src="{{ url('/public/' . $product->productImages->first()->filepath) }}"
                                     alt="Product Image" class="img-fluid">
                                 @else
                                 <img src="{{ asset('assets_user/images/default-product.png') }}" alt="Default Image"
@@ -995,5 +1013,5 @@ $discountedProducts = getDiscountedProducts();
 </div>
 @endsection
 @push('scripts')
-<script src=" {{asset("assets_user/customjs/home.js") }}"></script>
+<script src=" {{asset(" assets_user/customjs/home.js") }}"></script>
 @endpush

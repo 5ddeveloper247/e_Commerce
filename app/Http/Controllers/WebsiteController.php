@@ -41,6 +41,25 @@ class WebsiteController extends Controller
         return view('website.home')->with($data);
     }
 
+    public function siteSearch(Request $request)
+    {
+        // Sanitize the input
+        $searchQuery = filter_var($request->input('searchQuery'), FILTER_SANITIZE_STRING);
+        if ($searchQuery == '') {
+            return response()->json(['status' => 400, 'message' => 'Search query is required.']);
+        }
+        // Perform search with partial matching using LIKE
+        $products = Product::where('status', 1)
+            ->where('product_name', 'LIKE', '%' . $searchQuery . '%')
+            ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures'])
+            ->get();
+
+        // Return response
+        return response()->json(['status' => 200, 'products' => $products]);
+    }
+
+
+
     public function account(Request $request)
     {
         $data['pageTitle'] = 'Account';
@@ -193,7 +212,7 @@ class WebsiteController extends Controller
         $features = ProductFeature::where('product_id', $product->id)->get();
 
         // Fetch related products within the same category
-        $relatedProducts = Product::where('category_id', $categoryDetail->id)
+        $relatedProducts = Product::where('category_id', $categoryDetail->id)->where('status', 1)
             ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures'])
             ->get();
 
@@ -218,12 +237,48 @@ class WebsiteController extends Controller
         }
 
         $product = Product::find($product_id);
-
         if (!$product) {
             return response()->json(['status' => 404, 'message' => 'Product not found']);
         }
 
-        // Determine the price and discounted price
+        // Quantity check starts here
+        $cart = null;
+        // Check if the user is authenticated or the request contains a cart_id
+        if (Auth::check()) {
+            $cart = Cart::where('user_id', auth()->user()->id)->where('status', 0)->first();
+        } elseif ($request->has('cart_id') && $request->cart_id !== null) {
+            $cart = Cart::where('id', $request->cart_id)->where('status', 0)->first();
+        }
+
+        // Calculate the total quantity of the product in the cart (existing + new quantity)
+        $totalCartQuantity = $quantity; // Start with the new quantity
+        if ($cart) {
+            $cartDetail = CartDetail::where('cart_id', $cart->id)
+                ->where('product_id', $product_id)
+                ->first();
+
+            if ($cartDetail) {
+                $totalCartQuantity += $cartDetail->quantity; // Add existing cart quantity
+            }
+        }
+
+        // Check if the total quantity exceeds the available stock
+        if ($totalCartQuantity > $product->onhand_qty) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Product quantity out of stock, please select a quantity under ' . $product->onhand_qty
+            ]);
+        }
+
+        // Handle cases where available stock is low or out of stock
+        if ($product->onhand_qty <= 0) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Product is out of stock'
+            ]);
+        }
+
+        // Price and discount logic
         $price = $product->price;
         $dis_price = $product->price;
 
@@ -232,17 +287,13 @@ class WebsiteController extends Controller
         } elseif ($product->discount_price != null && $product->discount_price > 0) {
             $dis_price = $product->discount_price;
         }
-
         // Check if the user is authenticated and fetch the cart accordingly
         if (Auth::check()) {
             $cart = Cart::where('user_id', auth()->user()->id)->where('status', 0)->first();
-        } else {
-            if ($request->has('cart_id') && $request->cart_id !== null) {
-                $cart = Cart::where('id', $request->cart_id)->where('status', 0)->first();
-            } else {
-                $cart = [];
-            }
+        } elseif ($request->has('cart_id') && $request->cart_id !== null) {
+            $cart = Cart::where('id', $request->cart_id)->where('status', 0)->first();
         }
+
         // If the cart exists, update or add the product to the cart details
         if ($cart && $cart !== "") {
             $cartDetail = CartDetail::where('cart_id', $cart->id)
@@ -289,14 +340,14 @@ class WebsiteController extends Controller
         ]);
     }
 
+
     public function cartView(Request $request)
     {
         // Check if the user is authenticated
         if (Auth::check()) {
             $cart = Cart::where('user_id', auth()->user()->id)->where('status', 0)->first();
             $wishlist = WishList::where('user_id', auth()->user()->id)->count();
-        }
-        else {
+        } else {
             if ($request->has('cart_id') && $request->cart_id !== null) {
                 $cart = Cart::where('id', $request->cart_id)->where('status', 0)->first();
             } else {
@@ -606,8 +657,8 @@ class WebsiteController extends Controller
     public function getFilterData(Request $request)
     {
         $filters = [
-            'categories' => Category::all(),
-            'brands' => Brand::all(),
+            'categories' => Category::where('status', 1)->get(),
+            'brands' => Brand::where('status', 1)->get(),
         ];
         return response()->json($filters);
     }

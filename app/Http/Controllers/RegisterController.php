@@ -89,11 +89,11 @@ class RegisterController extends Controller
                 'regex:/^[\w.%+-]+@[A-Za-z0-9.-]+\.[A-Z]{2,}$/i'
             ],
             'phone_number' => 'required|numeric|digits_between:7,18',
-            'company_name' => 'required|string|max:50',
+            'company_name' => 'nullable|string|max:50',
             'address' => 'required|string|max:50',
-            'country' => 'required|string|max:50',
-            'city' => 'required|string|max:50',
-            'zipcode' => 'required|string|max:50',
+            'country' => 'nullable|string|max:50',
+            'city' => 'nullable|string|max:50',
+            'zipcode' => 'nullable|string|max:50',
             'password' => [
                 'required',
                 'string',
@@ -254,10 +254,22 @@ class RegisterController extends Controller
                 'confirmed'
             ],
         ], [
-            'password_confirmation.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+            'email.required' => 'The email field is required.',
+            'email.email' => 'The email must be a valid email address.',
+            'email.exists' => 'The email does not exist in our records.',
+
+            'otp.required' => 'The OTP field is required.',
+
+            'password.required' => 'The password field is required.',
+            'password.string' => 'The password must be a string.',
+            'password.min' => 'The password must be at least 8 characters.',
+            'password.max' => 'The password must not exceed 20 characters.',
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+            'password.confirmed' => 'The password confirmation does not match.',
         ]);
 
-        $user = User::where("email", $request->email)->where('role', '2')->first();
+
+        $user = User::where("email", $request->email)->first();
 
         if ($user) {
             if ($request->otp == $user->otp) {

@@ -16,15 +16,12 @@ $(document).ready(function () {
     }
 
     function getProductResponse(response) {
-
         if (response.status === 200) {
             // Success: Display products
 
             var product_listing = response.data;
 
             makeProductListing(product_listing);
-
-
 
             // Add your product display logic here
         } else {
