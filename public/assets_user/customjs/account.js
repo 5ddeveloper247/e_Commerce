@@ -742,34 +742,64 @@ $(document).ready(function () {
                 subTotal += parseInt(item.total_amount)
                 const url = base_url + '/public/' + item?.product.product_images[0]?.filepath;
                 orderDetailHtml += `
-                 <tr class="border-top border-bottom">
-                                        <td class="d-flex align-items-center gap-3">
-                                            <img class="border rounded-3 ms-3"
-                                                src="${url}"
-                                                width="120" alt="">
-                                            <div>
-                                                <small>
-                                                    ${item?.product?.model_name}
-                                                </small>
-                                                <br>
-                                                <small class="fw-semibold">
-                                                    ${item?.product?.product_name}
-                                                </small>
+                <tr class="border-top border-bottom">
+                    <td class="d-flex align-items-center gap-3">
+                        <img class="border rounded-3 ms-3"
+                             src="${url}"
+                             width="120" alt="">
+                        <div>
+                            <div class="d-flex align-items-center">
+                                <small class="fw-semibold">
+                                    ${item?.product?.product_name}
+                                </small>
+                                <div class="dropdown ms-2">
+                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                                        <path fill="currentColor" d="m7 10l5 5l5-5z"></path>
+                                    </svg>
+                                    </button>
+                                    <ul class="dropdown-menu p-3" style="width: 300px;">
+                                        <li class="mb-2">
+                                            <div class="d-flex align-items-center align-items-center ml-2">
+                                                <!-- Star rating -->
+                                                ${[1, 2, 3, 4, 5].map(i => `
+                                                    <span class="star-rating" data-rate-num="${i}" data-product-id="${item.product.id}" style="cursor: pointer;">
+                                                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                            <path class="star-rating-${i + '' + item.product.id}" id="star-rating-${i + '' + item.product.id}" fill="ddd" d="M12 2l2.17 6.16H21l-4.93 3.58 1.88 6.11L12 14.79 6.05 17.85l1.88-6.11L3 8.16h6.83L12 2z"></path>
+                                                        </svg>
+                                                    </span>
+                                                `).join('')}
                                             </div>
-                                        </td>
-                                        <td>$ ${item?.price}</td>
-                                        <td>
-                                            <div class="d-flex align-items-center">
-                                                <input type="number" class="form-control qty text-center border-0"
-                                                    value="${item?.quantity}" min="1" id="quantity" readonly>
+                                        </li>
+                                        <li class="mb-2">
+                                            <textarea class="form-control" rows="3" placeholder="Add your comment..."></textarea>
+                                        </li>
+                                        <li>
+                                            <button class="btn btn-primary mt-2" type="button" id="submit-rating-${item?.id}">Submit</button>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <small>
+                                ${item?.product?.model_name}
+                            </small>
+                            <br>
+                        </div>
+                    </td>
+                    <td>$ ${item?.price}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <input type="number" class="form-control qty text-center border-0"
+                                   value="${item?.quantity}" min="1" id="quantity" readonly>
+                        </div>
+                    </td>
+                    <td>
+                        $ ${item?.total_amount}
+                    </td>
+                </tr>`;
 
-                                            </div>
-                                        </td>
 
-                                        <td>
-                                            $ ${item?.total_amount}
-                                        </td>
-                                    </tr> `
+
             });
 
             //showing pending button
@@ -886,7 +916,7 @@ $(document).ready(function () {
                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="red" d="M19.3 5.71a4.92 4.92 0 0 0-3.51-1.46a4.92 4.92 0 0 0-3.51 1.46L12 6l-.28-.28a4.95 4.95 0 0 0-7 0a5 5 0 0 0 0 7l6.77 6.79a.75.75 0 0 0 1.06 0l6.77-6.79a5 5 0 0 0-.02-7.01"/></svg>
                            </button>
                             </div>
-                            <div class="d-flex justify-content-center my-4"> 
+                            <div class="d-flex justify-content-center my-4">
                                 <div class="featured-card-imagess">
                                     <a href="${base_url + '/product_detail/' + (product?.category?.category_name?.replace(/\s/g, '-') || 'default-category') + '/' + (product?.sku || 'default-sku')}">
                                         <img src="${base_url}/public/${image_filepath}" alt="Product image">
@@ -947,5 +977,22 @@ $(document).ready(function () {
         }
     }
 
+
+
+    $('body').on('click', '.star-rating', function () {
+
+        const rate = $(this).data('rate-num');
+        const prodid = $(this).data('product-id');
+
+        for (var i = 1; i < rate; i++) {
+            const el = '.star-rating-' + i + '' + prodid;
+            console.log(el)
+            $(el).attr('fill', '#ffd700')
+        }
+        updateRating(productId, rating);
+    })
+    function updateRating() {
+
+    }
 })
 

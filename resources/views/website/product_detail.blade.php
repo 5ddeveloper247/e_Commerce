@@ -32,10 +32,10 @@
             </div>
             <hr class="mb-0">
             <p class="text-muted mt-2">{{ $product->category->category_name }}</p>
+
             @php
             $is_offered_product = $product->is_offered == 1 ? true : false;
             $offered_Price = null;
-
             if ($is_offered_product) {
             $offeredPercentage = $product->offered_percentage;
             $offered_Price = calculateDiscount($product->price, $offeredPercentage);
@@ -53,30 +53,16 @@
 
 
 
+            @php
+            $ratings = $product->ratings->toArray(); // Convert the Eloquent Collection to an array
+            $avgRating = calculateAvgRating($ratings);
+            @endphp
+
             <div class="d-flex align-items-center">
                 <div class="rating-popup mb-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                    </svg>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                        <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                            d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                    </svg>
+                    {!! renderStars($avgRating) !!}
                 </div>
-                <p class="mb-0 ms-2">2 reviews</p>
+                <p class="mb-0 ms-2">({{ $avgRating }})</p>
             </div>
 
             <hr>
@@ -345,6 +331,10 @@
                 $is_offered = $relatedProduct->is_offered;
                 $offeredPrice = null;
 
+                $ratings_2 = $product->ratings->toArray(); // Convert the Eloquent Collection to an array
+                $avgRating_2 = calculateAvgRating($ratings_2);
+
+
                 if ($is_offered) {
                 $offeredPercentage = $relatedProduct->offered_percentage;
                 $offeredPrice = calculateDiscount($relatedProduct->price, $offeredPercentage);
@@ -390,37 +380,7 @@
 
                         <div class="card-body text-center">
                             <div class="rating border-bottom pb-2">
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-
+                                <p> {!! renderStars($avgRating) !!}</p>
                             </div>
                             <p class="card-title mt-2 border-top pt-3 line-clamp-2">
                                 <small class="card-title mt-2 border-top pt-3">{{ $relatedProduct->product_name

@@ -245,4 +245,41 @@ if (!function_exists('getDiscountedProducts')) {
             return $price - $discount;
         }
     }
+
+
+    if (!function_exists('calculateAvgRating')) {
+        // Helper function to calculate average rating
+        function calculateAvgRating($ratings)
+        {
+            if (empty($ratings)) {
+                return 0;
+            }
+            $total = array_reduce($ratings, function ($acc, $curr) {
+                return $acc + $curr['rating'];
+            }, 0);
+            return number_format($total / count($ratings), 1);
+        }
+    }
+
+    if (!function_exists('renderStars')) {
+        function renderStars($avgRating, $totalStars = 5)
+        {
+            $starsHtml = '';
+
+            for ($i = 0; $i < $totalStars; $i++) {
+                if ($i < floor($avgRating)) {
+                    // Fully filled star
+                    $starsHtml .= '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#FFD700" d="M12 2l2.17 6.16H21l-4.93 3.58 1.88 6.11L12 14.79 6.05 17.85l1.88-6.11L3 8.16h6.83L12 2z"></path></svg>';
+                } elseif ($i === floor($avgRating) && fmod($avgRating, 1) !== 0) {
+                    // Half star
+                    $starsHtml .= '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#ddd" d="M12 2l2.17 6.16H21l-4.93 3.58 1.88 6.11L12 14.79 6.05 17.85l1.88-6.11L3 8.16h6.83L12 2z"></path><path fill="#FFD700" d="M12 2l-2.17 6.16H3l4.93 3.58-1.88 6.11L12 14.79V2z"></path></svg>';
+                } else {
+                    // Empty star
+                    $starsHtml .= '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#ddd" d="M12 2l2.17 6.16H21l-4.93 3.58 1.88 6.11L12 14.79 6.05 17.85l1.88-6.11L3 8.16h6.83L12 2z"></path></svg>';
+                }
+            }
+
+            return $starsHtml;
+        }
+    }
 }

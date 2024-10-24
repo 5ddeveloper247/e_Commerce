@@ -45,8 +45,8 @@ class WebsiteController extends Controller
     {
         // Sanitize the input
         $searchQuery = filter_var($request->input('searchQuery'), FILTER_SANITIZE_STRING);
-        if($searchQuery==''){
-            return response()->json(['status' => 400,'message' => 'Search query is required.']);
+        if ($searchQuery == '') {
+            return response()->json(['status' => 400, 'message' => 'Search query is required.']);
         }
         // Perform search with partial matching using LIKE
         $products = Product::where('status', 1)
@@ -71,7 +71,7 @@ class WebsiteController extends Controller
     //product listing ajax
     public function productsListing(Request $request)
     {
-        $products = Product::where('status', 1)->with(['productImages', 'category'])->get();
+        $products = Product::where('status', 1)->with(['productImages', 'category', 'ratings'])->get();
         if ($products) {
             return response()->json(['status' => 200, 'message' => 'Products fetched successfully', 'data' => $products]);
         } else {
@@ -196,7 +196,7 @@ class WebsiteController extends Controller
             $product = Product::where('status', 1)
                 ->where('sku', $sku)
                 // ->where('category_id', $categoryDetail->id)
-                ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures'])
+                ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures', 'ratings'])
                 ->first();
 
             // If product is not found, return a 404
@@ -206,6 +206,8 @@ class WebsiteController extends Controller
         } else {
             return abort(404);
         }
+
+
 
         // Fetch related specifications and features
         $specifications = ProductSpecification::where('product_id', $product->id)->get();
@@ -595,7 +597,7 @@ class WebsiteController extends Controller
     public function productListingDetail(Request $request)
     {
         $productId = $request->productId;
-        $product = Product::with(['productImages', 'category', 'brand'])->find($productId);
+        $product = Product::with(['productImages', 'category', 'brand', 'ratings'])->find($productId);
         return response()->json([
             'product' => $product,
             'status' => 200,

@@ -53,10 +53,14 @@ nav svg {
 nav svg:hover {
     transform: rotateY(180deg);
 }
+
 .required-asterisk::after {
-    content: ' *';      /* Asterisk character */
-    color: red;         /* Asterisk color */
-    margin-left: 0.2rem; /* Space between label text and asterisk */
+    content: ' *';
+    /* Asterisk character */
+    color: red;
+    /* Asterisk color */
+    margin-left: 0.2rem;
+    /* Space between label text and asterisk */
 }
 
 .line-clamp-1 {
@@ -544,12 +548,23 @@ nav .navbar-brand img {
 
 .rating svg {
     color: var(--basic-color--);
-    margin: -19px !important;
+    /* margin: -19px !important; */
+    transition: 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.rating div {
+    color: var(--basic-color--);
+    /* margin: -19px !important; */
     transition: 0.3s ease-in-out;
     opacity: 0;
 }
 
 .featured-card:hover .rating svg {
+    opacity: 1;
+}
+
+.featured-card:hover .rating div {
     opacity: 1;
 }
 

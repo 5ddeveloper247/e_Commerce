@@ -144,7 +144,7 @@ $(document).ready(function () {
                         const truncatedProductName = productName.length > 11 ? productName.substring(0, 9) + '..' : productName;
 
 
-    cartHtml += `
+                        cartHtml += `
     <div class="px-3 pt-5">
         <div class="d-flex justify-content-center align-items-center">
             <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
@@ -212,6 +212,10 @@ $(document).ready(function () {
             toastr.error('You must have to login first', '', {
                 timeOut: 3000
             });
+            setTimeout(() => {
+                window.location.href = "/login"
+
+            }, 3000)
             return false;
         }
         const type = "Post";
@@ -252,6 +256,8 @@ $(document).ready(function () {
     function viewDetailProductResponse(response) {
         if (response.status === 200) {
             const product = response.product;
+            const avgRating = calculateAvgRating(product.ratings);
+            const totalStars = 5;
 
             var is_offered = product.is_offered == 1 ? true : false;
             var offeredPrice = '';
@@ -313,33 +319,9 @@ $(document).ready(function () {
 
                         <div class="d-flex align-items-center">
                             <div class="rating-popup mb-1">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
-                                    </path>
-                                </svg>
+                                   ${renderStars(avgRating, totalStars)}
                             </div>
-                            <p class="mb-0 ms-2">2 reviews</p>
+                            <p class="mb-0 ms-2">(${avgRating}) </p>
                         </div>
 
                         <hr>

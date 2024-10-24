@@ -200,6 +200,7 @@ $brands = $siteData['brands'];
 </script>
 <script src="{{ asset('assets_admin/plugins/toastr/toastr.min.js') }}"></script>
 <script src="{{asset('assets_user/customjs/common.js')}}"></script>
+<script src="{{asset('assets_user/customjs/ratings.js')}}"></script>
 <script src="{{asset('assets_user/customjs/customjs.js')}}"></script>
 <script src="{{ asset('assets_user/customjs/cart.js') }}"></script>
 <!-- Swiper JS -->

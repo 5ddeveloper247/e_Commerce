@@ -67,4 +67,9 @@ class Product extends Model
     {
         return $this->hasMany(CartDetail::class);
     }
+
+    public function ratings()
+    {
+        return $this->hasMany(Rating::class);
+    }
 }

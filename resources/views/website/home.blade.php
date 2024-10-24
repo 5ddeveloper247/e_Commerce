@@ -245,6 +245,9 @@
                 @php
                 $is_offered = $product->is_offered == 1;
                 $offeredPrice = $is_offered ? calculateDiscount($product->price, $product->offered_percentage) : null;
+                $ratings = $product->ratings->toArray();
+                $avgRating = calculateAvgRating($ratings);
+
                 @endphp
 
                 <div class="swiper-slide mt-5 p-2">
@@ -289,15 +292,7 @@
                         </div>
 
                         <div class="card-body text-center mt-5">
-                            <div class="rating border-bottom pb-2">
-                                @for ($i = 0; $i < 5; $i++) <svg xmlns="http://www.w3.org/2000/svg" width="1em"
-                                    height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                                    </svg>
-                                    @endfor
-                            </div>
-
+                            <p> {!! renderStars($avgRating) !!} <small>({{$avgRating}})</small></p>
                             <p class="card-title mt-2 border-top pt-3 line-clamp-2">
                                 <small>{{ $product->product_name }}</small>
                             </p>
@@ -454,6 +449,10 @@ $discountedProducts = getDiscountedProducts();
     @if($discountedProducts && $discountedProducts->count() > 0)
     <div class="promocards row mt-4">
         @foreach($discountedProducts as $index => $product)
+        @php
+        $ratings_2 = $product->ratings->toArray();
+        $avgRating_2 = calculateAvgRating($ratings_2);
+        @endphp
         @if($index < 2) <!-- Ensures that only up to two products are displayed -->
             <div class="col-lg-6 my-1">
                 <div
@@ -464,10 +463,12 @@ $discountedProducts = getDiscountedProducts();
                                 <h4 class="text-white">{{ $product->product_name ?? 'Product Name' }}</h4>
                                 <p class="text-white">Get up to {{ $product->offered_percentage ?? '' }}% Save</p>
                                 <p class="text-white">Price: ${{ $product->price ?? '' }}</p>
+                                <p> {!! renderStars($avgRating_2) !!} <small>({{$avgRating_2}})</small></p>
                                 <button class="btn btn-shop"><a
                                         href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}"
                                         style="text-decoration: none">Buy Now</a> </button>
                             </div>
+
                         </div>
                         <div class="col-md-5">
                             <div class="d-flex justify-content-center mt-md-0 mt-4">
