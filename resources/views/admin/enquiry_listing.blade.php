@@ -113,13 +113,13 @@
                                     </div>
 
                                     <!-- New Enquiry Button -->
-                                    <div class="d-flex align-items-center justify-content-center mt-3">
+                                    {{-- <div class="d-flex align-items-center justify-content-center mt-3">
                                         <div class="w-100 text-center border rounded-2 p-3 newEnquiryBtn"
                                             style="cursor: pointer;">
                                             <div class="h1">+</div>
                                             <div>New Enquiry</div>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>

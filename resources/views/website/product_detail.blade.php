@@ -32,7 +32,26 @@
             </div>
             <hr class="mb-0">
             <p class="text-muted mt-2">{{ $product->category->category_name }}</p>
-            <p class="fw-bold">{{ $product->pricd}}</p>
+            @php
+            $is_offered_product = $product->is_offered == 1 ? true : false;
+            $offered_Price = null;
+
+            if ($is_offered_product) {
+            $offeredPercentage = $product->offered_percentage;
+            $offered_Price = calculateDiscount($product->price, $offeredPercentage);
+            }
+            @endphp
+
+            @if($is_offered_product)
+            <p class="fw-bold"><small>Offered Price: $</small>{{ $offered_Price }}</p>
+            @elseif(!$is_offered_product && $product->discount_price > 0)
+            <p class="fw-bold"><small>Discounted Price: $</small>{{ $product->discount_price }}</p>
+            @else
+            <p class="fw-bold text-danger"><small>Actual Price: $</small>{{ $product->price }}</p>
+            @endif
+            <p class="fw-bold text-danger"><small>Actual Price: $</small>{{ $product->price }}</p>
+
+
 
             <div class="d-flex align-items-center">
                 <div class="rating-popup mb-1">
@@ -169,7 +188,7 @@
                 <div class="tab-pane fade py-3 show active" id="description-tab-pane" role="tabpanel"
                     aria-labelledby="description-tab" tabindex="0">
                     <p class="mb-0">
-                        {{ $product->description }}
+                        {!! $product->description !!}
                     </p>
                 </div>
                 <div class="tab-pane fade py-3" id="specification-tab-pane" role="tabpanel"
@@ -320,81 +339,109 @@
             <div class="border-under-main-heading"></div>
         </h3>
         <div class="swiper mySwiper3">
-
-
-
-
             <div class="swiper-wrapper">
-                @foreach ($relatedProducts as $relatedProduct )
+                @foreach ($relatedProducts as $relatedProduct)
+                @php
+                $is_offered = $relatedProduct->is_offered;
+                $offeredPrice = null;
+
+                if ($is_offered) {
+                $offeredPercentage = $relatedProduct->offered_percentage;
+                $offeredPrice = calculateDiscount($relatedProduct->price, $offeredPercentage);
+                }
+                @endphp
                 <div class="swiper-slide mt-5 p-2">
                     <div class="card featured-card border-0">
-                        <p class="sale-badge text-black">Sale</p>
+                        <p class="sale-badge text-black">
+                            @if ($is_offered)
+                            {{ round($offeredPercentage, 0) }}% Off
+                            @else
+                            {{ $relatedProduct->discount_price > 0 ? 'Discount' : 'AC' }}
+                            @endif
+                        </p>
                         <div class="actions">
-                            <button class="btn addWishListBtn" data-productid="{{$relatedProduct->id}}">
+                            <button class="btn addWishListBtn" data-productid="{{ $relatedProduct->id }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
                                     <path fill="#000"
-                                        d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11" />
+                                        d="M178 42c-21 0-39.26 9.47-50 25.34C117.26 51.47 99 42 78 42a60.07 60.07 0 0 0-60 60c0 29.2 18.2 59.59 54.1 90.31a334.7 334.7 0 0 0 53.06 37a6 6 0 0 0 5.68 0a334.7 334.7 0 0 0 53.06-37C219.8 161.59 238 131.2 238 102a60.07 60.07 0 0 0-60-60m-50 175.11c-16.41-9.47-98-59.39-98-115.11a48.05 48.05 0 0 1 48-48c20.28 0 37.31 10.83 44.45 28.27a6 6 0 0 0 11.1 0C140.69 64.83 157.72 54 178 54a48.05 48.05 0 0 1 48 48c0 55.72-81.59 105.64-98 115.11">
+                                    </path>
+                                </svg>
                                 </svg>
                             </button>
-
-                            {{-- this button is causing a issue on this page when it open a pop up
-                            the popup has a same id of quantity which is already defined on the button aboce
-                            which is utitlizing by add by cart button its modal is already in this page on the botton
-                            earch with this id viewDetailProduct--}}
-
-                            {{-- <button type="button" class="btn viewDetailProduct"
-                                data-productid="{{ @$relatedProduct->id }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                                    <path fill="#000"
-                                        d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
-                                </svg>
-                            </button> --}}
                         </div>
-                        <div class="featured-card-images">
-                            @if(isset($relatedProduct->productImages) && count($relatedProduct->productImages) > 0 &&
-                            isset($relatedProduct->productImages[0]->filepath))
-                            <a
-                                href="{{ url('/product_detail/' . str_replace(' ', '-', $relatedProduct->category->category_name ?? 'unknown-category') . '/' . $relatedProduct->sku) }}">
-                                <img class="img-fluid"
-                                    src="{{ url('/public/' . $relatedProduct->productImages[0]->filepath) }}"
-                                    alt="{{ $relatedProduct->productImages[0]->alt_text ?? 'Product Image' }}">
-                            </a>
-                            @else
-                            <a href="#">
-                                <img class="img-fluid" src="{{ url('/public/images/placeholder.png') }}"
-                                    alt="Placeholder Image">
-                            </a>
-                            @endif
+                        <div class="d-flex justify-content-center my-4">
+                            <div class="featured-card-images">
+                                @if (isset($relatedProduct->productImages) && count($relatedProduct->productImages) > 0
+                                && isset($relatedProduct->productImages[0]->filepath))
+                                <a
+                                    href="{{ url('/product_detail/' . str_replace(' ', '-', $relatedProduct->category->category_name ?? 'unknown-category') . '/' . $relatedProduct->sku) }}">
+                                    <img class="img-fluid"
+                                        src="{{ url('/public/' . $relatedProduct->productImages[0]->filepath) }}"
+                                        alt="{{ $relatedProduct->productImages[0]->alt_text ?? 'Product Image' }}">
+                                </a>
+                                @else
+                                <a href="#">
+                                    <img class="img-fluid" src="{{ url('/public/images/placeholder.png') }}"
+                                        alt="Placeholder Image">
+                                </a>
+                                @endif
+                            </div>
                         </div>
 
                         <div class="card-body text-center">
                             <div class="rating border-bottom pb-2">
+
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
+
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
+
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
+
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
+
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
+                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z">
+                                    </path>
                                 </svg>
+
                             </div>
-                            <p class="card-title mt-2 border-top pt-3">{{ $relatedProduct->product_name }}</p>
+                            <p class="card-title mt-2 border-top pt-3 line-clamp-2">
+                                <small class="card-title mt-2 border-top pt-3">{{ $relatedProduct->product_name
+                                    }}</small>
+                            </p>
                             <div class="price-and-btn">
-                                <h5 class="card-price">{{ $relatedProduct->price }}</h5>
+                                <div class="d-flex justify-content-center card-price">
+                                    @if ($is_offered)
+                                    <h5>${{ number_format($offeredPrice, 2) }}</h5>
+                                    @elseif ($relatedProduct->discount_price > 0)
+                                    <h5>${{ number_format($relatedProduct->discount_price, 2) }}</h5>
+                                    @else
+                                    <h5>${{ number_format($relatedProduct->price, 2) }}</h5>
+                                    @endif
+                                    <p class=" text-danger ps-1">
+                                        <small><del>${{ number_format($relatedProduct->price, 0) }}</del></small>
+                                    </p>
+                                </div>
+
                                 <button class="btn btn-add-to-cart AddToCartBtn" data-quantity="1"
-                                    data-productid="{{$relatedProduct->id}}">
+                                    data-productid="{{ $relatedProduct->id }}">
                                     <span class="me-2">+</span>
                                     Add to Cart
                                 </button>
@@ -408,6 +455,7 @@
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
         </div>
+
     </div>
 
 

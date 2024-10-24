@@ -867,12 +867,20 @@
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15"
-                                    id="password" name="password" placeholder="Password">
-                                <label for="password">Password</label>
+                                    id="currentPassword" name="currentPassword" placeholder="Current Password">
+                                <label for="currentPassword">Current Password</label>
                             </div>
                         </div>
+
                     </div>
                     <div class="row g-3 mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15"
+                                    id="password" name="password" placeholder="Password">
+                                <label for="password">New Password</label>
+                            </div>
+                        </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15"
@@ -880,13 +888,7 @@
                                 <label for="confirmPassword">Confirm Password</label>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="form-floating">
-                                <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15"
-                                    id="currentPassword" name="currentPassword" placeholder="Current Password">
-                                <label for="currentPassword">Current Password</label>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="text-center mt-5">
                         <button type="button" class="btn btn-add-to-cart py-2" id="updateDetailBtn">Update

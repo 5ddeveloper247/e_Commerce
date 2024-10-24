@@ -50,6 +50,7 @@ $(document).ready(function () {
         SendAjaxRequestToServer(type, url, '', '', handleProductResponse, '', '#contactReply_submit');
 
     }
+
     function handleProductResponse(response) {
         let newProductHtml;
         if (response.data) {

@@ -93,8 +93,10 @@ $brands = $siteData['brands'];
                 <ul class="list-unstyled">
                     <li><a href="{{url('/products')}}">Shop All</a></li>
                     @foreach ($categories as $category )
+                    @if($category->status==1 || $category->status=="1")
                     <li><a href="{{ url('/products'.'/'. $category->category_name) }}">{{ $category->category_name
                             }}</a></li>
+                    @endif
                     @endforeach
                 </ul>
             </div>
@@ -102,9 +104,10 @@ $brands = $siteData['brands'];
                 <h5>Popular Brands</h5>
                 <ul class="list-unstyled">
                     @foreach ($brands as $brand )
+                    @if($brand->status==1 || $brand->status=="1")
                     <li><a href="{{ $brand->url?? " #" }}">{{ $brand->title }}</a></li>
+                    @endif
                     @endforeach
-
                 </ul>
             </div>
         </div>
@@ -199,7 +202,6 @@ $brands = $siteData['brands'];
 <script src="{{asset('assets_user/customjs/common.js')}}"></script>
 <script src="{{asset('assets_user/customjs/customjs.js')}}"></script>
 <script src="{{ asset('assets_user/customjs/cart.js') }}"></script>
-<script src="{{ asset('assets_user/customjs/rating.js') }}"></script>
 <!-- Swiper JS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
 <script>

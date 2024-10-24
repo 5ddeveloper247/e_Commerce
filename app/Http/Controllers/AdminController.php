@@ -129,7 +129,6 @@ class AdminController extends Controller
 
             // Fetch the user record based on email
             $user = User::where('email', $request->email)->first();
-
             // Update user details
             $user->first_name = $request->firstName;
             $user->last_name = $request->lastName;

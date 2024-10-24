@@ -740,7 +740,7 @@ $(document).ready(function () {
             updateSteps(order.status.id, response.orderTrackings);
             order.order_details.forEach(item => {
                 subTotal += parseInt(item.total_amount)
-                const url = base_url + '/storage/' + item?.product.product_images[0]?.filepath;
+                const url = base_url + '/public/' + item?.product.product_images[0]?.filepath;
                 orderDetailHtml += `
                  <tr class="border-top border-bottom">
                                         <td class="d-flex align-items-center gap-3">
@@ -886,10 +886,10 @@ $(document).ready(function () {
                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="red" d="M19.3 5.71a4.92 4.92 0 0 0-3.51-1.46a4.92 4.92 0 0 0-3.51 1.46L12 6l-.28-.28a4.95 4.95 0 0 0-7 0a5 5 0 0 0 0 7l6.77 6.79a.75.75 0 0 0 1.06 0l6.77-6.79a5 5 0 0 0-.02-7.01"/></svg>
                            </button>
                             </div>
-                            <div class="d-flex justify-content-center my-4">
+                            <div class="d-flex justify-content-center my-4"> 
                                 <div class="featured-card-imagess">
                                     <a href="${base_url + '/product_detail/' + (product?.category?.category_name?.replace(/\s/g, '-') || 'default-category') + '/' + (product?.sku || 'default-sku')}">
-                                        <img src="${base_url}/storage/${image_filepath}" alt="Product image">
+                                        <img src="${base_url}/public/${image_filepath}" alt="Product image">
                                     </a>
                                 </div>
                             </div>
@@ -938,7 +938,7 @@ $(document).ready(function () {
                 timeOut: 3000
             })
             initialLoad();
-            cartView();
+            window.location.reload();
         }
         else {
             toastr.error(response.message, '', {

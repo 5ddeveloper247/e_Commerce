@@ -106,6 +106,7 @@ $(document).ready(function () {
                 $('#discounted_price').text(`$${sumDiscountedPrice.toFixed(2)}`);
                 $('#total').text(`$${sumTotal.toFixed(2)}`);
             }
+
             // Inject the generated HTML into the cart table body
             $('#cart_detail_table_body').html(cartDetailHtml);
 

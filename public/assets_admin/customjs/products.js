@@ -40,6 +40,8 @@ $(document).ready(function () {
         $("#imagePreview_div").hide();
         $("#featureImagePreview").attr('src', '');
         setEditorData('#editor2', '');
+        setEditorData('#productExtraInfoEditor', '');
+        setEditorData('.productDecription', '');
         getProductsOnLoad();
     }
 
@@ -134,9 +136,13 @@ $(document).ready(function () {
         var html = '<option value="">Choose Category</option>';
 
         response.forEach(item => {
-            html += `
+
+            if (item.status == 1) {
+                html += `
                 <option value="${item.id}">${item.category_name}</option>
             `;
+            }
+
         });
         $('#category_id').html(html);
     }
@@ -191,15 +197,22 @@ $(document).ready(function () {
         }
     }
 
+
+
+
+
     // Add Product Details
     $('body').on('click', '#saveProductBtn', function () {
         const saveForm = document.getElementById('product_settings_form');
         var formData = new FormData(saveForm);
+        var product_desc = $('.productDecription').next().find('.ck-content').html();
+        var product_extra_info = $('.productDecription').next().find('.ck-content').html();
+        formData.append('description', product_desc);
+        formData.append('extra_info', product_extra_info);
         productUpdateStore(formData);
     });
 
     $(document).on('click', '.edit_product', function (e) {
-
         var product_id = $(this).attr('data-id');
 
         let data = new FormData();
@@ -209,11 +222,13 @@ $(document).ready(function () {
         SendAjaxRequestToServer(type, url, data, '', getSpecificProductDetailResponse, '', '.edit_product');
     });
 
+
+
+
     function getSpecificProductDetailResponse(response) {
 
         var data = response.data;
         var product_detail = data.product_detail;
-
         if (product_detail != null) {
             var product_images = product_detail.product_images;
             var product_specifications = product_detail.product_specifications;
@@ -229,9 +244,9 @@ $(document).ready(function () {
             $('#discount_price').val(product_detail.discount_price);
             $('#weight').val(product_detail.weight);
             $('#onhand_qty').val(product_detail.onhand_qty);
-            $('#description').val(product_detail.description);
+            setEditorData('.productDecription', product_detail.description)
+            //$('#description').val(product_detail.description);
             $('#video_url').val(product_detail.video_url);
-
             $("#image-container,.image-container-selected").html('');
             var image_html = '';
             if (product_images != null) {
@@ -253,6 +268,7 @@ $(document).ready(function () {
             $(".media-nav-item,.specifications-nav-item,.features-nav-item").removeClass('d-none');
         }
     }
+
 
     function makeProductSpecificationListing(product_specifications) {
 
@@ -335,29 +351,33 @@ $(document).ready(function () {
         $('#features_table_body').html(html);
     }
 
+    var removedExistingFiles = []; // Array to track removed existing files
+    var selectedFiles = []; // Array to track new selected files
 
     $('#file-input1').on('change', function (event) {
         const files = event.target.files;
         const existing = $('.uploaded_files');
-        var allfileslength = existing.length + files.length + selectedFiles.length;
+
+        var allfileslength = existing.length + files.length + selectedFiles.length - removedExistingFiles.length;
+
         if (allfileslength > 7) {
             toastr.error('You can upload a maximum of 7 images.');
             return;
         }
+
         // Validate and add selected files to selectedFiles array
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
-            // Check if the file is an image
             if (!file.type.startsWith('image/')) {
                 toastr.error('Please select only image files.');
                 continue;
             }
             selectedFiles.push(file);
         }
-        // Update the display
+
+        // Update the display for new files only
         displaySelectedFiles_product();
     });
-
 
     function displaySelectedFiles_product() {
         var imageContainerselected = $('.image-container-selected');
@@ -366,65 +386,75 @@ $(document).ready(function () {
         selectedFiles.forEach((file, index) => {
             const reader = new FileReader();
             reader.onload = function (e) {
-                var image_html = `<div class="image-item-land file_section" >
-                                        <img src="${e.target.result}">
-                                        <span class="cancel-icon remove_file_section" data-id="">×</span>
-                                    </div>`;
+                var image_html = `<div class="image-item-land file_section" data-index="${index}">
+                                <img src="${e.target.result}">
+                                <span class="cancel-icon remove_file_section" data-new="true" data-id="${index}">×</span>
+                              </div>`;
                 imageContainerselected.append(image_html);
             }
             reader.readAsDataURL(file);
         });
     }
 
-
     $(document).on('click', '.remove_file_section', function (e) {
+        var isNewFile = $(this).attr('data-new') === "true";
+        var imageIndex = $(this).attr('data-id');
 
-        $(this).closest('.file_section').remove();
-        if ($(this).attr('data-id')) {
+        if (isNewFile) {
+            // Remove the selected new file
+            selectedFiles.splice(imageIndex, 1);
+            displaySelectedFiles_product(); // Re-render
+        } else {
+            // Handle removal of existing files
             var image_id = $(this).attr('data-id');
-
             let data = new FormData();
             data.append('id', image_id);
             let type = 'POST';
             let url = '/admin/product/delete/images';
-            SendAjaxRequestToServer(type, url, data, '', deleteProductImageResponse, '', '.remove_file_section');
+            let $this = $(this);
+
+            SendAjaxRequestToServer(type, url, data, '', function (response) {
+                deleteProductImageResponse(response, $this);
+            }, '', '.remove_file_section');
         }
     });
 
-    function deleteProductImageResponse(response) {
-
+    function deleteProductImageResponse(response, element) {
         if (response.status == 200) {
-            toastr.error(response.message, '', {
-                timeOut: 3000
-            });
+            toastr.success(response.message, '', { timeOut: 3000 });
+            var image_id = element.attr('data-id');
+            removedExistingFiles.push(image_id); // Track removed file
+
+            // Remove from UI
+            element.closest('.file_section').remove();
+        } else {
+            toastr.error("Something went wrong", '', { timeOut: 3000 });
         }
     }
+
 
     $('body').on('click', '#saveProductAssetsBtn', function () {
         // Get the product ID from the hidden input field
         const productId = $("input[name='product_id']").val();
         const video_url = $("input[name='video_url']").val();
+
         // Create a new FormData object
         var formData = new FormData();
-        // Append the product ID to the FormData
         formData.append('product_id', productId);
         formData.append('video_url', video_url);
 
+        // Append selected files to the FormData
         if (selectedFiles && selectedFiles.length > 0) {
             for (let i = 0; i < selectedFiles.length; i++) {
                 formData.append('product_images[]', selectedFiles[i]);
             }
         }
-        else {
-            formData.append('product_images', '');
-        }
 
+        // Save images via AJAX
         saveImages(formData);
     });
 
-
     function saveImages(formData) {
-        // Check if selected files are present and append them to the FormData
         const url = "/admin/product/store/images";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', handleProductImagesSaveResponse, '', '#saveProductAssetsBtn');
@@ -433,23 +463,23 @@ $(document).ready(function () {
     function handleProductImagesSaveResponse(response) {
         if (response.status == 200) {
             var product_id = $("#product_id").val();
-            getSpecificProductDetail(product_id);
+            getSpecificProductDetail(product_id);  // Refresh product details
+            // Clear the selectedFiles array
+            selectedFiles = [];
+            // Optionally clear the UI for selected files
+            $('.image-container-selected').empty();
 
-            toastr.success(response.message, '', {
-                timeOut: 3000
-            });
+            toastr.success(response.message, '', { timeOut: 3000 });
         } else {
-            var error = response.responseJSON.message;
-            toastr.error(error, '', {
-                timeOut: 3000
-            });
+            var error = response.responseJSON.message || "An error occurred"; // Fallback error message
+            toastr.error(error, '', { timeOut: 3000 });
         }
     }
+
 
     function getSpecificProductDetail(product_id) {
 
         var product_id = product_id;
-
         let data = new FormData();
         data.append('product_id', product_id);
         let type = 'POST';

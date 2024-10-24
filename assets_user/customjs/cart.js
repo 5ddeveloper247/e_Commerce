@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
     $('body').on('click', '.AddToCartBtn', function () {
         var product_id = $(this).attr('data-productId');
@@ -139,19 +141,20 @@ $(document).ready(function () {
                         let productName = item.product.product_name || 'Unnamed Product';
                         let productPrice = item?.discounted_price || 'Price not available';
                         totalAmount += parseInt(item?.total_amount || 0);  // Correctly add to totalAmount
+                        const truncatedProductName = productName.length > 11 ? productName.substring(0, 9) + '..' : productName;
 
 
-                        cartHtml += `
-                            <div class="px-3 pt-3">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
-                                    <div>
-                                        <p class="card-text text-muted mb-0">${productName}</p>
-                                        <p class="card-text fw-bold">${productPrice}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+    cartHtml += `
+    <div class="px-3 pt-5">
+        <div class="d-flex justify-content-center align-items-center">
+            <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
+            <div>
+                <p class="card-text text-muted mb-0">${truncatedProductName}</p>
+                <p class="card-text fw-bold"><small>$</small>${productPrice}</p>
+            </div>
+        </div>
+    </div>
+`;
                     } else {
                         cartHtml += `
                             <div class="px-3 pt-3">
@@ -249,6 +252,13 @@ $(document).ready(function () {
     function viewDetailProductResponse(response) {
         if (response.status === 200) {
             const product = response.product;
+
+            var is_offered = product.is_offered == 1 ? true : false;
+            var offeredPrice = '';
+            if (is_offered) {
+                var offeredPercentage = product.offered_percentage;
+                offeredPrice = calculateDiscount(product.price, offeredPercentage);
+            }
             const product_id = product.id;
             const product_name = product.product_name;
             const product_price = product.price;
@@ -292,7 +302,14 @@ $(document).ready(function () {
                         </div>
                         <hr class="mb-0">
                         <p class="text-muted mt-2">${product_category_name}</p>
-                        <p class="fw-bold">$ ${product_price}</p>
+                        ${is_offered
+                    ? `<p class="text-muted mt-2">Offered Price: <span class="fw-bold">$${offeredPrice}</span></p>`
+                    : (product.discount_price > 0)
+                        ? `<p class="text-muted mt-2">Discounted Price: <span class="fw-bold">$${product.discount_price}</span></p>`
+                        : `<p class="text-muted mt-2">Regular Price: <span class="fw-bold">$${product.price}</span></p>`
+                }
+
+
 
                         <div class="d-flex align-items-center">
                             <div class="rating-popup mb-1">
@@ -411,4 +428,21 @@ $(document).ready(function () {
             $('#viewDetailModal').modal('show');
         }
     }
+
+    //handling categorysearching
+    function calculateDiscount(price, percentage) {
+        if (percentage < 1 || percentage > 100) {
+            return 'Percentage must be between 1 and 100, mate!';
+        }
+
+        let discount = (price * percentage) / 100;
+        let discountedPrice = price - discount;
+
+        return discountedPrice.toFixed(2); // To keep it neat with 2 decimal places
+    }
+
+
 });
+
+
+

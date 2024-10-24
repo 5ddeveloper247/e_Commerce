@@ -9,7 +9,6 @@ $(document).ready(function () {
         fetchOrderDetail();
     }
 
-
     function fetchOrderDetail() {
         const url = `/admin/order/listing`;
         const type = "Post";
@@ -235,33 +234,34 @@ $(document).ready(function () {
         else if (order.status.name == "Confirmed") {
             statusHtml = `
             <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
-                            Cancel
-                        </button>
+
                         <button class="btn btn-done px-4 statusBtn" type="button" data-status="In-Transit" data-order-id="${order.id}">In-Transit</button>
                     </div>
             `
-
+            //     <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
+            //     Cancel
+            // </button>
         }
         else if (order.status.name == "In-Transit") {
             statusHtml = `
             <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
-                            Cancel
-                        </button>
+
                         <button class="btn btn-done px-4 statusBtn" type="button" data-status="Shipped" data-order-id="${order.id}">Shipped</button>
                     </div>
             `
+            // <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
+            //     Cancel
+            // </button>
 
         }
         else if (order.status.name == "Shipped") {
-            statusHtml = `
-            <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
-                        <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
-                            Cancel
-                        </button>
-                    </div>
-            `
+            // statusHtml = `
+            // <div class="modal-footer d-flex justify-content-end align-items-center px-4 pb-4 pt-3">
+            //             <button class="btn btn-cancel px-4 statusBtn" type="button" data-status="Cancelled" data-order-id="${order.id}" >
+            //                 Cancel
+            //             </button>
+            //         </div>
+            // `
 
         }
 

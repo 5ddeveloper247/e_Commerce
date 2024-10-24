@@ -235,35 +235,28 @@
             Featured Products
             <div class="border-under-main-heading"></div>
         </h3>
+
         <div class="swiper mySwiper3">
             <div class="swiper-wrapper">
-                <?php
-                    $featured_products = getFeaturedProducts();
+                <?php $featured_products = getFeaturedProducts(); ?>
 
-                    // dd($featured_products);
-                ?>
-                @if($featured_products != null)
-                @foreach(@$featured_products as $product)
+                @if($featured_products)
+                @foreach($featured_products as $product)
                 @php
-                $is_offered = $product->is_offered==1?true:false;
-                $offeredPrice = null;
-
-                if ($is_offered) {
-                $offeredPercentage = $product->offered_percentage;
-                // $offeredPrice = calculateDiscount($product->price, $offeredPercentage);
-                $offeredPrice = $product->price;
-                }
+                $is_offered = $product->is_offered == 1;
+                $offeredPrice = $is_offered ? calculateDiscount($product->price, $product->offered_percentage) : null;
                 @endphp
+
                 <div class="swiper-slide mt-5 p-2">
                     <div class="card featured-card border-0">
                         @if($is_offered)
-                        <p class="sale-badge text-black">{{$offeredPercentage.' '.'%'.'Off'}}</p>
-                        @endif
-                        @if(!$is_offered && $product->discount_price>0)
-                        <p class="sale-badge text-black">{{"Discount"}}</p>
+                        <p class="sale-badge text-black">{{ $product->offered_percentage }}% Off</p>
+                        @elseif($product->discount_price > 0)
+                        <p class="sale-badge text-black">Discount</p>
                         @else
-                        <p class="sale-badge text-black">{{"New"}}</p>
+                        <p class="sale-badge text-black">New</p>
                         @endif
+
                         <div class="actions">
                             <button class="btn addWishListBtn" data-productid="{{ $product->id }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 256 256">
@@ -272,68 +265,55 @@
                                 </svg>
                             </button>
                             <button type="button" class="btn viewDetailProduct" data-productid="{{ $product->id }}">
-                                <svg class="" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-                                    viewBox="0 0 24 24">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                     <path fill="#000"
                                         d="M12 9a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3m0 8a5 5 0 0 1-5-5a5 5 0 0 1 5-5a5 5 0 0 1 5 5a5 5 0 0 1-5 5m0-12.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5" />
                                 </svg>
                             </button>
                         </div>
+
                         <div class="d-flex justify-content-center my-4">
                             <div class="featured-card-images">
                                 <a
                                     href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}">
                                     @if(isset($product->productImages[0]->filepath))
                                     <img class="img-fluid"
-                                        src="{{url('/').'/public/'.$product->productImages[0]->filepath}}"
+                                        src="{{ url('/public/' . $product->productImages[0]->filepath) }}"
                                         alt="Card image">
                                     @else
-                                    <img class="img-fluid" src="{{asset('assets_user/images/category-img.png')}}"
+                                    <img class="img-fluid" src="{{ asset('assets_user/images/category-img.png') }}"
                                         alt="Card image">
                                     @endif
-
                                 </a>
                             </div>
                         </div>
+
                         <div class="card-body text-center mt-5">
-                            <div class="rating border-bottom pb-2 demo-rating">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
+                            <div class="rating border-bottom pb-2">
+                                @for ($i = 0; $i < 5; $i++) <svg xmlns="http://www.w3.org/2000/svg" width="1em"
+                                    height="1em" viewBox="0 0 512 512">
                                     <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
                                         d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                                </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                        d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z" />
-                                </svg>
+                                    </svg>
+                                    @endfor
                             </div>
+
                             <p class="card-title mt-2 border-top pt-3 line-clamp-2">
-                                <small>{{@$product->product_name}}</small>
+                                <small>{{ $product->product_name }}</small>
                             </p>
+
                             <div class="price-and-btn">
                                 <div class="d-flex justify-content-center card-price">
-                                    <h5>${{ number_format(@$product->discount_price != null ? $product->discount_price :
-                                        $product->price, 2) }}</h5>
-                                    @if(@$product->discount_price != null)
-                                    <p class="text-danger ps-1"><small><del>${{number_format(@$product->price, 2)
-                                                }}</del></small></p>
-                                    @endif
+                                    <h5>${{ number_format($is_offered ? $offeredPrice : $product->discount_price, 0) }}
+                                    </h5>
+                                    <p class="text-danger ps-1">
+                                        <small><del>${{ number_format($product->price, 0) }}</del></small>
+                                    </p>
                                 </div>
-                                <button class="btn btn-add-to-cart AddToCartBtn " data-quantity="1"
+
+                                <button class="btn btn-add-to-cart AddToCartBtn" data-quantity="1"
                                     data-productid="{{ $product->id }}">
-                                    <span class="me-2">+</span>
-                                    Add to Cart
+                                    <span class="me-2">+</span> Add to Cart
                                 </button>
                             </div>
                         </div>
@@ -341,13 +321,14 @@
                 </div>
                 @endforeach
                 @endif
-
             </div>
+
             <!-- Add Navigation buttons -->
             <div class="swiper-button-next"></div>
             <div class="swiper-button-prev"></div>
         </div>
     </div>
+
     <!-- _______________________Promo Cards_________________________ -->
     <div class="promocards row mt-4 d-none">
         <div class="col-md-4">
@@ -481,8 +462,11 @@ $discountedProducts = getDiscountedProducts();
                         <div class="col-md-7">
                             <div class="promo-text d-flex flex-column align-items-center">
                                 <h4 class="text-white">{{ $product->product_name ?? 'Product Name' }}</h4>
-                                <p class="text-white">Get up to {{ $product->offered_percentage ?? '0' }}% Save</p>
-                                {{-- <button class="btn btn-shop">Shop Now</button> --}}
+                                <p class="text-white">Get up to {{ $product->offered_percentage ?? '' }}% Save</p>
+                                <p class="text-white">Price: ${{ $product->price ?? '' }}</p>
+                                <button class="btn btn-shop"><a
+                                        href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}"
+                                        style="text-decoration: none">Buy Now</a> </button>
                             </div>
                         </div>
                         <div class="col-md-5">
@@ -988,7 +972,7 @@ $discountedProducts = getDiscountedProducts();
                 <div class="swiper-slide p-2">
                     <div
                         class="testimonial d-flex flex-lg-nowrap flex-wrap justify-content-md-start justify-content-center align-items-center">
-                        <img src="{{ url('/storage').'/'.$testimonial->mediaPath }}" alt="">
+                        <img src="{{ url('/').'/'.$testimonial->mediaPath }}" alt="">
                         <div class="testimonial-content d-flex flex-column flex-lg-nowrap flex-wrap">
                             <p class="quote">{{ @$testimonial->description }}</p>
                             <h6>{{ @$testimonial->name }}</h6>

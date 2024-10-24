@@ -17,6 +17,19 @@
                     </ol>
                 </nav>
                 <div class="row justify-content-start gx-0 gy-2 gap-4 mb-4">
+                    <div class="col d-flex justify-content-center gap-2 align-items-center d-card py-3 px-3"
+                        id="downloadExcel">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" width="1em" height="1em"
+                            viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7z" />
+                        </svg>
+                        <div class="ms-3">
+                            <h3 class="mb-0 text-center">
+                                <span class="fw-bold fs-2"></span>
+                            </h3>
+                            <small>Export</small>
+                        </div>
+                    </div> 
                     <div class="col d-flex justify-content-center gap-2 align-items-center d-card py-3 px-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 24 24">
                             <path fill="currentColor"

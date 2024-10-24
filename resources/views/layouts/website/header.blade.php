@@ -3,6 +3,66 @@
 $siteData=siteCommonData();
 $siteLogo=$siteData['settings']->logo;
 @endphp
+<style>
+    /* Basic styles for search bar */
+    .search-container {
+        width: 100%;
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    #main-search {
+        width: 50%;
+        padding: 10px;
+        font-size: 18px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    /* Modal container */
+    .modal-container {
+        position: fixed;
+        top: 100px;
+        /* Positioned below the search bar */
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        padding: 20px;
+        width: 100%;
+        display: none;
+        /* Hidden by default */
+        background: transparent;
+        /* No background to allow interaction */
+    }
+
+    /* Modal content */
+    .modal-content {
+        background-color: white;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        max-width: 80%;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style for search results */
+    #search-results {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    #search-results li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #search-results li:hover {
+        background-color: #f0f0f0;
+        cursor: pointer;
+    }
+</style>
 
 <div class="d-none">
     <nav class="navbar navbar-expand-lg header-top pb-0">
@@ -252,10 +312,7 @@ $siteLogo=$siteData['settings']->logo;
     <nav class="navbar navbar-expand-lg header-top bg-dark py-1">
         <div class="container">
             <!-- Logo on the left side -->
-            <a class="navbar-brand" href="{{url('/')}}">
-                <img class="img-fluid rounded-5" src="{{ url('/').'/'.$siteLogo }}" alt="">
-            </a>
-            <a href="#" type="button" class="d-flex align-items-center text-decoration-none"
+            {{-- <a href="#" type="button" class="d-flex align-items-center text-decoration-none"
                 data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
                 <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 512 512">
                     <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -269,7 +326,28 @@ $siteLogo=$siteData['settings']->logo;
                     <br>
                     USA
                 </p>
-            </a>
+            </a> --}}
+            <div class="d-flex align-items-center w-100">
+                <a class="navbar-brand me-5" href="{{url('/')}}">
+                    <img class="img-fluid rounded-5" src="{{ url('/').'/'.$siteLogo }}" alt="">
+                </a>
+                <div class="w-75">
+                    <form class="d-flex">
+                        <input class="form-control me-2 nav-search main-search-web" oninput="searchProduct('web')"
+                            type="search" placeholder="Search" aria-label="Search">
+                        <button id="nav-search-btn"
+                            class="btn nav-search-btn d-flex align-items-center justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
+                                <path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6" />
+                            </svg>
+                            <span class="ps-2"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+
             <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
                 tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
@@ -308,51 +386,33 @@ $siteLogo=$siteData['settings']->logo;
                 </div>
             </div>
             <!-- Centered search bar -->
-            <div class="justify-content-center w-50">
-                <form class="d-flex">
-                    <input class="form-control me-2 nav-search" type="search" placeholder="Search" aria-label="Search">
-                    <button id="nav-search-btn"
-                        class="btn nav-search-btn d-flex align-items-center justify-content-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="1.4em" height="1.4em" viewBox="0 0 24 24">
-                            <path fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2" d="M3 10a7 7 0 1 0 14 0a7 7 0 1 0-14 0m18 11l-6-6" />
-                        </svg>
-                        <span class="ps-2"></span>
-                    </button>
 
-                </form>
-            </div>
 
             <!-- Button on the right side -->
             <div class="d-flex align-items-center" role="search">
-                <div class="dropdown">
-                    <a class="px-2 d-flex align-items-end dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img height="25" width="25" src="{{asset('assets_user/images/usa.png')}}" alt="">
+                <div class="dropdown d-flex align-items-center">
+                    <a class="px-2 d-flex align-items-center dropdown-toggle text-decoration-none" href="#"
+                        role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                        <p class="mb-0 me-2">USA</p>
                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                             <path fill="currentColor" d="m7 10l5 5l5-5z" />
                         </svg>
                     </a>
-                    {{-- <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"
-                        style="width : 17rem; margin-left:-8rem;margin-top:9px">
+
+
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink"
+                        style="width: 17rem; margin-left: -8rem; margin-top: 9px;">
                         <div class="currency-box">
-                            <div class="d-flex flex-column justify-content-between">
-                                <div class="d-flex">
-                                    <p class="mb-0">Change currency</p>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <p class="mb-0 text-muted">£ - GBP - British Pound</p>
-                                    <a href="#" class="currency-change text-decoration-none text-black">Change</a>
-                                </div>
-                            </div>
                             <div class="d-flex align-items-center justify-content-center mt-3">
-                                <p class="mb-0 text-muted">You are shopping on Amazon.co.uk</p>
+                                <p class="mb-0 text-muted">You are shopping on {{ parse_url(url('/'), PHP_URL_HOST) }},
+                                    USA</p>
                             </div>
                             <a href="#" class="currency-change d-block mt-2 text-decoration-none text-center">Change
                                 country/region</a>
                         </div>
-                    </ul> --}}
+                    </ul>
                 </div>
+
                 <div class="dropdown-center">
                     <a class="px-2 text-decoration-none d-flex align-items-end" type="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -466,7 +526,8 @@ $siteLogo=$siteData['settings']->logo;
                             <div class="d-flex justify-content-center px-3 pb-2">
                                 <a type="button" href="{{url('cart')}}" class="btn btn-dark me-2 rounded-pill">View
                                     Cart</a>
-                                <a type="button" class="btn btn-secondary rounded-pill" id="checkoutBtn">Checkout</a>
+                                <a type="button" class="btn btn-dark rounded-pill checkoutBtn"
+                                    id="checkoutBtn">Checkout</a>
                             </div>
                         </div>
                     </div>
@@ -658,7 +719,8 @@ $siteLogo=$siteData['settings']->logo;
             </div>
             <div class="justify-content-center w-100">
                 <form class="d-flex">
-                    <input class="form-control me-2 nav-search" type="search" placeholder="Search" aria-label="Search">
+                    <input class="form-control me-2 nav-search main-search-mobile" oninput="searchProduct('mobile')"
+                        type="search" placeholder="Search" aria-label="Search">
                     <button class="btn nav-search-btn d-flex align-items-center" type="submit">
                         <svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                             viewBox="0 0 24 24">
@@ -669,6 +731,7 @@ $siteLogo=$siteData['settings']->logo;
                     </button>
                 </form>
             </div>
+
         </div>
     </nav>
 
@@ -708,6 +771,15 @@ $siteLogo=$siteData['settings']->logo;
         </div>
     </div>
 </div>
+
+<!-- Modal for displaying search results -->
+<div class="modal-container" id="search-modal">
+    <div class="modal-content">
+        <h2>Search Results</h2>
+        <ul id="search-results"></ul>
+    </div>
+</div>
+
 <!-- Offcanvas Menu -->
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasMenuu" aria-labelledby="offcanvasMenuuLabel"
     style="width:300px">
@@ -734,16 +806,112 @@ $siteLogo=$siteData['settings']->logo;
 
 
 @push('scripts')
-
 <script src="{{ asset('assets_user/customjs/header.js') }}"></script>
 <script>
-    $(document).ready(function() {
-        // Ensure this script runs after the document is ready
-        $('#nav-search-btn').on('click', function(e) {
-            event.preventDefault();
-            // Redirect to /products when the button is clicked
-            window.location.href = '/products';
+    function searchProduct(viewPort) {
+        let searchQuery;
+
+        if (viewPort === 'web') {
+            searchQuery = $('.main-search-web').val();
+        } else {
+            searchQuery = $('.main-search-mobile').val();
+        }
+        const type = "Post";
+        const url = "/site/search";
+        const data = new FormData();
+        data.append('searchQuery', searchQuery);
+        SendAjaxRequestToServer(type, url, data, '', siteFilteredProductsResponse, '', '');
+        // If there are no filtered products, hide the modal
+
+    }
+
+    function siteFilteredProductsResponse(response) {
+        const modal = document.getElementById('search-modal');
+        const searchResults = document.getElementById('search-results');
+        // If the response has status 400 (empty searchQuery), hide the modal
+        if (response.status === 400) {
+            modal.style.display = 'none';
+            return; // Exit the function
+        }
+
+        // If no products are found, hide the modal
+        if (response.products.length === 0) {
+            modal.style.display = 'none';
+            return; // Exit the function
+        }
+
+        // Clear previous results
+        searchResults.innerHTML = '';
+
+        // Add overflow behavior if there are more than one product
+        if (response.products.length > 1) {
+            searchResults.style.maxHeight = '400px'; // Adjust as per your layout
+            searchResults.style.overflowY = 'auto';
+        } else {
+            searchResults.style.maxHeight = 'unset'; // Remove overflow for one product
+            searchResults.style.overflowY = 'unset';
+        }
+        // Append new results
+        response.products.forEach(product => {
+            if (product.status !== 1) {
+                return;
+            }
+            let searchResultHtml = `
+            <li class="py-2 border-bottom">
+                <a href="${base_url + '/product_detail/' + (product?.category?.category_name?.replace(/\s/g, '-') || 'default-category') + '/' + (product?.sku || 'default-sku')}" class="text-decoration-none">
+                    <div class="list-view-products mx-3" id="product_list_element">
+                        <div class="card list-view-card p-2 border-0 my-4">
+                            <div class="verified-badge">AC</div>
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <div class="text-center">
+                                        <img src="http://ecommerce.gregorygadson.io/public/product_images/20/1728535959_vecteezy_air-conditioner-appliance_12909769.png" alt="Product Image" class="img-fluid list-view-card-images" style="max-width: 100%;">
+                                    </div>
+                                </div>
+                                <div class="col-md-7 d-flex flex-column justify-content-center border-end">
+                                    <h6 class="property-price">${product.product_name}</h6>
+                                    <div class="rating-list-view pb-2">
+                                        ${getRatingStars(5)}
+                                    </div>
+                                    <p class="card-text mb-0 line-clamp-4">${product.description}</p>
+                                </div>
+                                <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
+                                    <div class="d-flex card-price">
+                                        ${product.discount_price > 0 && product.discount_price !== ''
+                    ? `<h5 class="mb-0"><small>$</small>${product.price - product.discount_price}</h5>`
+                    : `<h5 class="mb-0"><small>$</small>${product.price}</h5>`
+                }
+                                        ${product.discount_price > 0
+                    ? `<p class="mb-0 text-danger ps-1"><small><del><small>$</small>${product.price}</del></small></p>`
+                    : `<p class="mb-0 text-danger ps-1"><small><small>$</small>${product.price}</small></p>`
+                }
+                                    </div>
+                                    <p class="fw-bold text-success">${product.discount ? 'Discount Available' : ''}</p>
+                                    <button class="btn btn-view-details my-1"><small>View Detail</small></button>
+                                    <button class="btn btn-add-to-cart my-1 AddToCartBtn" data-quantity="1" data-productid="${product.id}"><small>Add to Cart</small></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        `;
+            searchResults.innerHTML += searchResultHtml;
         });
-    });
+
+        // Show the modal with the results
+        modal.style.display = 'block';
+    }
+
+// Helper function to generate rating stars
+function getRatingStars(rating) {
+    let stars = '';
+    for (let i = 0; i < rating; i++) {
+        stars += `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
+                    <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32" d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
+                  </svg>`;
+    }
+    return stars;
+}
 </script>
 @endpush

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ContactUs; 
+use App\Models\ContactUs;
 use Exception;
 use Illuminate\Support\Facades\Log;
 

@@ -22,10 +22,9 @@
 
     <div class="your-cart container">
         <h3 class="main-headings position-relative text-start">
-            Featured Products
+            Cart
             <div class="border-under-main-heading"></div>
         </h3>
-
         <div class="table-responsive">
             <table class="w-100">
                 <thead class="py-3">
@@ -39,7 +38,7 @@
                 <tbody id="cart_detail_table_body">
 
                     {{-- dynamically injected here --}}
-                    
+
                     {{-- <tr class="border-top border-bottom">
                         <td class="d-flex align-items-center gap-3">
                             <img class="border rounded-3 ms-3"
@@ -121,6 +120,9 @@
             <small id="total">
 
             </small>
+        </div>
+        <div class="d-flex text-end gap-5 justify-content-end py-4">
+            <a type="button" class="btn btn-dark rounded-pill checkoutBtn" id="checkoutBtn">Go To Checkout</a>
         </div>
     </div>
 

@@ -2,6 +2,7 @@ $(document).ready(function () {
 
 
     fetchInitalNewsListing();
+    var newsLetterListsExcel = [];
     function fetchInitalNewsListing() {
         const url = "/admin/newletters/ajax";
         const type = "Get";
@@ -12,6 +13,7 @@ $(document).ready(function () {
                 $('#active').text(response.active)
                 $('#inactive').text(response.inactive)
                 $('#total').text(response.total);
+                newsLetterListsExcel.push(response.newsletters);
                 let html = '';
                 response.newsletters.forEach((item, index) => {
 
@@ -160,5 +162,29 @@ $(document).ready(function () {
             })
         }
     }
+
+
+
+    function generateExcel() {
+        // Step 1: Create a new workbook
+        var data = newsLetterListsExcel[0];
+        console.log(data)
+        console.log("ffffff")
+        var wb = XLSX.utils.book_new();
+
+        // Step 2: Convert the data array to a worksheet
+        var ws = XLSX.utils.json_to_sheet(data);
+
+        // Step 3: Append the worksheet to the workbook
+        XLSX.utils.book_append_sheet(wb, ws, "NewsLetter");
+
+        // Step 4: Generate and download the Excel file
+        XLSX.writeFile(wb, 'NewsLetter.xlsx');
+    }
+
+    // Example button to trigger download
+    document.getElementById('downloadExcel').addEventListener('click', function () {
+        generateExcel();  // Call the function with your data
+    });
 
 });

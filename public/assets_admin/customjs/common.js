@@ -275,16 +275,13 @@ $(document).on('click', '.modal-add-btn', function () {
     resetModalForm('#filterModal');
 });
 
+
 function resetModalForm(selector = '#filterModal') {
     $(selector).find('input').val('');
     $(selector).find('textarea').val('');
     $(selector).find('select').val(null).trigger('change');
 }
 
-
-
-var files = [];
-var selectedFiles = [];
 $('#file-input').on('change', function (event) {
     const files = event.target.files;
     var allfileslength = files.length + selectedFiles.length;
@@ -336,7 +333,6 @@ function displaySelectedFiles() {
         reader.readAsDataURL(file);
     });
 }
-
 function removeExistedFiles(fileIndex, url) {
     // Remove the file from the files array
     const removedfile = files[fileIndex]; // Directly use fileIndex to get the file object
@@ -382,6 +378,9 @@ function handleFileRemoveResponse(response) {
 }
 
 
+var files = [];
+var selectedFiles = [];
+
 function displayExistedFiles() {
     const $imageContainerexisted = $('.image-container-existed');
     $imageContainerexisted.empty(); // Clear previous images
@@ -411,3 +410,5 @@ function displayExistedFiles() {
         $imageContainerexisted.append($imageDiv);
     });
 }
+
+

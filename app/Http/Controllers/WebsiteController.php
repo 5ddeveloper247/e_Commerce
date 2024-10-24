@@ -45,8 +45,8 @@ class WebsiteController extends Controller
     {
         // Sanitize the input
         $searchQuery = filter_var($request->input('searchQuery'), FILTER_SANITIZE_STRING);
-        if ($searchQuery == '') {
-            return response()->json(['status' => 400, 'message' => 'Search query is required.']);
+        if($searchQuery==''){
+            return response()->json(['status' => 400,'message' => 'Search query is required.']);
         }
         // Perform search with partial matching using LIKE
         $products = Product::where('status', 1)

@@ -182,6 +182,7 @@ $(document).ready(function () {
             // Check if there are items in the response data
             if (response.data && response.data.length > 0) {
                 quantity = response.data.length;
+                wishlist = response.wishlist;
                 response.data.forEach(item => {
                     // Ensure the product and cart detail data exist before using it
                     if (item?.product && item?.product?.product_images && item.product.product_images[0]) {
@@ -214,7 +215,7 @@ $(document).ready(function () {
                 // Update totalAmount once after the loop
                 $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
                 $('#totalQuantity').text(quantity);  // Display total amount with 2 decimal places for better UX
-
+                $('#wishListHeader').text(wishlist);
             }
             else {
                 // No items in the cart
@@ -225,6 +226,7 @@ $(document).ready(function () {
                 `;
                 $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
                 $('#totalQuantity').text(quantity);
+                $('#wishListHeader').text(wishlist);
             }
 
             // Inject the generated HTML into the cart menu element

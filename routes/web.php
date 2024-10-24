@@ -144,6 +144,7 @@ Route::group(['prefix' => 'admin'], function () {
         //enquiries
         Route::post('/inquiries/listing', [AdminEnquiryController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
         Route::post('/enquiry/message/create', [AdminEnquiryController::class, 'enquiryMessageCreate'])->name('admin.enquiryMessageCreate');
+
         //dashboard
         Route::get('/getDashboardData', action: [DashboardController::class, 'getDashboard'])->name('admin.getDashboard');
     });
@@ -169,6 +170,8 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/forget_password', [RegisterController::class, 'forget_password'])->name('user.forgetpassword');
 
     Route::get('/home', [WebsiteController::class, 'home'])->name('user.home');
+    Route::post('/site/search', [WebsiteController::class, 'siteSearch'])->name('site.search');
+
     Route::post('/verifyEmailForget', [RegisterController::class, 'verifyEmailForget'])->name('user.verifyEmailForget');
     Route::post('/verifyOtpForget', [RegisterController::class, 'verifyOtpForget'])->name('user.verifyOtpForget');
     Route::post('/changePassForget', [RegisterController::class, 'changePassForget'])->name('user.changePassForget');
@@ -179,7 +182,7 @@ Route::group(['prefix' => '/'], function () {
     Route::get('/new_products', [WebsiteController::class, 'newProducts'])->name('user.newProducts');
     Route::get('/product_detail/{catName}/{sku}', [WebsiteController::class, 'productDetail'])->name('user.productDetail');
     Route::post('/newsletters/create/ajax', [NewsLetterController::class, 'newLetterCreate'])->name('admin.newsletter.create');
-    //cart and listing
+    //cart and listings
     Route::post('/cart/add', [WebsiteController::class, 'cartAdd'])->name('cart.add');
     Route::post('/cart/view', [WebsiteController::class, 'cartView'])->name('cart.view');
     Route::post('/cart/delete', [WebsiteController::class, 'cartDelete'])->name('cart.delete');
@@ -190,14 +193,11 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/inquiries/add', [WebsiteController::class, 'inquiriesCreate'])->name('admin.inquiriesCreate');
     Route::post('/inquiries/listing', [WebsiteController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
 
-    //middleware routes
+    //middleware routes 
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
         Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
         Route::post('/continue/checkout/prepayment', [WebsiteController::class, 'continueCheckout'])->name('user.continueCheckout');
-
-
-
 
         /************** AJAX ROUTES ******************/
         Route::get('/user', [WebsiteController::class, 'authUser'])->name('authUser');
@@ -212,15 +212,11 @@ Route::group(['prefix' => '/'], function () {
 
 
 
-// Route::get('/', function () {
-//     return view('website.home');
-// });
+
 Route::get('/product_detail', function () {
     return view('website.product_detail');
 });
-// Route::get('/sign_in', function () {
-//     return view('website.sign_in');
-// });
+
 
 Route::get('/cart', function () {
     return view('website.cart');
@@ -251,9 +247,7 @@ Route::get('/contact_us', function () {
 Route::get('/about_us', function () {
     return view('website.about_us');
 });
-// Route::get('/account', function () {
-//     return view('website.account');
-// });
+
 Route::get('/checkout', function () {
     return view('website.checkout');
 });
@@ -280,6 +274,7 @@ Route::get('/faqs', function () {
 });
 
 
-Route::get('payment', function () {
-    return view('website.payment');
-});
+ // for stripe payment testing 
+ // Route::get('payment', function () {
+ //     return view('website.payment');
+// }); 

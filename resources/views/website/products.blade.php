@@ -153,7 +153,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <h6 class="mt-3">Category</h6>
+                                <h6 class="mt-3">Explore</h6>
                                 <!-- Container for dynamically populated category checkboxes -->
                                 <div id="category-filter">
                                     <!-- Dynamic category checkboxes will be added here -->

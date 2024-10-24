@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
     $('body').on('click', '.AddToCartBtn', function () {
         var product_id = $(this).attr('data-productId');
@@ -57,10 +59,12 @@ $(document).ready(function () {
                 timeOut: 3000
             });
             cartView();
+
         }
         else {
             // Error Handling
             let errorMessage = 'An error occurred. Please try again.';
+
             if (response.status === 402) {
                 // Handle specific error status
                 errorMessage = response.message;
@@ -122,30 +126,35 @@ $(document).ready(function () {
             let cartHtml = '';
             let totalAmount = 0;  // Moved outside of the loop
             let quantity = 0;
+            let wishlist = 0;
+
+
 
             // Check if there are items in the response data
             if (response.data && response.data.length > 0) {
                 quantity = response.data.length;
+                wishlist = response.wishlist;
                 response.data.forEach(item => {
                     // Ensure the product and cart detail data exist before using it
                     if (item?.product && item?.product?.product_images && item.product.product_images[0]) {
-                        let imageUrl = `${base_url}/storage/${item.product.product_images[0].filepath}`;
+                        let imageUrl = `${base_url}/public/${item.product.product_images[0].filepath}`;
                         let productName = item.product.product_name || 'Unnamed Product';
                         let productPrice = item?.discounted_price || 'Price not available';
                         totalAmount += parseInt(item?.total_amount || 0);  // Correctly add to totalAmount
+                        const truncatedProductName = productName.length > 11 ? productName.substring(0, 9) + '..' : productName;
 
 
-                        cartHtml += `
-                            <div class="px-3 pt-3">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
-                                    <div>
-                                        <p class="card-text text-muted mb-0">${productName}</p>
-                                        <p class="card-text fw-bold"><small>$</small> ${productPrice}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        `;
+    cartHtml += `
+    <div class="px-3 pt-5">
+        <div class="d-flex justify-content-center align-items-center">
+            <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
+            <div>
+                <p class="card-text text-muted mb-0">${truncatedProductName}</p>
+                <p class="card-text fw-bold"><small>$</small>${productPrice}</p>
+            </div>
+        </div>
+    </div>
+`;
                     } else {
                         cartHtml += `
                             <div class="px-3 pt-3">
@@ -158,7 +167,7 @@ $(document).ready(function () {
                 // Update totalAmount once after the loop
                 $('#totalAmount').text('Total: $' + totalAmount.toFixed(2));  // Display total amount with 2 decimal places for better UX
                 $('#totalQuantity').text(quantity);  // Display total amount with 2 decimal places for better UX
-
+                $('#wishListHeader').text(wishlist);
             }
             else {
                 // No items in the cart
@@ -212,10 +221,11 @@ $(document).ready(function () {
 
     function addToWishListResponse(response) {
         if (response.status == 200) {
-            // success
+            // successwish
             toastr.success('Product added to wishlist successfully', '', {
                 timeOut: 3000
             });
+            cartView();
         }
         else {
             // error
@@ -242,6 +252,13 @@ $(document).ready(function () {
     function viewDetailProductResponse(response) {
         if (response.status === 200) {
             const product = response.product;
+
+            var is_offered = product.is_offered == 1 ? true : false;
+            var offeredPrice = '';
+            if (is_offered) {
+                var offeredPercentage = product.offered_percentage;
+                offeredPrice = calculateDiscount(product.price, offeredPercentage);
+            }
             const product_id = product.id;
             const product_name = product.product_name;
             const product_price = product.price;
@@ -250,10 +267,10 @@ $(document).ready(function () {
             const product_category_name = product.category.category_name;
             const product_images = product.product_images;  // Assuming this is an array of image URLs
             let viewDetailModalContentHtml = '';
-            let mainImage = product_images.length > 0 ? base_url + '/storage/' + product_images[0]?.filepath : '';
+            let mainImage = product_images.length > 0 ? base_url + '/public/' + product_images[0]?.filepath : '';
             let imageThumbnailsHtml = product_images.slice(1, 5).map((img, index) => `
                 <div class="col-3">
-                    <img src="${base_url + '/storage/' + img?.filepath}" class="img-thumbnail thumbnail-img" alt="Thumbnail ${index + 1}">
+                    <img src="${base_url + '/public/' + img?.filepath}" class="img-thumbnail thumbnail-img" alt="Thumbnail ${index + 1}">
                 </div>
             `).join('');
 
@@ -285,7 +302,14 @@ $(document).ready(function () {
                         </div>
                         <hr class="mb-0">
                         <p class="text-muted mt-2">${product_category_name}</p>
-                        <p class="fw-bold">$ ${product_price}</p>
+                        ${is_offered
+                    ? `<p class="text-muted mt-2">Offered Price: <span class="fw-bold">$${offeredPrice}</span></p>`
+                    : (product.discount_price > 0)
+                        ? `<p class="text-muted mt-2">Discounted Price: <span class="fw-bold">$${product.discount_price}</span></p>`
+                        : `<p class="text-muted mt-2">Regular Price: <span class="fw-bold">$${product.price}</span></p>`
+                }
+
+
 
                         <div class="d-flex align-items-center">
                             <div class="rating-popup mb-1">
@@ -404,4 +428,21 @@ $(document).ready(function () {
             $('#viewDetailModal').modal('show');
         }
     }
+
+    //handling categorysearching
+    function calculateDiscount(price, percentage) {
+        if (percentage < 1 || percentage > 100) {
+            return 'Percentage must be between 1 and 100, mate!';
+        }
+
+        let discount = (price * percentage) / 100;
+        let discountedPrice = price - discount;
+
+        return discountedPrice.toFixed(2); // To keep it neat with 2 decimal places
+    }
+
+
 });
+
+
+
