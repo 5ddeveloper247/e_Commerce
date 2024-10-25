@@ -20,6 +20,7 @@ use App\Models\User;
 use App\Models\SiteSetting;
 use App\Models\SiteSettingsFiles;
 use App\Models\Category;
+use App\Models\Rating;
 use App\Models\Enquiry;
 use App\Models\EnquiryMessages;
 use App\Models\EnquiryAttachments;
@@ -735,5 +736,41 @@ class AdminController extends Controller
     {
         $pageTitle = 'Enquiries';
         return view('admin.enquiry_listing', compact('pageTitle'));
+    }
+
+
+
+    public function reviewsIndex(Request $request)
+    {
+        $pageTitle = 'Reviews';
+        return view('admin.reviews-ratings', compact('pageTitle'));
+    }
+
+    public function reviewsListing(Request $request)
+    {
+        $reviews_ratings = Rating::where('status', 0)->with('user')->get();
+        $reviews_active = Rating::where('status', 1)->count(); // Fixed syntax error (=> to =)
+        $reviews_inactive = Rating::where('status', 0)->count(); // Fixed syntax error (=> to =)
+        $total = Rating::all()->count(); // Fixed syntax error (=> to =)
+
+        return response()->json([
+            'reviews' => $reviews_ratings,
+            'count' => $total, // You can also use $reviews_ratings->count()
+            'active' => $reviews_active,
+            'inactive' => $reviews_inactive,
+            'status' => 200
+        ]);
+    }
+    public function reviewsStatus(Request $request){
+        $id = $request->id;
+        $review = Rating::find($id);
+        if($review){
+            $currentStatus = $review->status;
+            $review->status = $currentStatus == 1? 0 : 1;
+            $review->save();
+            return response()->json(['message' => 'Status updated successfully','status' => 200]);
+        }else{
+            return response()->json(['message' => 'Review not found','status' => 404]);
+        }
     }
 }

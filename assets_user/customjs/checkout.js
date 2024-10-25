@@ -373,12 +373,9 @@ $(document).ready(function () {
     })
 
 
-
-
-
-
     //handling stripe checkout here
-    const stripe = Stripe(stripeKey);
+   
+    const stripe = Stripe("pk_test_51Px1EkP7RhDtH6R9qfRgqfgTyddOKBibU5EDJCrTIjZuC4WwTderbMhzf4NlRxqyHlpLWuNokH5Ba7TKQCncj7Sm00d5ZG55Lt");
     const elements = stripe.elements();
     const card = elements.create('card');
     card.mount('#card-element');

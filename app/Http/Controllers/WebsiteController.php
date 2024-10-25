@@ -27,6 +27,7 @@ use App\Models\OrderPayment;
 use App\Models\ShippingAddress;
 use App\Models\EnquiryMessages;
 use App\Models\EnquiryAttachments;
+use App\Models\Rating;
 
 
 class WebsiteController extends Controller
@@ -71,11 +72,23 @@ class WebsiteController extends Controller
     //product listing ajax
     public function productsListing(Request $request)
     {
-        $products = Product::where('status', 1)->with(['productImages', 'category', 'ratings'])->get();
-        if ($products) {
-            return response()->json(['status' => 200, 'message' => 'Products fetched successfully', 'data' => $products]);
+        $products = Product::where('status', 1)
+            ->with(['productImages', 'category', 'ratings' => function ($query) {
+                $query->where('status', 1); // Only fetch ratings with status 1
+            }])
+            ->get();
+
+        if ($products->isNotEmpty()) {
+            return response()->json([
+                'status' => 200,
+                'message' => 'Products fetched successfully',
+                'data' => $products
+            ]);
         } else {
-            return response()->json(['status' => 404, 'message' => 'No products found']);
+            return response()->json([
+                'status' => 404,
+                'message' => 'No products found'
+            ]);
         }
     }
 
@@ -814,5 +827,36 @@ class WebsiteController extends Controller
     {
         $pageTitle = 'Demo Page';
         return view('admin.demo', compact('pageTitle'));
+    }
+
+
+    public function reviewStore(Request $request)
+    {
+        $product_id = $request->input('product_id');
+        $review_text = $request->input('review');
+        $rating = $request->input('rating');
+
+        if ($product_id && $review_text && $rating) {
+            $review = Rating::updateOrCreate(
+                [
+                    'user_id' => Auth::id(),
+                    'product_id' => $product_id,
+                ],
+                [
+                    'rating' => $rating,
+                    'review' => $review_text,
+                ]
+            );
+
+            return response()->json([
+                'status' => 200,
+                'message' => 'Review saved successfully',
+            ]);
+        }
+
+        return response()->json([
+            'status' => 400,
+            'message' => 'Oops! Something went wrong, some important data might be missing.',
+        ]);
     }
 }

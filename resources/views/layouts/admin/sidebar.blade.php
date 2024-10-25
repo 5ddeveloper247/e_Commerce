@@ -269,6 +269,24 @@
                     </div>
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{route('admin.reviewsIndex')}}" class="nav-link main-links-for-submenu" role="button">
+                    <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
+                        <div class="nav-link-icon px-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 36 36">
+                                <path fill="currentColor"
+                                    d="M8 19v-8H5a3 3 0 0 0-3 3v18a1 1 0 0 0 .56.89a1 1 0 0 0 1-.1L8.71 29h13.44A2.77 2.77 0 0 0 25 26.13V25H14a6 6 0 0 1-6-6"
+                                    class="clr-i-solid clr-i-solid-path-1" />
+                                <path fill="currentColor"
+                                    d="M31 4H14a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h13.55l4.78 3.71a1 1 0 0 0 1 .11a1 1 0 0 0 .57-.9V7A3 3 0 0 0 31 4"
+                                    class="clr-i-solid clr-i-solid-path-2" />
+                                <path fill="none" d="M0 0h36v36H0z" />
+                            </svg>
+                        </div>
+                        <span class="nav-link-text">Reviews & Ratings</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </div>
     <div class="sidebar-footer border-end border-top toggle-button p-3" id="toggleSidebar">

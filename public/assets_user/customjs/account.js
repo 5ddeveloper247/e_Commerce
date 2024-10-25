@@ -743,6 +743,7 @@ $(document).ready(function () {
                 const url = base_url + '/public/' + item?.product.product_images[0]?.filepath;
                 orderDetailHtml += `
                 <tr class="border-top border-bottom">
+
                     <td class="d-flex align-items-center gap-3">
                         <img class="border rounded-3 ms-3"
                              src="${url}"
@@ -753,11 +754,15 @@ $(document).ready(function () {
                                     ${item?.product?.product_name}
                                 </small>
                                 <div class="dropdown ms-2">
-                                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                                   <button class="btn btn-warning dropdown-toggle d-flex align-items-center justify-content-center p-0 mt-2"
+                                        type="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false"
+                                        style="width: 20px; height: 20px; font-size: 0.8em; padding: 0;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 24 24" style="fill: #FFD700;">
                                         <path fill="currentColor" d="m7 10l5 5l5-5z"></path>
                                     </svg>
-                                    </button>
+                                </button>
+
+
                                     <ul class="dropdown-menu p-3" style="width: 300px;">
                                         <li class="mb-2">
                                             <div class="d-flex align-items-center align-items-center ml-2">
@@ -770,12 +775,12 @@ $(document).ready(function () {
                                                     </span>
                                                 `).join('')}
                                             </div>
-                                        </li>
+                                        </li> 
                                         <li class="mb-2">
-                                            <textarea class="form-control" rows="3" placeholder="Add your comment..."></textarea>
+                                            <textarea class="form-control" rows="3" id="submit-review-${item?.product?.id}" placeholder="Add your comment..."></textarea>
                                         </li>
                                         <li>
-                                            <button class="btn btn-primary mt-2" type="button" id="submit-rating-${item?.id}">Submit</button>
+                                            <button class="btn btn-primary mt-2 submit-review-rating" type="button" data-product-id="${item?.product?.id}" id="submit-rating-${item?.product?.id}">Submit</button>
                                         </li>
                                     </ul>
                                 </div>
@@ -980,19 +985,73 @@ $(document).ready(function () {
 
 
     $('body').on('click', '.star-rating', function () {
-
         const rate = $(this).data('rate-num');
         const prodid = $(this).data('product-id');
-
-        for (var i = 1; i < rate; i++) {
+        for (var i = 1; i <= 5; i++) {
             const el = '.star-rating-' + i + '' + prodid;
-            console.log(el)
+
+            $(el).attr('fill', '#ddd')
+        }
+
+        for (var i = 1; i <= rate; i++) {
+            const el = '.star-rating-' + i + '' + prodid;
+
             $(el).attr('fill', '#ffd700')
         }
-        updateRating(productId, rating);
+        updateRating(prodid, rate);
     })
-    function updateRating() {
+    function updateRating(productId, rating) {
 
+        $('.product_review_data').data('data-product-id', productId)
+        $('.product_review_data').data('data-product-rating', rating) //look this in accoutn.blade.php on the top of the file
+
+        // console.log($('.product_review_data').data('data-product-rating'))
+
+
+    }
+
+
+    $('body').on('click', '.submit-review-rating', function () {
+        const productId = $(this).data('product-id');
+        const review_id = '#submit-review-' + productId;
+        const review = $(review_id).val();
+        const rating = $('.product_review_data').data('data-product-rating');
+        submitReviewRatingEvent(review, rating, productId)
+
+    })
+
+    function submitReviewRatingEvent(review, rating, productId) {
+        const type = 'POST';
+        const url = '/review/store';
+        const data = new FormData()
+        if (productId) {
+            data.append('product_id', productId);
+            if (rating) {
+                data.append('rating', rating);
+            }
+            if (review) {
+                data.append('review', review);
+            }
+            SendAjaxRequestToServer(type, url, data, '', reviewRatingResponse, '', this);
+        }
+        else {
+            toastr.error("Oops! something went wrong", '', {
+                timeOut: 3000
+            })
+        }
+    }
+    function reviewRatingResponse(response) {
+        if (response.status == 200) {
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            })
+            initialLoad();
+            window.location.reload();
+        } else {
+            toastr.error(response.message, '', {
+                timeOut: 3000
+            })
+        }
     }
 })
 

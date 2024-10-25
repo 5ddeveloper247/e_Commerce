@@ -188,7 +188,16 @@ if (!function_exists('getFeaturedProducts')) {
     function getFeaturedProducts()
     {
         try {
-            $featured = Product::where('featured', '1')->where('status', '1')->with(['productImages', 'category'])->get();
+            $featured = Product::where('featured', 1)
+                ->where('status', 1)
+                ->with([
+                    'productImages',
+                    'category',
+                    'ratings' => function ($query) {
+                        $query->where('status', 1); // Only fetch ratings with status 1
+                    }
+                ])
+                ->get();
             return $featured;
         } catch (\Exception $e) {
             Log::error($e->getMessage());

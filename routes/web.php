@@ -73,6 +73,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/payments', [PaymentController::class, 'paymentIndex'])->name('admin.paymentIndex');
         //enquiry
         Route::get('/enquiry', [AdminController::class, 'enquiryIndex'])->name('admin.enquiryIndex');
+        Route::get('/reviews', [AdminController::class, 'reviewsIndex'])->name('admin.reviewsIndex');
 
 
 
@@ -147,6 +148,10 @@ Route::group(['prefix' => 'admin'], function () {
 
         //dashboard
         Route::get('/getDashboardData', action: [DashboardController::class, 'getDashboard'])->name('admin.getDashboard');
+
+        //reviews and ratings
+        Route::get('/reviews/listing', [AdminController::class, 'reviewsListing'])->name('admin.reviewsListing');
+        Route::post('/reviews/status', [AdminController::class, 'reviewsStatus'])->name('admin.reviewsStatus');
     });
 });
 
@@ -193,7 +198,7 @@ Route::group(['prefix' => '/'], function () {
     Route::post('/inquiries/add', [WebsiteController::class, 'inquiriesCreate'])->name('admin.inquiriesCreate');
     Route::post('/inquiries/listing', [WebsiteController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
 
-    //middleware routes 
+    //middleware routes
     Route::group(['middleware' => ['UserAuth']], function () {
         /************** PAGE ROUTES ******************/
         Route::get('/dashboard', [WebsiteController::class, 'account'])->name('user.dashboard');
@@ -207,6 +212,7 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/wishList/remove', [WebsiteController::class, 'wishListRemove'])->name('order.wishListRemove');
         Route::post('/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('order.enquiryMessageCreate');
         Route::post('payment', [PaymentController::class, 'makePayment'])->name('payment.make');
+        Route::post('/review/store', [WebsiteController::class, 'reviewStore'])->name('review.store');
     });
 });
 
@@ -274,7 +280,7 @@ Route::get('/faqs', function () {
 });
 
 
- // for stripe payment testing 
+ // for stripe payment testing
  // Route::get('payment', function () {
  //     return view('website.payment');
-// }); 
+// });

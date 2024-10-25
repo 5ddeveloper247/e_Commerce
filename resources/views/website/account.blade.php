@@ -11,6 +11,7 @@
         Account Settings
         <div class="border-under-main-heading"></div>
     </h3>
+    <p style="display:none" class="product_review_data" data-product-id="" data-product-rating=""></p>
     <div class="mt-5">
         <ul class="nav nav-tabs account-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
