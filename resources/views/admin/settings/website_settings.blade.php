@@ -13,24 +13,19 @@
                 <!-- Website Settings Section -->
                 <div class="section">
                     <h2>Website Settings</h2>
-                    <h4>Contact Details</h4>
+
                     <div class="row">
                         <div class="col-sm-6 mb-3">
                             <label for="phone" class="form-label required-asterisk ">Phone No</label>
                             <input type="number" class="form-control" fieldType="number" maxlength="15" id="phone"
-                                value="{{ @$siteSettings->phone }}" name="phone" placeholder="Enter contact links">
+                                value="{{ @$siteSettings->phone }}" name="phone" placeholder="Enter contact number">
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="Email" class="form-label required-asterisk">Email</label>
                             <input type="email" fieldType="alphanumeric" maxlength="50" class="form-control" id="email"
                                 name="email" value="{{ @$siteSettings->email }}" placeholder="Email">
                         </div>
-                        <div class="col-sm-6 mb-3">
-                            <label for="address" class="form-label required-asterisk">Address</label>
-                            <textarea class="form-control" fieldType="alphanumeric" maxlength="255" id="address"
-                                rows="3" value="{{ @$siteSettings->address }}" name="address"
-                                placeholder="Enter contact information">{{ @$siteSettings->address }}</textarea>
-                        </div>
+
                     </div>
                     <div class="row">
                         <div class="col-sm-6 mb-3">
@@ -43,13 +38,21 @@
                             <label for="banner_heading" class="form-label required-asterisk">Banner Heading</label>
                             <input type="text" class="form-control" fieldType="alphanumeric" maxlength="255"
                                 name="banner_heading" value="{{ @$siteSettings->banner_heading }}" id="banner_heading"
-                                placeholder="Enter website name">
+                                placeholder="Enter banner title">
                         </div>
                         <div class="col-sm-6 mb-3">
                             <label for="sub_heading" class="form-label required-asterisk">Sub Heading</label>
                             <input type="text" class="form-control" fieldType="alphanumeric" maxlength="255"
                                 id="sub_heading" name="sub_heading" value="{{ @$siteSettings->sub_heading}}"
-                                placeholder="Enter website name">
+                                placeholder="Enter banner sub heading">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 mb-3">
+                            <label for="address" class="form-label required-asterisk">Address</label>
+                            <textarea class="form-control" fieldType="alphanumeric" maxlength="255" id="address"
+                                rows="3" value="{{ @$siteSettings->address }}" name="address"
+                                placeholder="Enter address information">{{ @$siteSettings->address }}</textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -119,7 +122,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <button type="button" id="saveSettingsBtn" class="btn theme-btn-outline btn-lg px-md-5">Save
+                    <button type="button" id="saveSettingsBtn" class="btn btn-done btn-lg px-md-5">Save
                         Settings</button>
                 </div>
             </form>

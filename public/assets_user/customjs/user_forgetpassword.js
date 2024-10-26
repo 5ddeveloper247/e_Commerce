@@ -1,6 +1,6 @@
 var verifyFlag = '1';
 // function loadRegisterPageData() {
-    
+
 //     let form = '';
 //     let data = '';
 //     let type = 'POST';
@@ -22,15 +22,15 @@ var verifyFlag = '1';
 // }
 $(document).on('click', '#forgetPass_btn', function (e) {
     console.log(verifyFlag);
-    if(verifyFlag == '1'){
+    if (verifyFlag == '1') {
         verifyEmail();
-    }else if(verifyFlag == '2'){
+    } else if (verifyFlag == '2') {
         verifyOtp();
-    }else if(verifyFlag == '3'){
+    } else if (verifyFlag == '3') {
         changePass();
     }
 });
-function verifyEmail(){
+function verifyEmail() {
     var email = $("#email").val();
     let data = new FormData();
     data.append('email', email);
@@ -40,7 +40,7 @@ function verifyEmail(){
 }
 
 function verifyEmailForgetResponse(response) {
-    
+
     var data = response.data;
 
     if (response.status == 200) {
@@ -53,7 +53,7 @@ function verifyEmailForgetResponse(response) {
 
         verifyFlag = '2';
 
-    }else{
+    } else {
         if (response.status == 402) {
             error = response.message;
         } else {
@@ -65,7 +65,7 @@ function verifyEmailForgetResponse(response) {
     }
 }
 
-function verifyOtp(){
+function verifyOtp() {
     var email = $("#email").val();
     var otp = $("#otp").val();
     let data = new FormData();
@@ -77,7 +77,7 @@ function verifyOtp(){
 }
 
 function verifyOtpForgetResponse(response) {
-    
+
     var data = response.data;
 
     if (response.status == 200) {
@@ -93,7 +93,7 @@ function verifyOtpForgetResponse(response) {
 
         verifyFlag = '3';
 
-    }else{
+    } else {
         if (response.status == 402) {
             error = response.message;
         } else {
@@ -105,7 +105,8 @@ function verifyOtpForgetResponse(response) {
     }
 }
 
-function changePass(){
+function changePass() {
+
     var email = $("#email").val();
     var otp = $("#otp").val();
     var password = $("#password").val();
@@ -121,23 +122,25 @@ function changePass(){
 }
 
 function changePassForgetResponse(response) {
-    
+
     var data = response.data;
 
     if (response.status == 200) {
+
         toastr.success(response.message, '', {
             timeOut: 3000
         });
 
+        window.location.href = "/login";
         $("#email, #otp, #password, #password_confirmation").prop('disabled', false).val('');
         $("#email_div").show();
         $("#otp_div, #pass_div").hide();
-
         verifyFlag = '1';
 
-        
 
-    }else{
+
+    } else {
+
         if (response.status == 402) {
             error = response.message;
         } else {

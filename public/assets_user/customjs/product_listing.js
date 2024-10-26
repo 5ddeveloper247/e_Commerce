@@ -182,6 +182,7 @@ $(document).ready(function () {
 
         // Filter products with status 1 (active products)
         const activeProducts = product_listing.filter(product => product?.status === 1);
+
         if (activeProducts.length > 0) {
             activeProducts.forEach(product => {
                 var is_offered = product.is_offered == 1 ? true : false;
@@ -239,13 +240,13 @@ $(document).ready(function () {
                         </p>
                         <div class="price-and-btn">
                             <div class="d-flex justify-content-center card-price">
-                                ${is_offered
+                        ${is_offered
                         ? `<h5>$${offeredPrice}</h5>`
                         : product.discount_price > 0
                             ? `<h5>$${product.discount_price}</h5>`
                             : `<h5>$${product.price}</h5>`
                     }
-                                ${product?.price && product.discount_price > 0
+                                            ${product?.price && product.discount_price > 0
                         ? `<p class="text-danger ps-1"><small><del>$${product?.price}</del></small></p>`
                         : ''
                     }
@@ -273,13 +274,21 @@ $(document).ready(function () {
                             <h6 class="property-price">${product?.product_name}</h6>
                             <div class="border-bottom pb-2">
                             ${renderStars(avgRating, totalStars)}
-                            <div><span style="font-size:12px;">${avgRating}/5</span></div>
+
                         </div>
                         </div>
                         <div class="col-md-2 d-flex flex-column align-items-center justify-content-center">
                             <div class="d-flex card-price">
-                                <h5 class="mb-0">${product?.price}</h5>
-                                <p class="mb-0 text-danger ps-1"><small><del>${product?.price}</del></small></p>
+                                ${is_offered
+                        ? `<h5>$${offeredPrice}</h5>`
+                        : product.discount_price > 0
+                            ? `<h5>$${product.discount_price}</h5>`
+                            : `<h5>$${product.price}</h5>`
+                    }
+                                            ${product?.price && product.discount_price > 0
+                        ? `<p class="text-danger ps-1"><small><del>$${product?.price}</del></small></p>`
+                        : ''
+                    }
                             </div>
                             <p class="fw-bold text-success"></p>
                             <button class="btn btn-view-details my-1"><small>View Detail</small></button>
@@ -290,9 +299,15 @@ $(document).ready(function () {
                     </div>
                 </div>`;
             });
-        } else {
-            htmlGrid = '<p class="text-center">No product has found...</p>';
         }
+        else {
+            htmlGrid = '<p class="text-center">No product has found...</p>';
+            htmlList = '<p class="text-center">No product has found...</p>';
+            $("#product_grid_element").removeClass('product_grid_element');
+            $("#product_grid_element").removeClass('products');
+        }
+
+
 
         $("#product_grid_element").html(htmlGrid);
         $("#product_list_element").html(htmlList);
@@ -452,7 +467,6 @@ $(document).ready(function () {
 
         let discount = (price * percentage) / 100;
         let discountedPrice = price - discount;
-
         return discountedPrice.toFixed(2); // To keep it neat with 2 decimal places
     }
 

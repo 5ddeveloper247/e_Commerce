@@ -361,7 +361,7 @@
             </div>
             <div class="tab-pane fade py-4" id="wish-list-tab-pane" role="tabpanel" aria-labelledby="wish-list-tab"
                 tabindex="0">
-                <div class="table-responsive">
+                {{-- <div class="table-responsive">
                     <table class="table table-hover">
                         <thead class="thead-dark">
                             <tr>
@@ -378,7 +378,7 @@
                             <!-- Add more rows as needed -->
                         </tbody>
                     </table>
-                </div>
+                </div> --}}
                 <h3 class="text-center">Wish List</h3>
                 <div class="row mt-3" id="wishListContainer">
 

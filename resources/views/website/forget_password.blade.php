@@ -14,31 +14,34 @@
     <div class="row mt-5 justify-content-center align-items-center">
         <div class="col-md-5 my-1">
             <form action="" method="">
-                
+
                 <div class="form-floating mb-3" id="email_div">
                     <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
                     <label for="email">Email address</label>
                 </div>
-                
+
                 <div class="form-floating mb-3" id="otp_div" style="display:none;">
                     <input type="text" class="form-control" id="otp" name="otp" placeholder="">
-                    <label for="email">One Time Password</label>
+                    <label for="email">Otp</label>
                 </div>
 
                 <div id="pass_div" style="display:none;">
-                    <div class="form-floating mb-3" >
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password" name="password"
+                            placeholder="Enter Password">
                         <label for="password">Password</label>
                     </div>
-                    <div class="form-floating mb-3" >
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
+                    <div class="form-floating mb-3">
+                        <input type="password" class="form-control" id="password_confirmation"
+                            name="password_confirmation" placeholder="Confirm Password">
                         <label for="password_confirmation">Confirm Password</label>
                     </div>
                 </div>
-                
-                
+
+
                 <div class="d-flex justify-content-left align-items-center">
-                    <button type="button" class="btn btn-add-to-cart" id="back_btn" style="margin-right:10px;display:none;">
+                    <button type="button" class="btn btn-add-to-cart" id="back_btn"
+                        style="margin-right:10px;display:none;">
                         Back
                     </button>
                     <button type="button" class="btn btn-add-to-cart" id="forgetPass_btn">

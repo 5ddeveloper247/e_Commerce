@@ -1,6 +1,6 @@
 @php
 $siteData=siteCommonData();
-$siteLogo=$siteData['settings']->logo;
+$siteLogo=@$siteData['settings']->logo;
 @endphp
 <nav class="navbar navbar-top navbar-expand px-3" id="navbarDefault">
     <div class="collapse navbar-collapse justify-content-between">

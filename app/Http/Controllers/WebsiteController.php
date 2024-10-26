@@ -208,9 +208,21 @@ class WebsiteController extends Controller
         if (isset($sku)) {
             $product = Product::where('status', 1)
                 ->where('sku', $sku)
-                // ->where('category_id', $categoryDetail->id)
-                ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures', 'ratings'])
+                ->with([
+                    'productImages',
+                    'category',
+                    'productSpecifications',
+                    'brand',
+                    'productFeatures',
+                    'ratings' => function ($query) {
+                        $query->where('status', 1) // Only include ratings with status 1
+                            ->with(['user' => function ($query) {
+                                $query->where('status', 1); // Only include user details with status 1
+                            }]);
+                    },
+                ])
                 ->first();
+
 
             // If product is not found, return a 404
             if (!$product) {
@@ -227,11 +239,23 @@ class WebsiteController extends Controller
         $features = ProductFeature::where('product_id', $product->id)->get();
 
         // Fetch related products within the same category
-        $relatedProducts = Product::where('category_id', $categoryDetail->id)->where('status', 1)
-            ->with(['productImages', 'category', 'productSpecifications', 'brand', 'productFeatures'])
+        $relatedProducts = Product::where('category_id', $categoryDetail->id)
+            ->where('status', 1)
+            ->with([
+                'productImages',
+                'category',
+                'productSpecifications',
+                'brand',
+                'productFeatures',
+                'ratings' => function ($query) {
+                    $query->where('status', 1); // Only include ratings with status 1
+                }
+            ])
             ->get();
 
+
         // Return the product detail view with the fetched data
+        // dd($product);
         return view('website.product_detail', [
             'product' => $product,
             'specifications' => $specifications,
@@ -451,11 +475,21 @@ class WebsiteController extends Controller
         if ($request->has("order_id")) {
             // Fetch the single order with the specified order_id
             $order = Order::where('id', $request->order_id)
-                ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
-                ->first(); // Get the first record (which will be only one since order_id is unique)
+                ->with([
+                    'user',
+                    'orderDetails',
+                    'orderDetails.product.productImages',
+                    'shippingAddress',
+                    'orderPayment',
+                    'status',
+                    'orderDetails.product.ratings'
+                ])
+                ->orderBy('created_at', 'desc') // Sort by created_at in descending order
+                ->first();
+
+
             $orderTrackings = OrderTracking::where('order_id', $order->id)->with(['order', 'status'])->get();
             $wishList = Wishlist::where('user_id', Auth::user()->id)->with(['product.productImages', 'user'])->get();
-
             if (!$order) {
                 return response()->json([
                     'message' => 'Order not found',
@@ -476,7 +510,9 @@ class WebsiteController extends Controller
             // Fetch all orders for the logged-in user with status = 1
             $orders = Order::where('user_id', Auth::user()->id)
                 ->with(['user', 'orderDetails.product.productImages', 'shippingAddress', 'orderPayment', 'status']) // Load relationships
+                ->orderBy('created_at', 'desc') // Order by latest created orders
                 ->get();
+
 
             $wishList = Wishlist::where('user_id', Auth::user()->id)
                 ->with(['product.productImages', 'product.category', 'user'])

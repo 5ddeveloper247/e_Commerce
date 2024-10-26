@@ -211,9 +211,12 @@ if (!function_exists('getDiscountedProducts')) {
     function getDiscountedProducts()
     {
         try {
-            $discountedProducts = Product::where('is_offered', '1')->where('status', '1')
+            $discountedProducts = Product::where('is_offered', '1')
+                ->where('status', '1')
                 ->limit(2)
-                ->with(['productImages'])
+                ->with(['productImages', 'ratings' => function ($query) {
+                    $query->where('status', '1');
+                }])
                 ->get();
             return $discountedProducts;
         } catch (\Exception $e) {

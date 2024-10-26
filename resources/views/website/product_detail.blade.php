@@ -265,42 +265,20 @@
 
                 <div class="tab-pane fade py-3" id="reviews-tab-pane" role="tabpanel" aria-labelledby="reviews-tab"
                     tabindex="0">
-                    <h5>1 Review</h5>
-                    <h6 class="mt-3">Terrariums are cool</h6>
-                    <div class="mb-2">
-                        <!-- Star rating -->
-                        <div class="rating-popup mb-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                            </svg>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
-                                <path fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="32"
-                                    d="M480 208H308L256 48l-52 160H32l140 96l-54 160l138-100l138 100l-54-160Z"></path>
-                            </svg>
-                        </div>
+                    <h5>Reviews And Ratings</h5>
+                    @foreach ($product->ratings as $rating )
+                    <div>
+                        {!! renderStars($rating->rating) !!}
+                        <p><small>Posted by {{@$rating->user->username??"" }} on {{@$rating->created_at??"" }}</small>
+                        </p>
+                        <p>{{@$rating->review??"" }}</p>
                     </div>
-                    <p><small>Posted by Jane Doe on 7th Dec 2016</small></p>
                     <hr>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi vel metus ac est egestas porta sed
-                        quis erat. Integer id nulla massa. Proin vitae enim nisi. Praesent non dignissim nulla. Nulla
-                        mattis id massa ac pharetra. Mauris et nisi in dolor aliquam sodales. Aliquam dui nisl, dictum
-                        quis leo sit amet, rutrum volutpat metus. Curabitur libero nunc, interdum ac libero non,
-                        tristique porttitor metus. Ut non dignissim lorem, in vestibulum leo. Vivamus sodales quis
-                        turpis eget.</p>
+                    @endforeach
+
                 </div>
+
+
                 <div class="tab-pane fade py-3" id="extras-tab-pane" role="tabpanel" aria-labelledby="extras-tab"
                     tabindex="0">
                     <p>Each Ramsond 15000 BTU PTAC System will be shipped as a complete package. It will include:</p>

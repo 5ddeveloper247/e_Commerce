@@ -733,78 +733,91 @@ $(document).ready(function () {
     function handleOrderDetailResponse(response) {
         if (response.status === 200) {
             let order = response.order;
-            let orderDetailHtml = ''
-            let orderStatusBtnHtml = ''
-            let subTotal = 0
+            let orderDetailHtml = '';
+            let orderStatusBtnHtml = '';
+            let subTotal = 0;
             // Example usage based on order status
             updateSteps(order.status.id, response.orderTrackings);
             order.order_details.forEach(item => {
-                subTotal += parseInt(item.total_amount)
-                const url = base_url + '/public/' + item?.product.product_images[0]?.filepath;
+                subTotal += parseInt(item.total_amount);
+                const url = base_url + '/public/' + item?.product?.product_images[0]?.filepath;
+                const hasRating = item?.product?.ratings.length > 0;
+                const starRated = Math.ceil(item?.product?.ratings[0]?.rating);
+                const ratedArray = Array.from({ length: starRated }, (_, index) => index + 1);
+
+
                 orderDetailHtml += `
-                <tr class="border-top border-bottom">
-
-                    <td class="d-flex align-items-center gap-3">
-                        <img class="border rounded-3 ms-3"
-                             src="${url}"
-                             width="120" alt="">
-                        <div>
-                            <div class="d-flex align-items-center">
-                                <small class="fw-semibold">
-                                    ${item?.product?.product_name}
-                                </small>
-                                <div class="dropdown ms-2">
-                                   <button class="btn btn-warning dropdown-toggle d-flex align-items-center justify-content-center p-0 mt-2"
-                                        type="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false"
-                                        style="width: 20px; height: 20px; font-size: 0.8em; padding: 0;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="12px" height="12px" viewBox="0 0 24 24" style="fill: #FFD700;">
-                                        <path fill="currentColor" d="m7 10l5 5l5-5z"></path>
-                                    </svg>
-                                </button>
-
-
-                                    <ul class="dropdown-menu p-3" style="width: 300px;">
-                                        <li class="mb-2">
-                                            <div class="d-flex align-items-center align-items-center ml-2">
-                                                <!-- Star rating -->
-                                                ${[1, 2, 3, 4, 5].map(i => `
-                                                    <span class="star-rating" data-rate-num="${i}" data-product-id="${item.product.id}" style="cursor: pointer;">
-                                                        <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                                                            <path class="star-rating-${i + '' + item.product.id}" id="star-rating-${i + '' + item.product.id}" fill="ddd" d="M12 2l2.17 6.16H21l-4.93 3.58 1.88 6.11L12 14.79 6.05 17.85l1.88-6.11L3 8.16h6.83L12 2z"></path>
-                                                        </svg>
-                                                    </span>
-                                                `).join('')}
-                                            </div>
-                                        </li> 
-                                        <li class="mb-2">
-                                            <textarea class="form-control" rows="3" id="submit-review-${item?.product?.id}" placeholder="Add your comment..."></textarea>
-                                        </li>
-                                        <li>
-                                            <button class="btn btn-primary mt-2 submit-review-rating" type="button" data-product-id="${item?.product?.id}" id="submit-rating-${item?.product?.id}">Submit</button>
-                                        </li>
-                                    </ul>
+                    <tr class="border-top border-bottom">
+                        <td class="d-flex align-items-center gap-3">
+                            <img class="border rounded-3 ms-3"
+                                 src="${url}"
+                                 width="120" alt="">
+                            <div>
+                                <div class="d-flex align-items-center">
+                                    <small class="fw-semibold">
+                                        ${item?.product?.product_name}
+                                    </small>
+                                    ${!hasRating ? `
+                                    <div class="dropdown ms-2">
+                                        <button class="btn btn-secondry dropdown-toggle d-flex align-items-center justify-content-center p-0 mt-2"
+                                            type="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false"
+                                            style="width: 20px; height: 20px; font-size: 0.8em; padding: 0;">
+                                           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                                <path  fill="ddd" d="M12 2l2.17 6.16H21l-4.93 3.58 1.88 6.11L12 14.79 6.05 17.85l1.88-6.11L3 8.16h6.83L12 2z"></path>
+                                                            </svg>
+                                        </button>
+                                        <ul class="dropdown-menu p-3" style="width: 300px;">
+                                            <li class="mb-2">
+                                                <div class="d-flex align-items-center align-items-center ml-2">
+                                                    ${[1, 2, 3, 4, 5].map(i => `
+                                                        <span class="star-rating" data-rate-num="${i}" data-product-id="${item.product.id}" style="cursor: pointer;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                                <path class="star-rating-${i + '' + item.product.id}" id="star-rating-${i + '' + item.product.id}" fill="ddd" d="M12 2l2.17 6.16H21l-4.93 3.58 1.88 6.11L12 14.79 6.05 17.85l1.88-6.11L3 8.16h6.83L12 2z"></path>
+                                                            </svg>
+                                                        </span>
+                                                    `).join('')}
+                                                </div>
+                                            </li>
+                                            <li class="mb-2">
+                                                <textarea class="form-control" rows="3" id="submit-review-${item?.product?.id}" placeholder="Add your comment..."></textarea>
+                                            </li>
+                                            <li>
+                                                <button class="btn btn-primary mt-2 submit-review-rating" type="button" data-product-id="${item?.product?.id}" id="submit-rating-${item?.product?.id}">Submit</button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    ` :
+                        `
+                                            <li class="mb-2" style="list-style-type:none">
+                                                <div class="d-flex align-items-center align-items-center ml-2">
+                                                     ${ratedArray.map(i => `
+                                                        <span class=""  style="cursor: pointer;">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                                                <path  fill="#ffd700" d="M12 2l2.17 6.16H21l-4.93 3.58 1.88 6.11L12 14.79 6.05 17.85l1.88-6.11L3 8.16h6.83L12 2z"></path>
+                                                            </svg>
+                                                        </span>
+                                                    `).join('')}
+                                                </div>
+                                            </li>
+                                    `}
                                 </div>
+                                <small>
+                                    ${item?.product?.model_name}
+                                </small>
+                                <br>
                             </div>
-                            <small>
-                                ${item?.product?.model_name}
-                            </small>
-                            <br>
-                        </div>
-                    </td>
-                    <td>$ ${item?.price}</td>
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <input type="number" class="form-control qty text-center border-0"
-                                   value="${item?.quantity}" min="1" id="quantity" readonly>
-                        </div>
-                    </td>
-                    <td>
-                        $ ${item?.total_amount}
-                    </td>
-                </tr>`;
-
-
-
+                        </td>
+                        <td>$ ${item?.price}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <input type="number" class="form-control qty text-center border-0"
+                                       value="${item?.quantity}" min="1" id="quantity" readonly>
+                            </div>
+                        </td>
+                        <td>
+                            $ ${item?.total_amount}
+                        </td>
+                    </tr>`;
             });
 
             //showing pending button
@@ -912,6 +925,12 @@ $(document).ready(function () {
                 const product_images = product.product_images || [];
                 const image_filepath = product_images.length > 0 ? product_images[0].filepath : 'default_image_path.jpg'; // Provide a default image path
 
+                var offeredPrice_wishlist = '';
+                var is_offered_wishlist = product.is_offered == 1 ? true : false;
+                if (wishlist) {
+                    var offeredPercentage_wishlist = product.offered_percentage;
+                    offeredPrice_wishlist = calculateDiscount(product.price, offeredPercentage_wishlist);
+                }
                 wishListHtml += `
                     <div class="col-lg-3 col-md-4 col-sm-6 my-2">
                         <div class="card featured-card border-0">
@@ -935,8 +954,16 @@ $(document).ready(function () {
                                 <p class="card-title mt-2 border-top pt-3 line-clamp-2"><small>${product_name}</small></p>
                                 <div class="price-and-btn">
                                     <div class="d-flex justify-content-center card-price">
-                                        <h5>${product_price}</h5>
-                                        <p class="text-danger ps-1"><small><del>$15.00</del></small></p>
+                                         ${is_offered_wishlist
+                        ? `<h5>$${offeredPrice_wishlist}</h5>`
+                        : product.discount_price > 0
+                            ? `<h5>$ ${product.discount_price}</h5>`
+                            : `<h5>$ ${product.price}</h5>`
+                    }
+                                            ${product?.price && product.discount_price > 0
+                        ? `<p class="text-danger ps-1"><small><del>$${product?.price}</del></small></p>`
+                        : ''
+                    }
                                     </div>
                                     <button class="btn btn-add-to-cart AddToCartBtn" data-quantity="1" data-productid="${product_id}">
                                         <span class="me-2">+</span>
@@ -951,6 +978,7 @@ $(document).ready(function () {
             $('#wishListContainer').html(wishListHtml);
             $('#wishListLength').html(`(${wishListLength})`);
         } catch (error) {
+            console.log(error)
             $('#wishListContainer').html('<p>An error occurred while loading the wishlist. Please try again later.</p>');
         }
     }
@@ -1052,6 +1080,17 @@ $(document).ready(function () {
                 timeOut: 3000
             })
         }
+    }
+
+    function calculateDiscount(price, percentage) {
+        if (percentage < 1 || percentage > 100) {
+            return 'Percentage must be between 1 and 100, mate!';
+        }
+
+        let discount = (price * percentage) / 100;
+        let discountedPrice = price - discount;
+
+        return discountedPrice.toFixed(2); // To keep it neat with 2 decimal places
     }
 })
 

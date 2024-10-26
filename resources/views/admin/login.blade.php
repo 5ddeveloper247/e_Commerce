@@ -29,18 +29,18 @@
                         <div class="mt-4">
                             <label for="">EMAIL</label>
                             <br>
-                            <input class="w-100 p-2 mt-1" type="text"  name="email" placeholder="enter your email">
+                            <input class="w-100 p-2 mt-1" type="text"  name="email" placeholder="Enter your email">
                         </div>
                         <div class="mt-3">
                             <label for="">PASSWORD</label>
                             <br>
-                            <input class="w-100 p-2 mt-1" type="password" name="password" placeholder="enter your password">
+                            <input class="w-100 p-2 mt-1" type="password" name="password" placeholder="Enter your password">
                         </div>
-                        
+
                         <button type="submit" class="py-2 px-4 mt-4 mb-3 w-100">
                             SIGN IN
                         </button>
-                        
+
                     </form>
                 </div>
                 <a href="{{url('forget_password')}}">Forget Password</a>

@@ -1,7 +1,7 @@
 <!-- ____________________Laptop Screen_______________________ -->
 @php
 $siteData=siteCommonData();
-$siteLogo=$siteData['settings']->logo;
+$siteLogo=@$siteData['settings']->logo;
 @endphp
 <style>
     /* Basic styles for search bar */
