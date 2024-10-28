@@ -1,14 +1,21 @@
+<style>
+    .nav-link.active {
+        background-color: #007bff;
+        /* or any color */
+        color: #fff;
+    }
+</style>
+
 <div class="sidebar border-end d-lg-block d-none">
     <div>
         <ul class="nav flex-column">
 
 
             <div class="dashboard">
-
                 <li class="nav-item ">
                     <a href="{{url('admin/dashboard')}}"
-                        class=" d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5"
-                        href="#">
+                        class="d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5"
+                        href="#" id="dashboard-link">
 
                         <span>DASHBOARD</span>
                     </a>
@@ -44,14 +51,14 @@
                         <li class="nav-item active">
                             <a href="{{route('admin.listing')}}"
                                 class=" d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5"
-                                href="#">
+                                href="#" id="admin-link">
                                 <span>Admin</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('user.listing')}}"
                                 class="d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5"
-                                href="#">
+                                href="#" id="user-link">
                                 <span>User</span>
                             </a>
                         </li>
@@ -92,11 +99,10 @@
                 </div>
             </li>
 
-
-
             <li class="nav-item">
-                <a class="nav-link main-links-for-submenu" data-bs-toggle="collapse" href="#sidebar-faq" role="button"
-                    aria-expanded="false" aria-controls="collapseExample">
+                <a href="{{ route('admin.site.settings') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.site.settings') ? 'active' : '' }}"
+                    role="button" onclick="handleNavClick(this)">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <span class="dropdown-indicator-icon-wrapper">
                             <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
@@ -120,7 +126,7 @@
                     <ul class="nav flex-column mx-3">
                         <li class="nav-item">
                             <a href="{{route('admin.site.settings')}}"
-                                class="d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5"
+                                class="d-flex align-items-center justify-content-start text-start nav-link sidebar-sub-links-bg rounded-2 px-5 {{ request()->routeIs('admin.site.settings') ? 'active' : '' }}"
                                 href="#">
                                 <span>General Settings</span>
                             </a>
@@ -129,12 +135,10 @@
                 </div>
             </li>
 
-
-
-
-
             <li class="nav-item">
-                <a href="{{route('admin.category.get')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{route('admin.category.get')}}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.category.get') ? 'active' : '' }}"
+                    role="button" onclick="handleNavClick(this)">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24">
@@ -151,9 +155,13 @@
                     </div>
                 </a>
             </li>
+            {{-- --- --}}
+
 
             <li class="nav-item">
-                <a href="{{route('admin.products.index')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.products.index') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.products.index') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -167,8 +175,11 @@
                     </div>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a href="{{route('admin.order')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.order') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.order') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 32 32">
@@ -184,8 +195,14 @@
                     </div>
                 </a>
             </li>
+
+            {{-- ---- --}}
+
+
             <li class="nav-item">
-                <a href="{{route('admin.refund')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.refund') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.refund') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
@@ -198,8 +215,11 @@
                     </div>
                 </a>
             </li>
+            {{-- ____ --}}
             <li class="nav-item">
-                <a href="{{route('admin.contactus.index')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.contactus.index') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.contactus.index') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -211,8 +231,12 @@
                     </div>
                 </a>
             </li>
+            {{-- ___ --}}
+
             <li class="nav-item">
-                <a href="{{route('admin.newsletter.index')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.newsletter.index') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.newsletter.index') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -224,8 +248,11 @@
                     </div>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a href="{{route('admin.testimonials')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.testimonials') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.testimonials') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -237,8 +264,12 @@
                     </div>
                 </a>
             </li>
+
+            {{-- ___ --}}
             <li class="nav-item">
-                <a href="{{route('admin.paymentIndex')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.paymentIndex') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.paymentIndex') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
@@ -251,8 +282,11 @@
                     </div>
                 </a>
             </li>
+            {{-- ____ --}}
             <li class="nav-item">
-                <a href="{{route('admin.enquiryIndex')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.enquiryIndex') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.enquiryIndex') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 36 36">
@@ -269,8 +303,12 @@
                     </div>
                 </a>
             </li>
+            {{-- ___ --}}
+
             <li class="nav-item">
-                <a href="{{route('admin.reviewsIndex')}}" class="nav-link main-links-for-submenu" role="button">
+                <a href="{{ route('admin.reviewsIndex') }}"
+                    class="nav-link main-links-for-submenu {{ request()->routeIs('admin.reviewsIndex') ? 'active' : '' }}"
+                    role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 36 36">
@@ -287,8 +325,11 @@
                     </div>
                 </a>
             </li>
+            {{-- _____ --}}
+
         </ul>
     </div>
+
     <div class="sidebar-footer border-end border-top toggle-button p-3" id="toggleSidebar">
         <div class="sidebar-collapse-button">
             <svg class="sidebar-back-icon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
@@ -307,3 +348,44 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    const navLinks = document.querySelectorAll('.nav-link');
+    const localStorageKey = 'activeSidebarLink';
+
+    // Highlight the active link based on localStorage data
+    const activeLinkId = localStorage.getItem(localStorageKey);
+
+    if (activeLinkId) {
+        const activeLink = document.getElementById(activeLinkId);
+        if (activeLink) {
+            activeLink.classList.add('active');
+            // Open the parent collapse if it's part of a dropdown
+            const collapseElement = activeLink.closest('.collapse');
+            if (collapseElement) {
+                const collapseInstance = new bootstrap.Collapse(collapseElement, { toggle: false });
+                collapseInstance.show();
+            }
+        }
+    }
+
+    // Add event listeners to each link to handle clicks
+    navLinks.forEach((link) => {
+        link.addEventListener("click", function (event) {
+            // Remove 'active' from all links and add it to the clicked link
+            navLinks.forEach((lnk) => lnk.classList.remove("active"));
+            this.classList.add("active");
+
+            // Store the active link ID in localStorage
+            localStorage.setItem(localStorageKey, this.id);
+
+            // Check if the clicked link has a collapse toggle, prevent default to reload if needed
+            if (!this.getAttribute('data-bs-toggle')) {
+                event.preventDefault();
+                location.href = this.href; // Redirect to trigger page reload
+            }
+        });
+    });
+});
+</script>

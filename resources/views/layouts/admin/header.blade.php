@@ -515,11 +515,13 @@ $siteLogo=@$siteData['settings']->logo;
             <a class="navbar-brand d-flex me-1 me-sm-3" href="{{ route('admin.dashboard') }}">
                 <div class="d-flex align-items-center">
                     <div class="d-flex align-items-center">
-                        <img src="{{ url('/').'/'.@$siteLogo }}" alt="phoenix" width="60">
+                        <img src="{{ url('/') . '/' . @$siteLogo }}" alt=" " height="50" width="50"
+                            style="border-radius: 50%; overflow: hidden;">
                         <!-- <h5 class="logo-text ms-2 d-none d-sm-block">phoenix</h5> -->
                     </div>
                 </div>
             </a>
+
         </div>
         <div class="search-box navbar-top-search-box d-none d-lg-block" style="width:25rem;">
             <form class="position-relative" data-bs-toggle="search" data-bs-display="static" aria-expanded="false">

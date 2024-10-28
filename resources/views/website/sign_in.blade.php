@@ -30,10 +30,21 @@
                     <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
                     <label for="email">Email address</label>
                 </div>
-                <div class="form-floating mb-3">
+                <div class="form-floating mb-3 position-relative">
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                     <label for="password">Password</label>
+
+                    <!-- Eye icon for toggling password visibility -->
+                    <span class="position-absolute" style="cursor: pointer; right: 10px; top: 15px;"
+                        id="togglePasswordIcon">
+                        <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                            viewBox="0 0 24 24">
+                            <path fill="#010308"
+                                d="M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z" />
+                        </svg>
+                    </span>
                 </div>
+
                 <div class="d-flex justify-content-between align-items-center">
                     <button type="submit" class="btn btn-add-to-cart">
                         Sign in
@@ -64,3 +75,19 @@
 
 
 @endsection
+@push('scripts')
+<script>
+    document.getElementById('togglePasswordIcon').addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.setAttribute('d', 'M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.setAttribute('d', 'M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z');
+        }
+    });
+</script>
+@endpush

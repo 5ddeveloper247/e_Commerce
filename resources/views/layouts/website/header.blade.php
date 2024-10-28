@@ -1,4 +1,12 @@
 <!-- ____________________Laptop Screen_______________________ -->
+
+<style>
+    .nav-link.active {
+        color: #1153f7 !important;
+        /* Example: red color for active link */
+        font-weight: bolder;
+    }
+</style>
 @php
 $siteData=siteCommonData();
 $siteLogo=@$siteData['settings']->logo;
@@ -212,6 +220,45 @@ $siteLogo=@$siteData['settings']->logo;
     </nav>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!-- ____________________Mobile Screen_______________________ -->
 
 <div class="d-none">
@@ -311,22 +358,6 @@ $siteLogo=@$siteData['settings']->logo;
 <div class="d-lg-block d-none">
     <nav class="navbar navbar-expand-lg header-top bg-dark py-1">
         <div class="container">
-            <!-- Logo on the left side -->
-            {{-- <a href="#" type="button" class="d-flex align-items-center text-decoration-none"
-                data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 512 512">
-                    <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                        stroke-width="32"
-                        d="M256 48c-79.5 0-144 61.39-144 137c0 87 96 224.87 131.25 272.49a15.77 15.77 0 0 0 25.5 0C304 409.89 400 272.07 400 185c0-75.61-64.5-137-144-137" />
-                    <circle cx="256" cy="192" r="48" fill="none" stroke="currentColor" stroke-linecap="round"
-                        stroke-linejoin="round" stroke-width="32" />
-                </svg>
-                <p class="text-white mb-0 lh-1 me-2">
-                    <small class="text-nowrap">Delivered to</small>
-                    <br>
-                    USA
-                </p>
-            </a> --}}
             <div class="d-flex align-items-center w-100">
                 <a class="navbar-brand me-5" href="{{url('/')}}">
                     <img class="img-fluid rounded-5" src="{{ url('/').'/'.$siteLogo }}" alt="">
@@ -502,19 +533,7 @@ $siteLogo=@$siteData['settings']->logo;
                         <div class="dropdown-menu" style="margin-left:-13rem; width:18rem">
                             <div class="" id="cart_menu_item">
 
-                                {{-- dynamically injected here --}}
 
-                                {{-- <div class="px-3 pt-3">
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        <img src="https://cdn11.bigcommerce.com/s-xfjb6c0wb4/images/stencil/1920w/products/97/406/07__37672.1589167510.jpg?c=1z"
-                                            alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
-                                        <div>
-                                            <h5 class="card-title mb-1">Wintage Spoon</h5>
-                                            <p class="card-text text-muted mb-0">Aliquam quat voluptatem</p>
-                                            <p class="card-text fw-bold">₹129.95</p>
-                                        </div>
-                                    </div>
-                                </div> --}}
                             </div>
                             <div class="px-3">
                                 <hr>
@@ -536,36 +555,56 @@ $siteLogo=@$siteData['settings']->logo;
             </div>
         </div>
     </nav>
+
+
     <nav class="navbar navbar-expand-lg header-bottom py-0">
         <div class="container">
-            <!-- <div class="dropdown categories-dropdown">
-            <div class="d-flex align-items-center dropdown-toggle py-1" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <svg xmlns="http://www.w3.org/2000/svg" width="1.3em" height="1.3em" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z" />
-                </svg>
-                <span class="ms-2">All</span>
-            </div>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item d-flex align-items-center py-2 border-bottom" href="#">
-                        <svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                            <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6 6l6-6m-6-6l6 6" />
-                        </svg>Action</a>
+            <ul class="mb-2 mb-lg-0 bottom-header-ul d-flex flex-wrap align-items-center">
+                <li class="nav-item pe-2 all-categories-ul">
+                    <a id="allCategoriesBtn" class="nav-link pe-3 py-2 d-flex align-items-center" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasMenuu" aria-controls="offcanvasMenuu">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z" />
+                        </svg>
+                        <span class="ms-1">All</span>
+                    </a>
                 </li>
-                <li>
-                    <a class="dropdown-item d-flex align-items-center py-2 border-bottom" href="#">
-                        <svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                            <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6 6l6-6m-6-6l6 6" />
-                        </svg>Another action</a>
+                <li class="nav-item px-2">
+                    <a class="nav-link px-3 py-2" href="{{ url('contact_us') }}" data-tab="contact_us">Contact Us</a>
                 </li>
-                <li>
-                    <a class="dropdown-item d-flex align-items-center py-2" href="#">
-                        <svg class="me-2" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
-                            <path fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-6 6l6-6m-6-6l6 6" />
-                        </svg>Something else here</a>
+                <li class="nav-item px-2">
+                    <a class="nav-link px-3 py-2" href="{{ url('about_us') }}" data-tab="about_us">About Us</a>
+                </li>
+                <li class="nav-item px-2 position-relative more-dropdown">
+                    <a class="nav-link px-3 py-2 d-flex align-items-center" href="#" data-tab="more">
+                        More
+                        <svg class="ms-2 drop-down" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024">
+                            <path fill="currentColor" d="M831.872 340.864L512 652.672L192.128 340.864a30.59 30.59 0 0 0-42.752 0a29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728a30.59 30.59 0 0 0-42.752 0z" />
+                        </svg>
+                    </a>
+                    <div class="position-absolute rounded-3 ps-3 pe-5 py-3">
+                        <div class="navPages-item-page">
+                            <a class="link-action" href="{{ url('shipping-returns') }}" data-tab="shipping">Shipping &amp; Returns</a>
+                        </div>
+                        <div class="navPages-item-page">
+                            <a class="link-action" href="{{ url('delivery-information') }}" data-tab="delivery">Delivery Information</a>
+                        </div>
+                        <div class="navPages-item-page">
+                            <a class="link-action" href="{{ url('terms-conditions') }}" data-tab="terms">Terms &amp; Conditions</a>
+                        </div>
+                        <div class="navPages-item-page">
+                            <a class="link-action" href="{{ url('privacy-policy') }}" data-tab="privacy">Privacy Policy</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
-        </div> -->
+        </div>
+    </nav>
+
+
+
+    {{-- <nav class="navbar navbar-expand-lg header-bottom py-0">
+        <div class="container">
             <ul class="mb-2 mb-lg-0 bottom-header-ul d-flex flex-wrap align-items-center">
                 <li class="nav-item pe-2 all-categories-ul">
                     <a class="nav-link pe-3 py-2 d-flex align-items-center" type="button" data-bs-toggle="offcanvas"
@@ -609,10 +648,12 @@ $siteLogo=@$siteData['settings']->logo;
                 </li>
             </ul>
         </div>
-    </nav>
+    </nav> --}}
 </div>
-<!-- ____________________New Mobile Screen_______________________ -->
 
+
+
+<!-- ____________________New Mobile Screen_______________________ -->
 <div class="d-lg-none d-block">
     <nav class="navbar navbar-expand-lg small-nav">
         <div class="container">
@@ -808,6 +849,39 @@ $siteLogo=@$siteData['settings']->logo;
 @push('scripts')
 <script src="{{ asset('assets_user/customjs/header.js') }}"></script>
 <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Apply active class based on localStorage
+        const activeTab = localStorage.getItem("activeTab");
+        if (activeTab) {
+            document.querySelectorAll(".nav-link").forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("data-tab") === activeTab) {
+                    link.classList.add("active");
+                }
+            });
+        }
+
+        // Add click event listener to each nav-link
+        document.querySelectorAll(".nav-link").forEach(link => {
+            link.addEventListener("click", function (event) {
+                const tab = this.getAttribute("data-tab");
+
+                // Prevent page refresh for the "All" button
+                if (tab === "all") {
+                    event.preventDefault();
+                    // Trigger Bootstrap's offcanvas programmatically if needed
+                    const offcanvasMenu = new bootstrap.Offcanvas(document.getElementById("offcanvasMenuu"));
+                    offcanvasMenu.show();
+                } else {
+                    // Set the clicked tab in localStorage
+                    localStorage.setItem("activeTab", tab);
+                }
+            });
+        });
+    });
+</script>
+
+<script>
     function searchProduct(viewPort) {
         let searchQuery;
 
@@ -913,5 +987,8 @@ function getRatingStars(rating) {
     }
     return stars;
 }
+
 </script>
+
+
 @endpush

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\NewsLetter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -20,6 +21,7 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Rating;
 use App\Models\SiteSetting;
 use App\Models\SiteSettingsFiles;
 use App\Models\Category;
@@ -36,11 +38,15 @@ class DashboardController extends Controller
     {
         // Get the counts of orders, users, and products
         $ordersCount = Order::count();
-        $usersCount = User::count();
+        $usersCount = User::where('role', 2)->where('status', 1)->count();
+        $adminsCount = User::whereIn('role', [0, 1])->where('status', 1)->count();
+        $categoryCount = Category::where('status', 1)->count();
+        $newsLetterCount = NewsLetter::count();
+        $totalReviewsCount = Rating::count();
         $productsCount = Product::count();
-        $productsPublished=Product::where('status',1)->count();
-        $productsUnpublished=Product::where('status',0)->count();
-        $productsDiscounted=Product::where('is_offered',1)->count();
+        $productsPublished = Product::where('status', 1)->count();
+        $productsUnpublished = Product::where('status', 0)->count();
+        $productsDiscounted = Product::where('is_offered', 1)->count();
 
         // Sum the 'amount' field from the OrderPayment model
         $totalAmount = OrderPayment::where('transaction_status', 1)->sum('amount');
@@ -52,11 +58,16 @@ class DashboardController extends Controller
         return response()->json([
             'ordersCount' => $ordersCount,
             'usersCount' => $usersCount,
+            'adminsCount' => $adminsCount,
+            'categoryCount' => $categoryCount,
+            'newsLetterCount' => $newsLetterCount,
             'productsCount' => $productsCount,
             'totalAmount' => $formattedTotalAmount, // Formatted amount
+            'totalReviewsCount' => $totalReviewsCount,
             'productsPublished' => $productsPublished,
             'productsUnpublished' => $productsUnpublished,
             'productsDiscounted' => $productsDiscounted,
+
             'status' => 200, // Success status code
         ]);
     }
@@ -78,6 +89,4 @@ class DashboardController extends Controller
             return $amount;
         }
     }
-
-
 }

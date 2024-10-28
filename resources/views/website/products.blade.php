@@ -164,9 +164,9 @@
                                 <h6>Price</h6>
                                 <div class="d-flex gap-2">
                                     <div class="d-flex">
-                                        <input type="text" class="w-50" placeholder="Min" name="minPrice"
+                                        <input type="numer" class="w-50 mx-2" maxlength="15" placeholder="Min Price" name="minPrice"
                                             id="min-price">
-                                        <input type="text" class="w-50" placeholder="Max" name="maxPrice"
+                                        <input type="number" class="w-50" maxlength="15" placeholder="Max Price" name="maxPrice"
                                             id="max-price">
                                     </div>
                                 </div>

@@ -17,9 +17,14 @@ $(document).ready(function () {
                 if (response && response.status === 200) {
                     // Safely access values with optional chaining
                     const totalUsers = response?.usersCount ?? 0;
+                    const totalAdmins = response?.adminsCount ?? 0;
                     const totalOrders = response?.ordersCount ?? 0;
+                    const totalCategories = response?.categoryCount ?? 0;
+                    const totalNewsletter = response?.newsLetterCount ?? 0;
                     const totalProducts = response?.productsCount ?? 0;
                     const totalAmount = response?.totalAmount ?? 0;
+                    const totalReviews = response?.totalReviewsCount ?? 0;
+
 
                     const productsPublished = response?.productsPublished ?? 0;
                     const productsUnpublished = response?.productsUnpublished ?? 0;
@@ -27,15 +32,19 @@ $(document).ready(function () {
 
                     // Update dashboard values if they exist
                     $('#totalUsers').text(totalUsers);
+                    $('#totalAdmins').text(totalAdmins);
                     $('#totalOrders').text(totalOrders);
                     $('#totalProducts').text(totalProducts);
+                    $('#totalCategories').text(totalCategories);
+                    $('#totalNewsletter').text(totalNewsletter);
+                    $('#totalReviews').text(totalReviews);
                     // Ensure the totalAmount is a number and has a fixed format
                     $('#totalAmount').text((totalAmount));
                     $('#productsPublished').text((productsPublished));
                     $('#productsUnpublished').text((productsUnpublished));
                     $('#productsDiscounted').text((productsDiscounted));
                     $('#allProducts').text((totalProducts));
-                } else { 
+                } else {
                     // Handle cases where response status is not 200
                     console.error('Error: Invalid response status', response);
 

@@ -106,24 +106,43 @@
 
                         <input type="hidden" name="user_id" id="user_id">
                         <div class="form-floating col-md-12 mb-3">
-                            <input type="text" class="form-control" fieldType="alphabet" maxlength="15" id="user_name" name="user_name" placeholder="name">
+                            <input type="text" class="form-control" fieldType="alphabet" maxlength="15" id="user_name"
+                                name="user_name" placeholder="name">
                             <label class="mx-2 required-asterisk" for="generalInfo">username</label>
                         </div>
                         <div class="form-floating col-md-12 mb-3">
-                            <input type="email" class="form-control" fieldType="alphanumeric" maxlength="50" id="user_email" name="user_email"
-                                placeholder="name@example.com">
+                            <input type="email" class="form-control" fieldType="alphanumeric" maxlength="50"
+                                id="user_email" name="user_email" placeholder="name@example.com">
                             <label class="mx-2 required-asterisk" for="generalInfo">email</label>
                         </div>
 
-                        <div class="form-floating col-md-12 mb-3">
-                            <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15" id="user_password" name="user_password"
-                                placeholder="">
-                            <label class="mx-2 p-label required-asterisk" for="edit-admin-password">Password</label>
+                        <div class="form-floating col-md-12 mb-3 position-relative">
+                            <input type="password" class="form-control" id="user_password" name="user_password"
+                                maxlength="15" placeholder="">
+                            <label class="mx-2 p-label required-asterisk" for="user_password">Password</label>
+                            <span class="input-group-text position-absolute"
+                                style="cursor: pointer; right: 30px; top: 15px;" id="toggleUserPassword">
+                                <svg id="eyeIconUser" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                    viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z" />
+                                </svg>
+                            </span>
                         </div>
-                        <div class="form-floating col-md-12 mb-3">
-                            <input type="password" class="form-control" fieldType="alphanumeric" maxlength="15" id="user_confirm_password"
-                                name="user_confirm_password" placeholder="">
-                            <label class="mx-2 p-confirm-label required-asterisk" for="edit-admin-confirm-password">confirm Password</label>
+
+                        <div class="form-floating col-md-12 mb-3 position-relative">
+                            <input type="password" class="form-control" id="user_confirm_password"
+                                name="user_confirm_password" maxlength="15" placeholder="">
+                            <label class="mx-2 p-confirm-label required-asterisk" for="user_confirm_password">Confirm
+                                Password</label>
+                            <span class="input-group-text position-absolute"
+                                style="cursor: pointer; right: 30px; top: 15px;" id="toggleUserConfirmPassword">
+                                <svg id="eyeIconUserConfirm" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                    viewBox="0 0 24 24">
+                                    <path fill="currentColor"
+                                        d="M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z" />
+                                </svg>
+                            </span>
                         </div>
                         <div class="form-check form-switch col-md-12 d-flex align-items-center mb-3 mx-3">
                             <input class="form-check-input" type="checkbox" role="switch" name="user_status"

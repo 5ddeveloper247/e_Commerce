@@ -306,14 +306,6 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
-
     getFilterData()
     function getFilterData() {
         // Get filter data from the form
@@ -326,8 +318,8 @@ $(document).ready(function () {
 
     function handleFilterGetDataResponse(response) {
         // Parse the JSON response
-        const brands = response.brands;
-        const categories = response.categories;
+        const brands = response.brands || [];
+        const categories = response.categories || [];
 
         // Clear the existing filter options for both brand and category
         const brandFilterElement = document.getElementById('brand-filter');
@@ -335,62 +327,83 @@ $(document).ready(function () {
         brandFilterElement.innerHTML = '';
         categoryFilterElement.innerHTML = '';
 
-        // Dynamically create brand checkboxes
-        brands.forEach((brand, index) => {
-            const brandDiv = document.createElement('div');
-            const brandCheckbox = document.createElement('input');
-            const brandLabel = document.createElement('label');
-            // Assuming each brand has a 'title' property
-            brandCheckbox.type = 'checkbox';
-            brandCheckbox.name = 'brand';
-            brandCheckbox.value = brand.id; // Use brand.id for the value
-            brandCheckbox.id = `brand-${brand.id}`;
+        // Check if brands are available
+        if (brands.length > 0) {
+            // Dynamically create brand checkboxes
+            brands.forEach((brand, index) => {
+                const brandDiv = document.createElement('div');
+                const brandCheckbox = document.createElement('input');
+                const brandLabel = document.createElement('label');
 
-            // Set label attributes
-            brandLabel.htmlFor = `brand-${index + 1}`;
-            brandLabel.textContent = brand.title; // Use brand.title for display
-            // Append checkbox and label to the div
-            brandDiv.appendChild(brandCheckbox);
-            brandDiv.appendChild(brandLabel);
+                // Set checkbox attributes
+                brandCheckbox.type = 'checkbox';
+                brandCheckbox.name = 'brand';
+                brandCheckbox.value = brand.id;
+                brandCheckbox.id = `brand-${brand.id}`;
 
-            // Append div to the brand filter container
-            brandFilterElement.appendChild(brandDiv);
+                // Set label attributes
+                brandLabel.htmlFor = `brand-${brand.id}`;
+                brandLabel.textContent = brand.title;
 
-            // Add event listener for dynamically created checkboxes
-            brandCheckbox.addEventListener('change', applyFilters);
-        });
+                // Append checkbox and label to the div
+                brandDiv.appendChild(brandCheckbox);
+                brandDiv.appendChild(brandLabel);
 
-        // Dynamically create category checkboxes
-        categories.forEach((category, index) => {
-            const categoryDiv = document.createElement('div');
-            const categoryCheckbox = document.createElement('input');
-            const categoryLabel = document.createElement('label');
+                // Append div to the brand filter container
+                brandFilterElement.appendChild(brandDiv);
 
-            // Assuming each category has a 'category_name' property
-            categoryCheckbox.type = 'checkbox';
-            categoryCheckbox.name = 'category';
-            categoryCheckbox.value = category.id; // Use category.id for the value
-            categoryCheckbox.id = `category-${category.id}`;
+                // Add event listener for dynamically created checkboxes
+                brandCheckbox.addEventListener('change', applyFilters);
+            });
+        } else {
+            // Show message if no brands are found
+            const noBrandMessage = document.createElement('p');
+            noBrandMessage.textContent = "No Brand Found";
+            noBrandMessage.classList.add('no-data-message');
+            brandFilterElement.appendChild(noBrandMessage);
+        }
 
-            // Set label attributes
-            categoryLabel.htmlFor = `category-${index + 1}`;
-            categoryLabel.textContent = category.category_name; // Use category.category_name for display
+        // Check if categories are available
+        if (categories.length > 0) {
+            // Dynamically create category checkboxes
+            categories.forEach((category, index) => {
+                const categoryDiv = document.createElement('div');
+                const categoryCheckbox = document.createElement('input');
+                const categoryLabel = document.createElement('label');
 
-            // Append checkbox and label to the div
-            categoryDiv.appendChild(categoryCheckbox);
-            categoryDiv.appendChild(categoryLabel);
+                // Set checkbox attributes
+                categoryCheckbox.type = 'checkbox';
+                categoryCheckbox.name = 'category';
+                categoryCheckbox.value = category.id;
+                categoryCheckbox.id = `category-${category.id}`;
 
-            // Append div to the category filter container
-            categoryFilterElement.appendChild(categoryDiv);
+                // Set label attributes
+                categoryLabel.htmlFor = `category-${category.id}`;
+                categoryLabel.textContent = category.category_name;
 
-            // Add event listener for dynamically created checkboxes
-            categoryCheckbox.addEventListener('change', applyFilters);
-        });
+                // Append checkbox and label to the div
+                categoryDiv.appendChild(categoryCheckbox);
+                categoryDiv.appendChild(categoryLabel);
+
+                // Append div to the category filter container
+                categoryFilterElement.appendChild(categoryDiv);
+
+                // Add event listener for dynamically created checkboxes
+                categoryCheckbox.addEventListener('change', applyFilters);
+            });
+        } else {
+            // Show message if no categories are found
+            const noCategoryMessage = document.createElement('p');
+            noCategoryMessage.textContent = "No Category Found";
+            noCategoryMessage.classList.add('no-data-message');
+            categoryFilterElement.appendChild(noCategoryMessage);
+        }
 
         // Re-attach event listeners to price inputs
         document.getElementById('min-price').addEventListener('change', applyFilters);
         document.getElementById('max-price').addEventListener('change', applyFilters);
     }
+
 
 
     // Function to get the filter criteria and send it to the backend
