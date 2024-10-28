@@ -23,14 +23,14 @@
                 <div class="form-floating">
                     <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Full Name"
                         required>
-                    <label for="full_name">Full Name (Required)</label>
+                    <label for="full_name">Full Name (Required 7 to 15 digits long)</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="phone_number" name="phone_number"
+                    <input type="text" class="form-control"  maxlength="15" id="phone_number" name="phone_number"
                         placeholder="Phone Number">
-                    <label for="phone_number">Phone Number</label>
+                    <label for="phone_number">Phone Number (Required)</label>
                 </div>
             </div>
         </div>

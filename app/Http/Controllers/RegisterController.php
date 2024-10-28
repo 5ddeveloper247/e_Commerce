@@ -297,14 +297,31 @@ class RegisterController extends Controller
         // Validate the incoming request data
         $validatedData = $request->validate([
             'fullName' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255',         // Email validation
-            'phoneNumber' => 'required|string|max:255',
+            'email' => [
+                'required',
+                'string',
+                'email:rfc,dns', // Enforces proper email formatting with valid domain
+                'max:15',
+                'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', // Validates the presence of '.' and a valid domain after '@'
+            ],
+            'phoneNumber' => [
+                'required',
+                'string',
+                'regex:/^\d{7,15}$/', // Enforces a phone number of 7 to 15 digits only
+            ],
             'address' => 'required|string|max:255',
             'country' => 'required|exists:countries,id',  // Ensure the country exists in the countries table
             'state' => 'required|exists:states,id',       // Ensure the state exists in the states table
             'city' => 'required|exists:cities,id',        // Ensure the city exists in the cities table
             'postalCode' => 'nullable|string|max:20',
+        ], [
+            'email.regex' => 'The email must be a valid format, containing "@" and a valid domain.',
+            'phoneNumber.regex' => 'The phone number must be between 7 and 15 digits.',
+            'country.exists' => 'The selected country is invalid.',
+            'state.exists' => 'The selected state is invalid.',
+            'city.exists' => 'The selected city is invalid.',
         ]);
+
 
         // Check if 'edit_id' is present in the request (indicating an update operation)
         if ($request->has('edit_id')) {

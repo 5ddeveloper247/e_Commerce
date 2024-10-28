@@ -520,7 +520,6 @@ $(document).ready(function () {
             let form = $('#addSpecification_form');
             form.trigger("reset");
             $("#specification_id").val('');
-
             $(".modal").modal('hide');
 
             var product_id = $("#product_id").val();

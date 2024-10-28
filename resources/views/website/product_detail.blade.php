@@ -42,14 +42,14 @@
             }
             @endphp
 
+            <p class="fw-bold text-danger"><small>Actual Price: $</small>{{ $product->price }}</p>
+
             @if($is_offered_product)
             <p class="fw-bold"><small>Offered Price: $</small>{{ $offered_Price }}</p>
             @elseif(!$is_offered_product && $product->discount_price > 0)
             <p class="fw-bold"><small>Discounted Price: $</small>{{ $product->discount_price }}</p>
-            @else
-            <p class="fw-bold text-danger"><small>Actual Price: $</small>{{ $product->price }}</p>
             @endif
-            <p class="fw-bold text-danger"><small>Actual Price: $</small>{{ $product->price }}</p>
+
 
 
 

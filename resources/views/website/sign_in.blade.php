@@ -16,15 +16,15 @@
             <form action="{{route('user.loginSubmit')}}" method="POST">
                 @csrf
                 @if(session('error'))
-                    <div class="alert alert-danger">
-                        {{session('error')}}
-                    </div>
+                <div class="alert alert-danger">
+                    {{session('error')}}
+                </div>
                 @elseif($errors->any())
-                    <div class="alert alert-danger">
-                        @foreach ($errors->all() as $error)
-                            <p class="mb-0">{{ $error }}</p>
-                        @endforeach
-                    </div>
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                    <p class="mb-0">{{ $error }}</p>
+                    @endforeach
+                </div>
                 @endif
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
@@ -37,8 +37,9 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <button type="submit" class="btn btn-add-to-cart">
                         Sign in
-                    </button> 
-                    <a href="{{route('user.forgetpassword')}}" class="text-decoration-none text-black">Forgot password?</a>
+                    </button>
+                    <a href="{{route('user.forgetpassword')}}" class="text-decoration-none text-black">Forgot
+                        password?</a>
                 </div>
             </form>
         </div>
@@ -53,7 +54,7 @@
                 <li>Save items to your Wish List</li>
             </ul>
             <button class="btn btn-add-to-cart">
-                Create Account
+                <a href="{{ url('/register') }}" style="text-decoration: none">Create Account</a>
             </button>
         </div>
     </div>

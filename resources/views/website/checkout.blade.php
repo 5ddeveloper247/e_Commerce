@@ -70,25 +70,28 @@
                                     <input type="hidden" name="" id="edit_id" name="edit_id">
                                     <div class="mb-3">
                                         <label for="fullName" class="form-label required-asterisk ">Full Name</label>
-                                        <input type="text" class="form-control" fieldType="alphabet" maxlength="15" id="fullName" name="fullName"
-                                            placeholder="Enter full name" required>
+                                        <input type="text" class="form-control" fieldType="alphabet" maxlength="15"
+                                            id="fullName" name="fullName" placeholder="Enter full name" required>
                                     </div>
                                     <div class="mb-3">
                                         <label for="email" class="form-label required-asterisk">Email</label>
-                                        <input type="text" class="form-control" fieldType="alphanumeric" maxlength="50" id="email" name="email"
-                                            placeholder="Enter full name" required>
+                                        <input type="text" class="form-control" fieldType="alphanumeric" maxlength="50"
+                                            id="email" name="email" placeholder="Enter full name" required>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="phoneNumber" class="form-label required-asterisk">Phone Number</label>
-                                        <input type="number" class="form-control" fieldType="alphanumeric" maxlength="50" id="phoneNumber" name="phoneNumber"
-                                            placeholder="Enter phone number" required>
+                                        <label for="phoneNumber" class="form-label required-asterisk">Phone
+                                            Number</label>
+                                        <input type="text" class="form-control" fieldType="number" maxlength="15"
+                                            id="phoneNumber" name="phoneNumber" placeholder="Enter phone number"
+                                            required>
                                     </div>
 
 
                                     <!-- Address Line 1 -->
                                     <div class="mb-3">
                                         <label for="address" class="form-label required-asterisk">Address</label>
-                                        <textarea type="text" class="form-control" fieldType="alphanumeric" maxlength="255" id="address" name="address"
+                                        <textarea type="text" class="form-control" fieldType="alphanumeric"
+                                            maxlength="255" id="address" name="address"
                                             placeholder="Enter street address" required></textarea>
                                     </div>
 
@@ -104,7 +107,8 @@
 
                                     <!-- State/Province/Region Dropdown -->
                                     <div class="mb-3">
-                                        <label for="state" class="form-label required-asterisk ">State/Province/Region</label>
+                                        <label for="state"
+                                            class="form-label required-asterisk ">State/Province/Region</label>
                                         <select class="form-select" id="state" name="state" required>
                                             <option value="" selected>Select state</option>
 
@@ -176,7 +180,8 @@
             <!-- Order Comments Section -->
             <p class="fw-bold">Order Comments</p>
             <div class="mb-3">
-                <textarea class="form-control" id="orderComments" fieldType="alphanumeric" maxlength="255" rows="2" placeholder="Enter order comment"></textarea>
+                <textarea class="form-control" id="orderComments" fieldType="alphanumeric" maxlength="255" rows="2"
+                    placeholder="Enter order comment"></textarea>
             </div>
             <button class="btn btn-secondary" id="checkoutContinueBtn">Continue</button>
 

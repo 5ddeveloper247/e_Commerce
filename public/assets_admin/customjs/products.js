@@ -507,10 +507,10 @@ $(document).ready(function () {
         data.append('product_id', product_id);
         let type = 'POST';
         let url = '/admin/products/saveProductSpecifications';
-        SendAjaxRequestToServer(type, url, data, '', saveProductSpecificationsResponse, '', '#addSpecification_btn');
+        SendAjaxRequestToServer(type, url, data, '', saveProductSpecification, '', '#addSpecification_btn');
     });
 
-    function saveProductSpecificationsResponse(response) {
+    function saveProductSpecification(response) {
         if (response.status == 200) {
             // Success: Display success message and reset form
             toastr.success(response.message, '', {
@@ -521,7 +521,7 @@ $(document).ready(function () {
             form.trigger("reset");
             $("#specification_id").val('');
 
-            $(".modal").modal('hide');
+            $("#addSpecififcation_modal").modal('hide');
 
             var product_id = $("#product_id").val();
             getSpecificProductDetail(product_id);

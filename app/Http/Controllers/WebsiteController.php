@@ -305,7 +305,8 @@ class WebsiteController extends Controller
         if ($totalCartQuantity > $product->onhand_qty) {
             return response()->json([
                 'status' => 400,
-                'message' => 'Product quantity out of stock, please select a quantity under ' . $product->onhand_qty
+                'message' => 'We apologize for the inconvenience. The requested product quantity is currently out of stock.'
+
             ]);
         }
 
@@ -313,7 +314,7 @@ class WebsiteController extends Controller
         if ($product->onhand_qty <= 0) {
             return response()->json([
                 'status' => 400,
-                'message' => 'Product is out of stock'
+                'message' => 'We apologize for the inconvenience. The requested product quantity is currently out of stock.'
             ]);
         }
 

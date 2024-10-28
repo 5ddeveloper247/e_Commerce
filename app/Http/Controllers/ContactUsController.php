@@ -22,7 +22,7 @@ class ContactUsController extends Controller
         // Common validation rules
         $rules = [
             'full_name' => 'required|string|max:255',
-            'phone_number' => 'required|string|max:255',
+            'phone_number' => 'required|integer|regex:/^\d{7,15}$/',
             'email' => 'required|email|max:255',
             'order_number' => 'nullable|string|max:255',
             'company_name' => 'nullable|string|max:255',
