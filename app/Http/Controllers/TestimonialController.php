@@ -46,8 +46,12 @@ class TestimonialController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'designation' => 'nullable|string',
-            'file' => 'nullable|mimes:jpeg,jpg,png,gif|max:10240', // only allow these file types and limit the size to 10 MB
-            'testimonial_id' => 'nullable|exists:testimonials,id', // Ensure testimonial_id, if provided, exists in the database
+            'file' => 'required|mimes:jpeg,jpg,png,gif|max:10240',
+            'testimonial_id' => 'nullable|exists:testimonials,id',
+        ], [
+            'file.required' => 'A file upload is required.', // Custom error message for file
+            'file.mimes' => 'The file must be an image of type: jpeg, jpg, png, or gif.',
+            'file.max' => 'The file size may not exceed 10 MB.'
         ]);
 
         // Handle file upload if present, store in root/public/testimonials

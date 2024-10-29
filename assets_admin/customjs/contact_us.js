@@ -28,7 +28,7 @@ $(document).ready(function () {
                             const statusChecked = item?.status === 1 ? 'checked' : '';
                             const createdAt = item?.created_at
                                 ? new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
-                                  new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                                new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
                                 : 'N/A';
 
                             html += `
@@ -120,6 +120,9 @@ $(document).ready(function () {
                     $('#comment').val(item.comment);
                     $('#status').prop('checked', item.status == 1);
                     $('#contact-id').val(item.id);
+                    setTimeout(() => {
+                        $('#full_name').focus();
+                    }, 2000)
                 }
             },
             error: function (xhr, status, error) {

@@ -21,14 +21,14 @@
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Full Name"
-                        required>
-                    <label for="full_name">Full Name (Required 7 to 15 digits long)</label>
+                    <input type="text" class="form-control focusedField" maxlength="15" id="full_name" name="full_name"
+                        placeholder="Full Name" required>
+                    <label for="full_name">Full Name (Required 7 to 15 characters long)</label>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control"  maxlength="15" id="phone_number" name="phone_number"
+                    <input type="text" class="form-control" maxlength="15" id="phone_number" name="phone_number"
                         placeholder="Phone Number">
                     <label for="phone_number">Phone Number (Required)</label>
                 </div>
@@ -83,5 +83,4 @@
 @endsection
 @push('scripts')
 <script src="{{ asset('assets_user/customjs/contact_us.js') }}"></script>
-
 @endpush

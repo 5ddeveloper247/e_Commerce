@@ -20,16 +20,38 @@ $(document).ready(function () {
                     if (Array.isArray(response.data) && response.data.length > 0) {
                         let html = '';
 
+                        function escapeJSON(jsonObj) {
+                            return JSON.stringify(jsonObj)
+                                .replace(/"/g, '&quot;')
+                                .replace(/'/g, '&#39;')
+                                .replace(/\\/g, '\\\\'); // Escapes backslashes
+                        }
+
                         response.data.forEach((item, index) => {
-                            // Safely access item properties with optional chaining and defaults
-                            const name = item?.name || 'N/A';
-                            const designation = item?.designation || 'N/A';
-                            const description = item?.description || 'N/A';
+                            // Safely access and escape each property of item individually
+
+
+                            const id = item.id;
+                            const name = (item?.name || 'N/A').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                            const designation = (item?.designation || 'N/A').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+                            const description = (item?.description || 'N/A').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
                             const statusChecked = item?.status === 1 ? 'checked' : '';
+                            const mediaPath = item?.mediaPath || '';
                             const createdAt = item?.created_at
                                 ? new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
                                 new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
                                 : 'N/A';
+
+                            const safeItem = {
+                                id: item?.id,
+                                name,
+                                designation,
+                                description,
+                                status: item?.status,
+                                created_at: item?.created_at,
+                                mediaPath: item?.mediaPath || ""
+                            };
+                            // Use a sanitized object for JSON string with encoded values
 
                             // Append each testimonial row to the HTML string
                             html += `
@@ -59,16 +81,18 @@ $(document).ready(function () {
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-end">
                                                 <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
-                                                   data-bs-target="#filterModal" data-edit-testimonial='${JSON.stringify(item)}' id="handleEditTestimonialBtn">Edit</a>
+                                                   data-bs-target="#filterModal" data-edit-testimonial="${JSON.stringify(item)}" data-designation="${designation}" data-description="${description}" data-name="${name}" data-id="${id}" data-status="${statusChecked}" data-media-path="${mediaPath}" id="handleEditTestimonialBtn">Edit</a>
                                                 <div class="dropdown-divider"></div>
                                                 <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
-                                                   data-bs-target="#confirmationModalRemove" data-remove-testimonial='${JSON.stringify(item)}' id="handleRemoveTestimonialBtn">Remove</a>
+                                                   data-bs-target="#confirmationModalRemove" data-remove-testimonial="${(safeItem)}" data-id="${id}" id="handleRemoveTestimonialBtn">Remove</a>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
                             `;
                         });
+
+
 
                         // Insert the generated HTML into the table body
                         $('#testimonials_listing_table_body').html(html);
@@ -92,19 +116,28 @@ $(document).ready(function () {
 
     // Define additional functions for editing and removing admins
     $('body').on('click', '#handleEditTestimonialBtn', function () {
-        const item = JSON.parse($(this).attr('data-edit-testimonial'));
-        $('#name').val(item.name);
-        $('#designation').val(item.designation);
-        $('#description').val(item.description);
-        $('#status').prop('checked', item.status == 1);
-        $('#testimonial-id').val(item.id);
+        const id = $(this).data('id');
+        const name = $(this).data('name');
+        const designation = $(this).data('designation');
+        const description = $(this).data('description');
+        const status = $(this).data('status');
+        const mediaPath = $(this).data('media-path');
+
+        $('#name').val(name);
+        $('#designation').val(designation);
+        $('#description').val(description);
+        $('#status').prop('checked', status == "checked");
+        $('#testimonial-id').val(id);
         const filePreview = document.getElementById('filePreview');
         const previewSectionMain = document.getElementById('previewSectionMain');
-        filePreview.src = `${base_url}/${item.mediaPath}`;
+        filePreview.src = `${base_url}/${mediaPath}`;
         filePreview.style.display = 'block';
         previewSectionMain.style.display = 'block';
-
+        setTimeout(() => {
+            $('#name').focus();
+        }, 1000);
     });
+
 
 
 
@@ -118,8 +151,6 @@ $(document).ready(function () {
 
         let form = document.getElementById('addEventForm');
         const formData = new FormData(form);
-        console.log(formData)
-
         const url = "/admin/testimonials/createOrUpdate";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', updatejaxResponse, '', '#editAdminNow');
@@ -182,8 +213,9 @@ $(document).ready(function () {
 
 
     $('body').on('click', '#handleRemoveTestimonialBtn', function () {
-        const item = JSON.parse($(this).attr('data-remove-testimonial'));
-        $("#delete-testimonial-id").val(item.id);
+        const id = $(this).data('id');
+
+        $("#delete-testimonial-id").val(id);
     });
 
     $('body').on('click', '#deleteNowBtn', function () {
@@ -196,14 +228,14 @@ $(document).ready(function () {
                 formData.append(key, data[key]);
             }
         }
-        console.log(...formData);
+
         const url = "/admin/testimonial/delete";
         const type = "POST";
         SendAjaxRequestToServer(type, url, formData, '', removeTestimonialResponse, '', '#deleteNowBtn');
     })
 
     function removeTestimonialResponse(response) {
-        console.log(response);
+
         if (response.status == 200) {
             toastr.success(response.message, '', {
                 timeOut: 3000
@@ -284,6 +316,9 @@ $(document).ready(function () {
         filePreview.src = '';
         filePreview.style.display = 'none';
         previewSectionMain.style.display = 'none';
+        setTimeout(() => {
+            $('#name').focus();
+        }, 2000)
 
     });
 

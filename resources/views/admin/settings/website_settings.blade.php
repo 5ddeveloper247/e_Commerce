@@ -135,4 +135,12 @@
 
 @push('scripts')
 <script src="{{ asset('assets_admin/customjs/website_settings.js') }}"></script>
+<script>
+    $(document).ready(function () {
+    setTimeout(() => {
+
+        $('#phone').focus();
+    }, 2000)
+})
+</script>
 @endpush

@@ -77,17 +77,19 @@ $(document).ready(function () {
         $('#category_description').val(item.description);
         $('#category_status').prop('checked', item.status == 1);
         $('#category_id').val(item.id);
+        setTimeout(() => {
+            $('#category_name').focus();
+        }, 2000)
     })
 
     $('body').on('click', '#editCategoryNow', function () {
-
         const data = {
             id: $('#category_id').val(),
             category_name: $('#category_name').val(),
             category_description: $('#category_description').val(),
             category_status: $('#category_status').is(':checked') ? 1 : 0,
-
         }
+
         const formData = new FormData();
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
@@ -234,3 +236,9 @@ $(document).ready(function () {
     }
 
 });
+
+$('.modal-add-btn').on('click', function () {
+    setTimeout(() => {
+        $('#category_name').focus();
+    }, 2000)
+})

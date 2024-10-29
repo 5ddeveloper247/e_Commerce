@@ -6,7 +6,7 @@ $(document).ready(function () {
             response.settings.setting_files.forEach((file) => {
                 const imgdata = {
                     id: file.id,
-                    name: base_url +'/'+ file.file_path
+                    name: base_url + '/' + file.file_path
                 };
                 files.push(imgdata); //defined in common.js file
             });
@@ -100,6 +100,13 @@ $(document).ready(function () {
             }
         }
 
+    });
+
+    $('#phone').on('keyup', function (event) {
+        if (event.key === "Tab" || event.keyCode === 9) {
+            event.preventDefault(); // Prevents any default behavior if necessary
+            $('#email').focus(); // Moves focus to the next field
+        }
     });
 
 

@@ -40,3 +40,10 @@ $(".grid-icon").on("click", function () {
     $(".list-icon").removeClass("d-none");
     $(".grid-view-products").removeClass("d-none");
 });
+
+
+
+$(document).on('DOMContentLoaded', function () {
+    $('.focusedField').focus();
+});
+

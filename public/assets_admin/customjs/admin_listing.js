@@ -77,6 +77,9 @@ $(document).ready(function () {
         $('#admin_email').val(item.email);
         $('#admin_status').prop('checked', item.status == 1);
         $('#admin-id').val(item.id);
+        setTimeout(() => {
+            $('#admin_name').focus();
+        }, 2000)
     });
 
 
@@ -88,6 +91,7 @@ $(document).ready(function () {
             admin_status: $('#admin_status').is(':checked') ? 1 : 0,
             admin_password: $('#admin_password').val(),
             admin_confirm_password: $('#admin_confirm_password').val(),
+
         }
         const formData = new FormData();
         for (const key in data) {
@@ -245,4 +249,20 @@ document.getElementById('toggleConfirmPassword').addEventListener('click', funct
         confirmPasswordInput.type = 'password';
         eyeIconConfirm.setAttribute('d', 'M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z');
     }
+
 });
+
+
+
+$('.modal-add-btn').on('click', function () {
+    setTimeout(() => {
+        $('#admin_name').focus();
+    }, 2000)
+
+});
+
+
+
+
+
+

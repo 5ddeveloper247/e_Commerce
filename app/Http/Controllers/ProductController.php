@@ -68,16 +68,16 @@ class ProductController extends Controller
     protected function storeNewProduct(ProductRequest $request)
     {
         $request->validate([
-            'sku' => 'required|string|max:50,unqiue:products,sku', // Consider whether 'sku' should be an integer or a string with max length
+            'sku' => 'required|string|max:50|unique:products,sku', // Corrected unique rule
             'product_name' => 'required|string|max:255',
             'category_id' => 'required|integer|exists:categories,id',
             'brand_id' => 'required|integer|exists:brands,id',
             'model_name' => 'required|string|max:255',
-            'price' => 'required|numeric', // Use 'numeric' instead of 'float'
+            'price' => 'required|numeric', // Use 'numeric' to validate floats
             'discount_price' => 'required|numeric',
             'weight' => 'required|numeric',
             'onhand_qty' => 'required|numeric',
-            'description' => 'required|string|max:3000',
+            'description' => 'nullable|string|min:10|max:3000',
         ]);
 
         // Create the new product with validated data
@@ -87,17 +87,12 @@ class ProductController extends Controller
             'brand_id' => $request->input('brand_id'),
             'product_name' => $request->input('product_name'),
             'model_name' => $request->input('model_name'),
-            'video_url' => $request->input('video_url'),
+            'video_url' => $request->input('video_url'), // Assuming this is optional, handle accordingly
             'price' => $request->input('price'),
             'discount_price' => $request->input('discount_price'),
             'weight' => $request->input('weight'),
             'onhand_qty' => $request->input('onhand_qty'),
             'description' => $request->input('description'),
-            // 'is_offered' => $request->input('is_offered'),
-            // 'featured' => $request->input('featured'),
-            // 'status' => $request->input('status'),
-            // 'offered_percentage' => $request->input('offered_percentage'),
-            // 'created_by' => auth()->id(),
         ]);
 
         return response()->json([
@@ -106,6 +101,7 @@ class ProductController extends Controller
             'product_id' => $product->id,
         ]);
     }
+
 
 
     public function markAsDiscounted(Request $request)
@@ -173,9 +169,10 @@ class ProductController extends Controller
     protected function updateExistingProduct(ProductRequest $request)
     {
 
+
         $request->validate([
-            'product_id' => 'required',
-            'sku' => 'required|string|max:50,unqiue:products,sku',
+            'product_id' => 'required|exists:products,id', // Ensure the product exists
+            'sku' => 'required|string|max:50|unique:products,sku,' . $request->input('product_id'), // Corrected unique rule with ignore
             'product_name' => 'required|string|max:255',
             'category_id' => 'required|integer|exists:categories,id',
             'brand_id' => 'required|integer|exists:brands,id',
@@ -184,7 +181,7 @@ class ProductController extends Controller
             'discount_price' => 'required|numeric',
             'weight' => 'required|numeric',
             'onhand_qty' => 'required|numeric',
-            'description' => 'required|string|max:3000',
+            'description' => 'nullable|string|max:3000',
         ]);
 
         // Find the product by ID
@@ -209,22 +206,22 @@ class ProductController extends Controller
             'offered_percentage',
         ]);
 
-        $product->update($updateData);
-
-        // Update the 'updated_by' field
-        $product->update(['updated_by' => auth()->id()]);
-
-        $includeTotals = $request->input('includeTotals', false);
-
-        if ($includeTotals) {
-            // Fetch products
-            $products = Product::all();
-        }
+        // Update the product and the 'updated_by' field in one call
+        $product->update(array_merge($updateData, ['updated_by' => auth()->id()]));
 
         // Calculate totals if requested
-        $totalProducts = $includeTotals ? $products->count() : null;
-        $activeProducts = $includeTotals ? $products->where('status', 1)->count() : null;
-        $inactiveProducts = $includeTotals ? $products->where('status', 0)->count() : null;
+        $includeTotals = $request->input('includeTotals', false);
+        $totalProducts = null;
+        $activeProducts = null;
+        $inactiveProducts = null;
+
+        if ($includeTotals) {
+            // Fetch products and calculate totals
+            $products = Product::all();
+            $totalProducts = $products->count();
+            $activeProducts = $products->where('status', 1)->count();
+            $inactiveProducts = $products->where('status', 0)->count();
+        }
 
         return response()->json([
             'message' => 'Product updated successfully',
@@ -235,6 +232,7 @@ class ProductController extends Controller
             'inactiveProducts' => $inactiveProducts,
         ]);
     }
+
 
     public function getSpecificProductDetail(Request $request)
     {
@@ -339,7 +337,6 @@ class ProductController extends Controller
                 'message' => 'Product media successfully saved',
                 'image_ids' => $imageIds, // Return image IDs for confirmation if needed
             ], 200);
-
         } catch (Exception $e) {
             return response()->json([
                 'status' => 500,
@@ -517,8 +514,8 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'product_id' => 'required|exists:products,id',
             'feature_title' => 'required|string|max:255',
-            'feature_description' => 'required|string|max:255',
-            'feature_image' => 'required|image|max:2048',
+            'feature_description' => 'required|string|max:1500',
+            'feature_image' => 'required|image|max:10048',
         ]);
 
         // Find the product by ID
@@ -567,6 +564,16 @@ class ProductController extends Controller
     public function markProductStatus(Request $request)
     {
         $product = Product::where('id', $request->product_id)->first();
+        if (!$product) {
+            return response()->json(['message' => 'Product not found', 'status' => 404]);
+        }
+
+        $productImages = ProductImage::where('product_id', $product->id)->get();
+        if ($product->status == 0) {
+            if ($productImages->isEmpty()) {
+                return response()->json(['message' => 'You cannot activate the status of this product. Product images not found; please add at least 1 image.', 'status' => 404]);
+            }
+        }
 
         if ($product->status == '1') {
             $product->status = '0';
@@ -587,6 +594,12 @@ class ProductController extends Controller
 
         $product = Product::where('id', $request->product_id)->first();
 
+        if ($offered_flag == 1) {
+            $offeredCount = Product::where('is_offered', 1)->count();
+            if ($offeredCount >= 2) {
+                return response()->json(['status' => 400, 'message' => 'Already two products marked as offered, cannot add more than 2 products as Offered.']);
+            }
+        }
         $product->is_offered = $offered_flag;
         $product->offered_percentage = $offered_percentage;
         $product->save();

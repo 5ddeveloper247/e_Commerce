@@ -70,15 +70,15 @@ $('textarea').on('keydown', function (e) {
         var isValid = false;
 
         // Alphanumeric validation: letters and numbers
-       // Alphanumeric with special characters and spaces validation
-       if (fieldType === 'alphanumeric') {
-        isValid = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/.test(e.key);
-    }
+        // Alphanumeric with special characters and spaces validation
+        if (fieldType === 'alphanumeric') {
+            isValid = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?\s]*$/.test(e.key);
+        }
 
-    // Alphabet validation: only letters and spaces
-    else if (fieldType === 'alphabet') {
-        isValid = /^[a-zA-Z\s]*$/.test(e.key);
-    }
+        // Alphabet validation: only letters and spaces
+        else if (fieldType === 'alphabet') {
+            isValid = /^[a-zA-Z\s]*$/.test(e.key);
+        }
 
         // Number validation: only numbers
         else if (fieldType === 'number') {
@@ -245,5 +245,7 @@ $(document).on('click', '.filter-toggle', function (e) {
 
 
 
-
+$(document).on('DOMContentLoaded', function () {
+    $('.focusedField').focus();
+})
 

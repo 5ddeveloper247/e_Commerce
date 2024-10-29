@@ -27,7 +27,8 @@
                 </div>
                 @endif
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+                    <input type="email" class="form-control focusedField" id="email" name="email"
+                        placeholder="name@example.com">
                     <label for="email">Email address</label>
                 </div>
                 <div class="form-floating mb-3 position-relative">

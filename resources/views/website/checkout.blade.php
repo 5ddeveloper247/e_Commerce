@@ -70,7 +70,7 @@
                                     <input type="hidden" name="" id="edit_id" name="edit_id">
                                     <div class="mb-3">
                                         <label for="fullName" class="form-label required-asterisk ">Full Name</label>
-                                        <input type="text" class="form-control" fieldType="alphabet" maxlength="15"
+                                        <input type="text" class="form-control " fieldType="alphabet" maxlength="15"
                                             id="fullName" name="fullName" placeholder="Enter full name" required>
                                     </div>
                                     <div class="mb-3">
@@ -141,19 +141,19 @@
                     </div>
                 </div>
                 {{-- add new address --}}
-                <div class="form-check my-3">
+                {{-- <div class="form-check my-3">
                     <input class="form-check-input" type="checkbox" value="" id="billingAddressCheck">
                     <label class="form-check-label" for="billingAddressCheck">
                         My billing address is the same as my shipping address.
                     </label>
-                </div>
+                </div> --}}
 
                 <!-- Shipping Method Section -->
-                <p class="fw-bold">Shipping Method</p>
+                {{-- <p class="fw-bold">Shipping Method</p>
                 <div class="alert alert-warning">
                     Unfortunately one or more items in your cart can't be shipped to your location. Please choose a
                     different delivery address.
-                </div>
+                </div> --}}
             </div>
             <div class="new-shipping-address d-none">
                 <h4>Shipping</h4>
@@ -195,8 +195,10 @@
 
 
             <!-- Payment Section (Placeholder) -->
-            <h5 class="mt-4">Payment</h5>
+
             <div class="collapse" id="collapseExample">
+                <h5 class="mt-4">Payment</h5>
+
                 <form id="payment-form" action="{{ route('payment.make') }}" method="POST">
                     @csrf
                     <label for="card-element" style="color: #FFAA3D">Credit or Debit Card</label>

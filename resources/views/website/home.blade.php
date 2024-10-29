@@ -443,11 +443,10 @@
 
 
     <?php
-$discountedProducts = getDiscountedProducts();
-?>
+        $discountedProducts = getDiscountedProducts();
+    ?>
 
-    @if($discountedProducts && $discountedProducts->count() > 0)
-    <div class="promocards row mt-4">
+    @if($discountedProducts && $discountedProducts->count() > 0) <div class="promocards row mt-4">
         @foreach($discountedProducts as $index => $product)
         @php
         $ratings_2 = $product->ratings->toArray();
@@ -464,11 +463,11 @@ $discountedProducts = getDiscountedProducts();
                                 <p class="text-white">Get up to {{ $product->offered_percentage ?? '' }}% Save</p>
                                 <p class="text-white">Price: ${{ $product->price ?? '' }}</p>
                                 <p> {!! renderStars($avgRating_2) !!} <small>({{$avgRating_2}})</small></p>
-                                <button class="btn btn-shop"><a
-                                        href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}"
-                                        style="text-decoration: none">Buy Now</a> </button>
+                                <button class="btn btn-shop">
+                                    <a href="{{ url('product_detail/' . str_replace(' ', '-', $product->category->category_name) . '/' . $product->sku) }}"
+                                        style="text-decoration: none">Buy Now</a>
+                                </button>
                             </div>
-
                         </div>
                         <div class="col-md-5">
                             <div class="d-flex justify-content-center mt-md-0 mt-4">
@@ -487,7 +486,17 @@ $discountedProducts = getDiscountedProducts();
             @endif
             @endforeach
     </div>
+    @else
+    <div class="no-discounts text-center my-5">
+        <h2 class="text-muted">No Deals Right Now 😔</h2>
+        <p class="text-muted">We’re cooking up some amazing deals just for you! 🔥 Check back soon for exciting
+            discounts
+            and exclusive offers. 🎉</p>
+        <div style="font-size: 3em; color: #28a745;">🛍️✨</div>
+    </div>
     @endif
+
+
 
 
 
@@ -964,28 +973,42 @@ $discountedProducts = getDiscountedProducts();
             <div class="border-under-main-heading"></div>
         </h3>
         <div class="swiper mySwiper8 mt-5">
+            @php
+            $testimonials = testimonials();
+            @endphp
 
-            <div class="swiper-wrapper" id="testimonial-slider-element">
-                @php
-                $testimonials= testimonials();
-                @endphp
+            @if($testimonials && count($testimonials) > 0) <div class="swiper-wrapper" id="testimonial-slider-element">
                 @foreach($testimonials as $testimonial)
                 <div class="swiper-slide p-2">
                     <div
                         class="testimonial d-flex flex-lg-nowrap flex-wrap justify-content-md-start justify-content-center align-items-center">
-                        <img src="{{ url('/').'/'.$testimonial->mediaPath }}" alt="">
+                        <img src="{{ url('/') . '/' . $testimonial->mediaPath }}" alt="Testimonial Image"
+                            class="testimonial-image">
                         <div class="testimonial-content d-flex flex-column flex-lg-nowrap flex-wrap">
-                            <p class="quote">{{ @$testimonial->description }}</p>
-                            <h6>{{ @$testimonial->name }}</h6>
-                            <p>{{ @$testimonial->designation }}</p>
+                            <p class="quote">{{ $testimonial->description ?? 'No description available' }}</p>
+                            <h6>{{ $testimonial->name ?? 'Anonymous' }}</h6>
+                            <p>{{ $testimonial->designation ?? '' }}</p>
                         </div>
                     </div>
                 </div>
                 @endforeach
             </div>
-            <!-- <div class="swiper-pagination"></div> -->
+
+            <!-- Swiper Pagination and Navigation -->
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+            @else
+            <div class="no-testimonials text-center my-5">
+                <h4 class="text-muted">We’re gathering stories from our valued customers. ✨</h4>
+                <p class="text-muted">Be inspired soon by real experiences from people like you! 🌟</p>
+                <div style="font-size: 3em; color: #ffc107;">🗣️❤️</div>
+            </div>
+            @endif
         </div>
     </div>
+
+
     <!-- _______________________Latest Blogs Card Slider_________________________ -->
 </div>
 

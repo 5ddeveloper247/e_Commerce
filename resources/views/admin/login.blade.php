@@ -29,7 +29,8 @@
                     <div class="mt-4">
                         <label for="">EMAIL</label>
                         <br>
-                        <input class="w-100 p-2 mt-1" type="text" name="email" placeholder="Enter your email">
+                        <input class="w-100 p-2 mt-1 focusedField" type="text" name="email"
+                            placeholder="Enter your email">
                     </div>
                     <div class="mt-3 position-relative">
                         <label for="">PASSWORD</label>
@@ -81,5 +82,6 @@
             eyeIcon.setAttribute('d', 'M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z');
         }
     });
+
 </script>
 @endpush

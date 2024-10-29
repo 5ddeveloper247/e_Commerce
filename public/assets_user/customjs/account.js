@@ -346,6 +346,12 @@ $(document).ready(function () {
         city.value = '';
         state.value = '';
         phone.value = '';
+        setTimeout(() => {
+            $('#fullName').focus();
+        }, 2000)
+
+
+
     });
 
     // Use the correct selector for dynamically added elements (class or attribute selector)

@@ -2,7 +2,7 @@
 
 <style>
     .nav-link.active {
-        color: #1153f7 !important;
+        color: #99a1b7 !important;
         /* Example: red color for active link */
         font-weight: bolder;
     }

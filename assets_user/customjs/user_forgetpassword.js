@@ -21,6 +21,7 @@ var verifyFlag = '1';
 // 	$("#country").html(html);
 // }
 $(document).on('click', '#forgetPass_btn', function (e) {
+    console.log(verifyFlag);
     if (verifyFlag == '1') {
         verifyEmail();
     } else if (verifyFlag == '2') {
@@ -105,6 +106,7 @@ function verifyOtpForgetResponse(response) {
 }
 
 function changePass() {
+
     var email = $("#email").val();
     var otp = $("#otp").val();
     var password = $("#password").val();
@@ -124,20 +126,21 @@ function changePassForgetResponse(response) {
     var data = response.data;
 
     if (response.status == 200) {
+
         toastr.success(response.message, '', {
             timeOut: 3000
         });
 
-
+        window.location.href = "/login";
         $("#email, #otp, #password, #password_confirmation").prop('disabled', false).val('');
         $("#email_div").show();
         $("#otp_div, #pass_div").hide();
         verifyFlag = '1';
-      
 
 
 
     } else {
+
         if (response.status == 402) {
             error = response.message;
         } else {

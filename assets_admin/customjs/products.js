@@ -7,6 +7,9 @@ $(document).ready(function () {
         showAddEditForm();
         $(".media-nav-item,.specifications-nav-item,.features-nav-item").addClass('d-none');
         $('input, select, textarea').removeClass('is-invalid');
+        setTimeout(() => {
+            $('#sku').focus();
+        }, 2000)
     });
     $('#backProductBtn').on('click', function () {
         hideAddEditForm();
@@ -174,8 +177,10 @@ $(document).ready(function () {
             $('#product_id').val(response.product_id);
 
             $('.media-nav-item,.specifications-nav-item,.features-nav-item').removeClass('d-none');
-
             populateTotals(response);
+            setTimeout(() => {
+                $('#video_url').focus();
+            }, 2000)
         } else {
 
             if (response.status == 402) {
@@ -266,6 +271,9 @@ $(document).ready(function () {
             // Show the modal for editing
             showAddEditForm();
             $(".media-nav-item,.specifications-nav-item,.features-nav-item").removeClass('d-none');
+            setTimeout(() => {
+                $('#sku').focus();
+            }, 2000)
         }
     }
 
@@ -496,21 +504,23 @@ $(document).ready(function () {
         $('input').removeClass('is-invalid');
 
         $("#addSpecififcation_modal").modal('show');
+        setTimeout(() => {
+            $("#specification").focus();
+        }, 2000);
     });
 
     $(document).on('click', '#addSpecification_btn', function (e) {
 
         var product_id = $("#product_id").val();
-
         let form = document.getElementById('addSpecification_form');
         let data = new FormData(form);
         data.append('product_id', product_id);
         let type = 'POST';
         let url = '/admin/products/saveProductSpecifications';
-        SendAjaxRequestToServer(type, url, data, '', saveProductSpecificationsResponse, '', '#addSpecification_btn');
+        SendAjaxRequestToServer(type, url, data, '', saveProductSpecification, '', '#addSpecification_btn');
     });
 
-    function saveProductSpecificationsResponse(response) {
+    function saveProductSpecification(response) {
         if (response.status == 200) {
             // Success: Display success message and reset form
             toastr.success(response.message, '', {
@@ -520,7 +530,8 @@ $(document).ready(function () {
             let form = $('#addSpecification_form');
             form.trigger("reset");
             $("#specification_id").val('');
-            $(".modal").modal('hide');
+
+            $("#addSpecififcation_modal").modal('hide');
 
             var product_id = $("#product_id").val();
             getSpecificProductDetail(product_id);
@@ -617,6 +628,9 @@ $(document).ready(function () {
         $('input').removeClass('is-invalid');
 
         $("#addFeature_modal").modal('show');
+        setTimeout(() => {
+            $('#feature_title').focus();
+        }, 2000);
     });
 
     $('#feature_file').on('change', function () {
@@ -756,11 +770,28 @@ $(document).ready(function () {
     });
 
     function markProductStatusResponse(response) {
-        toastr.success(response.message, '', {
-            timeOut: 3000
-        });
+        if (response.status == 200) {
+            toastr.success(response.message, '', {
+                timeOut: 5000
+            });
 
+            getProductsOnLoad();
+
+        }
+        else if (response.status == 404) {
+            toastr.error(response.message, '', {
+                timeOut: 5000
+            })
+            getProductsOnLoad();
+        }
+        else {
+            error = "Opps! Something went wrong";
+            toastr.error(error, '', {
+                timeOut: 5000
+            });
+        }
         getProductsOnLoad();
+
     }
 
     $(document).on('click', '.close_modal', function (e) {
@@ -812,12 +843,27 @@ $(document).ready(function () {
 
     function changeProductOfferedStatusResponse(response) {
 
-        toastr.success(response.message, '', {
-            timeOut: 3000
-        });
+        if (response.status == 200) {
+            toastr.success(response.message, '', {
+                timeOut: 3000
+            });
 
-        $('.modal').modal('hide');
-        getProductsOnLoad();
+            $('.modal').modal('hide');
+            getProductsOnLoad();
+
+        }
+        else if (response.status == 400) {
+            toastr.error(response.message, '', {
+                timeOut: 3000
+            });
+        }
+        else {
+            error = "Opps! Something went wrong";
+            toastr.error(error, '', {
+                timeOut: 3000
+            });
+        }
+
     }
 
     $('body').on('click', '#hacndleMarkAsFeaturedBtn', function () {
@@ -943,6 +989,36 @@ $(document).ready(function () {
         } else {
             e.preventDefault();
             return false;
+        }
+    });
+
+
+    $('#sku').on('keydown', function (event) {
+        // Check if the Tab key (key code 9) is pressed
+        if (event.key === 'Tab' || event.keyCode === 9) {
+            event.preventDefault(); // Prevent the default tab behavior
+            $('#product_name').focus(); // Move focus to the next field with ID product_name
+        }
+    });
+    $('#price').on('keydown', function (event) {
+        // Check if the Tab key (key code 9) is pressed
+        if (event.key === 'Tab' || event.keyCode === 9) {
+            event.preventDefault(); // Prevent the default tab behavior
+            $('#discount_price').focus(); // Move focus to the next field with ID product_name
+        }
+    });
+    $('#discount_price').on('keydown', function (event) {
+        // Check if the Tab key (key code 9) is pressed
+        if (event.key === 'Tab' || event.keyCode === 9) {
+            event.preventDefault(); // Prevent the default tab behavior
+            $('#weight').focus(); // Move focus to the next field with ID product_name
+        }
+    });
+    $('#weight').on('keydown', function (event) {
+        // Check if the Tab key (key code 9) is pressed
+        if (event.key === 'Tab' || event.keyCode === 9) {
+            event.preventDefault(); // Prevent the default tab behavior
+            $('#onhand_qty').focus(); // Move focus to the next field with ID product_name
         }
     });
 

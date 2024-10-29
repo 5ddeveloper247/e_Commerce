@@ -13,6 +13,10 @@ $(document).ready(function () {
 
         $(this).find(".nav-link-text").css("color", "#3874ff");
     });
+
+
+
+
 });
 
 //  sidebar collapse logics
@@ -412,3 +416,6 @@ function displayExistedFiles() {
 }
 
 
+$(document).on('DOMContentLoaded', function () {
+    $('.focusedField').focus();
+});

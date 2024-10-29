@@ -17,12 +17,11 @@
                 </figure>
                 <div class="row mt-3">
                     @foreach ( $product->productImages as $image )
-
-                    @endforeach
                     <div class="col-3">
                         <img src="{{ asset('public/' . $image->filepath) }}" class="img-thumbnail thumbnail-img"
                             alt="Thumbnail 1">
                     </div>
+                    @endforeach
                 </div>
             </div>
         </div>

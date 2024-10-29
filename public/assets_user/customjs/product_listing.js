@@ -301,10 +301,17 @@ $(document).ready(function () {
             });
         }
         else {
-            htmlGrid = '<p class="text-center">No product has found...</p>';
-            htmlList = '<p class="text-center">No product has found...</p>';
-            $("#product_grid_element").removeClass('product_grid_element');
-            $("#product_grid_element").removeClass('products');
+            const noProductMessage = `
+                <div class="text-center my-5">
+                    <h2 class="text-muted">Oops! 🎉</h2>
+                    <p class="text-muted">We’re working hard to bring you exciting new products!<br>Check back soon for fresh additions. 🚀</p>
+                    <div style="font-size: 3em; color: #ff8c00;">🛒✨</div>
+                </div>`;
+
+            htmlGrid = noProductMessage;
+            htmlList = noProductMessage;
+
+            $("#product_grid_element").removeClass('product_grid_element products');
         }
 
 

@@ -350,6 +350,10 @@ $(document).ready(function () {
         city.value = '';
         state.value = '';
         phone.value = '';
+        setTimeout(() => {
+            $('#fullName').focus();
+        }, 2000)
+
     });
 
 
@@ -374,7 +378,7 @@ $(document).ready(function () {
 
 
     //handling stripe checkout here
-   
+
     const stripe = Stripe("pk_test_51Px1EkP7RhDtH6R9qfRgqfgTyddOKBibU5EDJCrTIjZuC4WwTderbMhzf4NlRxqyHlpLWuNokH5Ba7TKQCncj7Sm00d5ZG55Lt");
     const elements = stripe.elements();
     const card = elements.create('card');

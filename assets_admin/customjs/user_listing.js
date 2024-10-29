@@ -9,9 +9,9 @@ $(document).ready(function () {
 
     function getUsersListing(response) {
         if (response.status == 200) {
-            const active=response.active;
-            const inactive=response.inactive;
-            const total=response.count;
+            const active = response.active;
+            const inactive = response.inactive;
+            const total = response.count;
             let html = '';
             response.users.forEach(item => {
                 html += `
@@ -73,6 +73,9 @@ $(document).ready(function () {
         $('#user_email').val(item.email);
         $('#user_status').prop('checked', item.status == 1);
         $('#user_id').val(item.id);
+        setTimeout(() => {
+            $('#user_name').focus();
+        }, 2000)
     })
 
     $('body').on('click', '#editUserNow', function () {
@@ -85,6 +88,7 @@ $(document).ready(function () {
             user_password: $('#user_password').val(),
             user_confirm_password: $('#user_confirm_password').val(),
         }
+
         const formData = new FormData();
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
@@ -212,4 +216,44 @@ $(document).ready(function () {
 
     }
 
+
+
+    // Toggle password visibility for user_password
+    document.getElementById('toggleUserPassword').addEventListener('click', function () {
+        const passwordInput = document.getElementById('user_password');
+        const eyeIcon = document.getElementById('eyeIconUser');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.setAttribute('d', 'M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.setAttribute('d', 'M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z');
+        }
+    });
+
+    //Toggle password visibility for user_confirm_password
+    document.getElementById('toggleUserConfirmPassword').addEventListener('click', function () {
+        const confirmPasswordInput = document.getElementById('user_confirm_password');
+        const eyeIconConfirm = document.getElementById('eyeIconUserConfirm');
+        if (confirmPasswordInput.type === 'password') {
+            confirmPasswordInput.type = 'text';
+            eyeIconConfirm.setAttribute('d', 'M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z');
+        } else {
+            confirmPasswordInput.type = 'password';
+            eyeIconConfirm.setAttribute('d', 'M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z');
+        }
+    });
+
+
 })
+
+
+
+
+$('.modal-add-btn').on('click', function () {
+    setTimeout(() => {
+        $('#user_name').focus();
+    }, 2000)
+
+});
