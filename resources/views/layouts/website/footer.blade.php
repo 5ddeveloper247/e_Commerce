@@ -92,7 +92,7 @@ $brands = $siteData['brands'];
                 <h5>Categories</h5>
                 <ul class="list-unstyled">
                     <li><a href="{{url('/products')}}">Shop All</a></li>
-                    @foreach ($categories as $category )
+                    @foreach ($categories->take(7) as $category )
                     @if($category->status==1 || $category->status=="1")
                     <li><a href="{{ url('/products'.'/'. $category->category_name) }}">{{ $category->category_name
                             }}</a></li>
@@ -100,10 +100,10 @@ $brands = $siteData['brands'];
                     @endforeach
                 </ul>
             </div>
-            <div class="col-lg-3 col-md-4 footer-brands">
+            <div class="col-lg-3 col-md-4">
                 <h5>Popular Brands</h5>
                 <ul class="list-unstyled">
-                    @foreach ($brands as $brand )
+                    @foreach ($brands->take(8) as $brand )
                     @if($brand->status==1 || $brand->status=="1")
                     <li><a href="{{ $brand->url?? " #" }}">{{ $brand->title }}</a></li>
                     @endif

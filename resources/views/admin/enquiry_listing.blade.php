@@ -5,7 +5,9 @@
 @endpush
 
 @section('content')
-
+@php
+$users= getSiteUsers();
+@endphp
 <div>
     <div>
         <div class="p-md-4 p-3">
@@ -40,10 +42,21 @@
                                 id="enquiry_fullName" name="enquiry_fullName" placeholder="Enter full name" required>
                         </div>
                         <div class="mb-3">
+                            <label for="email" class="form-label required-asterisk">User</label>
+                            <select name="enquiry_user_to" id="enquiry_user_to" class="form-control">
+                                <option value="">Select User</option>
+                                @foreach($users as $user)
+                                <option value="{{$user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            </select>
+
+                        </div>
+                        <div class="mb-3">
                             <label for="email" class="form-label required-asterisk">Email</label>
-                            <input type="text" fieldType="alphanumeric" maxlength="50" class="  form-control"
+                            <input type="text" fieldType="alphanumeric" maxlength="50" class="form-control"
                                 id="enquiry_email" name="enquiry_email" placeholder="Enter full name" required>
                         </div>
+
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label required-asterisk">Phone Number</label>
                             <input type="number" fieldType="number" maxlength="15" class="  form-control"
@@ -80,7 +93,7 @@
                         </div>
 
                         <div class="d-flex justify-content-end ">
-                            <button type="button" class="btn btn-primary my-5" id="addEnquiryBtn">Add</button>
+                            <button type="button" class="btn btn-primary my-5" id="addEnquiryBtn">Send</button>
                         </div>
                     </form>
                     <div class="row main-messages">
@@ -113,13 +126,15 @@
                                     </div>
 
                                     <!-- New Enquiry Button -->
-                                    {{-- <div class="d-flex align-items-center justify-content-center mt-3">
+                                    <div class="d-flex align-items-center justify-content-center mt-3">
                                         <div class="w-100 text-center border rounded-2 p-3 newEnquiryBtn"
                                             style="cursor: pointer;">
                                             <div class="h1">+</div>
-                                            <div>New Enquiry</div>
+                                            <div>
+                                                <p style="font-size: small">New Enquiry</p>
+                                            </div>
                                         </div>
-                                    </div> --}}
+                                    </div>
 
                                 </div>
                             </div>

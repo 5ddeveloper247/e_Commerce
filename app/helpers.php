@@ -294,4 +294,11 @@ if (!function_exists('getDiscountedProducts')) {
             return $starsHtml;
         }
     }
+    if (!function_exists('getSiteUsers')) {
+        function getSiteUsers()
+        {
+            $users = User::where('role', 2)->where('status', 1)->get();
+            return $users;
+        }
+    }
 }

@@ -301,7 +301,7 @@ class RegisterController extends Controller
                 'required',
                 'string',
                 'email:rfc,dns', // Enforces proper email formatting with valid domain
-                'max:15',
+                'max:50',
                 'regex:/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/', // Validates the presence of '.' and a valid domain after '@'
             ],
             'phoneNumber' => [

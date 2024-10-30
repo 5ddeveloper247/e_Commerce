@@ -510,7 +510,7 @@ class ProductController extends Controller
 
     public function storeProductFeature(Request $request)
     {
-        // Validate the request data using $request->validate
+        // Validate the request data
         $validatedData = $request->validate([
             'product_id' => 'required|exists:products,id',
             'feature_title' => 'required|string|max:255',
@@ -518,26 +518,31 @@ class ProductController extends Controller
             'feature_image' => 'required|image|max:10048',
         ]);
 
-        // Find the product by ID
-        if ($request->feature_id == '') {
-            $feature = new ProductFeature();
-        } else {
-            $feature = ProductFeature::where('id', $request->feature_id)->first();
-        }
+        // Determine whether to create a new feature or update an existing one
+        $feature = $request->feature_id ? ProductFeature::findOrFail($request->feature_id) : new ProductFeature();
+
+        // Assign feature details
         $feature->product_id = $request->product_id;
         $feature->title = $request->feature_title;
         $feature->description = $request->feature_description;
         $feature->save();
 
+        // Handle image file upload
         if ($request->hasFile('feature_image')) {
-            if ($feature->filepath != null) {
-                Storage::disk('public')->delete($feature->filepath);
+            // Delete old image if it exists
+            if ($feature->filepath) {
+                unlink(public_path($feature->filepath));
             }
+
             $folder = 'product_feature_images/' . $request->product_id;
             $file = $request->file('feature_image');
-
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $filePath = $file->storeAs($folder, $fileName, 'public');
+
+            // Move the file to the public directory
+            $file->move(public_path($folder), $fileName);
+
+            // Set the filepath relative to the public directory
+            $filePath = "$folder/$fileName";
 
             $feature->filename = $file->getClientOriginalName();
             $feature->filepath = $filePath;
@@ -545,12 +550,10 @@ class ProductController extends Controller
         }
 
         // Return success response
-        if ($request->feature_id == '') {
-            return response()->json(['status' => 200, 'message' => 'Feature Added Successfully']);
-        } else {
-            return response()->json(['status' => 200, 'message' => 'Feature Updated Successfully']);
-        }
+        $message = $request->feature_id ? 'Feature Updated Successfully' : 'Feature Added Successfully';
+        return response()->json(['status' => 200, 'message' => $message]);
     }
+
     public function deleteProductFeature(Request $request)
     {
         $feature = ProductFeature::where('id', $request->feature_id)->first();

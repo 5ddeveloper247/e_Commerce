@@ -144,6 +144,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/payments/listing', [PaymentController::class, 'paymentsListing'])->name('admin.paymentsListing');
         //enquiries
         Route::post('/inquiries/listing', [AdminEnquiryController::class, 'inquiriesIndex'])->name('admin.inquiriesIndex');
+        Route::post('/inquiries/add', [AdminEnquiryController::class, 'createEnquiries'])->name('admin.inquiriesCreate');
         Route::post('/enquiry/message/create', [AdminEnquiryController::class, 'enquiryMessageCreate'])->name('admin.enquiryMessageCreate');
 
         //dashboard

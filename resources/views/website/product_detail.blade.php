@@ -16,7 +16,7 @@
                         alt="Card image" class="w-100" style="height: 23rem; width: 100%; height: auto;">
                 </figure>
                 <div class="row mt-3">
-                    @foreach ( $product->productImages as $image )
+                    @foreach ($product->productImages->take(4) as $image)
                     <div class="col-3">
                         <img src="{{ asset('public/' . $image->filepath) }}" class="img-thumbnail thumbnail-img"
                             alt="Thumbnail 1">
