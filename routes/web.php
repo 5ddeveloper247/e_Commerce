@@ -79,7 +79,9 @@ Route::group(['prefix' => 'admin'], function () {
 
         /************** AJAX ROUTES ******************/
         Route::get('/listing/ajax', [AdminController::class, 'adminListingAjax'])->name('admin.listing.ajax');
+        Route::post('/listing/data-table', [AdminController::class, 'adminListingDataTable'])->name('admin.listing.dataTable');
         Route::get('/user/listing/ajax', [AdminController::class, 'userListingAjax'])->name('user.listing.ajax');
+        Route::post('/user/listing/data-table', [AdminController::class, 'userListingDataTable'])->name('user.listing.dataTable');
         Route::post('/admin/edit/ajax', [AdminController::class, 'updateAdminAjax'])->name('admin.edit.ajax');
         Route::post('/user/edit/ajax', [AdminController::class, 'updateUserAjax'])->name('user.edit.ajax');
         Route::post('admin/delete/ajax', [AdminController::class, 'deleteAdminAjax'])->name('admin.delete.ajax');
@@ -88,6 +90,7 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/site/settings/get', [AdminController::class, 'getSiteSettingsAjax'])->name('admin.get.site.settings.ajax');
         Route::Post('/settings/file/remove', [AdminController::class, 'settingsFileRemove'])->name('admin.settings.file.remove.ajax');
         Route::get('/category/listing/ajax', [AdminController::class, 'categoryListingAjax'])->name('category.listing.ajax');
+        Route::post('/category/listing/data-table', [AdminController::class, 'categoryListingDataTable'])->name('category.listing.categoryListingDataTable');
         Route::post('/category/edit/ajax', [AdminController::class, 'updateCategoryAjax'])->name('user.category.ajax');
         Route::post('/category/status/ajax', [AdminController::class, 'updateCategoryStatusAjax'])->name('admin.category.status.ajax');
         // Admin Product Start //
@@ -214,6 +217,7 @@ Route::group(['prefix' => '/'], function () {
         Route::post('/enquiry/message/create', [WebsiteController::class, 'enquiryMessageCreate'])->name('order.enquiryMessageCreate');
         Route::post('payment', [PaymentController::class, 'makePayment'])->name('payment.make');
         Route::post('/review/store', [WebsiteController::class, 'reviewStore'])->name('review.store');
+        Route::post('/checkout/validate', [WebsiteController::class, 'checkoutValidate'])->name('checkout.checkoutValidate');
     });
 });
 

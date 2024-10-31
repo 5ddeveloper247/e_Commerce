@@ -5,48 +5,70 @@ $(document).ready(function () {
         fetchInquiriesData();
     }
     function displayInquiriesActive() {
-        var htmlInquiryActive = '';
+        let htmlInquiryActive = '';
+        let hasActiveInquiries = false;
         inquiries[0].forEach(inquiry => {
             if (inquiry.status == '1') {
+                hasActiveInquiries = true;
                 htmlInquiryActive += `
-                 <div class="list-item view-ticket inquiryDetailBtn" data-inquiryid="${inquiry?.id}">
-                                    <input type="checkbox" class="form-check-input me-3">
-                                    <span class="star">★</span>
-                                    <div class="list-item-content">
-                                       ${inquiry?.title}
-                                    </div>
-                                    <div class="timestamp">
-                                    ${formatDate(inquiry?.created_at)}
-                            </div>
-                 </div>
-                `
+                    <div class="list-item view-ticket inquiryDetailBtn" data-inquiryid="${inquiry?.id}">
+                        <input type="checkbox" class="form-check-input me-3">
+                        <span class="star">★</span>
+                        <div class="list-item-content">
+                            ${inquiry?.title}
+                        </div>
+                        <div class="timestamp">
+                            ${formatDate(inquiry?.created_at)}
+                        </div>
+                    </div>
+                `;
             }
-        })
+        });
+
+        if (!hasActiveInquiries) {
+            htmlInquiryActive = `
+                <div class="no-inquiries-message">
+                    No active inquiries at the moment. Check back later!
+                </div>
+            `;
+        }
+
         $('.inquiry-list-container').html(htmlInquiryActive);
     }
 
     function displayInquiriesInActive() {
-        var htmlInquiryInActive = '';
+        let htmlInquiryInActive = '';
+        let hasInActiveInquiries = false;
+
         inquiries[0].forEach(inquiry => {
             if (inquiry.status == '0') {
+                hasInActiveInquiries = true;
                 htmlInquiryInActive += `
-                 <div class="list-item view-ticket inquiryDetailBtn" data-inquiryid="${inquiry?.id}">
-                                    <input type="checkbox" class="form-check-input me-3">
-                                    <span class="star">★</span>
-                                    <div class="list-item-content">
-                                       ${inquiry?.title}
-                                    </div>
-                                    <div class="timestamp">
-                                       ${formatDate(inquiry?.created_at)}
-                            </div>
-                 </div>
-                `
+                    <div class="list-item view-ticket inquiryDetailBtn" data-inquiryid="${inquiry?.id}">
+                        <input type="checkbox" class="form-check-input me-3">
+                        <span class="star">★</span>
+                        <div class="list-item-content">
+                            ${inquiry?.title}
+                        </div>
+                        <div class="timestamp">
+                            ${formatDate(inquiry?.created_at)}
+                        </div>
+                    </div>
+                `;
             }
-        })
+        });
+
+        if (!hasInActiveInquiries) {
+            htmlInquiryInActive = `
+                <div class="no-inquiries-message">
+                    No inactive inquiries to display. All caught up!
+                </div>
+            `;
+        }
 
         $('.inquiry-list-container').html(htmlInquiryInActive);
-
     }
+
 
     var inquiries = [];
     function fetchInquiriesData() {
@@ -399,7 +421,7 @@ $(document).ready(function () {
         addSelectedFiles.forEach((file, index) => {
             formData.append(`files[]`, file); // `files[]` will create an array of files
         });
-        const url = '/inquiries/add';
+        const url = '/admin/inquiries/add';
         const type = 'Post';
         SendAjaxRequestToServer(type, url, formData, '', handleAddEnquiryResponse, '', '#addEnquiryBtn');
     })

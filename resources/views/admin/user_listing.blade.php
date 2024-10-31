@@ -1,7 +1,9 @@
 @extends('layouts.admin.admin_master')
 
 @push('css')
-
+<style>
+    /* Align the DataTable search box to the right */
+</style>
 @endpush
 
 @section('content')
@@ -64,6 +66,7 @@
                     </div>
                 </div>
             </div>
+
             <div id="products">
                 <div class="px-4 py-4 bg-white shadow table-container table-container">
                     <table id="user-listing" class="table table-responsive">
@@ -73,7 +76,7 @@
                                 <th class="text-nowrap" scope="col">NAME</th>
                                 <th scope="col" data-sort="category">EMAIL</th>
                                 <th class="text-center" scope="col">STATUS</th>
-                                <th scope="col">CREATED AT</th>
+                                {{-- <th scope="col">CREATED AT</th> --}}
                                 <th class="text-end" scope="col">ACTIONS</th>
                             </tr>
                         </thead>

@@ -1,4 +1,26 @@
+
+
+
 $(document).ready(function () {
+    var table = $('#admin-listing').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: 'listing/data-table', // replace with your server endpoint
+            type: 'Post'
+        },
+        columns: [
+            { data: 'id' },          // Adjust based on your data structure
+            { data: 'username' },        // Adjust based on your data structure
+            { data: 'email' },      // Adjust based on your data structure
+            { data: 'status' },      // Adjust based on your data structure
+            { data: 'action' }        // Adjust based on your data structure
+        ],
+        dom: '<"top"f>rt<"bottom"lip><"clear">', // Place filter (f) on top and align it with CSS
+        buttons: [
+            'copyHtml5', 'csvHtml5', 'excelHtml5', 'pdfHtml5', 'print'
+        ]
+    });
 
     fetchInitialLoad();
     function fetchInitialLoad() {

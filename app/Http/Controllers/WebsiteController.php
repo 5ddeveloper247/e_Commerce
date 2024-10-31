@@ -385,8 +385,9 @@ class WebsiteController extends Controller
     {
         // Check if the user is authenticated
         if (Auth::check()) {
+            // Get cart and wishlist for authenticated users
             $cart = Cart::where('user_id', auth()->user()->id)->where('status', 0)->first();
-            $wishlist = WishList::where('user_id', auth()->user()->id)->count();
+            $wishlistItems = WishList::where('user_id', auth()->user()->id)->count();
         } else {
             if ($request->has('cart_id') && $request->cart_id !== null) {
                 $cart = Cart::where('id', $request->cart_id)->where('status', 0)->first();
@@ -394,8 +395,8 @@ class WebsiteController extends Controller
                 return response()->json(['status' => 404, 'message' => 'Cart not found']);
             }
 
-            // Set wishlist count to 0 for guest users
-            $wishlist = 0;
+            // Set wishlist items to an empty array for guest users
+            $wishlistItems = [];
         }
 
         // Check if the cart exists
@@ -406,18 +407,19 @@ class WebsiteController extends Controller
                     $query->with(['productImages', 'category']);
                 }])->get();
 
-            // Return cart details and wishlist count
+            // Return cart details and wishlist items
             return response()->json([
                 'status' => 200,
                 'data' => $cartDetails,
                 'cart_id' => $cart->id,
-                'wishlist' => $wishlist,
+                'wishlist' => $wishlistItems, // Include wishlist items instead of just count
             ]);
         }
 
         // If cart doesn't exist, return an error response
-        return response()->json(['status' => 404, 'message' => 'Cart Detail not found']);
+        return response()->json(['status' => 404, 'message' => 'Cart Detail not found', 'wishlist' => $wishlistItems]);
     }
+
 
 
 
@@ -894,6 +896,33 @@ class WebsiteController extends Controller
         return response()->json([
             'status' => 400,
             'message' => 'Oops! Something went wrong, some important data might be missing.',
+        ]);
+    }
+
+
+    public function checkoutValidate(Request $request)
+    {
+        $cart = Cart::where('user_id', auth()->user()->id)->where('status', 0)->first();
+        $cartDetails = CartDetail::where('cart_id', $cart->id)
+            ->with(['product' => function ($query) {
+                $query->with(['productImages', 'category']);
+            }])->get();
+
+        if ($cartDetails) {
+            foreach ($cartDetails as $cartDetail) {
+                if ($cartDetail->product->onhand_qty < $cartDetail->quantity) {
+                    return response()->json([
+                        'message' => 'We apologize for the inconvenience. Unfortunately, there’s not enough stock for the product: ' . $cartDetail->product->product_name . '. 🛒 Available stock: ' . $cartDetail->product->onhand_qty . ' 📦',
+                        'available_qty' => $cartDetail->product->onhand_qty,
+                        'status' => 400,
+                    ]);
+                }
+            }
+        }
+        return response()->json([
+            'cartDetails' => $cartDetails,
+            'message' => 'Checkout process is valid',
+            'status' => 200,
         ]);
     }
 }

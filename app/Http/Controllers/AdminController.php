@@ -190,6 +190,80 @@ class AdminController extends Controller
         ]);
     }
 
+    public function userListingDataTable(Request $request)
+    {
+        $draw = $request->input('draw');
+        $start = $request->input('start', 0);
+        $length = $request->input('length', 10);
+        $searchValue = $request->input('search.value');
+
+        // Build the query with role filter
+        $query = User::query()->where('role', 2);
+
+        // Apply search filter within the role filter scope
+        if ($searchValue) {
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('username', 'like', "%{$searchValue}%")
+                    ->orWhere('first_name', 'like', "%{$searchValue}%")
+                    ->orWhere('email', 'like', "%{$searchValue}%")
+                    ->orWhere('last_name', 'like', "%{$searchValue}%");
+            });
+        }
+
+        $totalRecords = $query->count();
+        $data = $query->offset($start)->limit($length)->get();
+
+        $data = $data->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'username' => $user->username,
+                'email' => $user->email,
+                'status' => '
+                    <td class="text-center">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+                                   id="flexSwitchCheckChecked' . $user->id . '" ' . ($user->status === 1 ? 'checked' : '') . '>
+                        </div>
+                    </td>',
+                'action' => '
+                    <div class="text-end">
+                        <div class="btn-reveal-trigger position-static">
+                            <button class="btn btn-sm dropdown-toggle d-btn-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                     data-prefix="fas" data-icon="ellipsis" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path fill="currentColor"
+                                          d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end d-toggle">
+                                <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
+                                   data-bs-target="#filterModal" data-id="' . $user->id . '" data-username="' . $user->username . '" data-email="' . $user->email . '" data-status="' . $user->status . '" id="handleEditUserBtn">Edit</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+                                   data-bs-target="#confirmationModal" data-id="' . $user->id . '" id="handleRemoveUserBtn">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                '
+            ];
+        });
+
+        return response()->json([
+            "draw" => intval($draw),
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalRecords,
+            "data" => $data
+        ]);
+    }
+
+
+
+
+
+
     public function adminListingAjax(Request $request)
     {
         $adminsListingRecord = User::where('role', 1)->get();
@@ -201,6 +275,84 @@ class AdminController extends Controller
             'status' => 200,
             'active' => $active,
             'inactive' => $inactive
+        ]);
+    }
+
+    public function adminListingDataTable(Request $request)
+    {
+        // Get the requested page, number of entries, and search value
+        $draw = $request->input('draw'); // For DataTables to keep track of requests
+        $start = $request->input('start', 0); // Starting point for pagination
+        $length = $request->input('length', 10); // Number of records per page
+        $searchValue = $request->input('search.value'); // Search value
+
+        // Build the query
+        $query = User::query()
+            ->where(function ($q) {
+                $q->where('role', 0)->orWhere('role', 1);
+            });
+
+        // Apply search filter within the role condition
+        if ($searchValue) {
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('username', 'like', "%{$searchValue}%")
+                    ->orWhere('first_name', 'like', "%{$searchValue}%")
+                    ->orWhere('email', 'like', "%{$searchValue}%")
+                    ->orWhere('last_name', 'like', "%{$searchValue}%");
+            });
+        }
+
+        // Get total records before filtering
+        $totalRecords = $query->count();
+
+        // Apply pagination
+        $data = $query->offset($start)->limit($length)->get();
+
+        // Prepare data with action buttons
+        $data = $data->map(function ($user) {
+            return [
+                'id' => $user->id,
+                'username' => $user->username,
+                'email' => $user->email,
+                'status' => '
+                    <td class="text-center">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+                                   id="flexSwitchCheckChecked' . $user->id . '" ' . ($user->status === 1 ? 'checked' : '') . '>
+                        </div>
+                    </td>',
+                'action' => '
+                    <div class="text-end">
+                        <div class="btn-reveal-trigger position-static">
+                            <button class="btn btn-sm dropdown-toggle d-btn-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                     data-prefix="fas" data-icon="ellipsis" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path fill="currentColor"
+                                          d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end d-toggle">
+                                <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
+                                   data-bs-target="#filterModal" data-id="' . $user->id . '" data-username="' . $user->username . '" data-email="' . $user->email . '" data-status="' . $user->status . '" id="handleEditUserBtn">Edit</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+                                   data-bs-target="#confirmationModal" data-id="' . $user->id . '" id="handleRemoveUserBtn">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                '
+            ];
+        });
+
+        // Prepare the response
+        return response()->json([
+            "draw" => intval($draw), // Echo the draw value for DataTables
+            "recordsTotal" => $totalRecords, // Total records without filtering
+            "recordsFiltered" => $totalRecords, // Total records after filtering
+            "data" => $data // The data to be displayed
         ]);
     }
 
@@ -277,6 +429,7 @@ class AdminController extends Controller
                 $user = User::find($validatedData['id']);
                 if ($user) {
                     $user->username = $validatedData['admin_name'];
+                    $user->first_name = $validatedData['admin_name'];
                     $user->email = $validatedData['admin_email'];
 
                     // Update password only if provided
@@ -296,6 +449,7 @@ class AdminController extends Controller
                 // Create a new admin
                 $user = new User();
                 $user->username = $validatedData['admin_name'];
+                $user->first_name = $validatedData['admin_name'];
                 $user->email = $validatedData['admin_email'];
                 $user->password = Hash::make($validatedData['admin_password']);
                 $user->status = $validatedData['admin_status'];
@@ -386,6 +540,7 @@ class AdminController extends Controller
                 if ($user) {
                     // Update user details
                     $user->username = $validatedData['user_name'];
+                    $user->first_name = $validatedData['user_name'];
                     $user->email = $validatedData['user_email'];
 
                     // Update password only if provided
@@ -406,6 +561,7 @@ class AdminController extends Controller
                 // Create a new user if 'id' is not present
                 $user = new User();
                 $user->username = $validatedData['user_name'];
+                $user->first_name = $validatedData['user_name'];
                 $user->email = $validatedData['user_email'];
                 $user->password = Hash::make($validatedData['user_password']);
                 $user->status = $validatedData['user_status'];
@@ -640,6 +796,74 @@ class AdminController extends Controller
         ]);
     }
 
+    public function categoryListingDataTable(Request $request)
+    {
+        $draw = $request->input('draw');
+        $start = $request->input('start', 0);
+        $length = $request->input('length', 10);
+        $searchValue = $request->input('search.value');
+
+        // Build the query with role filter
+        $query = Category::query();
+
+        // Apply search filter within the role filter scope
+        if ($searchValue) {
+            $query->where(function ($q) use ($searchValue) {
+                $q->where('category_name', 'like', "%{$searchValue}%")
+                    ->orWhere('description', 'like', "%{$searchValue}%");
+            });
+        }
+
+        $totalRecords = $query->count();
+        $data = $query->offset($start)->limit($length)->get();
+
+        $data = $data->map(function ($category) {
+            return [
+                'id' => $category->id,
+                'category_name' => $category->category_name,
+                'description' => $category->description,
+                'status' => '
+                    <td class="text-center">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+                                   id="flexSwitchCheckChecked' . $category->id . '" ' . ($category->status === 1 ? 'checked' : '') . '>
+                        </div>
+                    </td>',
+                'action' => '
+                    <div class="text-end">
+                        <div class="btn-reveal-trigger position-static">
+                            <button class="btn btn-sm dropdown-toggle d-btn-toggle" type="button"
+                                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+                                     data-prefix="fas" data-icon="ellipsis" role="img"
+                                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+                                    <path fill="currentColor"
+                                          d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+                                    </path>
+                                </svg>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-end d-toggle">
+                                <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
+                                   data-bs-target="#filterModal" data-id="' . $category->id . '" data-categoryname="' . $category->category_name . '"  data-status="' . $category->status . '" id="handleEditUserBtn">Edit</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+                                   data-bs-target="#confirmationModal" data-id="' . $category->id . '" id="handleRemoveUserBtn">Remove</a>
+                            </div>
+                        </div>
+                    </div>
+                ',
+                'created_at' => $category->created_at
+            ];
+        });
+
+        return response()->json([
+            "draw" => intval($draw),
+            "recordsTotal" => $totalRecords,
+            "recordsFiltered" => $totalRecords,
+            "data" => $data
+        ]);
+    }
+
 
     public function updateCategoryAjax(Request $request)
     {
@@ -761,16 +985,17 @@ class AdminController extends Controller
             'status' => 200
         ]);
     }
-    public function reviewsStatus(Request $request){
+    public function reviewsStatus(Request $request)
+    {
         $id = $request->id;
         $review = Rating::find($id);
-        if($review){
+        if ($review) {
             $currentStatus = $review->status;
-            $review->status = $currentStatus == 1? 0 : 1;
+            $review->status = $currentStatus == 1 ? 0 : 1;
             $review->save();
-            return response()->json(['message' => 'Status updated successfully','status' => 200]);
-        }else{
-            return response()->json(['message' => 'Review not found','status' => 404]);
+            return response()->json(['message' => 'Status updated successfully', 'status' => 200]);
+        } else {
+            return response()->json(['message' => 'Review not found', 'status' => 404]);
         }
     }
 }

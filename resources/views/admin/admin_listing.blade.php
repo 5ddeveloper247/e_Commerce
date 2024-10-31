@@ -64,14 +64,13 @@
                 </div>
                 <div id="products">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
-                        <table id="admin-listing" class="table table-responsive">
+                        <table id="admin-listing" class="table table-responsive admin_listing">
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
                                     <th class="text-nowrap" scope="col">NAME</th>
                                     <th scope="col" data-sort="category">EMAIL</th>
                                     <th class="text-center" scope="col">STATUS</th>
-                                    <th scope="col">CREATED AT</th>
                                     <th class="text-end" scope="col">ACTIONS</th>
                                 </tr>
                             </thead>

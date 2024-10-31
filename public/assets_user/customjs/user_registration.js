@@ -1,5 +1,8 @@
+
+
+
 function loadRegisterPageData() {
-    
+
     let form = '';
     let data = '';
     let type = 'POST';
@@ -10,7 +13,6 @@ function loadRegisterPageDataResponse(response) {
 
     var data = response.data;
     var countries = data.countries;
-
     var html = '<option value="">Choose a Country</option>';
 	if(countries.length > 0){
 		$.each(countries, function (index, value) {
@@ -19,6 +21,8 @@ function loadRegisterPageDataResponse(response) {
 	}
 	$("#country").html(html);
 }
+
+
 $(document).on('change', '#country', function (e) {
     var country_id = $("#country").val();
         let form = '';
@@ -30,7 +34,7 @@ $(document).on('change', '#country', function (e) {
 });
 
 function getSpecificStatesResponse(response) {
-    
+
     var data = response.data;
     var states = data.states;
     var cities = data.cities;
@@ -42,7 +46,7 @@ function getSpecificStatesResponse(response) {
 		});
 	}
 	$("#state").html(html);
-    
+
     var html1 = '<option value="">Choose a City</option>';
 	if(cities.length > 0){
 		$.each(cities, function (index, value) {
@@ -50,10 +54,10 @@ function getSpecificStatesResponse(response) {
 		});
 	}
     $("#city").html(html1);
-    
+
     $("#state").val('');
     $("#city").val('');
-    
+
 }
 $(document).on('change', '#state', function (e) {
     var country_id = $("#country").val();
@@ -68,7 +72,7 @@ $(document).on('change', '#state', function (e) {
 });
 
 function getSpecificCitiesResponse(response) {
-    
+
     var data = response.data;
     var cities = data.cities;
 
@@ -92,7 +96,7 @@ $(document).on('click', '#signUp_submit', function (e) {
 });
 
 function addUserDataResponse(response) {
-    
+
     if (response.status == 200) {
         toastr.success(response.message, '', {
             timeOut: 3000
@@ -109,7 +113,7 @@ function addUserDataResponse(response) {
         } else {
             error = response.responseJSON.message;
             var is_invalid = response.responseJSON.errors;
-    
+
             $.each(is_invalid, function (key) {
                 // Assuming 'key' corresponds to the form field name
                 var inputField = $('[name="' + key + '"]');

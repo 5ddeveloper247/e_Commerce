@@ -6,7 +6,11 @@ $(document).ready(function () {
         var Url = base_url + "/checkout"; // Store current URL in a variable
         var cartid = localStorage.getItem('cart');
         if (is_auth) {
-            window.location.href = '/checkout';
+            const uri = "/checkout/validate";
+            const type = "Post";
+            const formData = new FormData();
+            SendAjaxRequestToServer(type, uri, formData, '', checkoutValidateResponse, '');
+            // window.location.href = '/checkout';
         }
         else {
             if (!cartid) {
@@ -22,6 +26,27 @@ $(document).ready(function () {
             }
         }
     });
+
+
+    function checkoutValidateResponse(response) {
+        if (response.status == 200) {
+            window.location.href = '/checkout';
+        }
+        else if (response.status == 400) {
+            const message = response.message;
+            toastr.error(message, 'Oops! ⚠️', {
+                timeOut: 10000
+            })
+        }
+        else {
+            const error = "Opps! Something went wrong";
+            toastr.error(error, '', {
+                timeOut: 5000
+            });
+        }
+    }
+
+
     function handleTempSessionResponse(response) {
         if (response.status == 200) {
             window.location.href = '/login';

@@ -5,48 +5,67 @@ $(document).ready(function () {
         fetchInquiriesData();
     }
     function displayInquiriesActive() {
-        var htmlInquiryActive = '';
+        let htmlInquiryActive = '';
         inquiries[0].forEach(inquiry => {
             if (inquiry.status == '1') {
                 htmlInquiryActive += `
-                 <div class="list-item view-ticket inquiryDetailBtn" data-inquiryid="${inquiry?.id}">
-                                    <input type="checkbox" class="form-check-input me-3">
-                                    <span class="star">★</span>
-                                    <div class="list-item-content">
-                                       ${inquiry?.title}
-                                    </div>
-                                    <div class="timestamp">
-                                    ${formatDate(inquiry?.created_at)}
-                            </div>
-                 </div>
-                `
+                    <div class="list-item view-ticket inquiryDetailBtn" data-inquiryid="${inquiry?.id}">
+                        <input type="checkbox" class="form-check-input me-3">
+                        <span class="star">★</span>
+                        <div class="list-item-content">
+                            ${inquiry?.title}
+                        </div>
+                        <div class="timestamp">
+                            ${formatDate(inquiry?.created_at)}
+                        </div>
+                    </div>
+                `;
             }
-        })
+        });
+
+        // Display message if no active inquiries found
+        if (htmlInquiryActive === '') {
+            htmlInquiryActive = `
+                <div class="no-inquiries-message">
+                    No active inquiries at the moment. Check back later!
+                </div>
+            `;
+        }
+
         $('.inquiry-list-container').html(htmlInquiryActive);
     }
 
     function displayInquiriesInActive() {
-        var htmlInquiryInActive = '';
+        let htmlInquiryInActive = '';
         inquiries[0].forEach(inquiry => {
             if (inquiry.status == '0') {
                 htmlInquiryInActive += `
-                 <div class="list-item view-ticket inquiryDetailBtn" data-inquiryid="${inquiry?.id}">
-                                    <input type="checkbox" class="form-check-input me-3">
-                                    <span class="star">★</span>
-                                    <div class="list-item-content">
-                                       ${inquiry?.title}
-                                    </div>
-                                    <div class="timestamp">
-                                       ${formatDate(inquiry?.created_at)}
-                            </div>
-                 </div>
-                `
+                    <div class="list-item view-ticket inquiryDetailBtn" data-inquiryid="${inquiry?.id}">
+                        <input type="checkbox" class="form-check-input me-3">
+                        <span class="star">★</span>
+                        <div class="list-item-content">
+                            ${inquiry?.title}
+                        </div>
+                        <div class="timestamp">
+                            ${formatDate(inquiry?.created_at)}
+                        </div>
+                    </div>
+                `;
             }
-        })
+        });
+
+        // Display message if no inactive inquiries found
+        if (htmlInquiryInActive === '') {
+            htmlInquiryInActive = `
+                <div class="no-inquiries-message">
+                    No inactive inquiries to display. All caught up!
+                </div>
+            `;
+        }
 
         $('.inquiry-list-container').html(htmlInquiryInActive);
-
     }
+
 
     var inquiries = [];
     function fetchInquiriesData() {

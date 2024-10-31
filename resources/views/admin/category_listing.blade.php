@@ -70,9 +70,9 @@
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
                         <table id="category-listing" class="table table-responsive">
                             <thead>
-                                <tr>
+                                <tr> 
                                     <th scope="col">ID</th>
-                                    <th class="text-nowrap" scope="col">NAME</th>
+                                    <th class="text-nowrap" scope="col">Title</th>
                                     <th class="text-nowrap" scope="col">Description</th>
                                     <th class="text-center" scope="col">STATUS</th>
                                     <th scope="col">CREATED AT</th>

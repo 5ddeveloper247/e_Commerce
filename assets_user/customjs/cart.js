@@ -145,16 +145,16 @@ $(document).ready(function () {
 
 
                         cartHtml += `
-    <div class="px-3 pt-5">
-        <div class="d-flex justify-content-center align-items-center">
-            <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
-            <div>
-                <p class="card-text text-muted mb-0">${truncatedProductName}</p>
-                <p class="card-text fw-bold"><small>$</small>${productPrice}</p>
-            </div>
-        </div>
-    </div>
-`;
+                        <div class="px-3 pt-5">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="${imageUrl}" alt="Product Image" class="img-thumbnail me-3" style="width: 60px;">
+                                <div>
+                                    <p class="card-text text-muted mb-0">${truncatedProductName}</p>
+                                    <p class="card-text fw-bold"><small>$</small>${productPrice}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                     } else {
                         cartHtml += `
                             <div class="px-3 pt-3">
@@ -171,6 +171,8 @@ $(document).ready(function () {
             }
             else {
                 // No items in the cart
+                let wishlist = 0;
+                wishlist = response.wishlist;
                 cartHtml = `
                     <div class="px-3 pt-3">
                         <small>No items in the cart. Please add some items to your cart.</small>
@@ -178,6 +180,7 @@ $(document).ready(function () {
                 `;
                 $('#totalAmount').text('Total: $' + totalAmount);  // Display total amount with 2 decimal places for better UX
                 $('#totalQuantity').text(0);
+                $('#wishListHeader').text(wishlist);
             }
 
             // Inject the generated HTML into the cart menu element
@@ -186,14 +189,15 @@ $(document).ready(function () {
 
         }
         else {
+            let wishlist = 0;
+            wishlist = response.wishlist;
             // Handle case when response status is not 200
             $('#cart_menu_item').html('<p class="text-center">No items in the cart</p>');
-
             // Ensure totalAmount is a number and format it to 2 decimal places
             let totalAmountFormatted = parseFloat(0);
-
             $('#totalAmount').text('Total: $' + totalAmountFormatted);  // Display total amount correctly
             $('#totalQuantity').text(0);  // Reset quantity to 0
+            $('#wishListHeader').text(wishlist);
         }
 
     }
@@ -236,10 +240,9 @@ $(document).ready(function () {
             toastr.error('An error occurred. Please try again later', '', {
                 timeOut: 3000
             });
+            cartView();
         }
     }
-
-
 
 
 

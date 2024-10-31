@@ -71,7 +71,17 @@ $siteLogo=@$siteData['settings']->logo;
         cursor: pointer;
     }
 </style>
+@php
+// Call the siteCommonData helper and extract the data
+$siteData = siteCommonData();
+// Extract specific variables from the returned data array
+$settings = $siteData['settings'];
+$products = $siteData['products'];
+$categories = $siteData['categories'];
+$brands = $siteData['brands'];
+// dd()
 
+@endphp
 <div class="d-none">
     <nav class="navbar navbar-expand-lg header-top pb-0">
         <div class="container">
@@ -561,8 +571,8 @@ $siteLogo=@$siteData['settings']->logo;
         <div class="container">
             <ul class="mb-2 mb-lg-0 bottom-header-ul d-flex flex-wrap align-items-center">
                 <li class="nav-item pe-2 all-categories-ul">
-                    <a id="allCategoriesBtn" class="nav-link pe-3 py-2 d-flex align-items-center" type="button" data-bs-toggle="offcanvas"
-                        data-bs-target="#offcanvasMenuu" aria-controls="offcanvasMenuu">
+                    <a id="allCategoriesBtn" class="nav-link pe-3 py-2 d-flex align-items-center" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenuu" aria-controls="offcanvasMenuu">
                         <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24">
                             <path fill="currentColor" d="M3 18v-2h18v2zm0-5v-2h18v2zm0-5V6h18v2z" />
                         </svg>
@@ -578,22 +588,28 @@ $siteLogo=@$siteData['settings']->logo;
                 <li class="nav-item px-2 position-relative more-dropdown">
                     <a class="nav-link px-3 py-2 d-flex align-items-center" href="#" data-tab="more">
                         More
-                        <svg class="ms-2 drop-down" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 1024 1024">
-                            <path fill="currentColor" d="M831.872 340.864L512 652.672L192.128 340.864a30.59 30.59 0 0 0-42.752 0a29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728a30.59 30.59 0 0 0-42.752 0z" />
+                        <svg class="ms-2 drop-down" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                            viewBox="0 0 1024 1024">
+                            <path fill="currentColor"
+                                d="M831.872 340.864L512 652.672L192.128 340.864a30.59 30.59 0 0 0-42.752 0a29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728a30.59 30.59 0 0 0-42.752 0z" />
                         </svg>
                     </a>
                     <div class="position-absolute rounded-3 ps-3 pe-5 py-3">
                         <div class="navPages-item-page">
-                            <a class="link-action" href="{{ url('shipping-returns') }}" data-tab="shipping">Shipping &amp; Returns</a>
+                            <a class="link-action" href="{{ url('shipping-returns') }}" data-tab="shipping">Shipping
+                                &amp; Returns</a>
                         </div>
                         <div class="navPages-item-page">
-                            <a class="link-action" href="{{ url('delivery-information') }}" data-tab="delivery">Delivery Information</a>
+                            <a class="link-action" href="{{ url('delivery-information') }}" data-tab="delivery">Delivery
+                                Information</a>
                         </div>
                         <div class="navPages-item-page">
-                            <a class="link-action" href="{{ url('terms-conditions') }}" data-tab="terms">Terms &amp; Conditions</a>
+                            <a class="link-action" href="{{ url('terms-conditions') }}" data-tab="terms">Terms &amp;
+                                Conditions</a>
                         </div>
                         <div class="navPages-item-page">
-                            <a class="link-action" href="{{ url('privacy-policy') }}" data-tab="privacy">Privacy Policy</a>
+                            <a class="link-action" href="{{ url('privacy-policy') }}" data-tab="privacy">Privacy
+                                Policy</a>
                         </div>
                     </div>
                 </li>
@@ -841,6 +857,15 @@ $siteLogo=@$siteData['settings']->logo;
                     </svg>
                 </a>
             </li>
+            @foreach ($categories as $category)
+            <li class="px-md-3 px-2 py-1">
+                <a class="dropdown-item d-flex align-items-center justify-content-between py-2 border-bottom"
+                    href="{{url('/products').'/'.$category->category_name}}">
+                    {{ $category->category_name }}
+                </a>
+            </li>
+            @endforeach
+
         </ul>
     </div>
 </div>

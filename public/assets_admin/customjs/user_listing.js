@@ -1,4 +1,26 @@
 $(document).ready(function () {
+    // Initialize DataTable and store the instance in a variable
+    var table = $('#user-listing').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: 'listing/data-table', // replace with your server endpoint
+            type: 'Post'
+        },
+        columns: [
+            { data: 'id' },          // Adjust based on your data structure
+            { data: 'username' },        // Adjust based on your data structure
+            { data: 'email' },      // Adjust based on your data structure
+            { data: 'status' },      // Adjust based on your data structure
+            { data: 'action' }        // Adjust based on your data structure
+        ],
+        dom: '<"top"f>rt<"bottom"lip><"clear">', // Place filter (f) on top and align it with CSS
+        buttons: [
+            'copyHtml5', 'csvHtml5', 'excelHtml5', 'pdfHtml5', 'print'
+        ]
+    });
+
+
     fetchInitalListing();
     function fetchInitalListing() {
         const url = "/admin/user/listing/ajax";
@@ -12,67 +34,71 @@ $(document).ready(function () {
             const active = response.active;
             const inactive = response.inactive;
             const total = response.count;
-            let html = '';
-            response.users.forEach(item => {
-                html += `
-                    <tr>
-                        <td class="ps-3">${item.id}</td>
-                        <td class="ps-3">${item.username}</td>
-                        <td class="ps-3">${item.email}</td>
-                        <td class="text-center">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
-                                       id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
-                            </div>
-                        </td>
-                        <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
-                        <td class="text-end">
-                            <div class="btn-reveal-trigger position-static">
-                                <button class="btn btn-sm dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
-                                         data-prefix="fas" data-icon="ellipsis" role="img"
-                                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
-                                        <path fill="currentColor"
-                                              d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
-                                        </path>
-                                    </svg>
-                                </button>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#filterModal" data-edit-user='${JSON.stringify(item)}' id="handleEditUserBtn">Edit</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
-                                       data-bs-target="#confirmationModal"  data-remove-user='${JSON.stringify(item)}' id="handleRemoveUserBtn">Remove</a>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            });
+            table.ajax.reload();
+            // let html = '';
+            // response.users.forEach(item => {
+            //     html += `
+            //         <tr>
+            //             <td class="ps-3">${item.id}</td>
+            //             <td class="ps-3">${item.username}</td>
+            //             <td class="ps-3">${item.email}</td>
+            //             <td class="text-center">
+            //                 <div class="form-check form-switch">
+            //                     <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
+            //                            id="flexSwitchCheckChecked${item.id}" ${item.status === 1 ? 'checked' : ''}>
+            //                 </div>
+            //             </td>
+            //             <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+            //             <td class="text-end">
+            //                 <div class="btn-reveal-trigger position-static">
+            //                     <button class="btn btn-sm dropdown-toggle" type="button"
+            //                             data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            //                         <svg class="svg-inline--fa fa-ellipsis" aria-hidden="true" focusable="false"
+            //                              data-prefix="fas" data-icon="ellipsis" role="img"
+            //                              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+            //                             <path fill="currentColor"
+            //                                   d="M8 256a56 56 0 1 1 112 0A56 56 0 1 1 8 256zm160 0a56 56 0 1 1 112 0 56 56 0 1 1 -112 0zm216-56a56 56 0 1 1 0 112 56 56 0 1 1 0-112z">
+            //                             </path>
+            //                         </svg>
+            //                     </button>
+            //                     <div class="dropdown-menu dropdown-menu-end">
+            //                         <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
+            //                            data-bs-target="#filterModal" data-edit-user='${id}}' id="handleEditUserBtn">Edit</a>
+            //                         <div class="dropdown-divider"></div>
+            //                         <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
+            //                            data-bs-target="#confirmationModal"  data-remove-user='${id}' id="handleRemoveUserBtn">Remove</a>
+            //                     </div>
+            //                 </div>
+            //             </td>
+            //         </tr>
+            //     `;
+            // });
+            
             $('#active').text(active)
             $('#inactive').text(inactive)
             $('#total').text(total)
-            $('#user_listing_table_body').html(html);
+            //$('#user_listing_table_body').html(html);
         }
-
     }
 
 
 
     $('body').on('click', '#handleEditUserBtn', function () {
-        const item = JSON.parse($(this).attr('data-edit-user'));
+
+        const id = $(this).data('id');
+        const username = $(this).data('username');
+        const email = $(this).data('email');
+        const status = $(this).data('status')
         const form = document.getElementById('addEventForm');
         $('.p-label').removeClass('required-asterisk');
         $('.p-confirm-label').removeClass('required-asterisk');
         $(form).find('.is-invalid').removeClass('is-invalid');
         // Reset the form fields
         form.reset();
-
-        $('#user_name').val(item.username);
-        $('#user_email').val(item.email);
-        $('#user_status').prop('checked', item.status == 1);
-        $('#user_id').val(item.id);
+        $('#user_name').val(username);
+        $('#user_email').val(email);
+        $('#user_status').prop('checked', status == 1);
+        $('#user_id').val(id);
         setTimeout(() => {
             $('#user_name').focus();
         }, 2000)
@@ -115,6 +141,7 @@ $(document).ready(function () {
             $('#addEventForm').trigger("reset");
             $("#filterModal").modal('hide');
             fetchInitalListing();
+            table.ajax.reload();
 
         } else {
             // Error Handling
@@ -146,8 +173,8 @@ $(document).ready(function () {
 
 
     $('body').on('click', '#handleRemoveUserBtn', function () {
-        const item = JSON.parse($(this).attr('data-remove-user'));
-        $("#delete-user-id").val(item.id);
+        const id = $(this).data('id');
+        $("#delete-user-id").val(id);
     });
 
     $('body').on('click', '#deleteNowBtn', function () {
@@ -257,3 +284,4 @@ $('.modal-add-btn').on('click', function () {
     }, 2000)
 
 });
+

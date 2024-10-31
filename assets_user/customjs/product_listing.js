@@ -327,15 +327,6 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
-
-
     getFilterData()
     function getFilterData() {
         // Get filter data from the form
@@ -491,7 +482,6 @@ $(document).ready(function () {
         if (percentage < 1 || percentage > 100) {
             return 'Percentage must be between 1 and 100, mate!';
         }
-
         let discount = (price * percentage) / 100;
         let discountedPrice = price - discount;
         return discountedPrice.toFixed(2); // To keep it neat with 2 decimal places
