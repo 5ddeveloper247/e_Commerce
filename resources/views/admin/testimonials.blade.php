@@ -67,6 +67,9 @@
                 <div id="products">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
                         <table id="testimonials-listing" class="table table-responsive">
+                            <div class="top text-end">
+                                <div><label for="dt-search-0">Search:</label><input id="testimonial-search-input" type="search"
+                                        class="rounded-5 py-1 px-2" aria-controls="testimonials-listing"></div>
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>

@@ -1450,7 +1450,7 @@ div.dt-container .dt-search input {
     position: relative !important;
     display: inline-block !important;
     margin-right: 20px !important;
-    width: 80px !important;
+    /* width: 80px !important; */
     text-align: center !important;
     vertical-align: top !important;
 }

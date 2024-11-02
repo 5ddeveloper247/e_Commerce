@@ -2,7 +2,29 @@
 
 
 $(document).ready(function () {
+    var table = $('#order-listing').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": true,
+    });
 
+    $('#payment-search-input').on("keyup", function (e) {
+        var tr = $('.data-row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.data-col').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
 
     initialLoad();
     function initialLoad() {
@@ -38,11 +60,11 @@ $(document).ready(function () {
 
                         // Append each payment row to the HTML string
                         html += `
-                            <tr>
-                                <td class="ps-3">${index + 1}</td> <!-- Display row number -->
-                                <td class="ps-3">${username}</td> <!-- Safely display username -->
-                                <td class="ps-3">${email}</td> <!-- Safely display email -->
-                                <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely display created_at -->
+                            <tr class="data-row">
+                                <td class="ps-3 data-col">${index + 1}</td> <!-- Display row number -->
+                                <td class="ps-3 data-col">${username}</td> <!-- Safely display username -->
+                                <td class="ps-3 data-col">${email}</td> <!-- Safely display email -->
+                                <td class="ps-3 data-col text-nowrap">${createdAt}</td> <!-- Safely display created_at -->
                                 <td class="text-end">
                                     <div class="btn-reveal-trigger position-static">
                                         <button class="btn btn-sm dropdown-toggle" type="button"

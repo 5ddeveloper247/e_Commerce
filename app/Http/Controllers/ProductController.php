@@ -635,4 +635,66 @@ class ProductController extends Controller
             return response()->json(['status' => 200, 'message' => 'Product Removed From Featured Successfully.']);
         }
     }
+
+    public function filterProducts(Request $request)
+    {
+        $name = $request->product_name_filter;
+        $status = $request->product_status_filter;
+        $brand_id = $request->product_brand_filter;
+        $category_id = $request->product_category_filter;
+        $min_price = $request->min_price;
+        $max_price = $request->max_price;
+        $sort_by = $request->sort_by;
+
+        $query = Product::query();
+
+        // Filter by product name
+        if (isset($name)) {
+            $query->where('product_name', 'like', '%' . $name . '%');
+        }
+
+        // Filter by product status
+        if (isset($status)) {
+            $query->where('status', $status);
+        }
+
+        // Filter by category using the relationship
+        if (isset($category_id)) {
+            $query->whereHas('category', function ($q) use ($category_id) {
+                $q->where('id', $category_id);
+            });
+        }
+
+        // Filter by brand using the relationship
+        if (isset($brand_id)) {
+            $query->whereHas('brand', function ($q) use ($brand_id) {
+                $q->where('id', $brand_id);
+            });
+        }
+
+        // Filter by price range
+        if (isset($min_price) && isset($max_price)) {
+            $query->whereBetween('price', [$min_price, $max_price]);
+        } elseif (isset($min_price)) {
+            $query->where('price', '>=', $min_price);
+        } elseif (isset($max_price)) {
+            $query->where('price', '<=', $max_price);
+        }
+
+        // Sorting logic
+        if (isset($sort_by)) {
+            if ($sort_by == 'price_asc') {
+                $query->orderBy('price', 'asc');
+            } elseif ($sort_by == 'price_desc') {
+                $query->orderBy('price', 'desc');
+            } elseif ($sort_by == 'newest') {
+                $query->orderBy('created_at', 'desc');
+            }
+        }
+
+        // Execute the query and return the results
+        $products = $query->get();
+
+        return response()->json(['products' => $products, 'status' => 200]);
+    }
 }

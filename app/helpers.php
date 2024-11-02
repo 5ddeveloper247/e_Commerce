@@ -301,4 +301,16 @@ if (!function_exists('getDiscountedProducts')) {
             return $users;
         }
     }
+
+    if (!function_exists('productRelatedData')) {
+        function productRelatedData()
+        {
+            $data = [];
+            $data['categories'] = Category::where('status', 1)->get();
+            $data['brands'] = Brand::where('status', 1)->get();
+            $data['products'] = Product::all()->where('status', 1)->pluck('product_name');
+            $data['users'] = User::where('role', 2)->where('status', 1)->get();
+            return $data;
+        }
+    }
 }

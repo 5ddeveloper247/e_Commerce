@@ -185,7 +185,7 @@ $(document).ready(function () {
                             ${Messagehtml}
                         </div>
                         <hr>
-                        <h5 class="my-2 required-asterisk">Reply</h5>
+                        <h5 class="my-2 required-asterisk">Message</h5>
                         <div class="form_blk">
                             <textarea name="" id="inquiryTextBox" fieldType="alphanumeric" maxlength="255" class="text_box p-3 rounded"
                                 placeholder="eg: Details about your dealership brand & service"></textarea>
@@ -275,9 +275,10 @@ $(document).ready(function () {
             const reader = new FileReader();
             reader.onload = function (e) {
                 var image_html = `
-                    <div class="image-item-land file_section" style="width: 80px; height: 80px; margin: 20px;">
+                    <div class="image-item-land file_section" style="height: 80px; margin: 20px;">
                         <img src="${e.target.result}" style="height: 100%; width: auto;">
-                        <span class="cancel-icon text-danger removeAttachment" data-id="${index}" style="cursor: pointer;">×</span>
+
+                        <span class="cancel-icon remove_file_section removeAttachment" data-id="${index}" style="cursor: pointer;">x</span>
                     </div>`;
                 imageContainerselected.append(image_html);
             }
@@ -332,10 +333,11 @@ $(document).ready(function () {
             const reader = new FileReader();
             reader.onload = function (e) {
                 var image_html = `
-                    <div class="image-item-land file_section" style="width: 80px; height: 80px; margin: 20px;">
-                        <img src="${e.target.result}" style="height: 100%; width: auto;">
-                        <span class="cancel-icon text-danger removeAddAttachment" data-id="${index}" style="cursor: pointer;">×</span>
-                    </div>`;
+                <div class="image-item-land file_section" style="height: 80px; margin: 10px; position: relative; display: inline-block;">
+                    <img src="${e.target.result}" style="height: 100%; width: auto; display: block;">
+                    <span class="cancel-icon remove_file_section removeAddAttachment" data-id="${index}">x</span>
+                </div>`;
+
                 imageContainerselected.append(image_html);
             }
             reader.readAsDataURL(file);

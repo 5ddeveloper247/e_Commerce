@@ -56,19 +56,23 @@
                 </div>
                 <div id="products">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
-                        <table id="order-listing" class="table table-responsive">
-                            <thead>
-                                <tr>
-                                    <th scope="col">ID</th>
-                                    <th class="text-nowrap" scope="col">NAME</th>
-                                    <th scope="col" data-sort="category">EMAIL</th>
-                                    <th scope="col">CREATED AT</th>
-                                    <th class="text-end" scope="col">ACTIONS</th>
-                                </tr>
-                            </thead>
-                            <tbody id="order_listing_table_body">
-                                {{-- dYNAMIC DATA WILL BE INJECTED HERE --}}
-                            </tbody>
+                        <table id="refund-listing" class="table table-responsive">
+                            <div class="top text-end">
+                                <div><label for="dt-search-0">Search:</label><input id="refund-search-input"
+                                        type="search" class="rounded-5 py-1 px-2" aria-controls="testimonials-listing">
+                                </div>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th class="text-nowrap" scope="col">NAME</th>
+                                        <th scope="col" data-sort="category">EMAIL</th>
+                                        <th scope="col">CREATED AT</th>
+                                        <th class="text-end" scope="col">ACTIONS</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="order_listing_table_body">
+                                    {{-- dYNAMIC DATA WILL BE INJECTED HERE --}}
+                                </tbody>
                         </table>
                     </div>
                 </div>
@@ -89,9 +93,9 @@
         </div>
 
         <div class="md-stepper-horizontal orange mt-5">
-           <div class="row" id="statusContainer">
+            <div class="row" id="statusContainer">
 
-           </div>
+            </div>
         </div>
         <div class="row justify-content-end gx-0 gy-2 gap-4 mb-4" id="statusHandler">
 

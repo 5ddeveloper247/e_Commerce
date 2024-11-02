@@ -844,10 +844,9 @@ class AdminController extends Controller
                             </button>
                             <div class="dropdown-menu dropdown-menu-end d-toggle">
                                 <a class="dropdown-item modal-edit-btn" type="button" data-bs-toggle="modal"
-                                   data-bs-target="#filterModal" data-id="' . $category->id . '" data-categoryname="' . $category->category_name . '"  data-status="' . $category->status . '" id="handleEditUserBtn">Edit</a>
+                                   data-bs-target="#filterModal" data-id="' . $category->id . '" data-categoryname="' . $category->category_name . '"  data-status="' . $category->status . '"  data-description="' . $category->description . '" id="handleEditCategoryBtn">Edit</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item text-danger" type="button" data-bs-toggle="modal"
-                                   data-bs-target="#confirmationModal" data-id="' . $category->id . '" id="handleRemoveUserBtn">Remove</a>
+
                             </div>
                         </div>
                     </div>

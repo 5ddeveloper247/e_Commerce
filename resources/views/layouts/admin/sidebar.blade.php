@@ -1,6 +1,6 @@
 <style>
     .nav-link.active {
-        background-color: #97a0ab;
+        background-color: rgb(202, 206, 218);
         /* or any color */
         color: #fff;
     }
@@ -9,8 +9,6 @@
 <div class="sidebar border-end d-lg-block d-none">
     <div>
         <ul class="nav flex-column">
-
-
             <div class="dashboard">
                 <li class="nav-item ">
                     <a href="{{url('admin/dashboard')}}"
@@ -104,7 +102,7 @@
                     class="nav-link main-links-for-submenu {{ request()->routeIs('admin.site.settings') ? 'active' : '' }}"
                     role="button" onclick="handleNavClick(this)">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
-                        <span class="dropdown-indicator-icon-wrapper">
+                        {{-- <span class="dropdown-indicator-icon-wrapper">
                             <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
                                 focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
                                 xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
@@ -112,7 +110,7 @@
                                     d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z">
                                 </path>
                             </svg>
-                        </span>
+                        </span> --}}
                         <div class="nav-link-icon px-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                 <path fill="currentColor"
@@ -255,9 +253,9 @@
                     role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20">
                                 <path fill="currentColor"
-                                    d="M3 3a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zm3 4h6v6H6zm2 2v2h2V9zm10 0h-4V7h4zm-4 4v-2h4v2zm-8 4v-2h12v2z" />
+                                    d="M4 3h12c.55 0 1.02.2 1.41.59S18 4.45 18 5v7c0 .55-.2 1.02-.59 1.41S16.55 14 16 14h-1l-5 5v-5H4c-.55 0-1.02-.2-1.41-.59S2 12.55 2 12V5c0-.55.2-1.02.59-1.41S3.45 3 4 3m11 2H4v1h11zm1 3H4v1h12zm-3 3H4v1h9z" />
                             </svg>
                         </div>
                         <span class="nav-link-text">Testimonials</span>
@@ -311,14 +309,9 @@
                     role="button">
                     <div class="sidebar-links-bg rounded-2 d-flex align-items-center py-1 px-3">
                         <div class="nav-link-icon px-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 36 36">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
                                 <path fill="currentColor"
-                                    d="M8 19v-8H5a3 3 0 0 0-3 3v18a1 1 0 0 0 .56.89a1 1 0 0 0 1-.1L8.71 29h13.44A2.77 2.77 0 0 0 25 26.13V25H14a6 6 0 0 1-6-6"
-                                    class="clr-i-solid clr-i-solid-path-1" />
-                                <path fill="currentColor"
-                                    d="M31 4H14a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h13.55l4.78 3.71a1 1 0 0 0 1 .11a1 1 0 0 0 .57-.9V7A3 3 0 0 0 31 4"
-                                    class="clr-i-solid clr-i-solid-path-2" />
-                                <path fill="none" d="M0 0h36v36H0z" />
+                                    d="M2 22V4q0-.825.588-1.412T4 2h16q.825 0 1.413.588T22 4v12q0 .825-.587 1.413T20 18H6zm7.075-7.75L12 12.475l2.925 1.775l-.775-3.325l2.6-2.25l-3.425-.275L12 5.25L10.675 8.4l-3.425.275l2.6 2.25z" />
                             </svg>
                         </div>
                         <span class="nav-link-text">Reviews & Ratings</span>

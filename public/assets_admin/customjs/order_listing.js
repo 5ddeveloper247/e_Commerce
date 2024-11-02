@@ -2,7 +2,29 @@
 
 
 $(document).ready(function () {
+    var table = $('#order-listing').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": true,
+    });
 
+    $('#order-search-input').on("keyup", function (e) {
+        var tr = $('.data-row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.data-col').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
 
     initialLoad();
     function initialLoad() {
@@ -27,11 +49,11 @@ $(document).ready(function () {
 
                     response.orders.forEach((order, index) => {
                         html += `
-                        <tr>
-                            <td class="ps-3">${index + 1}</td> <!-- Index starts from 1 -->
-                            <td class="ps-3">${order?.user?.username || 'N/A'}</td>
-                            <td class="ps-3">${order?.user?.email || 'N/A'}</td>
-                            <td class="ps-3 text-nowrap">
+                        <tr class="data-row">
+                            <td class="ps-3 data-col">${index + 1}</td> <!-- Index starts from 1 -->
+                            <td class="ps-3 data-col">${order?.user?.username || 'N/A'}</td>
+                            <td class="ps-3 data-col">${order?.user?.email || 'N/A'}</td>
+                            <td class="ps-3 data-col text-nowrap">
                                 ${order?.created_at ?
                                 new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
                                 new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })

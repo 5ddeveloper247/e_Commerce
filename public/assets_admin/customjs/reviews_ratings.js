@@ -1,4 +1,27 @@
 $(document).ready(function () {
+    var table = $('#reviews-listing').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": true,
+    });
+
+    $('#review-search-input').on("keyup", function (e) {
+        var tr = $('.data-row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.data-col').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
 
 
     fetchInitalContactListing();
@@ -38,18 +61,18 @@ $(document).ready(function () {
                             ).join('');
 
                             html += `
-                                <tr>
-                                    <td class="ps-3">${index + 1}</td> <!-- Display row number -->
-                                    <td class="ps-3">${fullName}</td> <!-- Display full name safely -->
-                                    <td class="ps-3">${stars}</td> <!-- Display star icons based on rating -->
-                                    <td class="ps-3">${review}</td> <!-- Display review safely -->
-                                    <td class="text-center">
+                                <tr class="data-row">
+                                    <td class="ps-3 data-col">${index + 1}</td> <!-- Display row number -->
+                                    <td class="ps-3 data-col">${fullName}</td> <!-- Display full name safely -->
+                                    <td class="ps-3 data-col">${stars}</td> <!-- Display star icons based on rating -->
+                                    <td class="ps-3 data-col">${review}</td> <!-- Display review safely -->
+                                    <td class="text-center data-col">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
                                                    id="flexSwitchCheckChecked${item?.id}" ${statusChecked}>
                                         </div>
                                     </td>
-                                    <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely handled created_at -->
+                                    <td class="ps-3 text-nowrap data-col">${createdAt}</td> <!-- Safely handled created_at -->
                                 </tr>
                             `;
                         });

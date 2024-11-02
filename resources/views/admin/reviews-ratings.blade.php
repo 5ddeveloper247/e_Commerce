@@ -56,7 +56,10 @@
                 </div>
                 <div id="contact">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
-                        <table id="contact-listing" class="table table-responsive">
+                        <table id="reviews-listing" class="table table-responsive">
+                            <div class="top text-end">
+                                <div><label for="dt-search-0">Search:</label><input id="review-search-input" type="search"
+                                        class="rounded-5 py-1 px-2" aria-controls="reviews-listing"></div>
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>

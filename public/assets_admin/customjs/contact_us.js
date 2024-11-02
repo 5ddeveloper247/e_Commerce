@@ -1,6 +1,31 @@
 $(document).ready(function () {
 
 
+    var table = $('#contact-listing').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": true,
+    });
+
+    $('#contact-search-input').on("keyup", function (e) {
+        var tr = $('.data_row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.data-col').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
+
+
     fetchInitalContactListing();
     function fetchInitalContactListing() {
         const url = "/admin/contact/ajax";
@@ -32,18 +57,18 @@ $(document).ready(function () {
                                 : 'N/A';
 
                             html += `
-                                <tr>
-                                    <td class="ps-3">${index + 1}</td> <!-- Display row number -->
-                                    <td class="ps-3">${fullName}</td> <!-- Display full name safely -->
-                                    <td class="ps-3">${phoneNumber}</td> <!-- Display phone number safely -->
-                                    <td class="ps-3">${emailAddress}</td> <!-- Display email address safely -->
+                                <tr class="data_row">
+                                    <td class="ps-3 data-col">${index + 1}</td> <!-- Display row number -->
+                                    <td class="ps-3 data-col">${fullName}</td> <!-- Display full name safely -->
+                                    <td class="ps-3 data-col">${phoneNumber}</td> <!-- Display phone number safely -->
+                                    <td class="ps-3 data-col">${emailAddress}</td> <!-- Display email address safely -->
                                     <td class="text-center">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
                                                    id="flexSwitchCheckChecked${item?.id}" ${statusChecked}>
                                         </div>
                                     </td>
-                                    <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely handled created_at -->
+                                    <td class="ps-3 text-nowrap data-col">${createdAt}</td> <!-- Safely handled created_at -->
                                     <td class="text-end">
                                         <div class="btn-reveal-trigger position-static">
                                             <button class="btn btn-sm dropdown-toggle" type="button"

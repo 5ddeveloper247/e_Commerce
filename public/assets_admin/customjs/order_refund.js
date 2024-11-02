@@ -2,6 +2,29 @@
 
 
 $(document).ready(function () {
+    var table = $('#refund-listing').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": true,
+    });
+
+    $('#refund-search-input').on("keyup", function (e) {
+        var tr = $('.data-row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.data-col').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
 
 
     initialLoad();
@@ -33,15 +56,15 @@ $(document).ready(function () {
                         const email = order?.user?.email || 'N/A';
                         const createdAt = order?.created_at
                             ? new Date(order.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' }) + ', ' +
-                              new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+                            new Date(order.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
                             : 'N/A';
 
                         html += `
-                            <tr>
-                                <td class="ps-3">${index + 1}</td> <!-- Changed index + 1 for numbering -->
-                                <td class="ps-3">${username}</td> <!-- Safely handled username -->
-                                <td class="ps-3">${email}</td> <!-- Safely handled email -->
-                                <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely handled date -->
+                            <tr class="data-row">
+                                <td class="ps-3 data-col">${index + 1}</td> <!-- Changed index + 1 for numbering -->
+                                <td class="ps-3 data-col">${username}</td> <!-- Safely handled username -->
+                                <td class="ps-3 data-col">${email}</td> <!-- Safely handled email -->
+                                <td class="ps-3 data-col text-nowrap">${createdAt}</td> <!-- Safely handled date -->
                                 <td class="text-end">
                                     <div class="btn-reveal-trigger position-static">
                                         <button class="btn btn-sm dropdown-toggle" type="button"

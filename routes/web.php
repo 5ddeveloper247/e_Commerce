@@ -122,6 +122,7 @@ Route::group(['prefix' => 'admin'], function () {
         // Product Features
         Route::post('/products/saveProductFeature', [ProductController::class, 'storeProductFeature'])->name('admin.products.saveProductFeature');
         Route::post('/products/deleteProductFeature', [ProductController::class, 'deleteProductFeature'])->name('admin.products.deleteProductFeature');
+        Route::post('/products/filter', [ProductController::class, 'filterProducts'])->name('admin.filterProducts');
         // Admin Product End //
         //contact us
         //all contact

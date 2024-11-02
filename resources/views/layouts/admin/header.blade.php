@@ -524,7 +524,7 @@ $siteLogo=@$siteData['settings']->logo;
 
         </div>
         <div class="search-box navbar-top-search-box d-none d-lg-block" style="width:25rem;">
-            <form class="position-relative" data-bs-toggle="search" data-bs-display="static" aria-expanded="false">
+            {{-- <form class="position-relative" data-bs-toggle="search" data-bs-display="static" aria-expanded="false">
                 <input class="form-control search-input fuzzy-search rounded-pill shadow" type="search"
                     placeholder="Search..." aria-label="Search">
                 <svg class="svg-inline--fa fa-magnifying-glass search-box-icon" aria-hidden="true" focusable="false"
@@ -534,7 +534,7 @@ $siteLogo=@$siteData['settings']->logo;
                         d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z">
                     </path>
                 </svg><!-- <span class="fas fa-search search-box-icon"></span> Font Awesome fontawesome.com -->
-            </form>
+            </form> --}}
             <!-- <div class="btn-close position-absolute end-0 top-50 translate-middle cursor-pointer shadow-none" data-bs-dismiss="search"><button class="btn btn-link p-0" aria-label="Close"></button></div> -->
             <div class="dropdown-menu border start-0 py-0 overflow-hidden w-100">
                 <div class="scrollbar-overlay" style="max-height: 30rem;" data-simplebar="init">

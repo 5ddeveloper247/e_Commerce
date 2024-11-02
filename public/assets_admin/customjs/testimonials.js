@@ -1,5 +1,30 @@
 $(document).ready(function () {
 
+    var table = $('#testimonials-listing').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": true,
+    });
+
+    $('#testimonial-search-input').on("keyup", function (e) {
+        var tr = $('.data-row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.data-col').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
+
+
     fetchInitialLoad();
     function fetchInitialLoad() {
         const url = "/admin/testimonials/ajax";
@@ -55,18 +80,18 @@ $(document).ready(function () {
 
                             // Append each testimonial row to the HTML string
                             html += `
-                                <tr>
-                                    <td class="ps-3">${index + 1}</td> <!-- Display row number -->
-                                    <td class="ps-3">${name}</td> <!-- Display name safely -->
-                                    <td class="ps-3">${designation}</td> <!-- Display designation safely -->
-                                    <td class="ps-3">${description}</td> <!-- Display description safely -->
-                                    <td class="text-center">
+                                <tr class="data-row">
+                                    <td class="ps-3 data-col">${index + 1}</td> <!-- Display row number -->
+                                    <td class="ps-3 data-col">${name}</td> <!-- Display name safely -->
+                                    <td class="ps-3 data-col">${designation}</td> <!-- Display designation safely -->
+                                    <td class="ps-3 data-col">${description}</td> <!-- Display description safely -->
+                                    <td class="text-center data-col">
                                         <div class="form-check form-switch">
                                             <input class="form-check-input flexSwitchCheckChecked" type="checkbox" role="switch"
                                                    id="flexSwitchCheckChecked${item?.id}" ${statusChecked}>
                                         </div>
                                     </td>
-                                    <td class="ps-3 text-nowrap">${createdAt}</td> <!-- Safely handled created_at -->
+                                    <td class="ps-3 text-nowrap data-col">${createdAt}</td> <!-- Safely handled created_at -->
                                     <td class="text-end">
                                         <div class="btn-reveal-trigger position-static">
                                             <button class="btn btn-sm dropdown-toggle" type="button"

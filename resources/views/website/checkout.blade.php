@@ -7,9 +7,7 @@
     }
 </style>
 @endpush
-
 @section('content')
-
 <div class="container checkout py-5">
     <h3 class="main-headings position-relative text-start">
         Checkout
@@ -19,7 +17,7 @@
         <div class="col-md-7 mt-5">
             <!-- Customer Section -->
             <div class="d-flex justify-content-between align-items-center mb-4">
-                <h4 class="mb-0">Customer</h4>
+                <h4 class="mb-0 mx-0">Customer</h4>
                 @auth
                 <p class="mb-0">{{ auth()->user()->email }}</p>
                 @endauth

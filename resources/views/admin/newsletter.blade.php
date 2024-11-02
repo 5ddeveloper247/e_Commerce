@@ -29,7 +29,7 @@
                             </h3>
                             <small>Export</small>
                         </div>
-                    </div> 
+                    </div>
                     <div class="col d-flex justify-content-center gap-2 align-items-center d-card py-3 px-3">
                         <svg xmlns="http://www.w3.org/2000/svg" width="2.5em" height="2.5em" viewBox="0 0 24 24">
                             <path fill="currentColor"
@@ -56,6 +56,10 @@
                 <div id="news">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
                         <table id="news-listing" class="table table-responsive">
+                            <div class="top text-end">
+                                <div><label for="dt-search-0">Search:</label><input id="news-search-input" type="search"
+                                        class="rounded-5 py-1 px-2" aria-controls="news-listing"></div>
+                            </div>
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>

@@ -84,11 +84,14 @@ $(document).ready(function () {
 
 
     $('body').on('click', '#handleEditCategoryBtn', function () {
-        const item = JSON.parse($(this).attr('data-edit-category'));
-        $('#category_name').val(item.category_name);
-        $('#category_description').val(item.description);
-        $('#category_status').prop('checked', item.status == 1);
-        $('#category_id').val(item.id);
+        const id = $(this).data('id');
+        const category_name = $(this).data('categoryname');
+        const description = $(this).data('description');
+        const status = $(this).data('status');
+        $('#category_name').val(category_name);
+        $('#category_description').val(description);
+        $('#category_status').prop('checked',status == 1);
+        $('#category_id').val(id);
         setTimeout(() => {
             $('#category_name').focus();
         }, 2000)

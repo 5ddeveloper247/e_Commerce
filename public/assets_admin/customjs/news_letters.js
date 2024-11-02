@@ -1,5 +1,27 @@
 $(document).ready(function () {
+    var table = $('#news-listing').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": true,
+    });
 
+    $('#news-search-input').on("keyup", function (e) {
+        var tr = $('.data-row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.data-col').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
 
     fetchInitalNewsListing();
     var newsLetterListsExcel = [];
@@ -24,10 +46,10 @@ $(document).ready(function () {
                     //  <div class="dropdown-divider"></div>
 
                     html += `
-                        <tr>
-                            <td class="ps-3">${index + 1}</td>
-                            <td class="ps-3">${item.email}</td>
-                            <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                        <tr class="data-row">
+                            <td class="ps-3 data-col">${index + 1}</td>
+                            <td class="ps-3 data-col">${item.email}</td>
+                            <td class="ps-3 text-nowrap data-col">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
                             <td class="text-end">
                                 <div class="btn-reveal-trigger position-static">
                                     <button class="btn btn-sm dropdown-toggle" type="button"

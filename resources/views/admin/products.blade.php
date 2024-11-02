@@ -2,7 +2,13 @@
 
 @push('css')
 @endpush
+@php
+$productData=productRelatedData();
+$categories=$productData['categories'];
+$brands=$productData['brands'];
 
+$product_names=$productData['products'];
+@endphp
 @section('content')
 <div id="product_listing_section">
     <div>
@@ -65,10 +71,80 @@
                 <div id="products">
                     <div class="px-4 py-4 bg-white shadow table-container table-container">
                         <table id="productListing_table" class="table table-responsive">
+                            <div class="top text-end">
+                                <div><label for="dt-search-0">Search:</label><input id="product-search-input"
+                                        type="search" class="rounded-5 py-1 px-2" aria-controls="productListing_table">
+                                </div>
+                                <div class="row">
+                                    <form action="" id="productFilterForm">
+                                        <div class="col-12">
+                                            <div class="row mt-4">
+                                                <div class="col-3">
+                                                    <label for="dt-search-0">Name:</label>
+                                                    <select id="product_name_filter"
+                                                        class="form-control rounded-5 py-1 px-2">
+                                                        <option value="">Select</option>
+                                                        @foreach($product_names as $name)
+                                                        <option value="{{$name}}">{{ $name }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label for="dt-search-0">Status:</label>
+                                                    <select id="product_status_filter"
+                                                        class="form-control rounded-5 py-1 px-2">
+                                                        <option value="">Select</option>
+                                                        <option value="1">Active</option>
+                                                        <option value="0">Inactive</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label for="dt-search-0">Category:</label>
+                                                    <select id="product_category_filter"
+                                                        class="form-control rounded-5 py-1 px-2">
+                                                        <option value="">Select</option>
+                                                        @foreach($categories as $category)
+                                                        <option value="{{$category->id }}">{{ $category->category_name
+                                                            }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                <div class="col-3">
+                                                    <label for="dt-search-0">Brand:</label>
+                                                    <select id="product_brand_filter"
+                                                        class="form-control rounded-5 py-1 px-2">
+                                                        <option value="">Select</option>
+                                                        @foreach($brands as $brand)
+                                                        <option value="{{$brand->id }}">{{ $brand->title}}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                            </div>
+                                            <div class="mt-3 col-12">
+                                                <button type="button"
+                                                    class="btn btn-primary rounded-5 py-1 px-3 btn-product-clear">
+                                                    Clear
+                                                    <i class="fa fa-filter"></i>
+                                                </button>
+                                                <button type="button"
+                                                    class="btn btn-primary rounded-5 py-1 px-3 btn-product-filter"
+                                                    id="btn-product-filter">
+                                                    Filter
+                                                    <i class="fa fa-filter"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                             <thead>
                                 <tr>
                                     <th scope="col">ID</th>
-                                    
+
                                     <th class="text-nowrap" scope="col">NAME</th>
                                     <th class="text-nowrap" scope="col">CATEGORY</th>
                                     <th class="text-nowrap" scope="col">BRAND</th>
@@ -145,12 +221,12 @@
                         aria-selected="false">Product Meida</a>
                 </li>
                 <li class="nav-item specifications-nav-item d-none">
-                    <a class="nav-link" id="specifications-tab" data-toggle="tab" href="#specifications" role="tab" aria-controls="specifications"
-                        aria-selected="false">Product Specifications</a>
+                    <a class="nav-link" id="specifications-tab" data-toggle="tab" href="#specifications" role="tab"
+                        aria-controls="specifications" aria-selected="false">Product Specifications</a>
                 </li>
                 <li class="nav-item features-nav-item d-none">
-                    <a class="nav-link" id="features-tab" data-toggle="tab" href="#features" role="tab" aria-controls="features"
-                        aria-selected="false">Product Features</a>
+                    <a class="nav-link" id="features-tab" data-toggle="tab" href="#features" role="tab"
+                        aria-controls="features" aria-selected="false">Product Features</a>
                 </li>
             </ul>
 
@@ -180,7 +256,8 @@
         <div class="modal-content border">
             <div class="modal-header justify-content-between border-0 px-4 py-3">
                 <h4 class="modal-title text-white">Marked As Offered</h4>
-                <button class="btn p-1 btn-outline-light close_modal" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <button class="btn p-1 btn-outline-light close_modal" type="button" data-bs-dismiss="modal"
+                    aria-label="Close">
                     <svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 15 15">
                         <path fill="currentColor"
                             d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27" />
@@ -202,17 +279,18 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center align-items-center px-4 pb-4 pt-3">
-                <button class="btn btn-cancel px-4 close_modal" type="button" data-bs-dismiss="modal" aria-label="Close">
+                <button class="btn btn-cancel px-4 close_modal" type="button" data-bs-dismiss="modal"
+                    aria-label="Close">
                     Cancel
                 </button>
-                <button class="btn btn-done px-4 changeProductOfferedStatus" type="button" id="" >Done</button>
+                <button class="btn btn-done px-4 changeProductOfferedStatus" type="button" id="">Done</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade removedFromOfferdConfirmModel " tabindex="-1"
-    aria-labelledby="removedFromOfferdConfirmModel" aria-hidden="true">
+<div class="modal fade removedFromOfferdConfirmModel " tabindex="-1" aria-labelledby="removedFromOfferdConfirmModel"
+    aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content text-center">
             <div class="modal-header bg-danger text-white">
@@ -225,15 +303,18 @@
                     <h6 class="mb-0 me-2" id="">Are you sure you want to remove this product from offered?</h6>
                     <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
                         <g fill="none">
-                            <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
-                            <path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2a1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99a.8.8 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509a1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5" />
+                            <path
+                                d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                            <path fill="currentColor"
+                                d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2a1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99a.8.8 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509a1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5" />
                         </g>
                     </svg>
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-danger px-md-3 close_modal" data-bs-dismiss="modal">NO</button>
-                <button type="button" class="btn btn-outline-danger px-md-3 changeProductOfferedStatus" id="">YES</button>
+                <button type="button" class="btn btn-outline-danger px-md-3 changeProductOfferedStatus"
+                    id="">YES</button>
             </div>
         </div>
     </div>
@@ -260,8 +341,10 @@
                         <h6 class="mb-0 me-2" id="featured_heading">Are Sure Want to Mark As Featured</h6>
                         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 24 24">
                             <g fill="none">
-                                <path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
-                                <path fill="currentColor" d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2a1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99a.8.8 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509a1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5" />
+                                <path
+                                    d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035q-.016-.005-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                                <path fill="currentColor"
+                                    d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2m0 2a8 8 0 1 0 0 16a8 8 0 0 0 0-16m0 12a1 1 0 1 1 0 2a1 1 0 0 1 0-2m0-9.5a3.625 3.625 0 0 1 1.348 6.99a.8.8 0 0 0-.305.201c-.044.05-.051.114-.05.18L13 14a1 1 0 0 1-1.993.117L11 14v-.25c0-1.153.93-1.845 1.604-2.116a1.626 1.626 0 1 0-2.229-1.509a1 1 0 1 1-2 0A3.625 3.625 0 0 1 12 6.5" />
                             </g>
                         </svg>
                     </div>

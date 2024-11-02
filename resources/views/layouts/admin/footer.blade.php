@@ -1,8 +1,21 @@
+@php
+// Call the siteCommonData helper and extract the data
+$siteData = siteCommonData();
+// Extract specific variables from the returned data array
+$settings = $siteData['settings'];
+$products = $siteData['products'];
+$categories = $siteData['categories'];
+$brands = $siteData['brands'];
+// dd()
+
+@endphp
+
 <footer>
     <div class="main-footer border-end border-top toggle-button ">
         <div class="d-flex align-items-center p-md-3 p-2">
-            <p class="mb-0">Payee Shop | 2024 ©</p>
-            <a class="mx-1" href="https://themewagon.com">E commerce</a>
+            <p class="mb-0">© 2024</p>
+            <a class="mx-1" href="{{ url('/') }}">{{ $settings->website_namen || '' }}</a>
+            <p class="mb-0">All rights reserved.</p>
         </div>
     </div>
 </footer>

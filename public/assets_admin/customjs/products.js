@@ -1,7 +1,35 @@
-var selectedFiles = [];
-$(document).ready(function () {
-    getProductsOnLoad();
 
+$(document).ready(function () {
+    var selectedFiles = [];
+
+    var table = $('#productListing_table').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": true,
+    });
+
+    $('#product-search-input').on("keyup", function (e) {
+        var tr = $('.data-row');
+        if ($(this).val().length >= 1) {//character limit in search box.
+            var noElem = true;
+            var val = $.trim(this.value).toLowerCase();
+            el = tr.filter(function () {
+                return $(this).find('.data-col').text().toLowerCase().match(val);
+            });
+            if (el.length >= 1) {
+                noElem = false;
+            }
+            tr.not(el).hide();
+            el.fadeIn().show();
+        } else {
+            tr.fadeIn().show();
+        }
+    });
+
+
+
+
+    getProductsOnLoad();
     //handle hide show section of adding products and listings
     $('#productAddBtn').on('click', function () {
         showAddEditForm();
@@ -91,18 +119,18 @@ $(document).ready(function () {
             var featuredText = item.featured == 1 ? 'Remove from featured' : 'Marked as featured';
             var offeredText = item.is_offered == 1 ? 'Remove from offered' : 'Marked as offered';
             html += `
-                <tr>
-                    <td class="ps-3">${item.id}</td>
-                    <td class="ps-3">${trimText(item.product_name, 15)}</td>
-                    <td class="ps-3">${item.category != null ? trimText(item.category.category_name, 15) : ''}</td>
-                    <td class="ps-3">${item.brand != null ? trimText(item.brand.title, 15) : ''}</td>
-                    <td class="ps-3">${item.model_name != null ? trimText(item.model_name, 15) : ''}</td>
+                <tr class="data-row">
+                    <td class="ps-3 data-col">${item.id}</td>
+                    <td class="ps-3 data-col">${trimText(item.product_name, 15)}</td>
+                    <td class="ps-3 data-col ">${item.category != null ? trimText(item.category.category_name, 15) : ''}</td>
+                    <td class="ps-3 data-col">${item.brand != null ? trimText(item.brand.title, 15) : ''}</td>
+                    <td class="ps-3 data-col">${item.model_name != null ? trimText(item.model_name, 15) : ''}</td>
                     <td class="text-center">
                         <div class="form-check form-switch">
                             <input class="form-check-input flexSwitchCheckChecked" data-id="${item.id}" type="checkbox" role="switch" ${item.status === 1 ? 'checked' : ''}>
                         </div>
                     </td>
-                    <td class="ps-3 text-nowrap">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
+                    <td class="ps-3 text-nowrap data-col">${new Date(item.created_at).toLocaleDateString('en-US', { month: 'short', day: '2-digit' })}, ${new Date(item.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}</td>
                     <td class="text-end">
                         <div class="btn-reveal-trigger position-static">
                             <button class="btn btn-sm dropdown-toggle" type="button"
@@ -1022,4 +1050,36 @@ $(document).ready(function () {
         }
     });
 
+
+    // product filter
+
+    $('body').on('click', '#btn-product-filter', function (e) {
+        e.preventDefault();
+
+        const product_name_filter = $('#product_name_filter').val();
+        const product_category_name = $('#product_category_filter').val();
+        const product_brand_name = $('#product_brand_filter').val();
+        const product_status = $('#product_status_filter').val();
+        const formData = new FormData();
+        formData.append('product_name_filter', product_name_filter);
+        formData.append('product_category_name', product_category_name);
+        formData.append('product_brand_name', product_brand_name);
+        formData.append('product_status', product_status);
+        let url = '/admin/products/filter';
+        SendAjaxRequestToServer('POST', url, formData, '', filterProductsResponse, '', '#productFilterForm');
+    });
+
+    function filterProductsResponse(response) {
+        console.log(response);
+        if (response.status == 200) {
+            populateListng(response.products);
+        }
+        else {
+            toastr.error('Something went wrong', '', {
+                timeOut: 3000
+
+            })
+        }
+
+    }
 });
