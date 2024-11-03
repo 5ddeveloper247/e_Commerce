@@ -1,6 +1,7 @@
 @extends('layouts.admin.admin_master')
 
 @push('css')
+
 @endpush
 @php
 $productData=productRelatedData();
@@ -79,19 +80,25 @@ $product_names=$productData['products'];
                                     <form action="" id="productFilterForm">
                                         <div class="col-12">
                                             <div class="row mt-4">
-                                                <div class="col-3">
-                                                    <label for="dt-search-0">Name:</label>
+                                                <!-- Row 1: SKU, Name, Status -->
+                                                <div class="col-4">
+                                                    <label for="product_sku_filter">SKU:</label>
+                                                    <input id="product_sku_filter" type="text"
+                                                        class="form-control rounded-5 py-1 px-2" placeholder="Enter Sku"
+                                                        maxlength="15">
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="product_name_filter">Name:</label>
                                                     <select id="product_name_filter"
                                                         class="form-control rounded-5 py-1 px-2">
                                                         <option value="">Select</option>
                                                         @foreach($product_names as $name)
-                                                        <option value="{{$name}}">{{ $name }}
-                                                        </option>
+                                                        <option value="{{ $name }}">{{ $name }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-3">
-                                                    <label for="dt-search-0">Status:</label>
+                                                <div class="col-4">
+                                                    <label for="product_status_filter">Status:</label>
                                                     <select id="product_status_filter"
                                                         class="form-control rounded-5 py-1 px-2">
                                                         <option value="">Select</option>
@@ -99,47 +106,63 @@ $product_names=$productData['products'];
                                                         <option value="0">Inactive</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-3">
-                                                    <label for="dt-search-0">Category:</label>
+                                            </div>
+
+                                            <div class="row mt-4">
+                                                <!-- Row 2: Category, Brand, Empty Column for Alignment -->
+                                                <div class="col-4">
+                                                    <label for="product_category_filter">Category:</label>
                                                     <select id="product_category_filter"
                                                         class="form-control rounded-5 py-1 px-2">
                                                         <option value="">Select</option>
                                                         @foreach($categories as $category)
-                                                        <option value="{{$category->id }}">{{ $category->category_name
-                                                            }}
-                                                        </option>
+                                                        <option value="{{ $category->id }}">{{ $category->category_name
+                                                            }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                                <div class="col-3">
-                                                    <label for="dt-search-0">Brand:</label>
+                                                <div class="col-4">
+                                                    <label for="product_brand_filter">Brand:</label>
                                                     <select id="product_brand_filter"
                                                         class="form-control rounded-5 py-1 px-2">
                                                         <option value="">Select</option>
                                                         @foreach($brands as $brand)
-                                                        <option value="{{$brand->id }}">{{ $brand->title}}
-                                                        </option>
+                                                        <option value="{{ $brand->id }}">{{ $brand->title }}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
+                                                <div class="col-4">
+                                                    <label for="product_qty_filter">Quantity:</label>
+                                                    <select id="product_qty_filter"
+                                                        class="form-control rounded-5 py-1 px-2">
+                                                        <option value="">Select</option>
+                                                        <option value="10">Less than 10</option>
+                                                        <option value="50">Less than 50</option>
+                                                        <option value="100">Less than 100</option>
+                                                        <option value="500">Less than 500</option>
+                                                        <option value="1000">Less than 1000</option>
+                                                        <option value="10000">Less than 10000</option>
 
-                                            </div>
-                                            <div class="mt-3 col-12">
-                                                <button type="button"
-                                                    class="btn btn-primary rounded-5 py-1 px-3 btn-product-clear">
-                                                    Clear
-                                                    <i class="fa fa-filter"></i>
-                                                </button>
-                                                <button type="button"
-                                                    class="btn btn-primary rounded-5 py-1 px-3 btn-product-filter"
-                                                    id="btn-product-filter">
-                                                    Filter
-                                                    <i class="fa fa-filter"></i>
-                                                </button>
+                                                    </select>
+                                                </div>
+                                                <div class="mt-4 col-4 d-flex align-items-end">
+                                                    <!-- Filter and Clear buttons aligned at the bottom -->
+                                                    <button type="button"
+                                                        class="btn btn-primary rounded-5 py-1 px-3 btn-product-clear me-2"
+                                                        id="productClearFilterBtn">
+                                                        Clear <i class="fa fa-filter"></i>
+                                                    </button>
+                                                    <button type="button"
+                                                        class="btn btn-primary rounded-5 py-1 px-3 btn-product-filter"
+                                                        id="btn-product-filter">
+                                                        Filter <i class="fa fa-filter"></i>
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </form>
                                 </div>
+
                             </div>
                             <thead>
                                 <tr>

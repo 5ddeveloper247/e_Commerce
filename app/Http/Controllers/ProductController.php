@@ -638,6 +638,8 @@ class ProductController extends Controller
 
     public function filterProducts(Request $request)
     {
+        $sku = $request->product_sku_filter;
+        $qty = $request->product_qty_filter;
         $name = $request->product_name_filter;
         $status = $request->product_status_filter;
         $brand_id = $request->product_brand_filter;
@@ -648,10 +650,18 @@ class ProductController extends Controller
 
         $query = Product::query();
 
+        // Filter by product sku
+        if (isset($sku)) {
+            $query->where('sku', 'like', '%' . $sku . '%');
+        }
         // Filter by product name
         if (isset($name)) {
             $query->where('product_name', 'like', '%' . $name . '%');
         }
+        if (isset($qty)) {
+            $query->where('onhand_qty', '<=', $qty);
+        }
+
 
         // Filter by product status
         if (isset($status)) {

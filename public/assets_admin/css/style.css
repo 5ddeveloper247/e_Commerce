@@ -1490,3 +1490,7 @@ div.dt-container .dt-search input {
 .danger {
     color: #ff0000bd;
 }
+
+.dt-layout-cell.dt-layout-start {
+    display: none !important;
+}

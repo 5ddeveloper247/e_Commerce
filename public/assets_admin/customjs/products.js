@@ -3,9 +3,11 @@ $(document).ready(function () {
     var selectedFiles = [];
 
     var table = $('#productListing_table').DataTable({
-        "paging": false,
-        "searching": false,
-        "ordering": true,
+        paging: false,       // Enables pagination
+        searching: false,    // Disables search box
+        ordering: true,      // Enables column sorting
+        pageLength: 10,      // Sets default rows per page
+        lengthMenu: [5, 10, 15, 20],  // Options for rows per page
     });
 
     $('#product-search-input').on("keyup", function (e) {
@@ -1055,16 +1057,19 @@ $(document).ready(function () {
 
     $('body').on('click', '#btn-product-filter', function (e) {
         e.preventDefault();
-
+        const product_sku_filter = $('#product_sku_filter').val();
         const product_name_filter = $('#product_name_filter').val();
-        const product_category_name = $('#product_category_filter').val();
-        const product_brand_name = $('#product_brand_filter').val();
-        const product_status = $('#product_status_filter').val();
+        const product_category_filter = $('#product_category_filter').val();
+        const product_brand_filter = $('#product_brand_filter').val();
+        const product_status_filter = $('#product_status_filter').val();
+        const product_qty_filter = $('#product_qty_filter').val();
         const formData = new FormData();
+        formData.append('product_sku_filter', product_sku_filter);
         formData.append('product_name_filter', product_name_filter);
-        formData.append('product_category_name', product_category_name);
-        formData.append('product_brand_name', product_brand_name);
-        formData.append('product_status', product_status);
+        formData.append('product_category_filter', product_category_filter);
+        formData.append('product_brand_filter', product_brand_filter);
+        formData.append('product_status_filter', product_status_filter);
+        formData.append('product_qty_filter', product_qty_filter);
         let url = '/admin/products/filter';
         SendAjaxRequestToServer('POST', url, formData, '', filterProductsResponse, '', '#productFilterForm');
     });
@@ -1080,6 +1085,14 @@ $(document).ready(function () {
 
             })
         }
+
+    }
+
+
+    $('#productClearFilterBtn').on('click', productClearFilter);
+
+    function productClearFilter() {
+        getProductsOnLoad();
 
     }
 });
