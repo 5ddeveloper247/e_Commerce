@@ -133,29 +133,38 @@ $(document).ready(function () {
             if (response.data.shippingAddress) {
                 let addressHtml = ''; // Initialize the addressHtml variable
 
-                response.data.shippingAddress.forEach(address => {
+                try {
+                    response.data.shippingAddress.forEach(address => {
+                        // Use nullish coalescing (??) to handle undefined values, providing a default if undefined
+                        addressHtml += `
+                            <div class="col-md-3 col-11 border rounded-2 m-3">
+                                <div class="p-3">
+                                    <h6 class="mb-1 text-truncate" style="max-width: 100%;">${address.name ?? 'N/A'}</h6>
+                                    <h6 class="mb-3 text-truncate" style="max-width: 100%;">${address.email ?? 'No email available'}</h6>
+                                    <p class="text-muted mb-1 text-truncate" style="max-width: 100%;">${address.phone_number ?? 'No phone number available'}</p>
+                                    <p class="text-muted mb-1 text-truncate" style="max-width: 100%;">${address.address ?? 'No address available'}</p>
+                                    <p class="text-muted mb-1 text-truncate" style="max-width: 100%;">${address.country?.name ?? 'Country not specified'}</p>
+                                    <p class="text-muted mb-1 text-truncate" style="max-width: 100%;">${address.state?.name ?? 'State not specified'}</p>
+                                    <div class="d-flex justify-content-start">
+                                        <button type="button"
+                                            class="btn btn-outline-secondary rounded-pill px-3 py-1 mx-1 editAddressBtn"
+                                            data-edit-item='${JSON.stringify(address)}'
+                                            data-edit-id="${address.id ?? ''}">Edit</button>
+                                        <button type="button"
+                                            class="btn btn-outline-secondary rounded-pill px-3 py-1 mx-1" data-delete-id="${address.id ?? ''}" id="deleteAddressBtn">Delete</button>
+                                    </div>
+                                </div>
+                            </div>`;
+                    });
+                } catch (error) {
+                    console.error("Error generating address HTML:", error);
+                    // Display a user-friendly message if there's an error
+                    addressHtml = `<p class="text-danger">There was an error loading the addresses. Please try again later.</p>`;
+                }
 
-                    addressHtml += `
-                    <div class="col-md-3 col-11 border rounded-2 m-3">
-                        <div class="p-3">
-                            <h6 class="mb-1">${address.name}</h6>
-                            <h6 class="mb-3">${address.email}</h6>
-                            <p class="text-muted mb-1">${address.phone_number}</p>
-                            <p class="text-muted mb-1">${address.address}</p>
-                            <p class="text-muted mb-1">${address.country.name}</p>
-                            <p class="text-muted mb-1">${address.state.name}</p>
-                            <div class="d-flex justify-content-start">
-                                                        <button type="button"
-                                class="btn btn-outline-secondary rounded-pill px-3 py-1 mx-1 editAddressBtn"
-                                data-edit-item='${JSON.stringify(address)}'
-                                data-edit-id="${address.id}">Edit</button>
-                                <button type="button"
-                                    class="btn btn-outline-secondary rounded-pill px-3 py-1 mx-1" data-delete-id="${address.id}" id
-                                    ="deleteAddressBtn">Delete</button>
-                            </div>
-                        </div>
-                    </div>`;
-                })
+                // Render the generated HTML
+                $('#addressContainer').html(addressHtml);
+
 
                 // Prepend the generated HTML content as the first child
                 $('#address_container').prepend(addressHtml);
@@ -340,7 +349,6 @@ $(document).ready(function () {
 
         // Reset the form
         form.reset();
-
         // Clear specific fields if needed (not necessary since form.reset() will do this)
         country.value = '';
         city.value = '';
@@ -364,7 +372,6 @@ $(document).ready(function () {
         console.log(addressData)
 
         $('#edit_id').val(addressData.id);
-
         const addressId = $(this).attr('data-edit-id');
         $('#fullName').val(addressData.name);
         $('#email').val(addressData.email);

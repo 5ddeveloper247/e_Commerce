@@ -77,7 +77,8 @@ class ProductController extends Controller
             'discount_price' => 'required|numeric',
             'weight' => 'required|numeric',
             'onhand_qty' => 'required|numeric',
-            'description' => 'nullable|string|min:10|max:3000',
+            'description' => 'nullable|string|max:3000',
+            'productExtraInfo' => 'nullable|string|max:3000',
         ]);
 
         // Create the new product with validated data
@@ -93,6 +94,7 @@ class ProductController extends Controller
             'weight' => $request->input('weight'),
             'onhand_qty' => $request->input('onhand_qty'),
             'description' => $request->input('description'),
+            'extra_info' => $request->input('productExtraInfo'),
         ]);
 
         return response()->json([
@@ -182,12 +184,14 @@ class ProductController extends Controller
             'weight' => 'required|numeric',
             'onhand_qty' => 'required|numeric',
             'description' => 'nullable|string|max:3000',
+            'productExtraInfo' => 'nullable|string|max:3000',
         ]);
 
         // Find the product by ID
         $product = Product::findOrFail($request->input('product_id'));
 
         // Prepare the update data
+        $extra_info = $request->productExtraInfo;
         $updateData = $request->only([
             'sku',
             'category_id',
@@ -207,7 +211,7 @@ class ProductController extends Controller
         ]);
 
         // Update the product and the 'updated_by' field in one call
-        $product->update(array_merge($updateData, ['updated_by' => auth()->id()]));
+        $product->update(array_merge($updateData, ['updated_by' => auth()->id(),'extra_info'=>$extra_info]));
 
         // Calculate totals if requested
         $includeTotals = $request->input('includeTotals', false);

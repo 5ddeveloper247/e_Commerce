@@ -240,16 +240,15 @@ $(document).ready(function () {
     $('body').on('click', '#saveProductBtn', function () {
         const saveForm = document.getElementById('product_settings_form');
         var formData = new FormData(saveForm);
-        var product_desc = $('.productDecription').next().find('.ck-content').html();
-        var product_extra_info = $('.productDecription').next().find('.ck-content').html();
-        formData.append('description', product_desc);
-        formData.append('extra_info', product_extra_info);
+        // var product_desc = $('.productDecription').next().find('.ck-content').html();
+        // var product_extra_info = $('.productDecription').next().find('.ck-content').html();
+        // formData.append('description', product_desc);
+        // formData.append('extra_info', product_extra_info);
         productUpdateStore(formData);
     });
 
     $(document).on('click', '.edit_product', function (e) {
         var product_id = $(this).attr('data-id');
-
         let data = new FormData();
         data.append('product_id', product_id);
         let type = 'POST';
@@ -279,8 +278,9 @@ $(document).ready(function () {
             $('#discount_price').val(product_detail.discount_price);
             $('#weight').val(product_detail.weight);
             $('#onhand_qty').val(product_detail.onhand_qty);
-            setEditorData('.productDecription', product_detail.description)
-            //$('#description').val(product_detail.description);
+            //setEditorData('.productDecription', product_detail.description)
+            $('#description').text(product_detail.description);
+            $('#productExtraInfo').text(product_detail.extra_info);
             $('#video_url').val(product_detail.video_url);
             $("#image-container,.image-container-selected").html('');
             var image_html = '';

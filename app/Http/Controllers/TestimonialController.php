@@ -135,6 +135,11 @@ class TestimonialController extends Controller
         $testimonial = Testimonial::find($id);
 
         if ($testimonial) {
+            if ($request->status == 1) {
+                if (!isset($testimonial->mediaPath)) {
+                    return response()->json(['message' => 'You cannot activate without testimonial Image, edit the testimonial first, add a image and then change the status', 'status' => 404]);
+                }
+            }
             // Toggle the status: if 1, set to 0; if 0, set to 1
             $currentStatus = $testimonial->status;
             $testimonial->status = $currentStatus == 1 ? 0 : 1;

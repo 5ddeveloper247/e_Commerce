@@ -70,12 +70,12 @@
                 <div class="col-sm-12 mb-3">
                     <label for="description" class="form-label">Description<span class="danger"></span></label>
                     <textarea class="form-control productDecription" id="description" name="description"
-                        fieldType="alphanumeric" maxlength="255" rows="3" placeholder="Enter description"></textarea>
+                        fieldType="alphanumeric" maxlength="3000" rows="3" placeholder="Enter description"></textarea>
                 </div>
                 <div class="col-sm-12 mb-3">
                     <label for="description" class="form-label">Extra Info</label>
-                    <textarea class="form-control" id="productExtraInfoEditor" name="productExtraInfo"
-                        rows="3"></textarea>
+                    <textarea class="form-control" id="productExtraInfo" name="productExtraInfo"
+                        fieldType="alphanumeric" maxlength="3000" rows="3" placeholder="Enter extra info"></textarea>
                 </div>
             </div>
         </div>

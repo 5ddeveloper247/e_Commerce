@@ -307,8 +307,9 @@ $(document).ready(function () {
         }
         else {
             toastr.error(response.message, '', {
-                timeOut: 3000
+                timeOut: 5000
             });
+            fetchInitialLoad();
         }
 
     }

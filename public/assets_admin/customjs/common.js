@@ -13,10 +13,6 @@ $(document).ready(function () {
 
         $(this).find(".nav-link-text").css("color", "#3874ff");
     });
-
-
-
-
 });
 
 //  sidebar collapse logics
@@ -98,7 +94,7 @@ $(document).ready(function () {
 $(document).ready(function () {
     // Initialize Summernote
     $("#summernote").summernote({
-        height: 210, // Initial height setting, adjust as needed
+        height: 510, // Initial height setting, adjust as needed
     });
 });
 
@@ -132,13 +128,12 @@ const editors = [
     "#editor7",
     "#editor8",
     "#editor9",
-    "#productExtraInfoEditor",
-    ".productDecription",
+    // "#productExtraInfoEditor",
+    // ".productDecription",
 ];
 
 // Create an object to store the editor instances
 const editorInstances = {};
-
 // Initialize each editor and store its instance
 editors.forEach(selector => {
     const element = document.querySelector(selector);

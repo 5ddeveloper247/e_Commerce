@@ -24,6 +24,7 @@ return new class extends Migration
             $table->decimal('weight')->nullable();
             $table->unsignedInteger('onhand_qty')->nullable();
             $table->text('description')->nullable();
+            $table->text('extra_info')->nullable();
             $table->boolean('is_offered')->default(false)->nullable();
             $table->boolean('featured')->default(false)->nullable();
             $table->boolean('status')->default(false)->nullable();

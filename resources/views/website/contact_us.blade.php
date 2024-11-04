@@ -21,9 +21,9 @@
         <div class="row g-3 mb-3">
             <div class="col-md-6">
                 <div class="form-floating">
-                    <input type="text" class="form-control focusedField" maxlength="15" id="full_name" name="full_name"
+                    <input type="text" class="form-control focusedField" maxlength="50" id="full_name" name="full_name"
                         placeholder="Full Name" required>
-                    <label for="full_name">Full Name (Required 7 to 15 characters long)</label>
+                    <label for="full_name">Full Name </label>
                 </div>
             </div>
             <div class="col-md-6">

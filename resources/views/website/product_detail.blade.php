@@ -280,8 +280,8 @@
 
                 <div class="tab-pane fade py-3" id="extras-tab-pane" role="tabpanel" aria-labelledby="extras-tab"
                     tabindex="0">
-                    <p>Each Ramsond 15000 BTU PTAC System will be shipped as a complete package. It will include:</p>
-                    <ul>
+                    <p>{{ @$product->extra_info?? '' }}</p>
+                    {{-- <ul>
                         <li>RAMSOND PTAC Unit Insert</li>
                         <li>Wall Sleeve (off white color)</li>
                         <li>Rear Outdoor Grill</li>
@@ -290,7 +290,7 @@
                         <li>1 Year Parts/5 Years Compressor Manufacturer Warranty</li>
                     </ul>
                     <p class="optional-note">(Optional Wireless Multifunction Digital Remote Control / Multifunction
-                        Digital Thermostat w/ Wiring Connection also available)</p>
+                        Digital Thermostat w/ Wiring Connection also available)</p> --}}
                 </div>
             </div>
         </div>

@@ -31,6 +31,8 @@ class Product extends Model
         'created_by',
         'updated_by',
         'offered_percentage',
+        'description',
+        'extra_info'
     ];
 
     public function category()

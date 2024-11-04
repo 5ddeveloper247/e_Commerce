@@ -3,9 +3,10 @@ $siteData=siteCommonData();
 $siteLogo=@$siteData['settings']->logo;
 @endphp
 <nav class="navbar navbar-top navbar-expand px-3" id="navbarDefault">
+    <p id="username" class="d-none">{{ Auth::user()->name }}</p>
     <div class="collapse navbar-collapse justify-content-between">
 
-        <div class="navbar-logo d-flex align-items-center">
+        <div class="navbar-logo d-flex align-items-center ps-5">
             <!-- Toggle button for Small Screen  -->
             <button class="navbar-toggler d-lg-none d-block" data-bs-toggle="collapse" href="#collapseExample"
                 role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -521,7 +522,6 @@ $siteLogo=@$siteData['settings']->logo;
                     </div>
                 </div>
             </a>
-
         </div>
         <div class="search-box navbar-top-search-box d-none d-lg-block" style="width:25rem;">
             {{-- <form class="position-relative" data-bs-toggle="search" data-bs-display="static" aria-expanded="false">
@@ -767,7 +767,7 @@ $siteLogo=@$siteData['settings']->logo;
                                             <div class="py-2"><a class="dropdown-item py-2 d-flex align-items-center"
                                                     href="pages/members.html">
                                                     <div class="avatar avatar-l status-online  me-2 text-body">
-                                                        <img class="rounded-circle "
+                                                        <img class="rounded-circle"
                                                             src="https://prium.github.io/phoenix/v1.18.0/assets/img/team/40x40/57.webp"
                                                             alt="">
                                                     </div>
@@ -863,7 +863,7 @@ $siteLogo=@$siteData['settings']->logo;
         </div>
         <ul class="navbar-nav navbar-nav-icons flex-row align-items-center">
             <li class="nav-item dropdown">
-                <a class="nav-link" href="#" style="min-width: 2.25rem" role="button" data-bs-toggle="dropdown"
+                {{-- <a class="nav-link" href="#" style="min-width: 2.25rem" role="button" data-bs-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false" data-bs-auto-close="outside"><span class="d-block"
                         style="height:20px;width:20px;"><svg xmlns="http://www.w3.org/2000/svg" width="16px"
                             height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
@@ -871,7 +871,7 @@ $siteLogo=@$siteData['settings']->logo;
                             style="height:20px;width:20px;">
                             <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
                             <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
-                        </svg></span></a>
+                        </svg></span></a> --}}
                 <div class="dropdown-menu dropdown-menu-end notification-dropdown-menu py-0 shadow border navbar-dropdown-caret"
                     id="navbarDropdownNotfication" aria-labelledby="navbarDropdownNotfication">
                     <div class="card position-relative border-0">
@@ -1361,10 +1361,12 @@ $siteLogo=@$siteData['settings']->logo;
                 </div>
             </li>
 
-            <li class="nav-item dropdown"><a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button"
-                    data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+            <li class="nav-item dropdown">
+                <a class=" lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown"
+                    data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
                     <div class="avatar avatar-l ">
-                        <img class="rounded-circle " src="{{ asset('assets_admin/images/user-icon.webp') }}" alt="">
+                        <img class="rounded-circle userAvatar" src="{{ asset('assets_admin/images/user-icon.webp') }}"
+                            alt="" style="height: 30px;">
                     </div>
                 </a>
                 <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border"
@@ -1373,7 +1375,7 @@ $siteLogo=@$siteData['settings']->logo;
                         <div class="card-body p-0">
                             <div class="text-center py-2">
                                 <div class="avatar avatar-xl ">
-                                    <img class="rounded-circle "
+                                    <img class="rounded-circle userAvatar"
                                         src="{{ asset('assets_admin/images/user-icon-md.jpg') }}" alt="">
                                 </div>
                                 <h6 class="mt-2 text-body-emphasis">{{ auth()->user()->name }}</h6>
@@ -1419,3 +1421,12 @@ $siteLogo=@$siteData['settings']->logo;
         </ul>
     </div>
 </nav>
+
+<script>
+    $(document).ready(function() {
+    const username = $('#username').text();
+    const avatarUrl = `https://ui-avatars.com/api/?name=${username}&background=random`;
+    $('.userAvatar').attr('src', avatarUrl);
+});
+
+</script>

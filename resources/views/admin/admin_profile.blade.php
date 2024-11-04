@@ -96,14 +96,14 @@
                                     <div
                                         class="col-12 col-sm-auto mb-sm-2 d-flex justify-content-md-start justify-content-center">
                                         <div class="avatar avatar-5xl">
-                                            <img class="rounded-circle img-fluid"
+                                            <img class="rounded-circle img-fluid" id="userAvatar"
                                                 src="https://prium.github.io/phoenix/v1.18.0/assets/img/team/15.webp"
                                                 alt="">
                                         </div>
                                     </div>
                                     <div class="col-12 col-sm-auto flex-1 modal-edit-btn" data-bs-toggle="modal"
                                         data-bs-target="#filterModal" data-modal-type="edit">
-                                        <h3>{{ $user->username }}</h3>
+                                        <h3 id="username">{{ $user->username }}</h3>
                                         <p class="text-body-secondary">
                                             Joined {{ \Carbon\Carbon::parse($user->created_at)->format('Y-m-d') }}
                                             <a type="button" class="text-info">Edit</a>
@@ -158,4 +158,15 @@
 
 @push('scripts')
 <script src="{{ asset('assets_admin/customjs/profile.js') }}"></script>
+<script>
+    $(document).ready(function() {
+    const username = $('#username').text();
+    const avatarUrl = `https://ui-avatars.com/api/?name=${username}&background=random`;
+
+    $('#userAvatar').attr('src', avatarUrl);
+});
+
+
+
+</script>
 @endpush
