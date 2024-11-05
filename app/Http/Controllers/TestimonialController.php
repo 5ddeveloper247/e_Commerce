@@ -54,6 +54,7 @@ class TestimonialController extends Controller
             'file.max' => 'The file size may not exceed 10 MB.'
         ]);
 
+
         // Handle file upload if present, store in root/public/testimonials
         if ($request->hasFile('file')) {
             $file = $request->file('file');

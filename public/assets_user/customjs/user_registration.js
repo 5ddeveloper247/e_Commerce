@@ -14,23 +14,23 @@ function loadRegisterPageDataResponse(response) {
     var data = response.data;
     var countries = data.countries;
     var html = '<option value="">Choose a Country</option>';
-	if(countries.length > 0){
-		$.each(countries, function (index, value) {
+    if (countries.length > 0) {
+        $.each(countries, function (index, value) {
             html += `<option value="${value.id}">${value.name}</option>`;
-		});
-	}
-	$("#country").html(html);
+        });
+    }
+    $("#country").html(html);
 }
 
 
 $(document).on('change', '#country', function (e) {
     var country_id = $("#country").val();
-        let form = '';
-        let data = new FormData();
-        data.append('country_id', country_id);
-        let type = 'POST';
-        let url = '/getSpecificStates';
-        SendAjaxRequestToServer(type, url, data, '', getSpecificStatesResponse, '', '');
+    let form = '';
+    let data = new FormData();
+    data.append('country_id', country_id);
+    let type = 'POST';
+    let url = '/getSpecificStates';
+    SendAjaxRequestToServer(type, url, data, '', getSpecificStatesResponse, '', '');
 });
 
 function getSpecificStatesResponse(response) {
@@ -40,19 +40,19 @@ function getSpecificStatesResponse(response) {
     var cities = data.cities;
 
     var html = '<option value="">Choose a State</option>';
-	if(states.length > 0){
-		$.each(states, function (index, value) {
+    if (states.length > 0) {
+        $.each(states, function (index, value) {
             html += `<option value="${value.id}">${value.name}</option>`;
-		});
-	}
-	$("#state").html(html);
+        });
+    }
+    $("#state").html(html);
 
     var html1 = '<option value="">Choose a City</option>';
-	if(cities.length > 0){
-		$.each(cities, function (index, value) {
+    if (cities.length > 0) {
+        $.each(cities, function (index, value) {
             html1 += `<option value="${value.id}">${value.name}</option>`;
-		});
-	}
+        });
+    }
     $("#city").html(html1);
 
     $("#state").val('');
@@ -77,19 +77,31 @@ function getSpecificCitiesResponse(response) {
     var cities = data.cities;
 
     var html = '<option value="">Choose a City</option>';
-	if(cities.length > 0){
-		$.each(cities, function (index, value) {
+    if (cities.length > 0) {
+        $.each(cities, function (index, value) {
             html += `<option value="${value.id}">${value.name}</option>`;
-		});
-	}
-	$("#city").html(html);
+        });
+    }
+    $("#city").html(html);
 }
 
 $(document).on('click', '#signUp_submit', function (e) {
     e.preventDefault();
 
+    //reCAPTCHA
+    var token = '';
+    grecaptcha.ready(function () {
+        grecaptcha.execute("6LeTn3UqAAAAABmlZec57pJh5-tqpsYi2a0Mvvx4", { action: 'subscribe_newsletter' }).then(function (token) {
+
+            $('#signUp_form').prepend('<input type="hidden" name="token" value="' + token + '">');
+            token = token;
+
+        });
+
+    });
     let form = document.getElementById('signUp_form');
     let data = new FormData(form);
+    //data.append('token', token);
     let type = 'POST';
     let url = '/addUserData';
     SendAjaxRequestToServer(type, url, data, '', addUserDataResponse, '', '#signUp_submit');
@@ -107,7 +119,7 @@ function addUserDataResponse(response) {
 
         $('input, select, textarea').removeClass('is-invalid');
 
-    }else{
+    } else {
         if (response.status == 402) {
             error = response.message;
         } else {
@@ -135,7 +147,7 @@ $(document).ready(function () {
 });
 
 
-$('#first_name, #last_name').on('keydown', function(e) {
+$('#first_name, #last_name').on('keydown', function (e) {
     var key = e.keyCode || e.which;
     var char = String.fromCharCode(key);
     var controlKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete'];
@@ -149,7 +161,7 @@ $('#first_name, #last_name').on('keydown', function(e) {
     }
 });
 
-$('#phone, #zipcode').on('keydown', function(e) {
+$('#phone, #zipcode').on('keydown', function (e) {
     var key = e.keyCode || e.which;
     var char = String.fromCharCode(key);
     var controlKeys = ['Backspace', 'Tab', 'ArrowLeft', 'ArrowRight', 'Delete', 'Enter'];

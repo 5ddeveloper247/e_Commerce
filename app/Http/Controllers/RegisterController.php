@@ -22,6 +22,7 @@ use App\Models\States;
 use App\Models\City;
 use App\Models\Cart;
 use App\Models\ShippingAddress;
+use Illuminate\Support\Facades\Http;
 
 
 class RegisterController extends Controller
@@ -77,7 +78,7 @@ class RegisterController extends Controller
 
     public function saveUserData(Request $request)
     {
-
+        // Step 1: Validate form data
         $validatedData = $request->validate([
             'first_name' => 'required|string|max:50',
             'last_name' => 'required|string|max:50',
@@ -92,8 +93,9 @@ class RegisterController extends Controller
             'company_name' => 'nullable|string|max:50',
             'address' => 'required|string|max:50',
             'country' => 'nullable|string|max:50',
+            'state' => 'nullable|string|max:50',
             'city' => 'nullable|string|max:50',
-            'zipcode' => 'nullable|string|max:50',
+            'zipcode' => 'nullable|string|max:10',
             'password' => [
                 'required',
                 'string',
@@ -101,14 +103,31 @@ class RegisterController extends Controller
                 'max:20',
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/',
                 'confirmed'
-            ],
-            'recaptcha' => 'required',
+            ]
         ], [
-            'recaptcha.required' => '"I am not a robot" check first.',
             'email.regex' => 'The email must be a valid email address with a proper domain.',
-            'password_confirmation.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.',
+            'password.regex' => 'The password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.'
         ]);
 
+        // // Step 2: Validate reCAPTCHA response
+        // $token = $request->token;
+        // $secretKey = '6LeTn3UqAAAAAElNbhf6p8a-Po6GBjNwA9Ls8cZC';
+        // $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+        //     'secret' => $secretKey,
+        //     'response' => $token,
+        // ]);
+
+        // $result = $response->json();
+        // if (!($result['success'] ?? false) || ($result['score'] ?? 0) < 0.5) {
+        //     return response()->json([
+        //         'message' => 'reCAPTCHA validation failed. Please try again',
+        //         'status' => 402,
+        //         'result' => $result,
+        //         'token' => $token
+        //     ]);
+        // }
+
+        // Step 3: Save user data
         $user = new User();
         $user->username = $request->first_name . ' ' . $request->last_name;
         $user->first_name = $request->first_name;
@@ -124,8 +143,10 @@ class RegisterController extends Controller
         $user->zip_code = $request->zipcode;
         $user->password = bcrypt($request->password);
         $user->save();
-
-        return response()->json(['status' => 200, 'message' => 'User registration successfully completed, now login with your email and password.']);
+        return response()->json([
+            'status' => 200,
+            'message' => 'User registration successfully completed. You can now log in with your email and password.'
+        ]);
     }
 
     public function login(Request $request)
@@ -193,7 +214,7 @@ class RegisterController extends Controller
             'email' => 'required|email|exists:users',
         ]);
 
-        $user = User::where("email", $request->email)->where('role', '2')->first();
+        $user = User::where("email", $request->email)->where('status', 1)->first();
 
         if (!$user) {
             return response()->json(['status' => 402, 'message' => "The selected email is invalid."]);
@@ -225,7 +246,7 @@ class RegisterController extends Controller
             'otp' => 'required',
         ]);
 
-        $user = User::where("email", $request->email)->where('role', '2')->first();
+        $user = User::where("email", $request->email)->first();
 
         if ($user) {
             if ($request->otp == $user->otp) {

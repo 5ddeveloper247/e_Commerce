@@ -118,11 +118,11 @@
                                 <input type="password" class="form-control" id="admin_password" name="admin_password"
                                     maxlength="15" placeholder="">
                                 <label class="mx-2 p-label required-asterisk" for="admin_password">Password</label>
-                                <span class="input-group-text position-absolute"
-                                    style="cursor: pointer; right: 30px; top: 15px;" id="togglePassword">
+                                <span class="position-absolute" style="cursor: pointer; right: 20px; top: 15px;"
+                                    id="togglePassword">
                                     <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                                         viewBox="0 0 24 24">
-                                        <path fill="currentColor"
+                                        <path fill="#010308"
                                             d="M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z" />
                                     </svg>
                                 </span>
@@ -133,11 +133,11 @@
                                     name="admin_confirm_password" maxlength="15" placeholder="">
                                 <label class="mx-2 p-confirm-label required-asterisk"
                                     for="admin_confirm_password">Confirm Password</label>
-                                <span class="input-group-text position-absolute"
-                                    style="cursor: pointer; right: 30px; top: 15px;" id="toggleConfirmPassword">
-                                    <svg id="eyeIconConfirm" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+                                <span class="position-absolute" style="cursor: pointer; right: 20px; top: 15px;"
+                                    id="toggleConfirmPassword">
+                                    <svg id="eyeIcon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                                         viewBox="0 0 24 24">
-                                        <path fill="currentColor"
+                                        <path fill="#010308"
                                             d="M12 4.5c-4.7 0-8.5 3.8-10 7.5c1.5 3.7 5.3 7.5 10 7.5c4.7 0 8.5-3.8 10-7.5c-1.5-3.7-5.3-7.5-10-7.5zm0 12c-2.7 0-4.9-2.2-4.9-4.5S9.3 7.5 12 7.5s4.9 2.2 4.9 4.5s-2.2 4.5-4.9 4.5zm0-7c-1.2 0-2.1 1-2.1 2.2S10.8 12 12 12s2.1-1 2.1-2.2S13.2 9.5 12 9.5z" />
                                     </svg>
                                 </span>
